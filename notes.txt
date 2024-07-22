@@ -1,0 +1,92 @@
+						MINISHELL
+
+.single quotes :
+{
+	- prevent from interpreting meta characters:
+		- '|'
+		- '&'
+		- '<'
+		- '>'
+		- '('
+		- ')'
+		- '$'
+		- '`'
+		- '\'
+		- '''
+		- '"'
+		- '\n'
+		- '\t'
+		- ' '
+}
+
+.double quotes :
+{
+	- ignore same meta characters as single quotes, except for '$'
+}
+
+.redirections :
+{
+	- '<' : redirect input
+	- '>' : redirect output
+	- '<<' : Here_doc (don't update history)
+	- '>>' : redirect output in append (O_APPEND)
+}
+
+.pipes ('|') :
+{
+	- connect before command output to next command input
+}
+
+.env variables :
+{
+	- '$VARIABLE' : expand to the VARIABLE value
+}
+
+.$? :
+{
+	- expand to the last exit code
+}
+
+.'ctrl-C', 'ctrl-D', 'ctrl-\' :
+{
+	- during executions :
+		- 'ctrl-C', 'ctrl-D', 'ctrl-\' : should behave like in bash
+	- in interactive mode (in the base prompt) :
+		- 'ctrl-C' : display a new prompt
+		- 'ctrl-D' : exits the shell
+		- 'ctrl-\' : does nothing
+}
+
+.built-ins :
+{
+	- echo : with option '-n')
+	- cd : with relative or absolute path
+	- env : with no arguments
+	- pwd
+	- export
+	- unset
+	- exit
+}
+
+.wildcards :
+{
+	- '*' should work 
+}
+
+.'&&', '||' and '()' :
+{
+	- '&&' :
+		- if the left command success, the right command is executed
+		- if the left command failed, the right command is not executed
+	- '||' :
+		- if the left command success, the right command is not executed
+		- if the left command failed, the right command is executed
+	- '()' :
+		- parenthesis make a priority for the inside code
+		- the inside code is executed by a sub-shell
+}
+
+.sub-shell :
+{
+	- a sub-shell is an background shell that can execute a line of code
+}
