@@ -69,10 +69,11 @@ int main (int ac, char **av)
 				data[i] = '\0';
 			i++;
 		}
-		if(checking_line(data) == -1)
+		if( parsing_cote(data) == -1)
 			printf("Error Bad inputs\n");
 		else
 			printf("good inputs\n");
+
 		// comand = ft_split(data, 32);
 		// define_comand(comand, &x);
 		// x = x->next;
