@@ -1,5 +1,8 @@
 #include "../includes/garb_utils.h"
 
+int		init_static(t_garbage **_static, void **arg);
+void	print_garbage_err(char *error);
+
 t_garb_node	*find_in_garbage(void *address, t_garbage *garbage)
 {
 	t_garb_node	*garb_node;
@@ -46,18 +49,13 @@ int	new_garb_node(void *adress, t_garbage *garbage)
 	return (EXIT_SUCCESS);
 }
 
-void	print_err(char *error)
+int	init_static(t_garbage **_static, void **arg)
 {
-	int	i;
-
-	if (error == NULL)
-		return ;
-	i = -1;
-	while (error[++i])
+	if (arg == NULL || *arg == NULL)
 	{
-		if (write(STDERR_FILENO, &error[i], 1) < 0)
-			return (print_err(WRITE_ERROR));
+		print_garbage_err(E1);
+		return (EXIT_FAILURE);
 	}
-	if (write(STDERR_FILENO, "\n", 1) < 0)
-		return (print_err(WRITE_ERROR));
+	*_static = (t_garbage *)*arg;
+	return (EXIT_SUCCESS);
 }

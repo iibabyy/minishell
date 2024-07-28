@@ -1,7 +1,7 @@
 #ifndef GARB_UTILS_H
 # define GARB_UTILS_H
 
-# include "garbage_collector.h"
+# include "../../../includes/garbage_collector.h"
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdio.h>
@@ -19,6 +19,6 @@ t_garb_node	*find_in_garbage(void *address, t_garbage *garbage);
 int			new_garb_node(void *adress, t_garbage *garbage);
 void		destroy_garbage_node(t_garb_node *node);
 t_garbage	*init_garbage(void);
-void		print_err(char *error);
+int	init_static(t_garbage **_static, void **arg);
 
 #endif

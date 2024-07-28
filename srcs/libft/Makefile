@@ -69,7 +69,7 @@ SRCS =	count_char.c	\
 		print_2d_array_nl.c	\
 		print_err_and_exit.c	\
 
-NAME = ../executables/libft.a
+NAME = libft.a
 OBJS_DIR = objs/
 OBJS = $(SRCS:.c=.o)
 OBJECTS_PREFIXED = $(addprefix $(OBJS_DIR), $(OBJS))
@@ -91,11 +91,9 @@ $(NAME): $(OBJECTS_PREFIXED) $(SRCS)
 
 clean:
 	@rm -rf $(OBJS_DIR)
-	@echo "$(RED)remove objects$(END)"
 
 fclean: clean
 	@rm -rf $(NAME)
-	@echo "$(RED)remove libft.a$(END)"
-	@echo "$(GREEN)Cleaned ! ✅$(END)"
+	@echo "$(GREEN)Libft cleaned ! ✅$(END)"
 
 re: clean fclean all

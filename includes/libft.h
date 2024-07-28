@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:35:02 by ibaby             #+#    #+#             */
-/*   Updated: 2024/07/24 21:01:04 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/07/28 18:11:27 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ char		*multi_re_strjoin(int strings_number, char *s1, char *s2, ...);
 void		ft_multi_free(int pointers_num, void **ptr1, void **ptr2, ...);
 int			print_2d_array_nl(char **NULL_TERMINATED_ARRAY);
 char		*re_join_get_next_line(int fd, char **str_address);
-void		print_err_and_exit(const char *err, int code, bool erno);
 int			count_char(char *str, char char_to_count);
 int			count_char_2d(char **array, char char_to_count);
 void		*ft_realloc(void *buffer, int buffer_size,
@@ -56,7 +55,7 @@ void		*ft_memmove(void *dest, const void *src, size_t n);
 void		*ft_memchr(const void *str, int tofind, size_t n);
 int			ft_memcmp(const void *str1, const void *str2, size_t n);
 
-void		*ft_calloc(size_t el_count, size_t el_size);
+void		*ft_calloc(size_t count, size_t size);
 char		**ft_split(const char *s, char sep);
 char		*ft_strdup(const char *src);
 char		*ft_substr(char const *s, unsigned int start, size_t len);

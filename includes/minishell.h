@@ -16,12 +16,9 @@
 # include <term.h>
 # include <dirent.h>
 
+#include "structs.h"
 #include "libft.h"
 #include "garbage_collector.h"
 
-typedef struct s_data
-{
-	void	*infos;
-}	t_data;
 
 #endif

@@ -1,7 +1,8 @@
 #include "../includes/garb_utils.h"
 
-static int	init_static(t_garbage **_static, void **arg);
 static int	is_destroyed(bool seter, bool value);
+int		init_static(t_garbage **_static, void **arg);
+void	print_garbage_err(char *error);
 
 void	*ft_malloc(unsigned long size)
 {
@@ -11,7 +12,7 @@ void	*ft_malloc(unsigned long size)
 	if (is_destroyed(false, false) == 3)
 		is_destroyed(true, false);
 	if (is_destroyed(false, false) != false)
-		return (print_err(E2), NULL);
+		return (print_garbage_err(E2), NULL);
 	if (garbage == NULL)
 	{
 		garbage = init_garbage();
@@ -38,7 +39,7 @@ void	ft_free(void **address)
 	if (address == NULL || *address == NULL)
 		return ;
 	if (is_destroyed(false, false) != false)
-		return (print_err(E1));
+		return (print_garbage_err(E1));
 	if (garbage == NULL)
 		return ((void)init_static(&garbage, address));
 	node_to_free = garbage->first;
@@ -65,7 +66,7 @@ void	destroy_garbage(t_garbage *garb)
 	t_garb_node			*temp;
 
 	if (is_destroyed(false, false) != false)
-		return (print_err(E2));
+		return (print_garbage_err(E2));
 	if (garbage == NULL)
 	{
 		init_static(&garbage, (void **)&garb);
@@ -83,14 +84,6 @@ void	destroy_garbage(t_garbage *garb)
 	is_destroyed(true, true);
 }
 
-static int	init_static(t_garbage **_static, void **arg)
-{
-	if (arg == NULL || *arg == NULL)
-		return (print_err(E1), EXIT_FAILURE);
-	*_static = (t_garbage *)*arg;
-	return (EXIT_SUCCESS);
-}
-
 static int	is_destroyed(bool seter, bool value)
 {
 	static int	is_destroy = 3;
@@ -98,4 +91,20 @@ static int	is_destroyed(bool seter, bool value)
 	if (seter == true)
 		is_destroy = value;
 	return (is_destroy);
+}
+
+void	print_garbage_err(char *error)
+{
+	int	i;
+
+	if (error == NULL)
+		return ;
+	i = -1;
+	while (error[++i])
+	{
+		if (write(STDERR_FILENO, &error[i], 1) < 0)
+			return ;
+	}
+	if (write(STDERR_FILENO, "\n", 1) < 0)
+		return ;
 }

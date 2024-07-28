@@ -10,9 +10,10 @@ END= 	$(shell tput -Txterm sgr0)
 
 #			#
 
+SRCS_DIR = srcs/
 
-SRCS =	srcs/garbage_utils.c		\
-		srcs/garbage_collector.c	\
+SRCS =	$(SRCS_DIR)garbage_utils.c		\
+		$(SRCS_DIR)garbage_collector.c	\
 
 NAME = ./garbage_collector.a
 
@@ -25,17 +26,18 @@ CC_FLAGS = -Wall -Wextra -Werror -O3
 all: $(NAME)
 
 %.o : %.c
+	@echo "$(BLUE)compiling: $(patsubst $(SRCS_DIR)%,%, $<)$(END)"
 	@$(CC) $(CC_FLAGS) -c $< -o $@
 
 $(NAME): $(OBJS) $(SRCS)
 	@ar cr $(NAME) $(OBJS)
-	@echo "$(GREEN)Garbage Collector library done ✅$(END)"
+	@echo "$(GREEN)Garbage Collector done ✅$(END)"
 
 clean:
 	@rm -rf $(OBJS)
 
 fclean: clean
 	@rm -rf $(NAME)
-	@echo "$(RED)Garbage Collector library cleaned $(END)"
+	@echo "$(GREEN)Garbage Collector cleaned ! ✅$(END)"
 
 re: clean fclean all
