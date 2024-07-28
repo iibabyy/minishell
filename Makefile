@@ -14,35 +14,61 @@ NAME = minishell
 
 CC = cc
 
-FLAGS = -Wall -Wextra -Werror -g3
+FLAGS = -Wall -Wextra -Werror -I$(INCLUDE_DIR) -g3
 
 INCLUDE_DIR = includes/
 
 SRCS_DIR = srcs/
 
-FILES =	$(addprefix $(SRCS_DIR), \
-				garbage_collector/garbage_collector.c	\
-		)
+# Libft
+
+LIBFT_DIR = srcs/libft/
+
+LIBFT = $(LIBFT_DIR)libft.a
+
+# Garbage Collector
+
+GARBAGE_COLLECTOR_DIR = srcs/garbage_collector/
+
+GARBAGE_COLLECTOR = $(GARBAGE_COLLECTOR_DIR)garbage_collector.a
+
+# Minishell
+
+FILES =	srcs/minishell/error_utils/free_and_exit.c	\
+		srcs/minishell/error_utils/print_err.c		\
 
 OBJ = $(FILES:.c=.o)
 
 all	: $(NAME)
 
-$(NAME) : $(OBJ)
-		@$(CC) $(FLAGS) $(OBJ) -o $(NAME)
-		@echo "$(GREEN)$(NAME) done ! ✅$(END)"
+# Variables
+
+$(NAME) : $(LIBFT) $(GARBAGE_COLLECTOR) $(OBJ)
+	@$(CC) $(FLAGS) $(OBJ) $(GARBAGE_COLLECTOR) $(LIBFT) -o $(NAME)
+	@echo "$(GREEN)$(NAME) done ! ✅$(END)"
+
+$(GARBAGE_COLLECTOR) : $(GARBAGE_COLLECTOR_DIR)
+	@make -sC $(GARBAGE_COLLECTOR_DIR)
+
+$(LIBFT) : $(LIBFT_DIR)
+	@make -sC $(LIBFT_DIR)
+
+# Compilation
 
 %.o : %.c
-		@echo "$(BLUE)Compiling: $^$(END)"
-		@$(CC) $(FLAGS) -c $< -o $@
+	@echo "$(BLUE)Compiling: $^$(END)"
+	@$(CC) $(FLAGS) -c $< -o $@
+
 clean :
+	@make clean -sC $(LIBFT_DIR)
+	@make clean -sC $(GARBAGE_COLLECTOR_DIR)
 	@rm -rf $(OBJ)
-	@echo "$(RED)objects removed$(END)"
 
 fclean : clean
+	@make fclean -sC $(LIBFT_DIR)
+	@make fclean -sC $(GARBAGE_COLLECTOR_DIR)
 	@rm -f $(NAME)
-	@echo "$(RED)$(NAME) removed$(END)"
-	@echo "$(GREEN)cleaned ! ✅$(END)"
+	@echo "$(GREEN)Minishell cleaned ! ✅$(END)"
 
 re : fclean all
 
