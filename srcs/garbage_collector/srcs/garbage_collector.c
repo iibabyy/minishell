@@ -4,6 +4,8 @@ static int	is_destroyed(bool seter, bool value);
 int		init_static(t_garbage **_static, void **arg);
 void	print_garbage_err(char *error);
 
+//	this function works like the real malloc function, it returns a pointers to an heap allocated zone, of the size specified in parameter.
+//	Make sure to use this function at least one time before the other garbage collector functions.
 void	*ft_malloc(unsigned long size)
 {
 	static t_garbage	*garbage = NULL;
@@ -30,6 +32,8 @@ void	*ft_malloc(unsigned long size)
 	return (ptr);
 }
 
+// this function copy the real 'free( )' function.
+//You can use it on all addresses, whether they are allocated by the 'ft_malloc( )' function or not.
 void	ft_free(void **address)
 {
 	static t_garbage	*garbage = NULL;
@@ -59,6 +63,9 @@ void	ft_free(void **address)
 	*address = NULL;
 }
 
+//this function free the garbage and all the addresses allocated by 'ft_malloc( )' but not freed by 'ft_free( )'.
+//Use it with a NULL parameter.
+//Make sure to use this function at the very end, because the others functions are disabled after that.
 void	destroy_garbage(t_garbage *garb)
 {
 	static t_garbage	*garbage = NULL;

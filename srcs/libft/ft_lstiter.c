@@ -6,15 +6,15 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 20:19:59 by ibaby             #+#    #+#             */
-/*   Updated: 2024/07/24 20:58:51 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/07/29 00:12:50 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/libft.h"
 
-void	ft_lstiter(t_list *lst, void (*f)(void *))
+void	ft_lstiter(t_token *lst, void (*f)(void *))
 {
-	t_list	*node;
+	t_token	*node;
 
 	node = lst;
 	while (node)

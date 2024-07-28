@@ -6,17 +6,17 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 20:20:27 by ibaby             #+#    #+#             */
-/*   Updated: 2024/07/24 20:58:51 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/07/29 00:25:49 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/libft.h"
 #include <stdlib.h>
 
-void	ft_lstclear(t_list **lst, void (*del)(void *))
+void	ft_lstclear(t_token **lst, void (*del)(void **))
 {
-	t_list	*elm;
-	t_list	*tmp;
+	t_token	*elm;
+	t_token	*tmp;
 
 	elm = *lst;
 	while (elm)

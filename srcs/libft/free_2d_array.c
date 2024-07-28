@@ -6,19 +6,11 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 12:05:57 by ibaby             #+#    #+#             */
-/*   Updated: 2024/07/24 21:00:24 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/07/29 00:23:07 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/libft.h"
-
-static void	ft_free(void **address)
-{
-	if (*address == NULL)
-		return ;
-	free(*address);
-	*address = NULL;
-}
 
 void	free_2d_array(void ***NULL_terminated_2d_array)
 {

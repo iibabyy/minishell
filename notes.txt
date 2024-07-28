@@ -3,18 +3,15 @@
 .single quotes :
 {
 	- prevent from interpreting meta characters:
+		- '"'
 		- '|'
-		- '&'
+		- '&&'
 		- '<'
 		- '>'
 		- '('
 		- ')'
 		- '$'
-		- '`'
-		- '\'
-		- '"'
-		- '\n'
-		- '\t'
+		- '*'
 		- ' '
 }
 
@@ -22,6 +19,12 @@
 {
 	- ignore same meta characters as single quotes, except for '$'
 	- ignore single quotes, but not double quotes
+}
+
+.strings :
+{
+	- characters delimited by quotes.
+	- they are not 'words'
 }
 
 .redirections :
@@ -59,7 +62,8 @@
 
 .built-ins :
 {
-	- echo : with option '-n')
+	- echo : with option '-n'
+		('-nnnnn, -nnnn -n', '-n -n -n...', etc... does the same)
 	- cd : with relative or absolute path
 	- env : with no arguments
 	- pwd

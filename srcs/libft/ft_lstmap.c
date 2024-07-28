@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 20:18:25 by ibaby             #+#    #+#             */
-/*   Updated: 2024/07/24 20:58:51 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/07/29 00:12:50 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 #include <stdlib.h>
 
 /*
-static void	ft_lstiter2(t_list *lst, void *(*f)(void *))
+static void	ft_lstiter2(t_token *lst, void *(*f)(void *))
 {
-	t_list	*node;
+	t_token	*node;
 
 	node = lst;
 	while (node)
@@ -26,15 +26,15 @@ static void	ft_lstiter2(t_list *lst, void *(*f)(void *))
 	}
 }
 
-static t_list	*ft_lstdup(t_list *lst)
+static t_token	*ft_lstdup(t_token *lst)
 {
-	t_list	*originalnode;
-	t_list	*newnode;
-	t_list	*newhead;
+	t_token	*originalnode;
+	t_token	*newnode;
+	t_token	*newhead;
 
 	if (!lst)
 		return (NULL);
-	if (!(newhead = malloc(sizeof(t_list))))
+	if (!(newhead = ft_malloc(sizeof(t_token))))
 		return (NULL);
 	newhead = lst;
 	originalnode = lst->next;
@@ -48,9 +48,9 @@ static t_list	*ft_lstdup(t_list *lst)
 	return (newhead);
 }
 
-t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
+t_token	*ft_lstmap(t_token *lst, void *(*f)(void *), void (*del)(void *))
 {
-	t_list	*newlist;
+	t_token	*newlist;
 
 	if (!(newlist = ft_lstdup(lst)))
 	{
@@ -62,10 +62,10 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 }
 */
 
-t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
+t_token	*ft_lstmap(t_token *lst, void *(*f)(void *), void (*del)(void *))
 {
-	t_list	*new_lst;
-	t_list	*elem;
+	t_token	*new_lst;
+	t_token	*elem;
 
 	if (!lst)
 		return (0);

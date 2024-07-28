@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 02:14:13 by ibaby             #+#    #+#             */
-/*   Updated: 2024/07/24 20:58:51 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/07/29 00:24:53 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ void	*ft_realloc(void *buffer, int buffer_size, size_t size,
 	ptr = ft_calloc(size, sizeof_type);
 	if (ptr == NULL)
 	{
-		free(buffer);
+		ft_free(&buffer);
 		return (NULL);
 	}
-	else if (buffer != NULL)
+	else if (buffer != NULL && size > 0)
 	{
 		ft_memcpy(ptr, buffer, buffer_size * sizeof_type);
-		free(buffer);
+		ft_free(&buffer);
 	}
 	return (ptr);
 }

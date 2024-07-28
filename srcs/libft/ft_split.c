@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 20:14:21 by ibaby             #+#    #+#             */
-/*   Updated: 2024/07/24 20:58:51 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/07/28 23:50:54 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	ft_split_2(const char *s, char **split, char sep, int words)
 		start = i;
 		while (s[i] != sep && s[i])
 			i++;
-		split[j] = malloc(sizeof(char) * (i - start + 1));
+		split[j] = ft_malloc(sizeof(char) * (i - start + 1));
 		if (!split[j])
 			return (-1);
 		ft_memmove(split[j], (s + start), (i - start));
@@ -93,13 +93,13 @@ char	**ft_split(const char *s, char sep)
 		words--;
 	if (words < 0 || *s == '\0')
 	{
-		split = malloc(sizeof(char *) * 1);
+		split = ft_malloc(sizeof(char *) * 1);
 		if (!split)
 			return (NULL);
 		split[0] = NULL;
 		return (split);
 	}
-	split = malloc(sizeof(char *) * (words + 1));
+	split = ft_malloc(sizeof(char *) * (words + 1));
 	if (!split)
 		return (NULL);
 	check = ft_split_2(s, split, sep, words);
