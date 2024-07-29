@@ -14,7 +14,7 @@ NAME = minishell
 
 CC = cc
 
-FLAGS = -Wall -Wextra -Werror -I$(INCLUDE_DIR) -g3
+FLAGS = -Wall -Wextra -Werror -I$(INCLUDE_DIR) -g3 -O3
 
 INCLUDE_DIR = includes/
 
@@ -38,7 +38,6 @@ FILES =	srcs/error_utils/free_and_exit.c	\
 		srcs/error_utils/print_err.c		\
 		srcs/lexing/check_char.c	\
 		srcs/lexing/lexer.c	\
-		srcs/lexing/main.c	\
 
 OBJ = $(FILES:.c=.o)
 
@@ -60,7 +59,7 @@ all	: $(NAME)
 $(NAME) : $(LIBFT) $(GARBAGE_COLLECTOR) $(OBJ)
 	@$(CC) $(FLAGS) $(OBJ) $(GARBAGE_COLLECTOR) $(LIBFT) -o $(NAME)
 	@echo ""
-	@echo "$(GREEN)$(NAME) done ! ✅$(END)"
+	@echo "$(BLUE)$(NAME) done ! ✅$(END)"
 
 $(GARBAGE_COLLECTOR) : $(GARBAGE_COLLECTOR_DIR)
 	@make -sC $(GARBAGE_COLLECTOR_DIR)
@@ -96,7 +95,7 @@ fclean : clean
 	@make fclean -sC $(LIBFT_DIR)
 	@make fclean -sC $(GARBAGE_COLLECTOR_DIR)
 	@rm -f $(NAME)
-	@echo "$(GREEN)Minishell cleaned ! ✅$(END)"
+	@echo "$(BLUE)Minishell cleaned ! ✅$(END)"
 
 re : fclean all
 

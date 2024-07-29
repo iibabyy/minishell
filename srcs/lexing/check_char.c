@@ -50,20 +50,23 @@ bool	is_quotes(char c)
 
 int	metachar_size(char *input, int start)
 {
-	char	*one_sized;
-	int		i;
-	char	c;
+	static bool	err = false;
+	char		*one_sized;
+	int			i;
+	char		c;
 	
-	i = 1;
-	c = input[start];
+	(c = input[start], i = 1);
 	if (c == '"' || c == 39)
 	{
 		while (input[start + i] != c && input[start + i] != '\0')
 			++i;
 		if (input[start + i] == '\0')
-			return (print_err("Error: opened quotes detected", false),
-				EXIT_FAILURE);
-		return (i - 1);
+		{
+			if (err == false)
+				(err = true, print_err("opened quotes detected", false));
+			return (-1);
+		}
+		return (i + 1);
 	}
 	one_sized = "()$*";
 	if (ft_strchr(one_sized, c) != NULL)

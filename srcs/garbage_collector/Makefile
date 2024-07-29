@@ -56,7 +56,7 @@ all: $(NAME)
 $(NAME): $(OBJS) $(SRCS)
 	@ar cr $(NAME) $(OBJS)
 	@echo ""
-	@echo "$(GREEN)Garbage Collector done ✅$(END)"
+	@echo "$(BLUE)Garbage Collector done ✅$(END)"
 
 clean:
 	@rm -rf $(OBJS)

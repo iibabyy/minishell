@@ -1,14 +1,22 @@
 #include "lexing_utils.h"
 
+/*
+Transform an input string in tokens
+Return an t_token chained list with their content and types
+Return NULL if an error occurs
+Return NULL and print an error message if there is opened quotes
+*/
 t_token	*input_to_tokens(char *input)
 {
 	t_token	*tokens;
 	int		i;
 	int		token_start;
 
-	i = 0;
+	(i = 0, tokens = NULL);
 	while (input[i] != '\0')
 	{
+		while (input[i] == ' ')
+			++i;
 		token_start = i;
 		while (is_meta_char(input, i) == false && input[i] != '\0')
 			++i;
@@ -51,13 +59,12 @@ int	meta_to_token(char *input, int index, t_token **tokens)
 
 	if (is_quotes(input[index]) == true)
 	{
-		content = ft_substr(input, (unsigned int)index + 1, metachar_size(input, index));
+		content = ft_substr(input, (unsigned int)index + 1, metachar_size(input, index) - 2);
 		new_token = ft_lstnew(content);
 		if (new_token == NULL || content == NULL)
 			return (ft_free(content), ft_free(new_token), EXIT_FAILURE);
 		new_token->type = STRING;
-		index += metachar_size(input, index) + 1;
-		return (ft_lstadd_back(tokens, new_token), EXIT_FAILURE);
+		return (ft_lstadd_back(tokens, new_token), EXIT_SUCCESS);
 	}
 	content = ft_substr(input, index, metachar_size(input, index));
 	new_token = ft_lstnew(content);

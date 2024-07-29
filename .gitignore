@@ -1,7 +1,6 @@
 minishell
 *.txt
 a.out
-main.c
 
 # Prerequisites
 *.d

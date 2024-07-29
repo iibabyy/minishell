@@ -111,7 +111,7 @@ $(OBJS_DIR)%.o : %.c
 $(NAME): $(OBJECTS_PREFIXED) $(SRCS)
 	@ar cr $(NAME) $(OBJECTS_PREFIXED)
 	@echo ""
-	@echo "$(GREEN)Libft done ✅$(END)"
+	@echo "$(BLUE)Libft done ✅$(END)"
 
 clean:
 	@rm -rf $(OBJS_DIR)
