@@ -13,4 +13,3 @@ void	free_all(t_data *data)
 	(void)data;
 	destroy_garbage(NULL);
 }
-

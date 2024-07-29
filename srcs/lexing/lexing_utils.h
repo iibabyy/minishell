@@ -1,7 +1,7 @@
 #ifndef LEXING_UTILS_H
 # define LEXING_UTILS_H
 
-#include <stdbool.h>
+# include <stdbool.h>
 
 # include "../../includes/structs.h"
 # include "../../includes/error.h"

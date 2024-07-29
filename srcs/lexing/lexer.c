@@ -12,7 +12,8 @@ t_token	*input_to_tokens(char *input)
 	int		i;
 	int		token_start;
 
-	(i = 0, tokens = NULL);
+	i = 0;
+	tokens = NULL;
 	while (input[i] != '\0')
 	{
 		while (input[i] == ' ')
@@ -59,7 +60,8 @@ int	meta_to_token(char *input, int index, t_token **tokens)
 
 	if (is_quotes(input[index]) == true)
 	{
-		content = ft_substr(input, (unsigned int)index + 1, metachar_size(input, index) - 2);
+		content = ft_substr(input, (unsigned int)index + 1,
+				metachar_size(input, index) - 2);
 		new_token = ft_lstnew(content);
 		if (new_token == NULL || content == NULL)
 			return (ft_free(content), ft_free(new_token), EXIT_FAILURE);
@@ -77,87 +79,3 @@ int	meta_to_token(char *input, int index, t_token **tokens)
 	ft_lstadd_back(tokens, new_token);
 	return (EXIT_SUCCESS);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-#include "lexing_utils.h"
-
-t_token	*input_to_tokens(char *input)
-{
-	t_token	*tokens;
-	int		i;
-	int		token_start;
-
-	i = 0;
-	token_start = 0;
-	while (input[i] != '\0')
-	{
-		if (word_to_token(input, &token_start, &i, &tokens) == EXIT_FAILURE)
-			return (ft_lstclear(&tokens, ft_free));
-		if (is_meta_char(input[i]) == true)
-		{
-			if (new_token(input, &i) == EXIT_FAILURE)
-				return (ft_lstclear(&tokens, ft_free));
-		}
-		else if (input[i] == '\0')
-			break ;
-	}
-}
-
-int	word_to_token(char *input, int *start, int *index, t_token **tokens)
-{
-	t_token	*new_token;
-	char	*word;
-	int		size;
-
-	size = 0;
-	while (is_meta_char(input[*i]) == false && input[*i] != '\0')
-		(++size, ++(*i));
-	word = ft_substr(input, *start, size);
-	if (word == NULL)
-		return (NULL);
-	*start = *i;
-	new_token = ft_lstnew(word);
-	if (new_token == NULL)
-		return (ft_free(word), NULL);
-	ft_lstadd_back(tokens, new_token);
-}
-
-int	new_token(char *input, int *index)
-{
-	if ()
-}
-*/

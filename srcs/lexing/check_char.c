@@ -15,7 +15,6 @@ bool	is_meta_char(char *input, int index)
 		return (false);
 }
 
-
 //	return true if input[index] is an operator
 //	return false if input[index] is not operator
 //	operators are |, &, (, )
@@ -54,8 +53,8 @@ int	metachar_size(char *input, int start)
 	char		*one_sized;
 	int			i;
 	char		c;
-	
-	(c = input[start], i = 1);
+
+	(one_sized = "()$*", c = input[start], i = 1);
 	if (c == '"' || c == 39)
 	{
 		while (input[start + i] != c && input[start + i] != '\0')
@@ -63,12 +62,11 @@ int	metachar_size(char *input, int start)
 		if (input[start + i] == '\0')
 		{
 			if (err == false)
-				(err = true, print_err("opened quotes detected", false));
+					(err = true, print_err("opened quotes detected", false));
 			return (-1);
 		}
 		return (i + 1);
 	}
-	one_sized = "()$*";
 	if (ft_strchr(one_sized, c) != NULL)
 		return (1);
 	else if (input[start + 1] == c)

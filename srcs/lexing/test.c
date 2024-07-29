@@ -8,7 +8,7 @@ void print_lexing(t_token *tokens);
 
 int main()
 {
-	char *test = "cat << EOF > cat || eco.>ho 'ghhhhhhhhhhhhhh'";
+	char *test = "cat << EOF > cat || eco.>ho 'ghhhhhhhhhhhhhh''";
 	printf("%c%s%c:\n", '"', test, '"');
 	t_token	*token = input_to_tokens(test);
 	print_lexing(token);

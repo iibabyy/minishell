@@ -5,7 +5,8 @@ static int	init_static(t_garbage **_static, void *arg);
 
 /*	this function works like the real malloc function,
 	it returns a pointers to an heap allocated zone.
-	Make sure to use this function at least one time before the other functions.*/
+	Make sure to use this function at least one time before
+	the other functions.*/
 void	*ft_malloc(unsigned long size)
 {
 	static t_garbage	*garbage = NULL;
@@ -59,13 +60,14 @@ void	ft_free(void *address)
 /*this function free the garbage and all the addresses allocated
 by 'ft_malloc( )' but not freed by 'ft_free( )'.
 Use it with a NULL parameter.
-Make sure to use this function at the very end, because the others functions are disabled after that.*/
+Make sure to use this function at the very end, because the others
+functions are disabled after that.*/
 void	destroy_garbage(t_garbage *garb)
 {
 	static t_garbage	*garbage = NULL;
 	t_garb_node			*node;
 	t_garb_node			*temp;
-	
+
 	if (is_destroyed(READER, false) != false)
 		return ;
 	if (garbage == NULL)
