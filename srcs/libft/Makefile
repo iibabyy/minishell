@@ -82,7 +82,6 @@ all: Makefile $(NAME)
 
 $(OBJS_DIR)%.o : %.c
 	@mkdir -p $(OBJS_DIR)
-	@echo "$(BLUE)Compiling: $<$(END)"
 	@$(CC) $(CC_FLAGS) -c $< -o $@
 
 $(NAME): $(OBJECTS_PREFIXED) $(SRCS)
@@ -94,6 +93,5 @@ clean:
 
 fclean: clean
 	@rm -rf $(NAME)
-	@echo "$(GREEN)Libft cleaned ! ✅$(END)"
 
 re: clean fclean all

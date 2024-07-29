@@ -25,11 +25,12 @@ typedef struct s_garbage
 # define OPERATOR 2			//	|, ||, &&, () and newlines.
 # define REDIRECTION 3		//	<, <<, >, >>.
 # define STRING 4
+
 typedef struct s_token
 {
-	int		type;
-	char	*content;
-	t_token	*next;
+	int				type;
+	char			*content;
+	struct s_token	*next;
 }	t_token;
 
 #endif

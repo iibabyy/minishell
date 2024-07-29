@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:34:18 by ibaby             #+#    #+#             */
-/*   Updated: 2024/07/29 00:24:29 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/07/29 15:11:49 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ char	*ft_re_strdup(char *src)
 	size = ft_strlen((char *)src) + 1;
 	str = ft_malloc(sizeof(char) * size);
 	if (!str)
-		return (ft_free(&src), NULL);
+		return (ft_free(src), NULL);
 	ft_strlcpy(str, src, size);
-	ft_free(&src);
+	ft_free(src);
 	return (str);
 }

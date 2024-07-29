@@ -1,7 +1,4 @@
-#include "../includes/garb_utils.h"
-
-int		init_static(t_garbage **_static, void **arg);
-void	print_garbage_err(char *error);
+#include "garb_utils.h"
 
 t_garb_node	*find_in_garbage(void *address, t_garbage *garbage)
 {
@@ -23,39 +20,28 @@ t_garbage	*init_garbage(void)
 
 	garbage = malloc(sizeof(t_garbage) * 1);
 	if (garbage == NULL)
-		return (free(garbage), perror(MALLOC_FAILED), NULL);
+		return (NULL);
 	garbage->first = NULL;
-	ft_free((void **)&garbage);
+	ft_free(garbage);
 	destroy_garbage(garbage);
 	return (garbage);
 }
 
-void	destroy_garbage_node(t_garb_node *node)
+void	destroy_garbage_node(t_garb_node *node_to_destroy)
 {
-	free(node->address);
-	free(node);
+	free(node_to_destroy->address);
+	free(node_to_destroy);
 }
 
-int	new_garb_node(void *adress, t_garbage *garbage)
+int	new_garb_node(void *address, t_garbage *garbage)
 {
 	t_garb_node	*new_node;
 
 	new_node = malloc(sizeof(t_garb_node) * 1);
 	if (new_node == NULL)
-		return (perror(MALLOC_FAILED), EXIT_FAILURE);
-	new_node->address = adress;
+		return (EXIT_FAILURE);
+	new_node->address = address;
 	new_node->next = garbage->first;
 	garbage->first = new_node;
-	return (EXIT_SUCCESS);
-}
-
-int	init_static(t_garbage **_static, void **arg)
-{
-	if (arg == NULL || *arg == NULL)
-	{
-		print_garbage_err(E1);
-		return (EXIT_FAILURE);
-	}
-	*_static = (t_garbage *)*arg;
 	return (EXIT_SUCCESS);
 }

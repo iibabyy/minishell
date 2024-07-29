@@ -56,7 +56,6 @@ $(LIBFT) : $(LIBFT_DIR)
 # Compilation
 
 %.o : %.c
-	@echo "$(BLUE)Compiling: $^$(END)"
 	@$(CC) $(FLAGS) -c $< -o $@
 
 clean :

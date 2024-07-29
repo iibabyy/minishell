@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 20:17:37 by ibaby             #+#    #+#             */
-/*   Updated: 2024/07/29 01:30:40 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/07/29 15:17:01 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_token	*ft_lstnew(char *content)
 {
 	t_token	*new;
 
-	new = ft_calloc(sizeof(t_token));
+	new = ft_calloc(1, sizeof(t_token));
 	if (!new)
 		return (NULL);
 	new->content = content;

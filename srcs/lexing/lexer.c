@@ -36,7 +36,7 @@ int	word_to_token(char *input, int start, int end, t_token **tokens)
 		return (EXIT_FAILURE);
 	new_token = ft_lstnew(word);
 	if (new_token == NULL)
-		return (ft_free(&word), EXIT_FAILURE);
+		return (ft_free(word), EXIT_FAILURE);
 	new_token->type = WORD
 	ft_lstadd_back(tokens, new_token);
 }
@@ -51,7 +51,7 @@ int	meta_to_token(char *input, int *index, t_token **tokens)
 		content = ft_substr(input, index + 1, metachar_size(input, index));
 		new_token = ft_lstnew(content);
 		if (new_token == NULL || content == NULL)
-			return (ft_free(&content), ft_free(&new_token), EXIT_FAILURE);
+			return (ft_free(content), ft_free(new_token), EXIT_FAILURE);
 		new_token->type = STRING;
 		*index += metachar_size(input, index) + 1;
 		return (ft_lstadd_back(tokens, new_token), EXIT_FAILURE);
@@ -59,7 +59,7 @@ int	meta_to_token(char *input, int *index, t_token **tokens)
 	content = ft_substr(input, index + 1, metachar_size(input, index));
 	new_token = ft_lstnew(content);
 	if (new_token == NULL || content == NULL)
-		return (ft_free(&content), ft_free(&new_token), EXIT_FAILURE);
+		return (ft_free(content), ft_free(new_token), EXIT_FAILURE);
 	if (is_operator(input, *index) == true)
 		new_token->type = OPERATOR;
 	else if (is_redirection(input, *index) == true)
@@ -142,7 +142,7 @@ int	word_to_token(char *input, int *start, int *index, t_token **tokens)
 	*start = *i;
 	new_token = ft_lstnew(word);
 	if (new_token == NULL)
-		return (ft_free(&word), NULL);
+		return (ft_free(word), NULL);
 	ft_lstadd_back(tokens, new_token);
 }
 

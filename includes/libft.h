@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:35:02 by ibaby             #+#    #+#             */
-/*   Updated: 2024/07/29 00:26:01 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/07/29 15:16:31 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,13 +80,13 @@ size_t		ft_strlen(const char *str);
 void		ft_striteri(char *s, void (*f)(unsigned int, char *));
 char		*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 
-t_token		*ft_lstnew(void *content);
+t_token		*ft_lstnew(char *content);
 void		ft_lstadd_front(t_token **lst, t_token *new);
 int			ft_lstsize(t_token *lst);
 t_token		*ft_lstlast(t_token *lst);
 void		ft_lstadd_back(t_token **lst, t_token *new);
-void		ft_lstdelone(t_token **lst, void (*del)(void **));
-void		ft_lstclear(t_token **lst, void (*del)(void **));
+void		ft_lstdelone(t_token *lst, void (*del)(void *));
+void		ft_lstclear(t_token **lst, void (*del)(void *));
 void		ft_lstiter(t_token *lst, void (*f)(void *));
 t_token		*ft_lstmap(t_token *lst, void *(*f)(void *), void (*del)(void *));
 
