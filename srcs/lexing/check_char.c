@@ -5,9 +5,9 @@ bool	is_meta_char(char *input, int index)
 	char	c;
 
 	c = input[index];
-	if (ft_strchr("'|<>()$* ", c) == true)
+	if (ft_strchr("'|<>()$* ", c) != NULL)
 		return (true);
-	else if (c == '"')
+	else if (c == 34)
 		return (true);
 	else if (c == '&' && input[index + 1] == '&')
 		return (true);
@@ -42,7 +42,7 @@ bool	is_redirection(char c)
 
 bool	is_quotes(char c)
 {
-	if (c == '"' || c == "'")
+	if (c == '"' || c == 39)
 		return (true);
 	else
 		return (false);
@@ -56,7 +56,7 @@ int	metachar_size(char *input, int start)
 	
 	i = 1;
 	c = input[start];
-	if (c == '"' || c == "'")
+	if (c == '"' || c == 39)
 	{
 		while (input[start + i] != c && input[start + i] != '\0')
 			++i;

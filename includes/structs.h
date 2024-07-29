@@ -20,6 +20,7 @@ typedef struct s_garbage
 }	t_garbage;
 
 //	Lexing
+
 # define META_CHARS ""
 # define WORD 1			//	commands, arguments, etc...
 # define OPERATOR 2			//	|, ||, &&, () and newlines.

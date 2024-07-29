@@ -36,8 +36,22 @@ GARBAGE_COLLECTOR = $(GARBAGE_COLLECTOR_DIR)garbage_collector.a
 
 FILES =	srcs/error_utils/free_and_exit.c	\
 		srcs/error_utils/print_err.c		\
+		srcs/lexing/check_char.c	\
+		srcs/lexing/lexer.c	\
+		srcs/lexing/main.c	\
 
 OBJ = $(FILES:.c=.o)
+
+#	Loading bar	#
+
+G                = \e[92m
+X                 = \e[0m
+BAR_SIZE        = 75
+
+TOTAL_FILES        := $(words $(FILES))
+COMPILED_FILES    := 0
+
+#				#
 
 all	: $(NAME)
 
@@ -45,6 +59,7 @@ all	: $(NAME)
 
 $(NAME) : $(LIBFT) $(GARBAGE_COLLECTOR) $(OBJ)
 	@$(CC) $(FLAGS) $(OBJ) $(GARBAGE_COLLECTOR) $(LIBFT) -o $(NAME)
+	@echo ""
 	@echo "$(GREEN)$(NAME) done ! ✅$(END)"
 
 $(GARBAGE_COLLECTOR) : $(GARBAGE_COLLECTOR_DIR)
@@ -57,6 +72,20 @@ $(LIBFT) : $(LIBFT_DIR)
 
 %.o : %.c
 	@$(CC) $(FLAGS) -c $< -o $@
+	@$(eval COMPILED_FILES := $(shell echo $$(($(COMPILED_FILES)+1))))
+	@echo -n " "
+	@for i in `seq 1 $(shell echo "$$(($(COMPILED_FILES)*$(BAR_SIZE)/$(TOTAL_FILES)))")`; do \
+		echo -n "$(G)▰$(X)" ; \
+	done
+	@for i in `seq 1 $(shell echo "$$(($(BAR_SIZE)-$(COMPILED_FILES)*$(BAR_SIZE)/$(TOTAL_FILES)))")`; do \
+		echo -n "▱" ; \
+	done
+	@echo -n " ($(shell echo "scale=2; $(COMPILED_FILES)/$(TOTAL_FILES) * 100" | bc)%) "
+	@echo -n "["
+	@printf "%d/%d" $(COMPILED_FILES) $(TOTAL_FILES)
+	@echo -n "] "
+	@printf "%s" $(notdir $<)
+	@printf "\e[0K\r"
 
 clean :
 	@make clean -sC $(LIBFT_DIR)

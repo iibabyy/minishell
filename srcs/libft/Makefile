@@ -10,7 +10,6 @@ END= 	$(shell tput -Txterm sgr0)
 
 #			#
 
-
 SRCS =	count_char.c	\
 		count_char_2d.c	\
 		free_2d_array.c	\
@@ -69,6 +68,17 @@ SRCS =	count_char.c	\
 		print_2d_array_nl.c	\
 		print_err_and_exit.c	\
 
+#	Loading bar	#
+
+G                = \e[92m
+X                 = \e[0m
+BAR_SIZE        = 75
+
+TOTAL_FILES        := $(words $(SRCS))
+COMPILED_FILES    := 0
+
+#				#
+
 NAME = libft.a
 OBJS_DIR = objs/
 OBJS = $(SRCS:.c=.o)
@@ -83,10 +93,25 @@ all: Makefile $(NAME)
 $(OBJS_DIR)%.o : %.c
 	@mkdir -p $(OBJS_DIR)
 	@$(CC) $(CC_FLAGS) -c $< -o $@
-
+	@$(eval COMPILED_FILES := $(shell echo $$(($(COMPILED_FILES)+1))))
+	@echo -n " "
+	@for i in `seq 1 $(shell echo "$$(($(COMPILED_FILES)*$(BAR_SIZE)/$(TOTAL_FILES)))")`; do \
+		echo -n "$(G)▰$(X)" ; \
+	done
+	@for i in `seq 1 $(shell echo "$$(($(BAR_SIZE)-$(COMPILED_FILES)*$(BAR_SIZE)/$(TOTAL_FILES)))")`; do \
+		echo -n "▱" ; \
+	done
+	@echo -n " ($(shell echo "scale=2; $(COMPILED_FILES)/$(TOTAL_FILES) * 100" | bc)%) "
+	@echo -n "["
+	@printf "%d/%d" $(COMPILED_FILES) $(TOTAL_FILES)
+	@echo -n "] "
+	@printf "%s" $(notdir $<)
+	@printf "\e[0K\r"
+	
 $(NAME): $(OBJECTS_PREFIXED) $(SRCS)
 	@ar cr $(NAME) $(OBJECTS_PREFIXED)
-	@echo "$(GREEN)Libft Done ! ✅$(END)"
+	@echo ""
+	@echo "$(GREEN)Libft done ✅$(END)"
 
 clean:
 	@rm -rf $(OBJS_DIR)
