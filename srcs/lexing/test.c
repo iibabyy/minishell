@@ -8,13 +8,16 @@ void print_lexing(t_token *tokens);
 
 int main()
 {
+	char *str = replace_env_vars("test: $$23432");
+	printf("%s\n", str);
 	// char *test = "cat <<<< EOF > cat |>| eco.>ho $PATH ' ghhhhhhhhhhhhh    h'>>";
+	// test = replace_env_vars("cat <<<< EOF > cat |>| eco.>ho $PATH ' ghhhhhhhhhhhhh    h'>>");
 	// printf("%c%s%c:\n", '"', test, '"');
 	// t_token	*token = input_to_tokens(test);
 	// print_lexing(token);
 	// ft_lstclear(&token, ft_free);
 	// destroy_garbage(0);
-	// return (0);
+	return (0);
 }
 
 void print_lexing(t_token *token)

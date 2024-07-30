@@ -4,55 +4,53 @@ char	*replace_env_vars(char *input)
 {
 	int		i;
 	int		y;
-	char	**arrays;
+	char	**array;
 	int		start;
 
-	i = 0;
-	arrays = ft_malloc(sizeof(char *) * (count_char(input, '$') + 1));
-	if (arrays == NULL)
+	(i = 0, y = 0);
+	array = ft_malloc(sizeof(char *) * (count_char(input, '$') * 10));
+	if (array == NULL)
 		return (ft_free(input), NULL);
 	while (input[i] != '\0')
 	{
 		start = i;
 		while (input[i] != '$' && input[i] != '\0')
 			++i;
-		arrays[y] = ft_substr(input, start, i - start);
-		if (arrays[y++] == NULL)
-			return (free_2d_array((void ***)&arrays), ft_free(input), NULL);
+		array[y] = ft_substr(input, start, i - start);
+		if (array[y++] == NULL)
+			return (ft_free(input), free_2d_array((void ***)&array), NULL);
 		if (input[i] == '\0')
 			break ;
-		arrays[y] = env_to_string(input, &i);
-		if (arrays[y++] == NULL)
-			return (free_2d_array((void ***)&arrays), ft_free(input), NULL)
+		array[y] = env_to_string(input, &i);
+		if (array[y++] == NULL)
+			return (ft_free(input), free_2d_array((void ***)&array), NULL);
 	}
-	arrays[y] = NULL;
-	return (join_2d_array(arrays));
+	array[y] = NULL;
+	return (ft_free(input), str_join_2d_and_free(array));
 }
 
-char	*env_to_string(char	*str, int *i)
+char	*env_to_string(char	*str, int *dollar_index)
 {
 	char	*var;
 	char	*env;
 	int		start;
 
-	start = ++*i;
-	if (ft_isalpha(str[*i]) == false && str[*i] != '_')
+	start = ++*dollar_index;
+	if (ft_isalpha(str[*dollar_index]) == false && str[*dollar_index] != '_')
 	{
-		++*i;
+		++*dollar_index;
 		var = ft_strdup("");
 		return (var);
 	}
-	while (ft_isalnum(str[*i]) == true || str[*i] == '_')
-		++*i;
-	var = ft_substr(str, start, i);
+	while (ft_isalnum(str[*dollar_index]) == true || str[*dollar_index] == '_')
+		++*dollar_index;
+	var = ft_substr(str, start, *dollar_index - start);
 	if (var == NULL)
 		return (NULL);
 	env = getenv(var);
 	ft_free(var);
 	if (env == NULL)
-	{
-		env = ft_strdup("");
-	}
+		return (ft_strdup(""));
+	env = ft_strdup(env);
 	return (env);
 }
-

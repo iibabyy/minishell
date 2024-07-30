@@ -41,7 +41,8 @@ FILES =	srcs/error_utils/free_and_exit.c	\
 		srcs/lexing/lexing.c				\
 		srcs/lexing/test.c					\
 		srcs/lexing/lexing_utils.c			\
-
+		srcs/lexing/env_var.c				\
+		
 OBJ = $(FILES:.c=.o)
 
 #	Loading bar	#

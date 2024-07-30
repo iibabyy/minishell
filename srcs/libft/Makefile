@@ -67,7 +67,9 @@ SRCS =	count_char.c	\
 		multi_strjoin.c	\
 		print_2d_array_nl.c	\
 		print_err_and_exit.c	\
-
+		str_join_2d.c	\
+		str_join_2d_and_free.c	\
+	
 #	Loading bar	#
 
 G                = \e[92m

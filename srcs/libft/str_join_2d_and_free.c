@@ -1,6 +1,6 @@
-#include "libft.h"
+#include "../../includes/libft.h"
 
-char	*str_join_2d(char **str_2d)
+char	*str_join_2d_and_free(char **str_2d)
 {
 	char	*str;
 	int		i;

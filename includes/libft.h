@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:35:02 by ibaby             #+#    #+#             */
-/*   Updated: 2024/07/29 15:16:31 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/07/30 22:28:49 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 #include "garbage_collector.h"
 #include "structs.h"
 
+//	personal functions
+
 void		ft_close_fd(int *fd);
 char		*ft_re_strjoin(const char *s1, const char *s2);
 void		free_2d_array(void ***NULL_terminated_2d_array);
@@ -37,6 +39,10 @@ int			count_char_2d(char **array, char char_to_count);
 void		*ft_realloc(void *buffer, int buffer_size,
 				size_t new_size, size_t sizeof_type);
 long int	ft_atol(const char *str);
+char		*str_join_2d_and_free(char **str_2d);
+char		*str_join_2d(char **str_2d);
+
+//	libft functions
 
 int			ft_putchar_fd(char c, int fd);
 int			ft_putstr_fd(const char *s, int fd);
