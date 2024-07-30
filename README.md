@@ -1,2 +1,2 @@
 # minishell
-Minishell project for 42, a bash representation.
+Minishell project for 42.
