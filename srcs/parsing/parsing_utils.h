@@ -5,7 +5,7 @@
 
 t_command		*init_command(void);
 int				add_words_to_command(t_parsing *data);
-int				add_redirections_to_command(t_parsing *data);
+int				add_redirection(t_parsing *data)
 int				type_to_oflags(int type);
 t_redirection	*init_redirection(t_parsing *data, int type, int o_flags);
 t_redirection	*find_last_redirection(t_redirection *redirection);

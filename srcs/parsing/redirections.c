@@ -7,16 +7,14 @@ int	add_redirection(t_parsing *data)
 	token = data->curr_token->content;
 	if (data->curr_token->type != REDIRECTION)
 		return (EXIT_FAILURE);
-	else if (ft_strcmp(token, ">") == 0)
+	else if (ft_strncmp(token, ">", 1) == 0)
 		return (add_redirection(data, OUTPUT));
-	else if (ft_strcmp(token, ">>") == 0)
+	else if (ft_strncmp(token, ">>", 2) == 0)
 		return (add_redirection(data, APPEND_OUTPUT));
-	else if (ft_strcmp(token, "<") == 0)
+	else if (ft_strncmp(token, "<", 1) == 0)
 		return (add_redirection(data, INPUT));
-	else if (ft_strcmp(token, "<<") == 0)
-		return (add_here_doc(data));
-	else
-		return (parse_err(TOKEN_ERR, token), EXIT_FAILURE);
+	else if (ft_strncmp(token, "<<", 2) == 0)
+		return (add_here_doc_to_data(data));
 }
 
 int	add_redirection_to_data(t_parsing *data, int type)

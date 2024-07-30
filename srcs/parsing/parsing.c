@@ -52,7 +52,7 @@ int	add_words_to_command(t_parsing *data)
 		token = token->next;
 		while (token->type == REDIRECTION)
 		{
-			if (add_redirections_to_command(data) == EXIT_FAILURE)
+			if (add_redirection(data) == EXIT_FAILURE)
 				return (EXIT_FAILURE);
 			token = token->next;
 		}
