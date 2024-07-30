@@ -18,5 +18,7 @@ bool	is_quotes(char c);
 int		metachar_size(char *input, int start);
 int		char_type(char c);;
 t_token	*init_token(char *input, int start);
+char	*env_to_string(char	*str, int *i);
+char	*replace_env_vars(char *input);
 
 #endif
