@@ -18,7 +18,7 @@ void	destroy_commands(t_command *command)
 	ft_free(command);
 }
 
-void	destroy_tokens(t_token token)
+void	destroy_tokens(t_token *token)
 {
 	t_token	*temp;
 
@@ -37,6 +37,10 @@ void	destroy_here_docs(t_here_doc *here_doc)
 
 	while (here_doc != NULL)
 	{
-		here_doc->
+		temp = here_doc;
+		here_doc = here_doc->next;
+		ft_close_fd(&temp->pipe[0]);
+		ft_close_fd(&temp->pipe[1]);
+		ft_free(temp);
 	}
 }

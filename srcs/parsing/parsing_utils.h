@@ -8,12 +8,12 @@ int				add_words_to_command(t_parsing *data);
 int				add_redirection(t_parsing *data)
 int				type_to_oflags(int type);
 t_redirection	*init_redirection(t_parsing *data, int type, int o_flags);
-t_redirection	*find_last_redirection(t_redirection *redirection);
+t_redirection	*last_redirection(t_redirection *redirection);
 
 // here_docs
 
 int			add_here_doc_to_data(t_parsing *data);
 t_here_doc	init_here_doc(t_parsing *data);
-t_here_doc	*find_last_here_doc(t_parsing *data);
+t_here_doc	*last_here_doc(t_parsing *data);
 
 #endif

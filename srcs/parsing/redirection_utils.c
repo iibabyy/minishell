@@ -27,7 +27,7 @@ int	type_to_oflags(int type)
 		return (O_RDONLY);
 }
 
-t_redirection	*find_last_redirection(t_redirection *redirection)
+t_redirection	*last_redirection(t_redirection *redirection)
 {
 	while (redirection->next != NULL)
 		redirection = redirection->next;

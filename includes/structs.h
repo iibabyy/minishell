@@ -21,11 +21,11 @@ typedef struct s_garbage
 
 //	Lexing
 
-# define META_CHARS ""
 # define WORD 1			//	commands, arguments, etc...
 # define OPERATOR 2			//	|, ||, &&, () and newlines.
 # define REDIRECTION 3		//	<, <<, >, >>.
 # define STRING 4
+# define ENV_VAR 5
 
 typedef struct s_token
 {

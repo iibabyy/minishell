@@ -27,5 +27,6 @@ int	add_redirection_to_data(t_parsing *data, int type)
 	if (data->redirection == NULL)
 		data->redirection = redirection;
 	else
-		find_last_redirection(data->redirection)->next = redirection;
+		last_redirection(data->redirection)->next = redirection;
+	data->curr_token = data->curr_token->next;
 }

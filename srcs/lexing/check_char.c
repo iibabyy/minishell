@@ -1,4 +1,4 @@
-#include "lexing_utils.h"
+#include "lexing.h"
 
 bool	is_meta_char(char *input, int index)
 {

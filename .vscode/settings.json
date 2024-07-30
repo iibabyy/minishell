@@ -10,7 +10,8 @@
 		"garb_utils.h": "c",
 		"lexing_utils.h": "c",
 		"structs.h": "c",
-		"parsing_utils.h": "c"
+		"parsing_utils.h": "c",
+		"lexing.h": "c"
 	},
 	"C_Cpp.errorSquiggles": "disabled"
 }

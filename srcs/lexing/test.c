@@ -1,4 +1,4 @@
-#include "lexing_utils.h"
+#include "lexing.h"
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <stdio.h>
@@ -8,7 +8,7 @@ void print_lexing(t_token *tokens);
 
 int main()
 {
-	char *test = "cat <<<< EOF > cat || eco.>ho 'ghhhhhhhhhhhhhh'>>";
+	char *test = "cat <<<< EOF > cat |>| eco.>ho $PATH ' ghhhhhhhhhhhhh    h'>>";
 	printf("%c%s%c:\n", '"', test, '"');
 	t_token	*token = input_to_tokens(test);
 	print_lexing(token);

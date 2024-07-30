@@ -36,10 +36,12 @@ GARBAGE_COLLECTOR = $(GARBAGE_COLLECTOR_DIR)garbage_collector.a
 
 FILES =	srcs/error_utils/free_and_exit.c	\
 		srcs/error_utils/print_err.c		\
-		srcs/lexing/check_char.c	\
-		srcs/lexing/lexing.c	\
-		srcs/lexing/test.c
-		
+		srcs/error_utils/free_utils.c		\
+		srcs/lexing/check_char.c			\
+		srcs/lexing/lexing.c				\
+		srcs/lexing/test.c					\
+		srcs/lexing/lexing_utils.c			\
+
 OBJ = $(FILES:.c=.o)
 
 #	Loading bar	#

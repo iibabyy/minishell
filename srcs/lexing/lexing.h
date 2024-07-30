@@ -1,5 +1,5 @@
-#ifndef LEXING_UTILS_H
-# define LEXING_UTILS_H
+#ifndef LEXING_H
+# define LEXING_H
 
 # include <stdbool.h>
 
@@ -16,5 +16,7 @@ bool	is_operator(char *input, int index);
 bool	is_redirection(char c);
 bool	is_quotes(char c);
 int		metachar_size(char *input, int start);
+int		char_type(char c);;
+t_token	*init_token(char *input, int start);
 
 #endif
