@@ -19,6 +19,10 @@
 #include "structs.h"
 #include "libft.h"
 #include "garbage_collector.h"
+#include "error.h"
 
+// lexing
+
+t_token	*input_to_tokens(char *input);
 
 #endif

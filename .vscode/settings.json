@@ -9,7 +9,8 @@
 		"errors_utils.h": "c",
 		"garb_utils.h": "c",
 		"lexing_utils.h": "c",
-		"structs.h": "c"
+		"structs.h": "c",
+		"parsing_utils.h": "c"
 	},
 	"C_Cpp.errorSquiggles": "disabled"
 }

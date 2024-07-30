@@ -34,4 +34,22 @@ typedef struct s_token
 	struct s_token	*next;
 }	t_token;
 
+//	Parsing
+
+# define COMMAND 1
+# define PIPE 2
+# define OR 4
+# define AND 3
+# define SUB_SHELL 4
+
+typedef struct s_command
+{
+	int					type;
+	char				**command;
+	int					infile;
+	int					outfile;
+	struct s_command	*left;
+	struct s_command	*right;
+}	t_command;
+
 #endif

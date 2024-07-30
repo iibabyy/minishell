@@ -66,6 +66,7 @@ int	meta_to_token(char *input, int index, t_token **tokens)
 		if (new_token == NULL || content == NULL)
 			return (ft_free(content), ft_free(new_token), EXIT_FAILURE);
 		new_token->type = STRING;
+		printf("metachar size: %i\n", metachar_size(input, index));
 		return (ft_lstadd_back(tokens, new_token), EXIT_SUCCESS);
 	}
 	content = ft_substr(input, index, metachar_size(input, index));
@@ -77,5 +78,6 @@ int	meta_to_token(char *input, int index, t_token **tokens)
 	else if (is_redirection(input[index]) == true)
 		new_token->type = REDIRECTION;
 	ft_lstadd_back(tokens, new_token);
+	printf("metachar size: %i\n", metachar_size(input, index));
 	return (EXIT_SUCCESS);
 }
