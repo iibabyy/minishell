@@ -6,16 +6,20 @@ while checking if there is any errors
 */
 t_command	*token_to_ast(t_token *token)
 {
-	t_command	*command;
-	t_command	*current;
+	t_parsing	data;
 	
-	while (token != NULL)
+	ft_memset(&data, 0, sizeof(t_data));
+	data.token = token;
+	data.curr_token = token;
+	while (data.curr_token != NULL)
 	{
-		command = init_command();
+		data.curr_command = init_command();
 		if (command == NULL)
 			return (NULL);
-		if (add_words_to_command(command, &token) == EXIT_FAILURE)
-			return (free_2d_array((void ***)&command->command), ft_free(command), NULL);
+		if (data.command == NULL)
+			data.command = data.curr_command;
+		if (add_words_to_command(&data) == EXIT_FAILURE)
+			return (NULL);
 	}
 }
 
@@ -31,25 +35,29 @@ t_command	*init_command(void)
 	command->type = COMMAND;
 }
 
-int	add_words_to_command(t_command *command, t_token **token)
+int	add_words_to_command(t_parsing *data)
 {
+	t_token		*token;
 	t_command	*command;
-	int			i;
+	int		i;
 
-	if ((*token)->type != WORD)
-		return (parse_err(TOKEN_ERR, (*token)->content), EXIT_FAILURE);
+	command = data->curr_command;
+	token = data->curr_token;
+	if (token->type != WORD)
+		return (parse_err(TOKEN_ERR, token->content), EXIT_FAILURE);
 	i = 0;
-	while ((*token)->type == WORD)
+	while (token->type == WORD)
 	{
-		command->command[i++] = (*token)->content;
-		(*token) = (*token)->next;
-		while ((*token)->type == REDIRECTION)
+		command[i++] = token->content;
+		token = token->next;
+		while (token->type == REDIRECTION)
 		{
-			if (add_redirections_to_command(command, token) == EXIT_FAILURE)
+			if (add_redirections_to_command(data) == EXIT_FAILURE)
 				return (EXIT_FAILURE);
-			(*token) = (*token)->next;
+			token = token->next;
 		}
 	}
-	command->command[i] = NULL;
+	command[i] = NULL;
+	data->curr_token = token;
 	return (EXIT_SUCCESS);
 }
