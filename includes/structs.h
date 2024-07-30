@@ -41,6 +41,7 @@ typedef struct s_token
 # define OR 4
 # define AND 3
 # define SUB_SHELL 4
+# define TOKEN_ERR "syntaxe error near token "
 
 typedef struct s_command
 {
@@ -48,7 +49,7 @@ typedef struct s_command
 	char				**command;
 	int					infile;
 	int					outfile;
-	struct s_command	*left;
+	struct s_command	*up;
 	struct s_command	*right;
 }	t_command;
 
