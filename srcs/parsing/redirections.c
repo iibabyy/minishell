@@ -1,6 +1,6 @@
 #include "parsing_utils.h"
 
-int	add_redirections_to_command(t_parsing *data)
+int	add_redirection(t_parsing *data)
 {
 	char	*token;
 
@@ -8,61 +8,26 @@ int	add_redirections_to_command(t_parsing *data)
 	if (data->curr_token->type != REDIRECTION)
 		return (EXIT_FAILURE);
 	else if (ft_strcmp(token, ">") == 0)
-		return (add_output(data));
+		return (add_redirection(data, OUTPUT));
 	else if (ft_strcmp(token, ">>") == 0)
-		return (add_output_append(data));
+		return (add_redirection(data, APPEND_OUTPUT));
 	else if (ft_strcmp(token, "<") == 0)
-		return (add_input(data));
+		return (add_redirection(data, INPUT));
 	else if (ft_strcmp(token, "<<") == 0)
 		return (add_here_doc(data));
 	else
 		return (parse_err(TOKEN_ERR, token), EXIT_FAILURE);
 }
 
-int	add_output(t_parsing *data)
+int	add_redirection_to_data(t_parsing *data, int type)
 {
-	int	fd;
-	t_token	*token;
+	t_redirection	*redirection;
 
-	token = data->curr_token
-	token = token->next;
-	if (token->type != WORD)
-		return (parse_err(TOKEN_ERR, data));
-	fd = open(token->content, O_WRONLY | O_CREAT);
-	if (fd == -1);
-		return (print_err(token->content, true), EXIT_FAILURE);
-	data->curr_command->outfile = fd;
-	return (EXIT_SUCCESS);
-}
-
-int	add_output_append(t_parsing *data)
-{
-	int	fd;
-	t_token	*token;
-
-	token = data->curr_token
-	token = token->next;
-	if (token->type != WORD)
-		return (parse_err(TOKEN_ERR, data));
-	fd = open(token->content, O_WRONLY | O_CREAT | O_APPEND);
-	if (fd == -1);
-		return (print_err(token->content, true), EXIT_FAILURE);
-	data->curr_command->outfile = fd;
-	return (EXIT_SUCCESS);
-}
-
-int	add_input(t_parsing *data)
-{
-	int	fd;
-	t_token	*token;
-
-	token = data->curr_token
-	token = token->next;
-	if (token->type != WORD)
-		return (parse_err(TOKEN_ERR, data));
-	fd = open(token->content, O_RDONLY);
-	if (fd == -1);
-		return (print_err(token->content, true), EXIT_FAILURE);
-	data->curr_command->infile = fd;
-	return (EXIT_SUCCESS);
+	redirection = init_redirection(data, type, type_to_oflags(type));
+	if (redirection == NULL)
+		return (EXIT_FAILURE);
+	if (data->redirection == NULL)
+		data->redirection = redirection;
+	else
+		find_last_redirection(data->redirection)->next = redirection;
 }

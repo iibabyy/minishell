@@ -57,16 +57,34 @@ typedef struct s_here_doc
 {
 	int					pipe[2];
 	char				*end_of_file;
+	t_command			*command;
+	t_token				*token;
 	struct s_here_doc	*next;
 }	t_here_doc;
 
+# define INPUT 1
+# define APPEND_OUTPUT 2
+# define OUTPUT 3
+# define HERE_DOC
+
+typedef struct s_redirection
+{
+	t_token					*token;
+	t_command				*command;
+	struct s_redirection	*next;
+	char					*file;
+	int						type;
+	int						o_flags;
+}	t_redirection;
+
 typedef struct s_parsing
 {
-	t_command	*command;
-	t_command	*curr_command;
-	t_token		*token;
-	t_token		*curr_token;
-	t_here_doc	*here_doc;
+	t_command		*command;
+	t_command		*curr_command;
+	t_token			*token;
+	t_token			*curr_token;
+	t_here_doc		*here_doc;
+	t_redirection	*redirection;
 }	t_parsing;
 
 #endif
