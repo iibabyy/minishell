@@ -1,34 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_re_strjoin.c                                    :+:      :+:    :+:   */
+/*   ft_remove_char.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/31 22:34:20 by ibaby             #+#    #+#             */
-/*   Updated: 2024/07/31 07:35:15 by ibaby            ###   ########.fr       */
+/*   Created: 2024/07/31 07:17:02 by ibaby             #+#    #+#             */
+/*   Updated: 2024/07/31 07:25:06 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/libft.h"
-#include <stdlib.h>
 
-char	*ft_re_strjoin(const char *s1, const char *s2)
+/*Return an allocated copy of the str 
+without the char c in parameter
+Return NULL if an error occurs*/
+char	*ft_remove_char(char *str, char c)
 {
-	size_t	len;
-	char	*str;
-
-	if (s1 == NULL && s2 != NULL)
-		return (ft_strdup(s2));
-	len = ft_strlen(s1) + ft_strlen(s2);
-	str = ft_malloc(sizeof(char) * (len + 1));
-	if (!str)
-	{
-		ft_free((void **)&s1);
+	char	*new;
+	int		size;
+	int		i;
+	int		j;
+	
+	size = ft_strlen(str) - count_char(str, c);
+	if (size == 0 || c == '\0')
 		return (NULL);
+	new = ft_malloc(sizeof(char) * (size + 1));
+	if (new == NULL)
+		return (NULL);
+	i = -1;
+	j = -1;
+	while (str[++i])
+	{
+		if (str[i] != c)
+			new[++j] = str[i];
 	}
-	ft_strlcpy(str, s1, ft_strlen(s1) + 1);
-	ft_strlcat(str, s2, len + 1);
-	ft_free((void **)&s1);
-	return (str);
+	new[j] = '\0';
+	return (new);
 }

@@ -67,7 +67,7 @@ all	: $(NAME)
 # Variables
 
 $(NAME) : $(LIBFT) $(GARBAGE_COLLECTOR) $(OBJ)
-	@$(CC) $(FLAGS) -lreadline $(OBJ) $(GARBAGE_COLLECTOR) $(LIBFT) -o $(NAME)
+	@$(CC) $(FLAGS) $(OBJ) $(GARBAGE_COLLECTOR) $(LIBFT) -o $(NAME)
 	@echo ""
 	@echo "$(BLUE)$(NAME) done ! ✅$(END)"
 
@@ -80,7 +80,7 @@ $(LIBFT) : $(LIBFT_DIR)
 # Compilation
 
 %.o : %.c
-	@$(CC) $(FLAGS) -c $< -o $@ -lreadline
+	@$(CC) $(FLAGS) -c $< -o $@
 	@$(eval COMPILED_FILES := $(shell echo $$(($(COMPILED_FILES)+1))))
 	@echo -n " "
 	@for i in `seq 1 $(shell echo "$$(($(COMPILED_FILES)*$(BAR_SIZE)/$(TOTAL_FILES)))")`; do \
@@ -107,6 +107,8 @@ fclean : clean
 	@rm -f $(NAME)
 	@echo "$(BLUE)Minishell cleaned ! ✅$(END)"
 
+ac : all clean
+
 re : fclean all
 
-.PHONY: all re clean fclean
+.PHONY: all re clean fclean ac

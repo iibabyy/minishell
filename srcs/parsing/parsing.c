@@ -10,17 +10,21 @@ t_command	*parse(char	*input)
 	t_parsing	data;
 	
 	ft_memset(&data, 0, sizeof(t_data));
-	data.token = input_to_tokens(input);
-	if (token == NULL)
+	data.redirection = NULL;
+	data.curr_token = NULL;
+	input = replace_env_vars(input);
+	data.token = input_to_tokens(&input);
+	if (data.token == NULL)
 		return (destroy_parsing(&data), NULL);
-	data.command = token_to_ast(token);
-	if (command == NULL)
+	data.curr_token = data.token;
+	data.command = token_to_ast(&data);
+	if (data.command == NULL)
 		return (destroy_parsing(&data), NULL);
 	if (open_redirections(data.redirection) == EXIT_FAILURE)
 		return (destroy_parsing(&data), NULL);
 	destroy_tokens(data.token);
 	destroy_redirections(data.redirection);
-	return (data.command)
+	return (data.command);
 }
 
 
@@ -35,12 +39,14 @@ t_command	*token_to_ast(t_parsing *data)
 	command = init_command(data);
 	if (command == NULL)
 		return (NULL);
+	data->command = command;
 	if (add_words_to_command(data) == EXIT_FAILURE)
 		return (NULL);
 	if (data->curr_token == NULL)
 		return (command);
+	printf("[1]\n");
 	command->previous = init_operator(data, command);
-	command->previous->right = token_to_ast(data->curr_token);
+	command->previous->right = token_to_ast(data);
 	return (command->previous);
 }
 
@@ -55,7 +61,7 @@ t_command	*init_command(t_parsing *data)
 	command->infile = STDIN_FILENO;
 	command->outfile = STDOUT_FILENO;
 	command->type = COMMAND;
-	command->command = ft_malloc(sizeof(char *) * 5);
+	command->command = ft_malloc(sizeof(char *) * (args_number(data->curr_token) + 2));
 	return (command);
 }
 
@@ -67,7 +73,9 @@ int	add_words_to_command(t_parsing *data)
 
 	command = data->command;
 	token = data->curr_token;
-	if (token == NULL || command == NULL)
+	if (command == NULL)
+		return (EXIT_FAILURE);
+	if (token == NULL)
 		return (EXIT_FAILURE);
 	if (token->type != WORD && token->type != STRING)
 		return (parse_err(TOKEN_ERR, token->content), EXIT_FAILURE);
@@ -85,6 +93,7 @@ int	add_words_to_command(t_parsing *data)
 	}
 	command->command[i] = NULL;
 	data->curr_token = token;
+	printf("token = %s\n", data->curr_token->content);
 	return (EXIT_SUCCESS);
 }
 

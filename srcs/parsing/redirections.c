@@ -36,7 +36,7 @@ int	add_redirection_to_data(t_parsing *data, int type)
 
 int	open_redirections(t_redirection	*redirection)
 {
-	redirection = check_redirection(redirection);
+	redirection = parse_redirections(redirection);
 	if (redirection == NULL)
 		return (EXIT_FAILURE);
 	while (redirection != NULL)
@@ -53,9 +53,10 @@ int	open_redirections(t_redirection	*redirection)
 		}
 		redirection = redirection->next;
 	}
+	return (EXIT_SUCCESS);
 }
 
-t_redirection	check_redirections(t_redirection *redirection)
+t_redirection	*parse_redirections(t_redirection *redirection)
 {
 	t_redirection	*temp;
 	t_redirection	*before_temp;
@@ -94,4 +95,5 @@ int	open_file(t_redirection *redirection)
 	else if (type == INPUT)
 		target_command_fd = &redirection->command->infile;
 	*target_command_fd = fd;
+	return (EXIT_SUCCESS);
 }

@@ -11,11 +11,11 @@ void	print_command(t_command *command);
 char *operator_type_to_str(int type);
 void printTree(t_command *command, int depth, int isRight, int *branch);
 
-# define TEST "ls -ls | grep .dsgdgd && echo done"
+# define TEST "ls | ls"
 
 int main()
 {
-	char *str = parse(TEST);
+	t_command *command = parse(TEST);
 	int array[1024] = {0};
 	printTree(command, 0, 0, array);
 	destroy_garbage(0);

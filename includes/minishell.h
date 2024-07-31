@@ -21,6 +21,13 @@
 #include "garbage_collector.h"
 #include "error.h"
 
+char	*get_input(char *end_of_file, bool quotes);
+
+// lexing
+
+char	*replace_env_vars(char *input);
+t_token	*input_to_tokens(char **input);
+
 // parsing
 
 t_command	*parse(char	*input);

@@ -1,36 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_2d_array.c                                   :+:      :+:    :+:   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/16 13:29:32 by ibaby             #+#    #+#             */
-/*   Updated: 2024/07/31 09:49:45 by ibaby            ###   ########.fr       */
+/*   Created: 2024/05/29 22:20:37 by ibaby             #+#    #+#             */
+/*   Updated: 2024/06/12 16:39:03 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/libft.h"
+#include "get_next_line.h"
 
-int	print_2d_array(char **NULL_TERMINATED_ARRAY)
+int	is_nl(char *str)
 {
 	int	i;
-	int	check;
-	int	temp;
 
 	i = 0;
-	check = 0;
-	while (NULL_TERMINATED_ARRAY[i])
+	if (str == 0)
+		return (0);
+	while (str[i])
 	{
-		if (i != 0)
-			temp = ft_putstr_fd(" ", 1);
-		temp = ft_putstr_fd(NULL_TERMINATED_ARRAY[i], 1);
-		if (temp < 0)
-			return (-1);
-		if (temp < 0)
-			return (-1);
-		check += temp;
+		if (str[i] == '\n')
+			return (1);
 		i++;
 	}
-	return (check);
+	return (0);
 }

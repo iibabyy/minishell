@@ -70,6 +70,10 @@ SRCS =	count_char.c	\
 		str_join_2d.c	\
 		str_join_2d_and_free.c	\
 		print_2d_array.c	\
+		ft_remove_char.c	\
+		ft_re_remove_char.c	\
+		get_next_line_utils.c 	\
+		get_next_line.c	\
 
 #	Loading bar	#
 

@@ -51,27 +51,30 @@ bool	is_quotes(char c)
 		return (false);
 }
 
-int	metachar_size(char *input, int start)
+int	metachar_size(char **input, int start)
 {
-	static bool	err = false;
 	int			i;
 	char		c;
+	char		*temp;
 
-	(c = input[start], i = 0);
+	(c = (*input)[start], i = 0);
 	if (c == '"' || c == 39)
 	{
 		++i;
-		while (input[start + i] != c && input[start + i] != '\0')
-			++i;
-		if (input[start + i] == '\0')
+		while ((*input)[start + i] != c && (*input)[start + i] != '\0')
 		{
-			if (err == false)
-					(err = true, print_err("opened quotes detected", false));
-			return (-1);
+			++i;
+			if ((*input)[start + i] == '\0')
+			{
+				*input = ft_re_strjoin(*input, temp);
+				temp = get_input(&c, true);
+				if (temp == NULL || *input == NULL)
+					return (ft_free(input), ft_free(temp), -1);
+			}
 		}
 		return (i + 1);
 	}
-	while (is_meta_char(input, start + i) == true && input[start + i] != ' ')
+	while (is_meta_char((*input), start + i) == true && (*input)[start + i] != ' ')
 		++i;
 	return (i);
 }
