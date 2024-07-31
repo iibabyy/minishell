@@ -9,7 +9,7 @@ t_here_doc	*init_here_doc(t_parsing *data)
 		return (print_err("init_here_doc: ft_calloc() failed", true), NULL);
 	if (pipe(here_doc->pipe) == -1)
 		return (print_err("init_here_doc: pipe() failed", true),
-				parse_err(NULL, NULL, data), NULL);
+				parse_err(NULL, NULL), NULL);
 	here_doc->token = data->curr_token;
 	here_doc->command = data->command;
 	data->curr_token = data->curr_token->next;

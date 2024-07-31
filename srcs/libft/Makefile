@@ -89,7 +89,7 @@ OBJECTS_PREFIXED = $(addprefix $(OBJS_DIR), $(OBJS))
 
 CC = cc
 
-CC_FLAGS = -Wall -Wextra -Werror -fPIE -O3
+CC_FLAGS = -Wall -Wextra -Werror -fPIE
 
 all: Makefile $(NAME)
 

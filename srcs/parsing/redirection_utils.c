@@ -42,3 +42,24 @@ t_redirection	*last_redirection(t_redirection *redirection)
 		redirection = redirection->next;
 	return (redirection);
 }
+
+int	check_redirection(t_redirection	*redirection)
+{
+	t_token	*token;
+	char	*type;
+
+	token = redirection->token;
+	if (redirection->type == INPUT)
+		type = "<";
+	if (redirection->type == HERE_DOC)
+		type = "<<";
+	if (redirection->type == OUTPUT)
+		type = ">";
+	if (redirection->type == APPEND_OUTPUT)
+		type = ">>";
+	if (ft_strcmp(token->content, type) != 0)
+		return (parse_err(TOKEN_ERR, token->content), EXIT_FAILURE);
+	if (token->file->type != WORD || token->file->type != STRING)
+		return (parse_err(TOKEN_ERR, token->file->content), EXIT_FAILURE);
+	return (EXIT_SUCCESS);
+}

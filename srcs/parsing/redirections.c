@@ -33,3 +33,65 @@ int	add_redirection_to_data(t_parsing *data, int type)
 	data->curr_token = data->curr_token->next;
 	return (EXIT_SUCCESS);
 }
+
+int	open_redirections(t_redirection	*redirection)
+{
+	redirection = check_redirection(redirection);
+	if (redirection == NULL)
+		return (EXIT_FAILURE);
+	while (redirection != NULL)
+	{
+		if (redirection->type == HERE_DOC)
+		{
+			if (open_here_doc(redirection) == EXIT_FAILURE)
+				return (EXIT_FAILURE);
+		}
+		else
+		{
+			if (open_file(redirection) == EXIT_FAILURE)
+				return (EXIT_FAILURE);
+		}
+		redirection = redirection->next;
+	}
+}
+
+t_redirection	check_redirections(t_redirection *redirection)
+{
+	t_redirection	*temp;
+	t_redirection	*before_temp;
+
+	temp = redirection;
+	before_temp = NULL;
+	while (temp != NULL)
+	{
+		if (check_redirection(temp) == EXIT_FAILURE)
+		{
+			destroy_redirections(temp);
+			break ;
+		}
+		before_temp = temp;
+		temp = temp->next;
+	}
+	if (before_temp == NULL)
+		return (NULL);
+	else
+		before_temp->next = NULL;
+	return (redirection);
+}
+
+int	open_file(t_redirection *redirection)
+{
+	int	*target_command_fd;
+	int	type;
+	int	fd;
+
+	fd = open(redirection->file->content, redirection->o_flags);
+	if (fd == -1)
+		return (EXIT_FAILURE);
+	type = redirection->type;
+	if (type == OUTPUT || type == APPEND_OUTPUT)
+		target_command_fd = &redirection->command->outfile;
+	else if (type == INPUT)
+		target_command_fd = &redirection->command->infile;
+	*target_command_fd = fd;
+}

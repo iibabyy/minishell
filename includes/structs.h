@@ -40,7 +40,7 @@ typedef struct s_token
 # define OR 4
 # define AND 3
 # define SUB_SHELL 4
-# define TOKEN_ERR "syntaxe error near token"
+# define TOKEN_ERR "syntaxe error near unexpected token"
 
 typedef struct s_command
 {

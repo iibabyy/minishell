@@ -1,16 +1,30 @@
 #include "lexing.h"
+#include <stdio.h>
 #include <readline/readline.h>
 #include <readline/history.h>
-#include <stdio.h>
+
+extern char *readline(const char *prompt);
 
 char *type_to_str(int type);
 void print_lexing(t_token *tokens);
 void	print_command(t_command *command);
 char *operator_type_to_str(int type);
+void printTree(t_command *command, int depth, int isRight, int *branch);
+
+# define TEST "ls -ls | grep .dsgdgd && echo done"
+
+int main()
+{
+	char *str = parse(TEST);
+	int array[1024] = {0};
+	printTree(command, 0, 0, array);
+	destroy_garbage(0);
+	return (0);
+}
 
 void print_command(t_command *command) {
     if (command->type == COMMAND)
-        printf("%s", command->command[0]);
+        printf("%s (%s)", command->command[0], str_join_2d(command->command + 1));
     else
 		printf ("%s", operator_type_to_str(command->type));
 }
@@ -37,18 +51,6 @@ void printTree(t_command *command, int depth, int isRight, int *branch) {
         printTree(command->left, depth + 1, command->right == NULL, branch);
         printTree(command->right, depth + 1, 1, branch);
     }
-}
-
-int main()
-{
-	char *str = "cat | ls && ls || ls";
-	str = replace_env_vars(str);
-	t_token *token = input_to_tokens(str);
-	t_command *command = token_to_ast(token);
-	int array[1024] = {0};
-	printTree(command, 0, 0, array);
-	destroy_garbage(0);
-	return (0);
 }
 
 char *operator_type_to_str(int type)
@@ -91,5 +93,4 @@ void print_lexing(t_token *token)
 		token = token->next;
 	}
 	printf("\n");
-	
 }

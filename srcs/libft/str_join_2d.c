@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 03:28:32 by ibaby             #+#    #+#             */
-/*   Updated: 2024/07/31 03:28:33 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/07/31 03:59:33 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ char	*str_join_2d(char **str_2d)
 	i = -1;
 	while (str_2d[++i] != NULL)
 	{
+		if (i != 0)
+			str = ft_re_strjoin(str, " ");
 		str = ft_re_strjoin(str, str_2d[i]);
 		if (str == NULL)
 			return (NULL);

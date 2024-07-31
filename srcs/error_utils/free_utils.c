@@ -52,3 +52,13 @@ void	destroy_redirections(t_redirection *redirection)
 		redirection = redirection->next;
 	}
 }
+
+void	destroy_parsing(t_parsing *data)
+{
+	if (data->token != NULL)
+		destroy_tokens(data->token);
+	if (data->redirection != NULL)
+		destroy_redirections(data->redirection);
+	if (data->command != NULL)
+		destroy_commands(data->command);
+}
