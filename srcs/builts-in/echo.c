@@ -1,84 +1,105 @@
 #include "../../includes/minishell.h"
 
-typedef struct s_echo_params
+typedef struct s_quotes_params
 {
+    bool is_open;
+    bool is_str;
+    bool one_is_open;
+    bool two_is_open;
     bool is_param;
-    bool prm_e;
-    bool prm_E;
-    bool prm_n;
-    char **spilt_data;
+    bool start;
 } t_echo_params;
 
-int check_flag(char *data, t_echo_params *param)
-{
-    char ascii[256];
-    int i;
-    int j;
 
-    ft_bzero(ascii, 256);
-    i = 1;
-    j = 0;
-    while(data[i])
-    {
-        if (data[i] != 'n' && data[i] != 'e' && data[i] != 'E')
-            return (-1);
-        ascii[(int)data[i]] = 1;
-        ++i;
-    }
-    if (ascii[(int)'n'] == 1)
-        param->prm_n = true;
-    if (ascii[(int)'e'] == 1)
-        param->prm_e = true;
-    if (ascii[(int)'E'] == 1)
-        param->prm_E = true;
-    if (i > 1)
-        param->is_param = true;
-    return (0);
-}
 
-void set_params(char **data, t_echo_params *echo_param)
+bool check_options(char *data)
 {
     int i;
-    int j;
 
     i = 0;
-    j = 0;
-    while(data[i])
+    while (data[i] && data[i] == 32)
+       ++i;
+    if (data[i] != '-' || data[i] == '\0')
+        return (false);
+    if (data[i] == '-')
+        ++i;
+    if (data[i] == 32)
+            return (false);
+    while (data[i] && data[i] != 32)
     {
-        if(data[i][0] == '-')
-        {
-            if(check_flag(data[i], echo_param) == -1)
-                break;
-        }
-        i++;
+        if (data[i] != 'n')
+            return (false);
+        ++i;
     }
-    return;
+    return (true);
 }
 
 void ft_echo(char *data, int fd)
 {
     int i;
-    t_echo_params *echo_param;
-
-
+    int j;
     i = 0;
-    if (ft_strchr(data, fd))
+ 
+    t_echo_params *params;
+    params = ft_calloc (sizeof(params), 1);
+    ft_bzero(params, sizeof(params));
+    while (data[i] && data[i] == 32)
+        ++i;
+    
+    while (data[i])
     {
-        echo_param->spilt_data = ft_split(data, 32);
-        if (! echo_param->split_data)
+        j = 0;
+        /*check if str start with " or ' */
+        if (data[i] == '"' && params->one_is_open == false)
+            params->two_is_open = true;
+        else if (data[i] == 39 && params->two_is_open == false) 
+             params->one_is_open = true;
+
+        /*close quotes if we have same quotes char*/
+        if (params->one_is_open && data[i] == 39)
+            params->one_is_open = false;
+        else if (params->two_is_open == true && data[i] == '"')
+            params->two_is_open = false;
+    
+        /*check if we open an other quotes in quotes to determine substr*/
+        if(params->two_is_open && data[i] == 39)
         {
-            print_err(NULL, 1, false);
+            ft_putchar_fd(data[i], fd);
+            params->is_str = true;
         }
-        set_params(echo_param->spilt_data, echo_param);
+        else if(params->two_is_open && data[i] == 39 && params->is_str == true)
+        {
+            ft_putchar_fd(data[i], fd);
+            params->is_str = false;
+        }
+        if (data[i] == '-' && data[i + 1] == 'n' && params->is_str == false && params->start == false)
+        {
+            j = i + i;
+            while(data[j] && data[j] != 32)
+            {
+                if (data[j] != 'n')
+                {
+                    params->is_param =  false;
+                    break;
+                }
+                j++;
+            }
+        }
+        else
+        {
+            if (params->is_param == true)
+                i = j;
+            ft_putchar_fd(data[i], fd);
+        }
+        i++;
     }
-    if (echo_param->is_param)
-        printf("param\n");
-    else
-        printf("not param\n");
 }
 
-int main (void)
+int main (int ac, char **av)
 {
-    ft_echo("-n salut", STDOUT_FILENO);
+    if(ac > 1)
+    {
+        ft_echo(av[1], STDOUT_FILENO);
+    }
     return (0);
 }
