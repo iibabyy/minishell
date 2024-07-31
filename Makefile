@@ -16,7 +16,7 @@ CC = cc
 
 INCLUDE_DIR = includes/
 
-FLAGS = -Wall -Wextra -Werror -I$(INCLUDE_DIR) -g3 -lreadline
+FLAGS = -Wall -Wextra -Werror -I$(INCLUDE_DIR) -g3
 
 SRCS_DIR = srcs/
 
@@ -80,7 +80,7 @@ $(LIBFT) : $(LIBFT_DIR)
 # Compilation
 
 %.o : %.c
-	@$(CC) $(FLAGS) -c $< -o $@
+	@$(CC) $(FLAGS) -c $< -o $@  -lreadline
 	@$(eval COMPILED_FILES := $(shell echo $$(($(COMPILED_FILES)+1))))
 	@echo -n " "
 	@for i in `seq 1 $(shell echo "$$(($(COMPILED_FILES)*$(BAR_SIZE)/$(TOTAL_FILES)))")`; do \
