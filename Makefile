@@ -16,7 +16,7 @@ CC = cc
 
 INCLUDE_DIR = includes/
 
-FLAGS = -Wall -Wextra -Werror -I$(INCLUDE_DIR) -g3
+FLAGS = -Wall -Wextra -Werror -I$(INCLUDE_DIR) -g3 -lreadline
 
 SRCS_DIR = srcs/
 
