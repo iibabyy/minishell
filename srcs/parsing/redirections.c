@@ -92,7 +92,7 @@ int	open_file(t_redirection *redirection)
 	type = redirection->type;
 	if (type == OUTPUT || type == APPEND_OUTPUT)
 		target_command_fd = &redirection->command->outfile;
-	else if (type == INPUT)
+	else
 		target_command_fd = &redirection->command->infile;
 	*target_command_fd = fd;
 	return (EXIT_SUCCESS);
