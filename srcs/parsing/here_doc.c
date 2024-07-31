@@ -74,20 +74,20 @@ char	*get_input(char *end_of_file, bool quotes)
 		return (print_err("get_here_doc(): ft_strdup() failed", false), NULL);
 	while (1)
 	{
-		// readline("> ");
-		input = get_next_line(0);
+		
+		input = readline("> ");
 		if (input == NULL)
 			return (print_err("get_here_doc(): readline() failed", false),
 				NULL);
 		if (quotes == false && is_limiter(input, end_of_file) == 0)
-			return (ft_free(input), input_join);
+			return (free(input), input_join);
 		input_join = ft_re_strjoin(input_join, input);
 		if (input_join == NULL)
 			return (print_err("get_here_doc(): ft_re_strjoin() failed", false),
 				NULL);
 		if (quotes == true && ft_strchr(input, end_of_file[0]) != NULL)
-			return (ft_free(input), input_join);
-		ft_free(input);
+			return (free(input), input_join);
+		free(input);
 	}
 	return (input_join);
 }

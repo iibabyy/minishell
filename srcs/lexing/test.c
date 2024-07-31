@@ -14,8 +14,7 @@ void printTree(t_command *command, int depth, int isRight, int *branch);
 # define TEST "ls | cat < Makefile -e || echo 'a"
 int main()
 {
-	//readline("\e[1;minishell >");
-	char *str = get_next_line(0);
+	char *str = readline("\e[1;minishell >");
 	t_command *command = parse(str);
 	int array[1024] = {0};
 	printTree(command, 0, 0, array);
