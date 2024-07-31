@@ -18,6 +18,7 @@ int	args_number(t_token *token)
 {
 	int	i;
 
+	i = 0;
 	token = token->next;
 	while (token != NULL && token->type != OPERATOR)
 	{
