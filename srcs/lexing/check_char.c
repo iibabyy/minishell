@@ -66,8 +66,10 @@ int	metachar_size(char **input, int start)
 			++i;
 			if ((*input)[start + i] == '\0')
 			{
-				*input = ft_re_strjoin(*input, temp);
 				temp = get_input(&c, true);
+				printf("input before: %s\n", *input);
+				*input = ft_re_strjoin(*input, temp);
+				printf("input after: %s\n", *input);
 				if (temp == NULL || *input == NULL)
 					return (ft_free(input), ft_free(temp), -1);
 			}

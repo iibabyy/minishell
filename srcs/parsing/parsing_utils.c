@@ -19,9 +19,29 @@ int	args_number(t_token *token)
 	int	i;
 
 	token = token->next;
-	while (token != NULL && token->type == WORD)
+	while (token != NULL && token->type != OPERATOR)
 	{
+		if (token->type == REDIRECTION)
+		{
+			if (token->next == NULL || token->next->next == NULL)
+				return (i);
+			token = token->next->next;
+		}
 		++i;
+		token = token->next;
+	}
+	return (i);
+}
+
+int	redirections_number(t_token *token)
+{
+	int	i;
+
+	i = 0;
+	while (token != NULL)
+	{
+		if (token->type == REDIRECTION)
+			++i;
 		token = token->next;
 	}
 	return (i);

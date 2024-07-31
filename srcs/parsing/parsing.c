@@ -20,10 +20,11 @@ t_command	*parse(char	*input)
 	data.command = token_to_ast(&data);
 	if (data.command == NULL)
 		return (destroy_parsing(&data), NULL);
-	if (open_redirections(data.redirection) == EXIT_FAILURE)
+	if (open_redirections(data.redirection) == EXIT_FAILURE
+			&& redirections_number(data.token) != 0)
 		return (destroy_parsing(&data), NULL);
-	destroy_tokens(data.token);
-	destroy_redirections(data.redirection);
+	// destroy_tokens(data.token);
+	// destroy_redirections(data.redirection);
 	return (data.command);
 }
 
@@ -44,9 +45,9 @@ t_command	*token_to_ast(t_parsing *data)
 		return (NULL);
 	if (data->curr_token == NULL)
 		return (command);
-	printf("[1]\n");
 	command->previous = init_operator(data, command);
-	command->previous->right = token_to_ast(data);
+	if (command->previous != NULL)
+		command->previous->right = token_to_ast(data);
 	return (command->previous);
 }
 
@@ -73,9 +74,7 @@ int	add_words_to_command(t_parsing *data)
 
 	command = data->command;
 	token = data->curr_token;
-	if (command == NULL)
-		return (EXIT_FAILURE);
-	if (token == NULL)
+	if (command == NULL || token == NULL)
 		return (EXIT_FAILURE);
 	if (token->type != WORD && token->type != STRING)
 		return (parse_err(TOKEN_ERR, token->content), EXIT_FAILURE);
@@ -86,14 +85,14 @@ int	add_words_to_command(t_parsing *data)
 		token = token->next;
 		while (token != NULL && token->type == REDIRECTION)
 		{
+			data->curr_token = token;
 			if (add_redirection(data) == EXIT_FAILURE)
 				return (EXIT_FAILURE);
-			token = token->next;
+			token = token->next->next;
 		}
 	}
 	command->command[i] = NULL;
 	data->curr_token = token;
-	printf("token = %s\n", data->curr_token->content);
 	return (EXIT_SUCCESS);
 }
 

@@ -111,4 +111,14 @@ ac : all clean
 
 re : fclean all
 
+s :
+	@make -sC $(LIBFT_DIR)
+	@make -sC $(GARBAGE_COLLECTOR_DIR)
+	@make
+
+res :
+	@make re -sC $(LIBFT_DIR)
+	@make re -sC $(GARBAGE_COLLECTOR_DIR)
+	@make
+
 .PHONY: all re clean fclean ac

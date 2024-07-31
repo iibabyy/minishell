@@ -59,7 +59,7 @@ int	check_redirection(t_redirection	*redirection)
 		type = ">>";
 	if (ft_strcmp(token->content, type) != 0)
 		return (parse_err(TOKEN_ERR, token->content), EXIT_FAILURE);
-	if (token->type != WORD || token->type != STRING)
+	if (token->type != REDIRECTION)
 		return (parse_err(TOKEN_ERR, token->content), EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }

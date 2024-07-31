@@ -11,11 +11,12 @@ void	print_command(t_command *command);
 char *operator_type_to_str(int type);
 void printTree(t_command *command, int depth, int isRight, int *branch);
 
-# define TEST "ls | ls"
-
+# define TEST "ls | cat < Makefile -e || echo 'a"
 int main()
 {
-	t_command *command = parse(TEST);
+	char *str = readline("\e[1;minishell >");
+	t_command *command = parse(str);
+	free(str);
 	int array[1024] = {0};
 	printTree(command, 0, 0, array);
 	destroy_garbage(0);
