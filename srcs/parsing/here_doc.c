@@ -1,4 +1,4 @@
-#include "parsing_utils.h"
+#include "parsing.h"
 
 /*
 Fork() ? :	(No)
@@ -26,21 +26,21 @@ mainly the here_docs errors.
 
 */
 
-int	add_here_doc_to_data(t_parsing	*data)
-{
-	t_here_doc	*here_doc;
+// int	add_here_doc_to_data(t_parsing	*data)
+// {
+// 	t_here_doc	*here_doc;
 
-	here_doc = init_here_doc(data);
-	if (data->here_doc == NULL)
-		data->here_doc = here_doc;
-	else
-		last_here_doc(data)->next = here_doc;
-	data->curr_token = data->curr_token->next;
-}
+// 	here_doc = init_here_doc(data);
+// 	if (data->here_doc == NULL)
+// 		data->here_doc = here_doc;
+// 	else
+// 		last_here_doc(data)->next = here_doc;
+// 	data->curr_token = data->curr_token->next;
+// }
 
-int	open_here_docs(t_here_doc *here_doc)
-{
-	char	*input;
+// int	open_here_docs(t_here_doc *here_doc)
+// {
+// 	char	*input;
 
-	while ()
-}
+// 	while ()
+// }

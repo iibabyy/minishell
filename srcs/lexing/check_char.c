@@ -13,6 +13,8 @@ bool	is_meta_char(char *input, int index)
 		return (true);
 	else if (c == '&' && input[index + 1] == '&')
 		return (true);
+	else if (c == '&' && input[index - 1] == '&')
+		return (true);
 	else
 		return (false);
 }

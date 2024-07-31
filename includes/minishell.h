@@ -26,4 +26,8 @@
 char	*replace_env_vars(char *input);
 t_token	*input_to_tokens(char *input);
 
+// parsing
+
+t_command	*token_to_ast(t_token *token);
+
 #endif

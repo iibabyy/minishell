@@ -33,14 +33,22 @@ void	destroy_tokens(t_token *token)
 
 void	destroy_here_docs(t_here_doc *here_doc)
 {
-	t_here_doc	*temp;
+	ft_close_fd(&here_doc->pipe[0]);
+	ft_close_fd(&here_doc->pipe[1]);
+	ft_free(here_doc);
+}
 
-	while (here_doc != NULL)
+void	destroy_redirections(t_redirection *redirection)
+{
+	t_redirection	*temp;
+
+	while (redirection != NULL)
 	{
-		temp = here_doc;
-		here_doc = here_doc->next;
-		ft_close_fd(&temp->pipe[0]);
-		ft_close_fd(&temp->pipe[1]);
+		temp = redirection;
+		redirection = redirection->next;
+		if (temp->type == HERE_DOC)
+			destroy_here_docs(temp->here_doc);
 		ft_free(temp);
+		redirection = redirection->next;
 	}
 }

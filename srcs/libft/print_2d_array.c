@@ -1,31 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   str_join_2d.c                                      :+:      :+:    :+:   */
+/*   print_2d_array.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/31 03:28:32 by ibaby             #+#    #+#             */
-/*   Updated: 2024/07/31 03:28:33 by ibaby            ###   ########.fr       */
+/*   Created: 2024/06/16 13:29:32 by ibaby             #+#    #+#             */
+/*   Updated: 2024/07/31 03:35:45 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/libft.h"
 
-char	*str_join_2d(char **str_2d)
+int	print_2d_array_nl(char **NULL_TERMINATED_ARRAY)
 {
-	char	*str;
-	int		i;
+	int	i;
+	int	check;
+	int	temp;
 
-	if (str_2d == NULL)
-		return (NULL);
-	str = NULL;
-	i = -1;
-	while (str_2d[++i] != NULL)
+	i = 0;
+	check = 0;
+	while (NULL_TERMINATED_ARRAY[i])
 	{
-		str = ft_re_strjoin(str, str_2d[i]);
-		if (str == NULL)
-			return (NULL);
+		if (i != 0)
+			temp = ft_putstr_fd(" ", 1);
+		temp = ft_putstr_fd(NULL_TERMINATED_ARRAY[i], 1);
+		if (temp < 0)
+			return (-1);
+		if (temp < 0)
+			return (-1);
+		check += temp;
+		i++;
 	}
-	return (str);
+	return (check);
 }

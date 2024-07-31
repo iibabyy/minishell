@@ -3,10 +3,7 @@
 
 # include <stdbool.h>
 
-# include "../../includes/structs.h"
-# include "../../includes/error.h"
-# include "../../includes/libft.h"
-# include "../../includes/garbage_collector.h"
+# include "../../includes/minishell.h"
 
 t_token	*input_to_tokens(char *input);
 int		word_to_token(char *input, int start, int end, t_token **tokens);
@@ -16,7 +13,7 @@ bool	is_operator(char *input, int index);
 bool	is_redirection(char c);
 bool	is_quotes(char c);
 int		metachar_size(char *input, int start);
-int		char_type(char c);;
+int		char_type(char *str, int index);
 t_token	*init_token(char *input, int start);
 char	*env_to_string(char	*str, int *i);
 char	*replace_env_vars(char *input);

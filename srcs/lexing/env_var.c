@@ -8,6 +8,8 @@ char	*replace_env_vars(char *input)
 	int		start;
 
 	(i = 0, y = 0);
+	if (count_char(input, '$') == 0)
+		return (input);
 	array = ft_malloc(sizeof(char *) * (count_char(input, '$') * 10));
 	if (array == NULL)
 		return (ft_free(input), NULL);

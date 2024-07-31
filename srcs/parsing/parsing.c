@@ -1,4 +1,4 @@
-#include "parsing_utils.h"
+#include "parsing.h"
 
 /*
 This function transform tokens to a binary tree
@@ -11,28 +11,32 @@ t_command	*token_to_ast(t_token *token)
 	ft_memset(&data, 0, sizeof(t_data));
 	data.token = token;
 	data.curr_token = token;
-	while (data.curr_token != NULL)
-	{
-		data.curr_command = init_command();
-		if (command == NULL)
-			return (NULL);
-		if (data.command == NULL)
-			data.command = data.curr_command;
-		if (add_words_to_command(&data) == EXIT_FAILURE)
-			return (NULL);
-	}
+	data.redirection = NULL;
+	data.command = init_command(&data);
+	if (data.command == NULL)
+		return (NULL);
+	if (add_words_to_command(&data) == EXIT_FAILURE)
+		return (NULL);
+	if (data.curr_token == NULL)
+		return (data.command);
+	data.command->previous = init_operator(&data, data.command);
+	data.command->previous->right = token_to_ast(data.curr_token);
+	return (data.command->previous);
 }
 
-t_command	*init_command(void)
+t_command	*init_command(t_parsing *data)
 {
 	t_command	*command;
 
-	command = ft_malloc(sizeof(t_command) * 1);
+	(void)data;
+	command = ft_calloc(1, sizeof(t_command));
 	if (command == NULL)
 		return (NULL);
 	command->infile = STDIN_FILENO;
 	command->outfile = STDOUT_FILENO;
 	command->type = COMMAND;
+	command->command = ft_malloc(sizeof(char *) * 5);
+	return (command);
 }
 
 int	add_words_to_command(t_parsing *data)
@@ -41,23 +45,45 @@ int	add_words_to_command(t_parsing *data)
 	t_command	*command;
 	int		i;
 
-	command = data->curr_command;
+	command = data->command;
 	token = data->curr_token;
-	if (token->type != WORD)
-		return (parse_err(TOKEN_ERR, token->content), EXIT_FAILURE);
+	if (token == NULL || command == NULL)
+		return (EXIT_FAILURE);
+	if (token->type != WORD && token->type != STRING)
+		return (parse_err(TOKEN_ERR, token->content, data), EXIT_FAILURE);
 	i = 0;
-	while (token->type == WORD)
+	while (token != NULL && (token->type == WORD || token->type == STRING))
 	{
-		command[i++] = token->content;
+		command->command[i++] = token->content;
 		token = token->next;
-		while (token->type == REDIRECTION)
+		while (token != NULL && token->type == REDIRECTION)
 		{
 			if (add_redirection(data) == EXIT_FAILURE)
 				return (EXIT_FAILURE);
 			token = token->next;
 		}
 	}
-	command[i] = NULL;
+	command->command[i] = NULL;
 	data->curr_token = token;
 	return (EXIT_SUCCESS);
+}
+
+t_command	*init_operator(t_parsing *data, t_command *left_command)
+{
+	t_command	*operator;
+	t_token		*current;
+
+	current = data->curr_token;
+	if (current->type != OPERATOR)
+		return (parse_err(TOKEN_ERR, current->content, data), NULL);
+	operator = ft_calloc(1, sizeof(t_command));
+	if (operator == NULL)
+		return (print_err("init_operator(): ft_calloc() failed", false), NULL);
+	operator->type = token_to_operator_type(current);
+	if (operator->type == -1)
+		return (parse_err(TOKEN_ERR, current->content, data), NULL);
+	operator->left = left_command;
+	operator->right = NULL;
+	data->curr_token = data->curr_token->next;
+	return (operator);
 }

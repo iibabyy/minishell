@@ -1,4 +1,4 @@
-#include "parsing_utils.h"
+#include "parsing.h"
 
 int	add_redirection(t_parsing *data)
 {
@@ -8,13 +8,15 @@ int	add_redirection(t_parsing *data)
 	if (data->curr_token->type != REDIRECTION)
 		return (EXIT_FAILURE);
 	else if (ft_strncmp(token, ">", 1) == 0)
-		return (add_redirection(data, OUTPUT));
+		return (add_redirection_to_data(data, OUTPUT));
 	else if (ft_strncmp(token, ">>", 2) == 0)
-		return (add_redirection(data, APPEND_OUTPUT));
+		return (add_redirection_to_data(data, APPEND_OUTPUT));
 	else if (ft_strncmp(token, "<", 1) == 0)
-		return (add_redirection(data, INPUT));
+		return (add_redirection_to_data(data, INPUT));
 	else if (ft_strncmp(token, "<<", 2) == 0)
-		return (add_here_doc_to_data(data));
+		return (add_redirection_to_data(data, HERE_DOC));
+	else
+		return (EXIT_FAILURE);
 }
 
 int	add_redirection_to_data(t_parsing *data, int type)
@@ -29,4 +31,5 @@ int	add_redirection_to_data(t_parsing *data, int type)
 	else
 		last_redirection(data->redirection)->next = redirection;
 	data->curr_token = data->curr_token->next;
+	return (EXIT_SUCCESS);
 }

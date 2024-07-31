@@ -9,5 +9,6 @@ void	print_err(char *err, bool errno);
 void	print_err_and_exit(char *err, int status, bool errno);
 void	parse_err(char *error, char *token, t_parsing *data);
 void	destroy_commands(t_command *command);
+void	destroy_redirections(t_redirection *redirection);
 
 #endif

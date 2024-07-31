@@ -49,7 +49,10 @@ int	word_to_token(char *input, int start, int end, t_token **tokens)
 	if (new_token == NULL)
 		return (ft_free(word), EXIT_FAILURE);
 	new_token->type = WORD;
-	ft_lstadd_back(tokens, new_token);
+	if (*tokens == NULL)
+		*tokens = new_token;
+	else
+		ft_lstadd_back(tokens, new_token);
 	return (EXIT_SUCCESS);
 }
 
@@ -58,6 +61,8 @@ int	meta_to_token(char *input, int index, t_token **tokens)
 	t_token	*new_token;
 
 	new_token = init_token(input, index);
+	if (new_token == NULL)
+		return (EXIT_FAILURE);
 	ft_lstadd_back(tokens, new_token);
 	return (EXIT_SUCCESS);
 }

@@ -24,8 +24,7 @@ typedef struct s_garbage
 # define WORD 1			//	commands, arguments, etc...
 # define OPERATOR 2			//	|, ||, &&, () and newlines.
 # define REDIRECTION 3		//	<, <<, >, >>.
-# define STRING 4
-# define ENV_VAR 5
+# define STRING 4			// "abcde...", etc...
 
 typedef struct s_token
 {
@@ -41,7 +40,7 @@ typedef struct s_token
 # define OR 4
 # define AND 3
 # define SUB_SHELL 4
-# define TOKEN_ERR "syntaxe error near token "
+# define TOKEN_ERR "syntaxe error near token"
 
 typedef struct s_command
 {
@@ -51,12 +50,13 @@ typedef struct s_command
 	int					outfile;
 	struct s_command	*left;
 	struct s_command	*right;
+	struct s_command	*previous;
 }	t_command;
 
 typedef struct s_here_doc
 {
 	int					pipe[2];
-	char				*end_of_file;
+	t_token				*end_of_file;
 	t_command			*command;
 	t_token				*token;
 	struct s_here_doc	*next;
@@ -65,25 +65,24 @@ typedef struct s_here_doc
 # define INPUT 1
 # define APPEND_OUTPUT 2
 # define OUTPUT 3
-# define HERE_DOC
+# define HERE_DOC 4
 
 typedef struct s_redirection
 {
 	t_token					*token;
 	t_command				*command;
-	struct s_redirection	*next;
-	char					*file;
+	t_token					*file;
+	t_here_doc				*here_doc;
 	int						type;
 	int						o_flags;
+	struct s_redirection	*next;
 }	t_redirection;
 
 typedef struct s_parsing
 {
 	t_command		*command;
-	t_command		*curr_command;
 	t_token			*token;
 	t_token			*curr_token;
-	t_here_doc		*here_doc;
 	t_redirection	*redirection;
 }	t_parsing;
 

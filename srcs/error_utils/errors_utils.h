@@ -13,5 +13,6 @@ void	parse_err(char *error, char *token, t_parsing *data);
 void	destroy_commands(t_command *command);
 void	destroy_tokens(t_token *tokens);
 void	destroy_here_docs(t_here_doc *here_doc);
+void	destroy_redirections(t_redirection *redirection);
 
 #endif
