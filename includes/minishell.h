@@ -5,7 +5,7 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <fcntl.h>
-
+# include <stdbool.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/types.h>
@@ -21,7 +21,7 @@
 #include "garbage_collector.h"
 #include "error.h"
 
-char	*get_input(char *end_of_file, bool quotes);
+char	*get_input(char *end_of_file, char *prompt, bool quotes);
 
 // lexing
 
@@ -31,9 +31,11 @@ t_token	*input_to_tokens(char **input);
 // parsing
 
 t_command	*parse(char	*input);
+int	open_redirections(t_redirection	*redirection);
 
 // debug
 
 char *type_to_str(int type);
+char *operator_type_to_str(int type);
 
 #endif

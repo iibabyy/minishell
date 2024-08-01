@@ -11,7 +11,7 @@ t_command	*parse(char	*input)
 
 	ft_memset(&data, 0, sizeof(t_data));
 	data.redirection = NULL;
-	data.curr_token = NULL;
+	data.error = false;
 	input = replace_env_vars(input);
 	data.token = input_to_tokens(&input);
 	if (data.token == NULL)
@@ -19,12 +19,10 @@ t_command	*parse(char	*input)
 	data.curr_token = data.token;
 	data.command = token_to_ast(&data);
 	if (data.command == NULL)
-		return (NULL);
-	// destroy_tokens(data.token);
-	// destroy_redirections(data.redirection);
-	if (open_redirections(data.redirection) == EXIT_FAILURE
-			&& redirections_number(data.token) != 0)
 		return (destroy_parsing(&data), NULL);
+	// if (open_redirections(data.redirection) == EXIT_FAILURE
+	// 		&& redirections_number(data.token) != 0)
+	// 	return (destroy_parsing(&data), NULL);
 	return (data.command);
 }
 
@@ -37,10 +35,12 @@ t_command	*token_to_ast(t_parsing *data)
 	if (first_command == NULL)
 		return (destroy_parsing(data), NULL);
 	data->command = create_ast(data, first_command);
+	if (data->error == true)
+		return (NULL);
+	if (first_command->previous != NULL)
+		return (first_command->previous);
 	return (first_command);
 }
-
-char *operator_type_to_str(int type);
 
 t_command	*create_ast(t_parsing *data, t_command *left)
 {
@@ -77,13 +77,15 @@ t_command	*init_command(t_parsing *data)
 	command = ft_calloc(1, sizeof(t_command));
 	if (command == NULL)
 		return (NULL);
-	command->infile = STDIN_FILENO;
-	command->outfile = STDOUT_FILENO;
+	command->infile_fd = STDIN_FILENO;
+	command->outfile_fd = STDOUT_FILENO;
+	command->outfile = NULL;
+	command->infile = NULL;
 	command->type = COMMAND;
 	command->command = ft_malloc(sizeof(char *) * (args_number(data->curr_token) + 2));
+	command->command[0] = NULL;
 	return (command);
 }
-
 
 t_command	*init_operator(t_parsing *data, t_command *left_command)
 {
@@ -104,6 +106,8 @@ t_command	*init_operator(t_parsing *data, t_command *left_command)
 		return (parse_err(TOKEN_ERR, current->content), NULL);
 	operator->left = left_command;
 	operator->right = NULL;
+	if (data->curr_token->next == NULL || data->curr_token->next->type != WORD)
+		return (parse_err(TOKEN_ERR, data->curr_token->content), NULL);
 	data->curr_token = data->curr_token->next;
 	return (operator);
 }

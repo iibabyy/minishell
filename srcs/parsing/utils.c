@@ -1,12 +1,5 @@
 #include "parsing.h"
 
-t_redirection	*last_redirection(t_redirection *redirection)
-{
-	while (redirection->next != NULL)
-		redirection = redirection->next;
-	return (redirection);
-}
-
 int	redirections_number(t_token *token)
 {
 	int	i;

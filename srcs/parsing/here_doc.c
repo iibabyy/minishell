@@ -34,7 +34,7 @@ int	open_here_doc(t_redirection *redirection)
 		return (parse_err(TOKEN_ERR, redirection->token->content),
 				EXIT_FAILURE);
 	here_doc = redirection->here_doc;
-	input = get_input(here_doc->end_of_file->content, true);
+	input = get_input(here_doc->end_of_file->content, HEREDOC_PROMPT, true);
 	if (input == NULL)
 		return (EXIT_FAILURE);
 	ft_putstr_fd(input, redirection->here_doc->pipe[1]);
@@ -67,31 +67,27 @@ static bool	is_limiter(char *input, char *limiter)
 	}
 }
 
-char	*get_input(char *end_of_file, bool quotes)
+char	*get_input(char *end_of_file, char *prompt, bool quotes)
 {
 	char	*input;
 	char	*input_join;
 
-	input_join = ft_strdup("\n");
-	if (input_join == NULL)
-		return (print_err("get_here_doc(): ft_strdup() failed", false), NULL);
+	input_join = NULL;
 	while (1)
 	{
-		
-		input = readline("> ");
+		input = replace_env_vars(readline(prompt));
 		if (input == NULL)
-			return (print_err("get_here_doc(): readline() failed", false),
-				NULL);
+			return (input_join);
+		// input = here_doc_subshell(input);
 		if (quotes == false && is_limiter(input, end_of_file) == 0)
 			return (free(input), input_join);
 		input_join = ft_re_strjoin(input_join, input);
 		if (input_join == NULL)
-			return (print_err("get_here_doc: ft_strjoin failed", false), NULL);
-		if (quotes == true && ft_strchr(input, end_of_file[0]) != NULL)
+			return (print_err("get_here_doc(): strjoin() failed", false), NULL);
+		if (quotes == true && ft_strchr(input, *end_of_file) != NULL)
 			return (free(input), input_join);
-		input_join = ft_re_strjoin(input_join, "\n");
 		if (input_join == NULL)
-			return (print_err("get_here_doc: ft_strjoin failed", false), NULL);
+			return (print_err("get_here_doc(): strjoin() failed", false), NULL);
 		free(input);
 	}
 	return (input_join);
@@ -119,3 +115,13 @@ t_redirection	*init_here_doc(t_parsing *data)
 	redirection->here_doc->end_of_file = data->curr_token;
 	return (redirection);
 }
+
+// char	*here_doc_subshell(char *input)
+// {
+// 	char	*subshell;
+
+// 	subshell = ft_strdup(ft_strchr(input, '('));
+// 	if (subshell == NULL)
+// 		return (input);
+// 	if (ft_strchr(subshell, ')')
+// }

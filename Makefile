@@ -39,7 +39,7 @@ FILES =	srcs/error_utils/free_and_exit.c	\
 		srcs/error_utils/free_utils.c		\
 		srcs/lexing/check_char.c			\
 		srcs/lexing/lexing.c				\
-		srcs/lexing/test.c					\
+		srcs/minishell/main.c					\
 		srcs/lexing/lexing_utils.c			\
 		srcs/lexing/env_var.c				\
 		srcs/parsing/parsing_utils.c		\

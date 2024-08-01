@@ -14,11 +14,11 @@ t_token	*init_token(char **input, int start)
 	len = metachar_size(input, start);
 	if (len == -1 || new_token->type == -1)
 		return (ft_free(new_token), NULL);
-	if (new_token->type == STRING)
-	{
-		len -= 2;
-		start += 1;
-	}
+	// if (new_token->type == STRING)
+	// {
+	// 	len -= 2;
+	// 	start += 1;
+	// }
 	content = ft_substr(*input, start, len);
 	if (content == NULL)
 		return (print_err("init_token: ft_substr() function failed:", true),
@@ -33,13 +33,13 @@ int	char_type(char *str, int index)
 
 	c = str[index];
 	if (is_quotes(c) == true)
-		return (STRING);
+		return (WORD);
 	if (is_redirection(c) == true)
 		return (REDIRECTION);
 	if (ft_strchr("|()", c) != NULL)
 		return (OPERATOR);
 	if (c == '&' && str[index + 1] == '&')
 		return (OPERATOR);
-	fprintf(stderr, "unknow token '%c'\n", c);
+	print_err("unknow token\n", false);
 	return (-1);
 }

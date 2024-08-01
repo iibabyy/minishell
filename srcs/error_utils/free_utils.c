@@ -54,8 +54,11 @@ void	destroy_redirections(t_redirection *redirection)
 
 void	destroy_parsing(t_parsing *data)
 {
+	if (data->error == true)
+		return ;
 	if (data->token != NULL)
 		destroy_tokens(data->token);
 	if (data->command != NULL)
 		destroy_commands(data->command);
+	data->error = true;
 }

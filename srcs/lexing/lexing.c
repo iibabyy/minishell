@@ -21,32 +21,36 @@ t_token	*input_to_tokens(char **input)
 		token_start = i;
 		while (is_meta_char(*input, i) == false && (*input)[i] != '\0')
 			++i;
-		if (word_to_token(*input, token_start, i, &tokens) == EXIT_FAILURE)
+		if (word_to_token(input, token_start, &i, &tokens) == EXIT_FAILURE)
 			return (ft_lstclear(&tokens, ft_free), NULL);
 		while ((*input)[i] == ' ')
 			++i;
-		if (is_meta_char(*input, i) == true && (*input)[i] != '\0')
-		{
-			if (meta_to_token(input, i, &tokens) == EXIT_FAILURE)
-				return (ft_lstclear(&tokens, ft_free), NULL);
-			i += metachar_size(input, i);
-		}
+		if (meta_to_token(input, &i, &tokens) == EXIT_FAILURE)
+			return (ft_lstclear(&tokens, ft_free), NULL);
 	}
 	return (tokens);
 }
 
-int	word_to_token(char *input, int start, int end, t_token **tokens)
+int	word_to_token(char **input, int i, int *end, t_token **tokens)
 {
 	t_token	*new_token;
 	char	*word;
+	int 	len;
 
-	if (end - start == 0 || input[start] == '\0')
+	if (*end - i == 0 || (*input)[i] == '\0')
 		return (EXIT_SUCCESS);
-	// if (ft_strnstr(*input, "(", 1) != NULL)
-	// 	word = get_parenthesis(input, )
-	word = ft_substr(input, start, end - start);
+	if (is_quotes((*input)[i]) == true)
+	{
+		len = quotes_size(input, i + 1, (*input)[i]);
+		printf("len: %i\n", len);
+		i++;
+	}
+	else
+		len = *end - i;
+	word = ft_substr(*input, i, len);
 	if (word == NULL)
 		return (EXIT_FAILURE);
+	printf("word: %s\n", word);
 	new_token = ft_lstnew(word);
 	if (new_token == NULL)
 		return (ft_free(word), EXIT_FAILURE);
@@ -55,17 +59,22 @@ int	word_to_token(char *input, int start, int end, t_token **tokens)
 		*tokens = new_token;
 	else
 		ft_lstadd_back(tokens, new_token);
+	if (is_quotes((*input)[i]) == true)
+		*end = i + len + 1;
 	return (EXIT_SUCCESS);
 }
 
-int	meta_to_token(char **input, int index, t_token **tokens)
+int	meta_to_token(char **input, int *index, t_token **tokens)
 {
 	t_token	*new_token;
 
-	new_token = init_token(input, index);
+	if (is_meta_char(*input, *index) == false)
+		return (EXIT_SUCCESS);
+	new_token = init_token(input, *index);
 	if (new_token == NULL)
 		return (EXIT_FAILURE);
 	ft_lstadd_back(tokens, new_token);
+	*index += metachar_size(input, *index);
 	return (EXIT_SUCCESS);
 }
 
@@ -73,12 +82,8 @@ int	meta_to_token(char **input, int index, t_token **tokens)
 int	metachar_size(char **input, int start)
 {
 	int			i;
-	char		c;
-
-	c = (*input)[start];
+	
 	i = 0;
-	if (c == '"' || c == 39)
-		return (quotes_size(input, start, c));
 	while (is_meta_char((*input), start + i) == true && (*input)[start + i] != ' ')
 		++i;
 	return (i);

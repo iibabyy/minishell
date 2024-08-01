@@ -8,55 +8,51 @@ int	add_redirection(t_parsing *data)
 	if (data->curr_token->type != REDIRECTION)
 		return (EXIT_FAILURE);
 	else if (ft_strncmp(token, ">>", 2) == 0)
-		return (add_redirection_to_data(data, APPEND_OUTPUT));
+		return (add_redirection_to_command(data, APPEND_OUTPUT));
 	else if (ft_strncmp(token, ">", 1) == 0)
-		return (add_redirection_to_data(data, OUTPUT));
+		return (add_redirection_to_command(data, OUTPUT));
 	else if (ft_strncmp(token, "<<", 2) == 0)
-		return (add_redirection_to_data(data, HERE_DOC));
+		return (add_redirection_to_command(data, HERE_DOC));
 	else if (ft_strncmp(token, "<", 1) == 0)
-		return (add_redirection_to_data(data, INPUT));
+		return (add_redirection_to_command(data, INPUT));
 	else
 		return (EXIT_FAILURE);
 }
 
-int	add_redirection_to_data(t_parsing *data, int type)
+int	add_redirection_to_command(t_parsing *data, int type)
 {
 	t_redirection	*redirection;
 
 	redirection = init_redirection(data, type, type_to_oflags(type));
 	if (redirection == NULL)
 		return (EXIT_FAILURE);
-	if (data->redirection == NULL)
-		data->redirection = redirection;
+	if (redirection->type == OUTPUT || redirection->type == APPEND_OUTPUT)
+		redirect_add_back(&data->command->outfile, redirection);
 	else
-		last_redirection(data->redirection)->next = redirection;
+		redirect_add_back(&data->command->infile, redirection);
 	data->curr_token = data->curr_token->next;
 	return (EXIT_SUCCESS);
 }
 
-int	open_redirections(t_redirection	*redirection)
+/*
+open the redirections linked to the command in parameter
+Return 1 if an error occurs, and 0 otherwise
+*/
+int	open_redirections(t_command	*command)
 {
-	redirection = parse_redirections(redirection);
-	if (redirection == NULL)
+
+	if	(parse_redirection(command->infile) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	while (redirection != NULL)
-	{
-		if (redirection->type == HERE_DOC)
-		{
-			if (open_here_doc(redirection) == EXIT_FAILURE)
-				return (EXIT_FAILURE);
-		}
-		else
-		{
-			if (open_file(redirection) == EXIT_FAILURE)
-				return (EXIT_FAILURE);
-		}
-		redirection = redirection->next;
-	}
+	if (ft_open_redirect(command->infile) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
+	if	(parse_redirection(command->outfile) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
+	if (ft_open_redirect(command->outfile) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
 
-t_redirection	*parse_redirections(t_redirection *redirection)
+int	parse_redirection(t_redirection *redirection)
 {
 	t_redirection	*temp;
 	t_redirection	*before_temp;
@@ -74,10 +70,10 @@ t_redirection	*parse_redirections(t_redirection *redirection)
 		temp = temp->next;
 	}
 	if (before_temp == NULL)
-		return (NULL);
+		return (EXIT_FAILURE);
 	else
 		before_temp->next = NULL;
-	return (redirection);
+	return (EXIT_SUCCESS);
 }
 
 int	open_file(t_redirection *redirection)

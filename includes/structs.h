@@ -39,37 +39,38 @@ typedef struct s_token
 
 # define COMMAND 1
 # define PIPE 2
-# define OR 4
 # define AND 3
-# define SUB_SHELL 4
-
-# define TOKEN_ERR "syntaxe error near unexpected token"
-
-typedef struct s_command
-{
-	int					type;
-	char				**command;
-	int					infile;
-	int					outfile;
-	int					weight;
-	struct s_command	*left;
-	struct s_command	*right;
-	struct s_command	*previous;
-}	t_command;
-
-typedef struct s_here_doc
-{
-	int					pipe[2];
-	t_token				*end_of_file;
-	t_command			*command;
-	t_token				*token;
-	struct s_here_doc	*next;
-}	t_here_doc;
+# define OR 4
+# define SUB_SHELL 5
 
 # define INPUT 1
 # define APPEND_OUTPUT 2
 # define OUTPUT 3
 # define HERE_DOC 4
+
+# define TOKEN_ERR "syntaxe error near unexpected token"
+
+typedef struct s_parsing
+{
+	t_command		*command;
+	t_token			*token;
+	t_token			*curr_token;
+	bool			error;
+}	t_parsing;
+
+typedef struct s_command
+{
+	char				**command;
+	t_redirection		*infile;
+	t_redirection		*outfile;
+	struct s_command	*left;
+	struct s_command	*right;
+	struct s_command	*previous;
+	int					infile_fd;
+	int					outfile_fd;
+	int					type;
+	int					weight;
+}	t_command;
 
 typedef struct s_redirection
 {
@@ -82,12 +83,13 @@ typedef struct s_redirection
 	struct s_redirection	*next;
 }	t_redirection;
 
-typedef struct s_parsing
+typedef struct s_here_doc
 {
-	t_command		*command;
-	t_token			*token;
-	t_token			*curr_token;
-	t_redirection	*redirection;
-}	t_parsing;
+	int					pipe[2];
+	t_token				*end_of_file;
+	t_command			*command;
+	t_token				*token;
+	struct s_here_doc	*next;
+}	t_here_doc;
 
 #endif

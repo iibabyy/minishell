@@ -4,7 +4,6 @@ t_redirection	*init_redirection(t_parsing *data, int type, int o_flags)
 {
 	t_redirection	*redirection;
 
-
 	if (type == HERE_DOC)
 	{
 		redirection = init_here_doc(data);
@@ -60,4 +59,38 @@ t_redirection	*init_others_redirection(t_parsing *data, int type, int o_flags)
 	data->curr_token = data->curr_token->next;
 	redirection->file = data->curr_token;
 	return (redirection);
+}
+
+t_redirection	*redirect_add_back(t_redirection **lst, t_redirection *redirection)
+{
+	t_redirection	*last;
+
+	if (!new)
+		return ;
+	if (!*lst)
+	{
+		*lst = new;
+		return ;
+	}
+	last = ft_lstlast(*lst);
+	last->next = new;
+}
+
+int	ft_open_redirect(t_redirection *redirection)
+{
+	while (redirection != NULL)
+	{
+		if (redirection->type == HERE_DOC)
+		{
+			if (open_here_doc(redirection) == EXIT_FAILURE)
+				return (EXIT_FAILURE);
+		}
+		else
+		{
+			if (open_file(redirection) == EXIT_FAILURE)
+				return (EXIT_FAILURE);
+		}
+		redirection = redirection->next;
+	}
+	return (EXIT_SUCCESS);
 }

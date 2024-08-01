@@ -7,10 +7,10 @@ int	token_to_operator_type(t_token *token)
 	content = token->content;
 	if (token == NULL)
 		return (-1);
-	else if (ft_strcmp(content, "|") == 0)
-		return (PIPE);
 	else if (ft_strcmp(content, "||") == 0)
 		return (OR);
+	else if (ft_strcmp(content, "|") == 0)
+		return (PIPE);
 	else if (ft_strcmp(content, "&&") == 0)
 		return (AND);
 	else
@@ -22,6 +22,8 @@ int	args_number(t_token *token)
 	int	i;
 
 	i = 0;
+	if (token == NULL)
+		return (0);
 	token = token->next;
 	while (token != NULL && token->type != OPERATOR)
 	{
@@ -54,12 +56,6 @@ int	add_words_to_command(t_parsing *data)
 	t_command	*command;
 	int			i;
 
-	// if (data->curr_token->type != WORD && data->curr_token->type != STRING)
-	// {
-	// 	if (data->curr_token->next == NULL)
-	// 		data->curr_token->content = "newline";
-	// 	return (parse_err(TOKEN_ERR, data->curr_token->content), EXIT_FAILURE);
-	// }
 	command = data->command;
 	if (command == NULL || data->curr_token == NULL)
 		return (EXIT_FAILURE);
@@ -75,7 +71,7 @@ int	add_words_to_command(t_parsing *data)
 		while (data->curr_token != NULL && data->curr_token->type == REDIRECTION)
 		{
 			if (add_redirection(data) == EXIT_FAILURE)
-				return (EXIT_FAILURE);
+				return (command->command[i] = NULL, EXIT_FAILURE);
 		}
 	}
 	command->command[i] = NULL;
