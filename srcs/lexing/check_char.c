@@ -57,7 +57,7 @@ int	quotes_size(char **input, int start, char eof)
 	int		i;
 	
 	i = 1;
-	while ((*input)[start + i] != eof && (*input)[start + i] != '\0')
+	while ((*input)[start + i] != eof)
 	{
 		if ((*input)[start + ++i] == '\0')
 		{
