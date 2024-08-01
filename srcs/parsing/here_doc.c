@@ -37,6 +37,9 @@ int	open_here_doc(t_redirection *redirection)
 	input = get_input(here_doc->end_of_file->content, true);
 	if (input == NULL)
 		return (EXIT_FAILURE);
+	ft_putstr_fd(input, redirection->here_doc->pipe[1]);
+	print_file(redirection->here_doc->pipe[1]);
+	ft_free(input);
 	return (EXIT_SUCCESS);
 }
 
@@ -81,7 +84,7 @@ char	*get_input(char *end_of_file, bool quotes)
 				NULL);
 		if (quotes == false && is_limiter(input, end_of_file) == 0)
 			return (free(input), input_join);
-		input_join = ft_re_strjoin(input_join, input);
+		input_join = multi_re_strjoin(3, input_join, input, "\n");
 		if (input_join == NULL)
 			return (print_err("get_here_doc(): ft_re_strjoin() failed", false),
 				NULL);
@@ -90,4 +93,28 @@ char	*get_input(char *end_of_file, bool quotes)
 		free(input);
 	}
 	return (input_join);
+}
+
+t_redirection	*init_here_doc(t_parsing *data)
+{
+	t_redirection	*redirection;
+
+	redirection = ft_malloc(sizeof(t_redirection) * 1);
+	if (redirection == NULL)
+		return (print_err("init_here_doc(): ft_malloc() function failed",
+				false), NULL);
+	ft_memset(redirection, 0, sizeof(t_redirection));
+	redirection->here_doc = ft_malloc(sizeof(t_here_doc));
+	if (redirection->here_doc == NULL)
+		return (print_err("init_here_doc: ft_malloc() failed", true), NULL);
+	if (pipe(redirection->here_doc->pipe) == -1)
+		return (print_err("init_here_doc: pipe() failed", true),
+				parse_err(NULL, NULL), NULL);
+	redirection->here_doc->token = data->curr_token;
+	printf("%p\n", &data->curr_token);
+	redirection->type = HERE_DOC;
+	redirection->here_doc->command = data->command;
+	data->curr_token = data->curr_token->next;
+	redirection->here_doc->end_of_file = data->curr_token;
+	return (redirection);
 }

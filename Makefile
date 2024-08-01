@@ -44,10 +44,10 @@ FILES =	srcs/error_utils/free_and_exit.c	\
 		srcs/lexing/env_var.c				\
 		srcs/parsing/parsing_utils.c		\
 		srcs/parsing/here_doc.c				\
-		srcs/parsing/here_doc_utils.c		\
 		srcs/parsing/parsing.c				\
 		srcs/parsing/redirection_utils.c	\
 		srcs/parsing/redirections.c			\
+		srcs/parsing/utils.c				\
 
 OBJ = $(FILES:.c=.o)
 
@@ -67,7 +67,7 @@ all	: $(NAME)
 # Variables
 
 $(NAME) : $(LIBFT) $(GARBAGE_COLLECTOR) $(OBJ)
-	@$(CC) $(FLAGS) $(OBJ) $(GARBAGE_COLLECTOR) $(LIBFT) -o $(NAME)
+	@$(CC) $(FLAGS) $(OBJ) $(GARBAGE_COLLECTOR) -lreadline $(LIBFT) -o $(NAME)
 	@echo ""
 	@echo "$(BLUE)$(NAME) done ! ✅$(END)"
 
@@ -80,7 +80,7 @@ $(LIBFT) : $(LIBFT_DIR)
 # Compilation
 
 %.o : %.c
-	@$(CC) $(FLAGS) -c $< -o $@  -lreadline
+	@$(CC) $(FLAGS) -c $< -o $@
 	@$(eval COMPILED_FILES := $(shell echo $$(($(COMPILED_FILES)+1))))
 	@echo -n " "
 	@for i in `seq 1 $(shell echo "$$(($(COMPILED_FILES)*$(BAR_SIZE)/$(TOTAL_FILES)))")`; do \

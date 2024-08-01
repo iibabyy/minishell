@@ -49,7 +49,6 @@ void	destroy_redirections(t_redirection *redirection)
 		if (temp->type == HERE_DOC)
 			destroy_here_docs(temp->here_doc);
 		ft_free(temp);
-		redirection = redirection->next;
 	}
 }
 

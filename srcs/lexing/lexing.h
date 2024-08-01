@@ -17,5 +17,6 @@ int		char_type(char *str, int index);
 t_token	*init_token(char **input, int start);
 char	*env_to_string(char	*str, int *i);
 char	*replace_env_vars(char *input);
+int	quotes_size(char **input, int start, char eof);
 
 #endif

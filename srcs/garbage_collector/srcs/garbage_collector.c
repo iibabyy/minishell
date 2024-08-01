@@ -7,7 +7,7 @@ static int	init_static(t_garbage **_static, void *arg);
 	it returns a pointers to an heap allocated zone.
 	Make sure to use this function at least one time before
 	the other functions.*/
-void	*ft_malloc(size_t size)
+void	*ft_malloc(unsigned long size)
 {
 	static t_garbage	*garbage = NULL;
 	void				*ptr;

@@ -4,42 +4,17 @@ t_redirection	*init_redirection(t_parsing *data, int type, int o_flags)
 {
 	t_redirection	*redirection;
 
-	redirection = ft_malloc(sizeof(t_redirection) * 1);
-	if (redirection == NULL)
-		return (print_err("init_redirection(): ft_malloc() function failed",
-				true), NULL);
-	ft_memset(redirection, 0, sizeof(t_redirection));
-	if (type == REDIRECTION)
-		redirection->here_doc = init_here_doc(data);
+
+	if (type == HERE_DOC)
+	{
+		redirection = init_here_doc(data);
+	}
 	else
 	{
-		redirection->type = type;
-		redirection->o_flags = o_flags;
-		redirection->command = data->command;
-		redirection->token = data->curr_token;
-		data->curr_token = data->curr_token->next;
-		redirection->file = data->curr_token;
+		redirection = init_others_redirection(data, type, o_flags);
 	}
-	return (redirection);
-}
-
-int	type_to_oflags(int type)
-{
-	if (type == OUTPUT)
-		return (O_WRONLY);
-	if (type == APPEND_OUTPUT)
-		return (O_WRONLY | O_APPEND);
-	if (type == INPUT)
-		return (O_RDONLY);
-	if (type == HERE_DOC)
-		return (O_RDWR | O_APPEND);
-	return (-1);
-}
-
-t_redirection	*last_redirection(t_redirection *redirection)
-{
-	while (redirection->next != NULL)
-		redirection = redirection->next;
+	if (data->curr_token == NULL)
+		return (parse_err(TOKEN_ERR, redirection->token->content), NULL);
 	return (redirection);
 }
 
@@ -48,18 +23,42 @@ int	check_redirection(t_redirection	*redirection)
 	t_token	*token;
 	char	*type;
 
-	token = redirection->token;
-	if (redirection->type == INPUT)
-		type = "<";
+	printf("redirection: %d\n", redirection->type);
+	type = NULL;
 	if (redirection->type == HERE_DOC)
-		type = "<<";
-	if (redirection->type == OUTPUT)
+	{
+		if (ft_strcmp(redirection->here_doc->token->content, "<<") != 0)
+			return (parse_err(TOKEN_ERR, redirection->here_doc->token->content),
+				EXIT_FAILURE);
+		return (EXIT_SUCCESS);
+	}
+	else if (redirection->type == INPUT)
+		type = "<";
+	else if (redirection->type == OUTPUT)
 		type = ">";
-	if (redirection->type == APPEND_OUTPUT)
+	else if (redirection->type == APPEND_OUTPUT)
 		type = ">>";
+	token = redirection->token;
 	if (ft_strcmp(token->content, type) != 0)
 		return (parse_err(TOKEN_ERR, token->content), EXIT_FAILURE);
 	if (token->type != REDIRECTION)
 		return (parse_err(TOKEN_ERR, token->content), EXIT_FAILURE);
 	return (EXIT_SUCCESS);
+}
+
+t_redirection	*init_others_redirection(t_parsing *data, int type, int o_flags)
+{
+	t_redirection	*redirection;
+
+	redirection = ft_calloc(1, sizeof(t_redirection));
+	if (redirection == NULL)
+		return (print_err("init_here_doc(): ft_calloc() function failed",
+				false), NULL);
+	redirection->type = type;
+	redirection->o_flags = o_flags;
+	redirection->command = data->command;
+	redirection->token = data->curr_token;
+	data->curr_token = data->curr_token->next;
+	redirection->file = data->curr_token;
+	return (redirection);
 }

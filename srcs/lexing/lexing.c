@@ -42,6 +42,8 @@ int	word_to_token(char *input, int start, int end, t_token **tokens)
 
 	if (end - start == 0 || input[start] == '\0')
 		return (EXIT_SUCCESS);
+	// if (ft_strnstr(*input, "(", 1) != NULL)
+	// 	word = get_parenthesis(input, )
 	word = ft_substr(input, start, end - start);
 	if (word == NULL)
 		return (EXIT_FAILURE);
@@ -65,4 +67,19 @@ int	meta_to_token(char **input, int index, t_token **tokens)
 		return (EXIT_FAILURE);
 	ft_lstadd_back(tokens, new_token);
 	return (EXIT_SUCCESS);
+}
+
+
+int	metachar_size(char **input, int start)
+{
+	int			i;
+	char		c;
+
+	c = (*input)[start];
+	i = 0;
+	if (c == '"' || c == 39)
+		return (quotes_size(input, start, c));
+	while (is_meta_char((*input), start + i) == true && (*input)[start + i] != ' ')
+		++i;
+	return (i);
 }

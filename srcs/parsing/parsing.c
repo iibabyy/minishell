@@ -8,7 +8,7 @@ Return NULL if an error occurs
 t_command	*parse(char	*input)
 {
 	t_parsing	data;
-	
+
 	ft_memset(&data, 0, sizeof(t_data));
 	data.redirection = NULL;
 	data.curr_token = NULL;
@@ -19,36 +19,54 @@ t_command	*parse(char	*input)
 	data.curr_token = data.token;
 	data.command = token_to_ast(&data);
 	if (data.command == NULL)
-		return (destroy_parsing(&data), NULL);
+		return (NULL);
+	// destroy_tokens(data.token);
+	// destroy_redirections(data.redirection);
 	if (open_redirections(data.redirection) == EXIT_FAILURE
 			&& redirections_number(data.token) != 0)
 		return (destroy_parsing(&data), NULL);
-	// destroy_tokens(data.token);
-	// destroy_redirections(data.redirection);
 	return (data.command);
 }
 
-
-/*
-This function transform tokens to a binary tree
-while checking if there is any errors
-*/
 t_command	*token_to_ast(t_parsing *data)
 {
-	t_command	*command;
+	t_command	*first_command;
 
-	command = init_command(data);
-	if (command == NULL)
-		return (NULL);
-	data->command = command;
-	if (add_words_to_command(data) == EXIT_FAILURE)
-		return (NULL);
+	first_command = create_command(data);
+	data->command = first_command;
+	if (first_command == NULL)
+		return (destroy_parsing(data), NULL);
+	data->command = create_ast(data, first_command);
+	return (first_command);
+}
+
+char *operator_type_to_str(int type);
+
+t_command	*create_ast(t_parsing *data, t_command *left)
+{
+	t_command	*operator;
+
 	if (data->curr_token == NULL)
-		return (command);
-	command->previous = init_operator(data, command);
-	if (command->previous != NULL)
-		command->previous->right = token_to_ast(data);
-	return (command->previous);
+		return (NULL);
+	operator = init_operator(data, left);
+	if (operator == NULL)
+		return (destroy_parsing(data), NULL);
+	if (operator->weight < next_operator_weight(data))
+	{
+		operator->right = last_command(token_to_ast(data));
+		if (operator->right == NULL)
+			return (destroy_parsing(data), NULL);
+	}
+	else
+	{
+		operator->right = create_command(data);
+		if (operator->right == NULL)
+			return (destroy_parsing(data), NULL);
+	}
+	left->previous = operator;
+	operator->right->previous = operator;
+	operator->previous = create_ast(data, operator);
+	return (operator);
 }
 
 t_command	*init_command(t_parsing *data)
@@ -66,35 +84,6 @@ t_command	*init_command(t_parsing *data)
 	return (command);
 }
 
-int	add_words_to_command(t_parsing *data)
-{
-	t_token		*token;
-	t_command	*command;
-	int		i;
-
-	command = data->command;
-	token = data->curr_token;
-	if (command == NULL || token == NULL)
-		return (EXIT_FAILURE);
-	if (token->type != WORD && token->type != STRING)
-		return (parse_err(TOKEN_ERR, token->content), EXIT_FAILURE);
-	i = 0;
-	while (token != NULL && (token->type == WORD || token->type == STRING))
-	{
-		command->command[i++] = token->content;
-		token = token->next;
-		while (token != NULL && token->type == REDIRECTION)
-		{
-			data->curr_token = token;
-			if (add_redirection(data) == EXIT_FAILURE)
-				return (EXIT_FAILURE);
-			token = token->next->next;
-		}
-	}
-	command->command[i] = NULL;
-	data->curr_token = token;
-	return (EXIT_SUCCESS);
-}
 
 t_command	*init_operator(t_parsing *data, t_command *left_command)
 {
@@ -109,6 +98,9 @@ t_command	*init_operator(t_parsing *data, t_command *left_command)
 		return (print_err("init_operator(): ft_calloc() failed", false), NULL);
 	operator->type = token_to_operator_type(current);
 	if (operator->type == -1)
+		return (parse_err(TOKEN_ERR, current->content), NULL);
+	operator->weight = weight_by_type(operator->type);
+	if (operator->weight == -1)
 		return (parse_err(TOKEN_ERR, current->content), NULL);
 	operator->left = left_command;
 	operator->right = NULL;

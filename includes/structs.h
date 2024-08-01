@@ -1,6 +1,8 @@
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
+# define P_BLACK
+# define PBLUE '\033[0;34'
 typedef struct s_data
 {
 	void	*infos;
@@ -40,6 +42,7 @@ typedef struct s_token
 # define OR 4
 # define AND 3
 # define SUB_SHELL 4
+
 # define TOKEN_ERR "syntaxe error near unexpected token"
 
 typedef struct s_command
@@ -48,6 +51,7 @@ typedef struct s_command
 	char				**command;
 	int					infile;
 	int					outfile;
+	int					weight;
 	struct s_command	*left;
 	struct s_command	*right;
 	struct s_command	*previous;

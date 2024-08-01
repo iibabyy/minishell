@@ -32,5 +32,8 @@ t_token	*input_to_tokens(char **input);
 
 t_command	*parse(char	*input);
 
+// debug
+
+char *type_to_str(int type);
 
 #endif

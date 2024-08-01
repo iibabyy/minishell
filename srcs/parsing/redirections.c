@@ -7,14 +7,14 @@ int	add_redirection(t_parsing *data)
 	token = data->curr_token->content;
 	if (data->curr_token->type != REDIRECTION)
 		return (EXIT_FAILURE);
-	else if (ft_strncmp(token, ">", 1) == 0)
-		return (add_redirection_to_data(data, OUTPUT));
 	else if (ft_strncmp(token, ">>", 2) == 0)
 		return (add_redirection_to_data(data, APPEND_OUTPUT));
-	else if (ft_strncmp(token, "<", 1) == 0)
-		return (add_redirection_to_data(data, INPUT));
+	else if (ft_strncmp(token, ">", 1) == 0)
+		return (add_redirection_to_data(data, OUTPUT));
 	else if (ft_strncmp(token, "<<", 2) == 0)
 		return (add_redirection_to_data(data, HERE_DOC));
+	else if (ft_strncmp(token, "<", 1) == 0)
+		return (add_redirection_to_data(data, INPUT));
 	else
 		return (EXIT_FAILURE);
 }
@@ -86,9 +86,9 @@ int	open_file(t_redirection *redirection)
 	int	type;
 	int	fd;
 
-	fd = open(redirection->file->content, redirection->o_flags);
+	fd = open(redirection->file->content, redirection->o_flags, 0644);
 	if (fd == -1)
-		return (EXIT_FAILURE);
+		return (perror(redirection->file->content), EXIT_FAILURE);
 	type = redirection->type;
 	if (type == OUTPUT || type == APPEND_OUTPUT)
 		target_command_fd = &redirection->command->outfile;

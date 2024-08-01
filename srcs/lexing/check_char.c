@@ -7,7 +7,7 @@ bool	is_meta_char(char *input, int index)
 	c = input[index];
 	if (c == '\0')
 		return (false);
-	else if (ft_strchr("'|<>()$* ", c) != NULL)
+	else if (ft_strchr("'|<>$* ", c) != NULL)
 		return (true);
 	else if (c == 34)
 		return (true);
@@ -51,32 +51,21 @@ bool	is_quotes(char c)
 		return (false);
 }
 
-int	metachar_size(char **input, int start)
+int	quotes_size(char **input, int start, char eof)
 {
-	int			i;
-	char		c;
-	char		*temp;
-
-	(c = (*input)[start], i = 0);
-	if (c == '"' || c == 39)
+	char	*temp;
+	int		i;
+	
+	i = 1;
+	while ((*input)[start + i] != eof && (*input)[start + i] != '\0')
 	{
-		++i;
-		while ((*input)[start + i] != c && (*input)[start + i] != '\0')
+		if ((*input)[start + ++i] == '\0')
 		{
-			++i;
-			if ((*input)[start + i] == '\0')
-			{
-				temp = get_input(&c, true);
-				printf("input before: %s\n", *input);
-				*input = ft_re_strjoin(*input, temp);
-				printf("input after: %s\n", *input);
-				if (temp == NULL || *input == NULL)
-					return (ft_free(input), ft_free(temp), -1);
-			}
+			temp = get_input(&eof, true);
+			*input = ft_re_strjoin(*input, temp);
+			if (temp == NULL || *input == NULL)
+				return (ft_free(input), ft_free(temp), -1);
 		}
-		return (i + 1);
 	}
-	while (is_meta_char((*input), start + i) == true && (*input)[start + i] != ' ')
-		++i;
-	return (i);
+	return (i + 1);
 }

@@ -1,22 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   garbage_collector.h                                :+:      :+:    :+:   */
+/*   re_get_next_line.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/27 22:31:32 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/01 03:42:21 by ibaby            ###   ########.fr       */
+/*   Created: 2024/06/27 02:11:07 by ibaby             #+#    #+#             */
+/*   Updated: 2024/08/01 07:53:01 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GARBAGE_COLLECTOR_H
-# define GARBAGE_COLLECTOR_H
+#include "get_next_line.h"
 
-# include "structs.h"
+char	*re_join_gnl(int fd, char *str_address)
+{
+	char	*gnl;
 
-void	*ft_malloc(unsigned long size);
-void	ft_free(void *address);
-void	destroy_garbage(t_garbage *NULL_PARAM);
-
-#endif
+	gnl = get_next_line(fd);
+	if (gnl == NULL)
+		return (ft_free(str_address), NULL);
+	if (str_address == NULL)
+		return (gnl);
+	gnl = ft_re_strjoin(str_address, gnl);
+	return (gnl);
+}
