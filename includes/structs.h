@@ -52,25 +52,33 @@ typedef struct s_token
 
 typedef struct s_parsing
 {
-	t_command		*command;
-	t_token			*token;
-	t_token			*curr_token;
-	bool			error;
+	struct s_command	*command;
+	t_token				*token;
+	t_token				*curr_token;
+	bool				error;
 }	t_parsing;
 
 typedef struct s_command
 {
-	char				**command;
-	t_redirection		*infile;
-	t_redirection		*outfile;
-	struct s_command	*left;
-	struct s_command	*right;
-	struct s_command	*previous;
-	int					infile_fd;
-	int					outfile_fd;
-	int					type;
-	int					weight;
+	char					**command;
+	struct s_redirection	*infile;
+	struct s_redirection	*outfile;
+	struct s_command		*left;
+	struct s_command		*right;
+	struct s_command		*previous;
+	int						infile_fd;
+	int						outfile_fd;
+	int						type;
+	int						weight;
 }	t_command;
+
+typedef struct s_here_doc
+{
+	int					pipe[2];
+	t_token				*end_of_file;
+	t_token				*token;
+	struct s_here_doc	*next;
+}	t_here_doc;
 
 typedef struct s_redirection
 {
@@ -82,14 +90,5 @@ typedef struct s_redirection
 	int						o_flags;
 	struct s_redirection	*next;
 }	t_redirection;
-
-typedef struct s_here_doc
-{
-	int					pipe[2];
-	t_token				*end_of_file;
-	t_command			*command;
-	t_token				*token;
-	struct s_here_doc	*next;
-}	t_here_doc;
 
 #endif

@@ -37,9 +37,10 @@ int	open_here_doc(t_redirection *redirection)
 	input = get_input(here_doc->end_of_file->content, HEREDOC_PROMPT, true);
 	if (input == NULL)
 		return (EXIT_FAILURE);
-	ft_putstr_fd(input, redirection->here_doc->pipe[1]);
-	print_file(redirection->here_doc->pipe[1]);
+	ft_putstr_fd(input, here_doc->pipe[1]);
 	ft_free(input);
+	ft_close_fd(&here_doc->pipe[1]);
+	redirection->command->infile_fd = here_doc->pipe[0];
 	return (EXIT_SUCCESS);
 }
 
@@ -97,11 +98,10 @@ t_redirection	*init_here_doc(t_parsing *data)
 {
 	t_redirection	*redirection;
 
-	redirection = ft_malloc(sizeof(t_redirection) * 1);
+	redirection = ft_calloc(1, sizeof(t_redirection));
 	if (redirection == NULL)
 		return (print_err("init_here_doc(): ft_malloc() function failed",
 				false), NULL);
-	ft_memset(redirection, 0, sizeof(t_redirection));
 	redirection->here_doc = ft_malloc(sizeof(t_here_doc));
 	if (redirection->here_doc == NULL)
 		return (print_err("init_here_doc: ft_malloc() failed", true), NULL);
@@ -110,7 +110,7 @@ t_redirection	*init_here_doc(t_parsing *data)
 				parse_err(NULL, NULL), NULL);
 	redirection->here_doc->token = data->curr_token;
 	redirection->type = HERE_DOC;
-	redirection->here_doc->command = data->command;
+	redirection->command = data->command;
 	data->curr_token = data->curr_token->next;
 	redirection->here_doc->end_of_file = data->curr_token;
 	return (redirection);

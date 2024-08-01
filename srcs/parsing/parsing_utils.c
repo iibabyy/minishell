@@ -62,8 +62,7 @@ int	add_words_to_command(t_parsing *data)
 	i = 0;
 	while (data->curr_token != NULL && data->curr_token->type != OPERATOR)
 	{
-		while (data->curr_token != NULL && (data->curr_token->type == WORD
-				|| data->curr_token->type == STRING))
+		while (data->curr_token != NULL && (data->curr_token->type == WORD))
 		{
 			command->command[i++] = data->curr_token->content;
 			data->curr_token = data->curr_token->next;

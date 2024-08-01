@@ -19,7 +19,7 @@ t_token	*input_to_tokens(char **input)
 		while ((*input)[i] == ' ')
 			++i;
 		token_start = i;
-		while (is_meta_char(*input, i) == false && (*input)[i] != '\0')
+		while (is_meta_char(*input, i) == false && (*input)[i] != '\0') //TODO: the while stop if an metachar appears even in a string ("cat 'ab|c'"")
 			++i;
 		if (word_to_token(input, token_start, &i, &tokens) == EXIT_FAILURE)
 			return (ft_lstclear(&tokens, ft_free), NULL);
@@ -30,6 +30,7 @@ t_token	*input_to_tokens(char **input)
 	}
 	return (tokens);
 }
+
 
 int	word_to_token(char **input, int i, int *end, t_token **tokens)
 {

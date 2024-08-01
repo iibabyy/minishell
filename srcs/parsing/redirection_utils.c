@@ -12,7 +12,7 @@ t_redirection	*init_redirection(t_parsing *data, int type, int o_flags)
 	{
 		redirection = init_others_redirection(data, type, o_flags);
 	}
-	if (data->curr_token == NULL)
+	if (data->curr_token == NULL) // || data->curr_token->type != WORD
 		return (parse_err(TOKEN_ERR, redirection->token->content), NULL);
 	return (redirection);
 }
@@ -61,19 +61,25 @@ t_redirection	*init_others_redirection(t_parsing *data, int type, int o_flags)
 	return (redirection);
 }
 
-t_redirection	*redirect_add_back(t_redirection **lst, t_redirection *redirection)
+void	redirect_add_back(t_redirection **lst, t_redirection *redirection)
 {
 	t_redirection	*last;
 
-	if (!new)
-		return ;
-	if (!*lst)
+	if (redirection == NULL)
 	{
-		*lst = new;
 		return ;
 	}
-	last = ft_lstlast(*lst);
-	last->next = new;
+	if (*lst == NULL)
+	{
+		*lst = redirection;
+		return ;
+	}
+	last = *lst;
+	while (last->next != NULL)
+	{
+		last = last->next;
+	}
+	last->next = redirection;
 }
 
 int	ft_open_redirect(t_redirection *redirection)

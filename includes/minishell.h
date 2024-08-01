@@ -31,7 +31,7 @@ t_token	*input_to_tokens(char **input);
 // parsing
 
 t_command	*parse(char	*input);
-int	open_redirections(t_redirection	*redirection);
+int	open_redirections(t_command	*command);
 
 // debug
 

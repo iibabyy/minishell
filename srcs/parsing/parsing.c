@@ -10,7 +10,6 @@ t_command	*parse(char	*input)
 	t_parsing	data;
 
 	ft_memset(&data, 0, sizeof(t_data));
-	data.redirection = NULL;
 	data.error = false;
 	input = replace_env_vars(input);
 	data.token = input_to_tokens(&input);
@@ -23,6 +22,9 @@ t_command	*parse(char	*input)
 	// if (open_redirections(data.redirection) == EXIT_FAILURE
 	// 		&& redirections_number(data.token) != 0)
 	// 	return (destroy_parsing(&data), NULL);
+	
+	if (data.command->previous != NULL)
+		return (data.command->previous);
 	return (data.command);
 }
 
@@ -37,8 +39,6 @@ t_command	*token_to_ast(t_parsing *data)
 	data->command = create_ast(data, first_command);
 	if (data->error == true)
 		return (NULL);
-	if (first_command->previous != NULL)
-		return (first_command->previous);
 	return (first_command);
 }
 
@@ -81,6 +81,7 @@ t_command	*init_command(t_parsing *data)
 	command->outfile_fd = STDOUT_FILENO;
 	command->outfile = NULL;
 	command->infile = NULL;
+	command->previous = NULL;
 	command->type = COMMAND;
 	command->command = ft_malloc(sizeof(char *) * (args_number(data->curr_token) + 2));
 	command->command[0] = NULL;

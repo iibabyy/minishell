@@ -40,7 +40,6 @@ Return 1 if an error occurs, and 0 otherwise
 */
 int	open_redirections(t_command	*command)
 {
-
 	if	(parse_redirection(command->infile) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	if (ft_open_redirect(command->infile) == EXIT_FAILURE)
@@ -58,6 +57,8 @@ int	parse_redirection(t_redirection *redirection)
 	t_redirection	*before_temp;
 
 	temp = redirection;
+	if (temp == NULL)
+		return (EXIT_SUCCESS);
 	before_temp = NULL;
 	while (temp != NULL)
 	{
@@ -87,9 +88,9 @@ int	open_file(t_redirection *redirection)
 		return (perror(redirection->file->content), EXIT_FAILURE);
 	type = redirection->type;
 	if (type == OUTPUT || type == APPEND_OUTPUT)
-		target_command_fd = &redirection->command->outfile;
+		target_command_fd = &redirection->command->outfile_fd;
 	else
-		target_command_fd = &redirection->command->infile;
+		target_command_fd = &redirection->command->infile_fd;
 	*target_command_fd = fd;
 	return (EXIT_SUCCESS);
 }
