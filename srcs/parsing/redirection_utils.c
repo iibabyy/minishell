@@ -23,7 +23,6 @@ int	check_redirection(t_redirection	*redirection)
 	t_token	*token;
 	char	*type;
 
-	printf("redirection: %d\n", redirection->type);
 	type = NULL;
 	if (redirection->type == HERE_DOC)
 	{

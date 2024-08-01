@@ -91,7 +91,7 @@ char *operator_type_to_str(int type)
 		return (ft_strdup("OR"));
 	if (type == PIPE)
 		return (ft_strdup("PIPE"));
-	return (ft_strdup("?"));
+	return (NULL);
 }
 
 char *type_to_str(int type)

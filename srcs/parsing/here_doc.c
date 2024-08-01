@@ -113,7 +113,6 @@ t_redirection	*init_here_doc(t_parsing *data)
 		return (print_err("init_here_doc: pipe() failed", true),
 				parse_err(NULL, NULL), NULL);
 	redirection->here_doc->token = data->curr_token;
-	printf("%p\n", &data->curr_token);
 	redirection->type = HERE_DOC;
 	redirection->here_doc->command = data->command;
 	data->curr_token = data->curr_token->next;
