@@ -1,26 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcmp.c                                        :+:      :+:    :+:   */
+/*   print_2d_array.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/12 20:24:32 by ibaby             #+#    #+#             */
-/*   Updated: 2024/07/30 05:04:18 by ibaby            ###   ########.fr       */
+/*   Created: 2024/06/16 13:29:32 by ibaby             #+#    #+#             */
+/*   Updated: 2024/07/31 09:49:45 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
+#include "../../includes/libft.h"
 
-/*
-Return 0 if the 2 strings corresponds
-*/
-int	ft_strcmp(const char *s1, const char *s2)
+int	print_2d_array(char **NULL_TERMINATED_ARRAY)
 {
-	size_t	i;
+	int	i;
+	int	check;
+	int	temp;
 
 	i = 0;
-	while (s1[i] && s2[i] && s1[i] == s2[i])
+	check = 0;
+	while (NULL_TERMINATED_ARRAY[i])
+	{
+		if (i != 0)
+			temp = ft_putstr_fd(" ", 1);
+		temp = ft_putstr_fd(NULL_TERMINATED_ARRAY[i], 1);
+		if (temp < 0)
+			return (-1);
+		if (temp < 0)
+			return (-1);
+		check += temp;
 		i++;
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+	}
+	return (check);
 }

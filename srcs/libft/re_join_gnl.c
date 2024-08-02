@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcmp.c                                        :+:      :+:    :+:   */
+/*   re_get_next_line.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/12 20:24:32 by ibaby             #+#    #+#             */
-/*   Updated: 2024/07/30 05:04:18 by ibaby            ###   ########.fr       */
+/*   Created: 2024/06/27 02:11:07 by ibaby             #+#    #+#             */
+/*   Updated: 2024/08/01 07:53:01 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
+#include "get_next_line.h"
 
-/*
-Return 0 if the 2 strings corresponds
-*/
-int	ft_strcmp(const char *s1, const char *s2)
+char	*re_join_gnl(int fd, char *str_address)
 {
-	size_t	i;
+	char	*gnl;
 
-	i = 0;
-	while (s1[i] && s2[i] && s1[i] == s2[i])
-		i++;
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+	gnl = get_next_line(fd);
+	if (gnl == NULL)
+		return (ft_free(str_address), NULL);
+	if (str_address == NULL)
+		return (gnl);
+	gnl = ft_re_strjoin(str_address, gnl);
+	return (gnl);
 }

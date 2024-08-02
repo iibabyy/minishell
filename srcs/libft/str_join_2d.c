@@ -1,26 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcmp.c                                        :+:      :+:    :+:   */
+/*   str_join_2d.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/12 20:24:32 by ibaby             #+#    #+#             */
-/*   Updated: 2024/07/30 05:04:18 by ibaby            ###   ########.fr       */
+/*   Created: 2024/07/31 03:28:32 by ibaby             #+#    #+#             */
+/*   Updated: 2024/08/02 20:06:15 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
+#include "../../includes/libft.h"
 
-/*
-Return 0 if the 2 strings corresponds
-*/
-int	ft_strcmp(const char *s1, const char *s2)
+char	*str_join_2d(char **str_2d, char *sep)
 {
-	size_t	i;
+	char	*str;
+	int		i;
 
-	i = 0;
-	while (s1[i] && s2[i] && s1[i] == s2[i])
-		i++;
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+	if (str_2d == NULL)
+		return (NULL);
+	str = NULL;
+	i = -1;
+	while (str_2d[++i] != NULL)
+	{
+		if (i != 0)
+		{
+			str = ft_re_strjoin(str, sep);
+			if (str == NULL)
+				return (NULL);
+		}
+		str = ft_re_strjoin(str, str_2d[i]);
+		if (str == NULL)
+			return (NULL);
+	}
+	return (str);
 }

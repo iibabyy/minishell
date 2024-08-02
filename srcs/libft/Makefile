@@ -67,7 +67,16 @@ SRCS =	count_char.c	\
 		multi_strjoin.c	\
 		print_2d_array_nl.c	\
 		print_err_and_exit.c	\
-
+		str_join_2d.c	\
+		str_join_2d_and_free.c	\
+		print_2d_array.c	\
+		ft_remove_char.c	\
+		ft_re_remove_char.c	\
+		get_next_line_utils.c 	\
+		get_next_line.c	\
+		read_file.c 	\
+		re_join_gnl.c	\
+		print_file.c	\
 #	Loading bar	#
 
 G                = \e[92m
@@ -86,7 +95,7 @@ OBJECTS_PREFIXED = $(addprefix $(OBJS_DIR), $(OBJS))
 
 CC = cc
 
-CC_FLAGS = -Wall -Wextra -Werror -fPIE -O3
+CC_FLAGS = -Wall -Wextra -Werror -fPIE
 
 all: Makefile $(NAME)
 

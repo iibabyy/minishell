@@ -1,26 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcmp.c                                        :+:      :+:    :+:   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/12 20:24:32 by ibaby             #+#    #+#             */
-/*   Updated: 2024/07/30 05:04:18 by ibaby            ###   ########.fr       */
+/*   Created: 2024/05/29 22:20:37 by ibaby             #+#    #+#             */
+/*   Updated: 2024/06/12 16:39:03 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
+#include "get_next_line.h"
 
-/*
-Return 0 if the 2 strings corresponds
-*/
-int	ft_strcmp(const char *s1, const char *s2)
+int	is_nl(char *str)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
-	while (s1[i] && s2[i] && s1[i] == s2[i])
+	if (str == 0)
+		return (0);
+	while (str[i])
+	{
+		if (str[i] == '\n')
+			return (1);
 		i++;
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+	}
+	return (0);
 }

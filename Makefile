@@ -14,9 +14,9 @@ NAME = minishell
 
 CC = cc
 
-FLAGS = -Wall -Wextra -Werror -I$(INCLUDE_DIR) -g3 -O3
-
 INCLUDE_DIR = includes/
+
+FLAGS = -Wall -Wextra -Werror -I$(INCLUDE_DIR) -g3
 
 SRCS_DIR = srcs/
 
@@ -36,8 +36,18 @@ GARBAGE_COLLECTOR = $(GARBAGE_COLLECTOR_DIR)garbage_collector.a
 
 FILES =	srcs/error_utils/free_and_exit.c	\
 		srcs/error_utils/print_err.c		\
-		srcs/lexing/check_char.c	\
-		srcs/lexing/lexer.c	\
+		srcs/error_utils/free_utils.c		\
+		srcs/lexing/check_char.c			\
+		srcs/lexing/lexing.c				\
+		srcs/main.c					\
+		srcs/lexing/lexing_utils.c			\
+		srcs/lexing/env_var.c				\
+		srcs/parsing/parsing_utils.c		\
+		srcs/parsing/here_doc.c				\
+		srcs/parsing/parsing.c				\
+		srcs/parsing/redirection_utils.c	\
+		srcs/parsing/redirections.c			\
+		srcs/parsing/utils.c				\
 
 OBJ = $(FILES:.c=.o)
 
@@ -57,7 +67,7 @@ all	: $(NAME)
 # Variables
 
 $(NAME) : $(LIBFT) $(GARBAGE_COLLECTOR) $(OBJ)
-	@$(CC) $(FLAGS) $(OBJ) $(GARBAGE_COLLECTOR) $(LIBFT) -o $(NAME)
+	@$(CC) $(FLAGS) $(OBJ) $(GARBAGE_COLLECTOR) -lreadline $(LIBFT) -o $(NAME)
 	@echo ""
 	@echo "$(BLUE)$(NAME) done ! ✅$(END)"
 
@@ -97,6 +107,18 @@ fclean : clean
 	@rm -f $(NAME)
 	@echo "$(BLUE)Minishell cleaned ! ✅$(END)"
 
+ac : all clean
+
 re : fclean all
 
-.PHONY: all re clean fclean
+s :
+	@make -sC $(LIBFT_DIR)
+	@make -sC $(GARBAGE_COLLECTOR_DIR)
+	@make
+
+res :
+	@make re -sC $(LIBFT_DIR)
+	@make re -sC $(GARBAGE_COLLECTOR_DIR)
+	@make
+
+.PHONY: all re clean fclean ac

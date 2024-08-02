@@ -9,7 +9,16 @@
 		"errors_utils.h": "c",
 		"garb_utils.h": "c",
 		"lexing_utils.h": "c",
-		"structs.h": "c"
+		"structs.h": "c",
+		"parsing_utils.h": "c",
+		"lexing.h": "c",
+		"parsing.h": "c",
+		"resource.h": "c",
+		"wait.h": "c",
+		"readline.h": "c",
+		"history.h": "c",
+		"get_next_line.h": "c",
+		"stdio.h": "c"
 	},
 	"C_Cpp.errorSquiggles": "disabled"
 }

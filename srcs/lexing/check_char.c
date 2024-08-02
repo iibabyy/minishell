@@ -1,15 +1,17 @@
-#include "lexing_utils.h"
+#include "lexing.h"
 
 bool	is_meta_char(char *input, int index)
 {
 	char	c;
 
 	c = input[index];
-	if (ft_strchr("'|<>()$* ", c) != NULL)
-		return (true);
-	else if (c == 34)
+	if (c == '\0')
+		return (false);
+	else if (ft_strchr("|<>$* ", c) != NULL)
 		return (true);
 	else if (c == '&' && input[index + 1] == '&')
+		return (true);
+	else if (c == '&' && input[index - 1] == '&')
 		return (true);
 	else
 		return (false);
@@ -47,30 +49,25 @@ bool	is_quotes(char c)
 		return (false);
 }
 
-int	metachar_size(char *input, int start)
+int	quotes_size(char **input, int start, char eof)
 {
-	static bool	err = false;
-	char		*one_sized;
-	int			i;
-	char		c;
-
-	(one_sized = "()$*", c = input[start], i = 1);
-	if (c == '"' || c == 39)
+	char	*temp;
+	int		i;
+	
+	i = 0;
+	while (1)
 	{
-		while (input[start + i] != c && input[start + i] != '\0')
-			++i;
-		if (input[start + i] == '\0')
+		if ((*input)[start + i] == '\0')
 		{
-			if (err == false)
-					(err = true, print_err("opened quotes detected", false));
-			return (-1);
+			temp = get_input(&eof, QUOTES_PROMPT, true);
+			*input = ft_re_strjoin(*input, temp);
+			if (temp == NULL || *input == NULL)
+				return (print_err("quotes_size(): get_input() failed", false),
+					ft_free(*input), ft_free(temp), -1);
 		}
-		return (i + 1);
+		if ((*input)[start + i] == eof)
+			break ;
+		++i;
 	}
-	if (ft_strchr(one_sized, c) != NULL)
-		return (1);
-	else if (input[start + 1] == c)
-		return (2);
-	else
-		return (1);
+	return (i);
 }
