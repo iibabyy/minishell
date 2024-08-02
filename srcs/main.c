@@ -1,17 +1,21 @@
 #include "../includes/minishell.h"
 
+/*		UTILS	*/
+
 char *type_to_str(int type);
 void	print_command(t_command *command);
 char *operator_type_to_str(int type);
 void printTree(t_command *command, int depth, int isRight, int *branch);
+t_command	*last_command(t_command *current);
+void	print_AST(t_command *command);
 
-# define TEST "ls | cat < Makefile -e || echo 'a"
+/*				*/
+
 int main()
 {
 	char *str;
 	t_command *command;
-	t_command *last;
-	int array[1024] = {0};
+
 	while (1)
 	{
 		str = readline("\033[0;36mminishell \033[0;33m✗\033[0m ");
@@ -21,19 +25,21 @@ int main()
 			break ;
 		}
 		command = parse(str);
-		if (command == NULL)
-			continue ;
-		printf("(%s):\n", str);
-		last = command;
-		while (last->previous)
-			last = last->previous;
-		printTree(last, 0, 0, array);
-		ft_memset(array, 0, sizeof(int) * 1024);
-		command = NULL;
+		print_AST(command);
+		free(str);
 	}
 	destroy_garbage(0);
 	return (0);
 }
+
+void	print_AST(t_command *command)
+{
+	int array[1024] = {0};
+
+	command = last_command(command);
+	printTree(command, 0, 0, array);
+}
+
 
 void print_command(t_command *command)
 {
