@@ -28,7 +28,7 @@ char	*replace_env_vars(char *input)
 			return (ft_free(input), free_2d_array((void ***)&array), NULL);
 	}
 	array[y] = NULL;
-	return (ft_free(input), str_join_2d_and_free(array));
+	return (ft_free(input), str_join_2d_and_free(array, ""));
 }
 
 char	*env_to_string(char	*str, int *dollar_index)

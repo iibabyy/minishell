@@ -79,7 +79,9 @@ char	*get_input(char *end_of_file, char *prompt, bool quotes)
 		input = replace_env_vars(readline(prompt));
 		if (input == NULL)
 			return (input_join);
-		// input = here_doc_subshell(input);
+		input_join = ft_re_strjoin(input_join, "\n");
+		if (input_join == NULL)
+			return (print_err("get_here_doc(): strjoin() failed", false), NULL);
 		if (quotes == false && is_limiter(input, end_of_file) == 0)
 			return (free(input), input_join);
 		input_join = ft_re_strjoin(input_join, input);

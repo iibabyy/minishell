@@ -44,7 +44,7 @@ int	word_to_token(char **input, int i, int *end, t_token **tokens)
 	{
 		len = quotes_size(input, i + 1, (*input)[i]);
 		printf("len: %i\n", len);
-		i++;
+		*end = ++i + len + 1;
 	}
 	else
 		len = *end - i;
@@ -60,8 +60,6 @@ int	word_to_token(char **input, int i, int *end, t_token **tokens)
 		*tokens = new_token;
 	else
 		ft_lstadd_back(tokens, new_token);
-	if (is_quotes((*input)[i]) == true)
-		*end = i + len + 1;
 	return (EXIT_SUCCESS);
 }
 

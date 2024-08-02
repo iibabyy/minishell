@@ -1,8 +1,8 @@
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
-# define P_BLACK
-# define PBLUE '\033[0;34'
+# include <stdbool.h>
+
 typedef struct s_data
 {
 	void	*infos;

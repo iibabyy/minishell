@@ -14,7 +14,7 @@ int main()
 	int array[1024] = {0};
 	while (1)
 	{
-		str = readline("\033[0;36mmminishell \033[0;33m✗\033[0m ");
+		str = readline("\033[0;36mminishell \033[0;33m✗\033[0m ");
 		if (ft_strcmp(str, "exit") == 0)
 		{
 			free(str);
@@ -39,7 +39,7 @@ void print_command(t_command *command)
 {
     if (command->type == COMMAND)
     {
-		printf("%s [<%s>]", command->command[0], str_join_2d(command->command + 1));
+		printf("%s ({%s})", command->command[0], str_join_2d(&command->command[1], ", "));
 	if (command->infile_fd != STDIN_FILENO)
 		printf(" | infile: %i", command->infile_fd);
 	else

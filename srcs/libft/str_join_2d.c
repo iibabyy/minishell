@@ -6,13 +6,13 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 03:28:32 by ibaby             #+#    #+#             */
-/*   Updated: 2024/07/31 03:59:33 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/08/02 20:06:15 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/libft.h"
 
-char	*str_join_2d(char **str_2d)
+char	*str_join_2d(char **str_2d, char *sep)
 {
 	char	*str;
 	int		i;
@@ -24,7 +24,11 @@ char	*str_join_2d(char **str_2d)
 	while (str_2d[++i] != NULL)
 	{
 		if (i != 0)
-			str = ft_re_strjoin(str, " ");
+		{
+			str = ft_re_strjoin(str, sep);
+			if (str == NULL)
+				return (NULL);
+		}
 		str = ft_re_strjoin(str, str_2d[i]);
 		if (str == NULL)
 			return (NULL);
