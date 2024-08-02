@@ -3,8 +3,12 @@
 
 # include <stdlib.h>
 # include <stdbool.h>
+# include <fcntl.h>
+# include <string.h>
 # include "../../includes/garbage_collector.h"
 # include "../../includes/libft.h"
+
+# define ERROR_LOG_FILE "/home/idrissa/42/projects/minishell/.error_log"
 
 void	free_all(t_data *data);
 void	print_err(char *err, bool errno);

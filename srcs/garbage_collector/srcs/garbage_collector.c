@@ -15,7 +15,8 @@ void	*ft_malloc(unsigned long size)
 	if (is_destroyed(READER, false) == NOT_DEFINED)
 		is_destroyed(SETTER, false);
 	if (is_destroyed(READER, false) == true)
-		return (NULL);
+		return (error_log("ft_malloc: used after dastroyed garbage", false),
+			NULL);
 	if (garbage == NULL)
 	{
 		garbage = init_garbage();
@@ -24,7 +25,7 @@ void	*ft_malloc(unsigned long size)
 	}
 	ptr = malloc(size);
 	if (ptr == NULL)
-		return (NULL);
+		return (error_log("ft_malloc: malloc() failed:", true), NULL);
 	if (new_garb_node(ptr, garbage) == EXIT_FAILURE)
 		return (free(ptr), NULL);
 	return (ptr);

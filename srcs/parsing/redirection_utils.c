@@ -50,8 +50,7 @@ t_redirection	*init_others_redirection(t_parsing *data, int type, int o_flags)
 
 	redirection = ft_calloc(1, sizeof(t_redirection));
 	if (redirection == NULL)
-		return (print_err("init_here_doc(): ft_calloc() function failed",
-				false), NULL);
+		return (NULL);
 	redirection->type = type;
 	redirection->o_flags = o_flags;
 	redirection->command = data->command;

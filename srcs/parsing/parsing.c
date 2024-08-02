@@ -98,7 +98,7 @@ t_command	*init_operator(t_parsing *data, t_command *left_command)
 		return (parse_err(TOKEN_ERR, current->content), NULL);
 	operator = ft_calloc(1, sizeof(t_command));
 	if (operator == NULL)
-		return (print_err("init_operator(): ft_calloc() failed", false), NULL);
+		return (NULL);
 	operator->type = token_to_operator_type(current);
 	if (operator->type == -1)
 		return (parse_err(TOKEN_ERR, current->content), NULL);

@@ -81,16 +81,16 @@ char	*get_input(char *end_of_file, char *prompt, bool quotes)
 			return (input_join);
 		input_join = ft_re_strjoin(input_join, "\n");
 		if (input_join == NULL)
-			return (print_err("get_here_doc(): strjoin() failed", false), NULL);
+			return (NULL);
 		if (quotes == false && is_limiter(input, end_of_file) == 0)
 			return (free(input), input_join);
 		input_join = ft_re_strjoin(input_join, input);
 		if (input_join == NULL)
-			return (print_err("get_here_doc(): strjoin() failed", false), NULL);
+			return (NULL);
 		if (quotes == true && ft_strchr(input, *end_of_file) != NULL)
 			return (free(input), input_join);
 		if (input_join == NULL)
-			return (print_err("get_here_doc(): strjoin() failed", false), NULL);
+			return (NULL);
 		free(input);
 	}
 	return (input_join);
@@ -102,14 +102,12 @@ t_redirection	*init_here_doc(t_parsing *data)
 
 	redirection = ft_calloc(1, sizeof(t_redirection));
 	if (redirection == NULL)
-		return (print_err("init_here_doc(): ft_malloc() function failed",
-				false), NULL);
+		return (NULL);
 	redirection->here_doc = ft_malloc(sizeof(t_here_doc));
 	if (redirection->here_doc == NULL)
-		return (print_err("init_here_doc: ft_malloc() failed", true), NULL);
+		return (NULL);
 	if (pipe(redirection->here_doc->pipe) == -1)
-		return (print_err("init_here_doc: pipe() failed", true),
-				parse_err(NULL, NULL), NULL);
+		return (parse_err(NULL, NULL), NULL);
 	redirection->here_doc->token = data->curr_token;
 	redirection->type = HERE_DOC;
 	redirection->command = data->command;
