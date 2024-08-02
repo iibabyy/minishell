@@ -12,7 +12,7 @@
 
 #include "get_next_line.h"
 
-int	is_nl(char *str)
+int	is_newline(char *str)
 {
 	int	i;
 

@@ -31,7 +31,7 @@ char	*get_next_line(int fd)
 	buffer = ft_malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!str || !buffer)
 		return (free(buffer), free(str), NULL);
-	while (is_nl(str) == 0 && byte_read > 0)
+	while (is_newline(str) == 0 && byte_read > 0)
 	{
 		byte_read = read(fd, buffer, BUFFER_SIZE);
 		if (byte_read < 0)
