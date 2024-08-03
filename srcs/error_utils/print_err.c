@@ -26,7 +26,7 @@ void	parse_err(char *error, char *token)
 		{
 			token = ft_strdup(token);
 			if (token == NULL)
-				return (print_err("parse_err(): ft_strdup() failed", false));
+				return (print_err("parse_err: ft_strdup() failed", false));
 			token[3] = '\0';
 		}
 		ft_putstr_fd("Error: ", STDERR_FILENO);
@@ -43,4 +43,33 @@ void	print_err_and_exit(char *err, int status, bool errno)
 {
 	print_err(err, errno);
 	exit(status);
+}
+
+void	error_log(char *error, bool errno)
+{
+	static int	error_num = 0;
+	int	error_log_fd;
+
+	error_log_fd = open(ERROR_LOG_FILE, O_WRONLY | O_CREAT | O_APPEND);
+	if (error_log_fd == -1)
+		return ;
+	if (++error_num != 1)
+		if (ft_putstr_fd("\n\n", error_log_fd) == -1)
+			return (ft_close_fd(&error_log_fd),
+				print_err("error_log: put_str() failed", true));
+	if (ft_putnbr_fd(error_num, error_log_fd) == -1)
+		return (ft_close_fd(&error_log_fd),
+			print_err("error_log: put_nbr() failed", true));
+	if (ft_putstr_fd(".\n", error_log_fd) == -1)
+		return (ft_close_fd(&error_log_fd),
+			print_err("error_log: put_str() failed", true));
+	if (error != NULL)
+		if (ft_putstr_fd(error, error_log_fd) == -1)
+		return (ft_close_fd(&error_log_fd),
+			print_err("error_log: put_str() failed", true));
+	if (errno == true)
+		if (ft_putstr_fd(strerror(errno), error_log_fd) == -1)
+			return (ft_close_fd(&error_log_fd),
+				print_err("error_log: put_str() failed", true));
+	ft_close_fd(&error_log_fd);
 }

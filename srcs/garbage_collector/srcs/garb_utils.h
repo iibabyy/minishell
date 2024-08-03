@@ -9,6 +9,7 @@
 # include <stddef.h>
 # include <stdbool.h>
 # include <errno.h>
+# include <string.h>
 
 # define E1 "Error: use ft_malloc before any other garbage_collector functions"
 # define E2 "Error: can't use an garbage function after using destroy_garbage()"
@@ -26,5 +27,6 @@ t_garbage	*init_garbage(void);
 void		print_err(char *error);
 t_garb_node	*find_by_address(void *address, t_garbage *garbage);
 t_garb_node	*find_before_node(t_garb_node *node, t_garbage *garbage);
+void		error_log(char *error, bool erno);
 
 #endif

@@ -61,13 +61,12 @@ typedef struct s_parsing
 typedef struct s_command
 {
 	char					**command;
-	struct s_redirection	*infile;
-	struct s_redirection	*outfile;
+	struct s_redirection	*redirections;
 	struct s_command		*left;
 	struct s_command		*right;
 	struct s_command		*previous;
-	int						infile_fd;
-	int						outfile_fd;
+	int						infile;
+	int						outfile;
 	int						type;
 	int						weight;
 }	t_command;

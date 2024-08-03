@@ -62,7 +62,7 @@ int	quotes_size(char **input, int start, char eof)
 			temp = get_input(&eof, QUOTES_PROMPT, true);
 			*input = ft_re_strjoin(*input, temp);
 			if (temp == NULL || *input == NULL)
-				return (print_err("quotes_size(): get_input() failed", false),
+				return (error_log("quotes_size: get_input() failed", false),
 					ft_free(*input), ft_free(temp), -1);
 		}
 		if ((*input)[start + i] == eof)

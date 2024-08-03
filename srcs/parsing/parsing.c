@@ -77,10 +77,8 @@ t_command	*init_command(t_parsing *data)
 	command = ft_calloc(1, sizeof(t_command));
 	if (command == NULL)
 		return (NULL);
-	command->infile_fd = STDIN_FILENO;
-	command->outfile_fd = STDOUT_FILENO;
-	command->outfile = NULL;
-	command->infile = NULL;
+	command->infile = STDIN_FILENO;
+	command->outfile = STDOUT_FILENO;
 	command->previous = NULL;
 	command->type = COMMAND;
 	command->command = ft_malloc(sizeof(char *) * (args_number(data->curr_token) + 2));
@@ -98,7 +96,7 @@ t_command	*init_operator(t_parsing *data, t_command *left_command)
 		return (parse_err(TOKEN_ERR, current->content), NULL);
 	operator = ft_calloc(1, sizeof(t_command));
 	if (operator == NULL)
-		return (print_err("init_operator(): ft_calloc() failed", false), NULL);
+		return (NULL);
 	operator->type = token_to_operator_type(current);
 	if (operator->type == -1)
 		return (parse_err(TOKEN_ERR, current->content), NULL);

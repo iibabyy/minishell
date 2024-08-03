@@ -8,7 +8,7 @@ t_token	*init_token(char **input, int start)
 
 	new_token = ft_calloc(1, sizeof(t_token) * 1);
 	if (new_token == NULL)
-		return (print_err("init_token: ft_malloc() failed:", true), NULL);
+		return (NULL);
 	new_token->next = NULL;
 	new_token->type = char_type(*input, start);
 	len = metachar_size(input, start);
@@ -21,8 +21,7 @@ t_token	*init_token(char **input, int start)
 	// }
 	content = ft_substr(*input, start, len);
 	if (content == NULL)
-		return (print_err("init_token: ft_substr() function failed:", true),
-			ft_free(new_token), NULL);
+		return (ft_free(new_token), NULL);
 	new_token->content = content;
 	return (new_token);
 }
@@ -40,6 +39,6 @@ int	char_type(char *str, int index)
 		return (OPERATOR);
 	if (c == '&' && str[index + 1] == '&')
 		return (OPERATOR);
-	print_err("unknow token\n", false);
+	error_log("unknow token\n", false);
 	return (-1);
 }
