@@ -48,10 +48,10 @@ char	**add_alias(char **array, char *line, int start)
 	i = 0;
 	while (alias_val[i] != NULL)
 	{
-		array[i] = alias_val[i];
+		array[i + 1] = alias_val[i];
 		++i;
 	}
-	array[i] = NULL;
+	array[i + 1] = NULL;
 	return (ft_free(alias_val), array);
 }
 
@@ -68,7 +68,7 @@ char	**insert_alias(char **command, char **alias)
 	if (new_command == NULL)
 		return (command);
 	while (alias[++i] != NULL)
-		new_command[i] = alias[i];
+		new_command[i] = alias[i + 1];
 	while (command[++j + 1] != NULL)
 		new_command[i + j] = command[j + 1];
 	new_command[i + j] = NULL;
