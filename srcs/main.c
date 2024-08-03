@@ -15,8 +15,6 @@ int main()
 {
 	char *str;
 	t_command *command;
-	t_command *last;
-	int array[1024] = {0};
 
 	init_aliases();
 	init_error_log();
@@ -29,15 +27,10 @@ int main()
 			break ;
 		}
 		command = parse(str);
+		free(str);
 		if (command == NULL)
 			continue ;
-		last = command;
-		while (last->previous)
-			last = last->previous;
-		printTree(last, 0, 0, array);
-		ft_memset(array, 0, sizeof(int) * 1024);
-		command = NULL;
-		free(str);
+		print_AST(command);
 	}
 	destroy_garbage(0);
 	return (0);
