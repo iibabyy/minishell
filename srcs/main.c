@@ -8,6 +8,7 @@ char *operator_type_to_str(int type);
 void printTree(t_command *command, int depth, int isRight, int *branch);
 t_command	*last_command(t_command *current);
 void	print_AST(t_command *command);
+void    exec_command(t_command *);
 
 /*				*/
 
@@ -25,6 +26,7 @@ int main()
 			break ;
 		}
 		command = parse(str);
+		exec_command(command);
 		print_AST(command);
 		free(str);
 	}

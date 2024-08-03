@@ -1,5 +1,3 @@
-#	colors	#
-
 BLACK=	$(shell tput -Txterm setaf 0)
 RED= 	$(shell tput -Txterm setaf 1)
 GREEN= 	$(shell tput -Txterm setaf 2)
@@ -48,6 +46,7 @@ FILES =	srcs/error_utils/free_and_exit.c	\
 		srcs/parsing/redirection_utils.c	\
 		srcs/parsing/redirections.c			\
 		srcs/parsing/utils.c				\
+		srcs/exec/exec.c					\
 
 OBJ = $(FILES:.c=.o)
 
