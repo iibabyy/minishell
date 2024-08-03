@@ -86,7 +86,7 @@ void exec_command(t_command *command)
                 print_err_and_exit(command->command[0] , 1, false);
             }
         }
-        //open_redirections(command);
+        open_redirections(command);
         redirect_std(command);
         execve(exec->command_path, command->command, NULL);     
     }
