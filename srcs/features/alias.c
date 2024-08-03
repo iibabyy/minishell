@@ -54,8 +54,6 @@ int	init_aliases()
 	aliases = search_aliases(mshrc_fd);
 	if (aliases == NULL)
 		return (EXIT_FAILURE);
-	printf("test\n");
-	print_2d_array(aliases[0]);
 	get_alias(aliases);
 	return (EXIT_SUCCESS);
 }
