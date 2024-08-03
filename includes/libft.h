@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:35:02 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/03 00:58:11 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/08/03 11:39:57 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ int			print_2d_array_nl(char **NULL_TERMINATED_ARRAY);
 char		*re_join_gnl(int fd, char *str_address);
 int			count_char(char *str, char char_to_count);
 int			count_char_2d(char **array, char char_to_count);
-void		*ft_realloc(void *buffer, int buffer_size,
-				size_t new_size, size_t sizeof_type);
+// void		*ft_realloc(void *buffer, int buffer_size,
+// 				size_t new_size, size_t sizeof_type);
 long int	ft_atol(const char *str);
 char		*str_join_2d_and_free(char **str_2d, char *sep);
 char		*str_join_2d(char **str_2d, char *sep);

@@ -1,8 +1,5 @@
 #include "garb_utils.h"
 
-static int	is_destroyed(bool setter, bool value);
-static int	init_static(t_garbage **_static, void *arg);
-
 /*	this function works like the real malloc function,
 	it returns a pointers to an heap allocated zone.
 	Make sure to use this function at least one time before
@@ -26,9 +23,32 @@ void	*ft_malloc(unsigned long size)
 	ptr = malloc(size);
 	if (ptr == NULL)
 		return (error_log("ft_malloc: malloc() failed:", true), NULL);
-	if (new_garb_node(ptr, garbage) == EXIT_FAILURE)
+	if (new_garb_node(ptr, garbage, size) == EXIT_FAILURE)
 		return (free(ptr), NULL);
 	return (ptr);
+}
+
+void	*ft_realloc(void *ptr, unsigned long size_to_add)
+{
+	static t_garbage	*garbage = NULL;
+	t_garb_node	*ptr_node;
+	unsigned char	*new_ptr;
+
+	if (ptr == NULL || is_destroyed(READER, false) != false)
+		return (NULL);
+	if (garbage == NULL)
+		return ((void)init_static(&garbage, ptr), NULL);
+	if (size_to_add == 0)
+		return (ptr);
+	ptr_node = find_by_address(ptr, garbage);
+	if (ptr_node == NULL)
+		return (NULL);
+	new_ptr = ft_calloc(1, ptr_node->size + size_to_add);
+	if (new_ptr == NULL)
+		return (ft_free(ptr), NULL);
+	ft_memcpy(new_ptr, ptr, ptr_node->size);
+	ft_free(ptr);
+	return ((void *)new_ptr);
 }
 
 /*this function copy the real 'free( )' function.
@@ -85,21 +105,4 @@ void	destroy_garbage(t_garbage *garb)
 	}
 	free(garbage);
 	is_destroyed(SETTER, true);
-}
-
-static int	init_static(t_garbage **_static, void *arg)
-{
-	if (arg == NULL)
-		return (EXIT_FAILURE);
-	*_static = (t_garbage *)arg;
-	return (EXIT_SUCCESS);
-}
-
-static int	is_destroyed(bool setter, bool value)
-{
-	static int	is_destroy = NOT_DEFINED;
-
-	if (setter == true)
-		is_destroy = value;
-	return (is_destroy);
 }

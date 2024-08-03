@@ -2,6 +2,7 @@
 # define GARB_UTILS_H
 
 # include "../../../includes/garbage_collector.h"
+# include "../../../includes/libft.h"
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdio.h>
@@ -21,12 +22,13 @@
 # define READER 0
 
 t_garb_node	*find_in_garbage(void *address, t_garbage *garbage);
-int			new_garb_node(void *address, t_garbage *garbage);
+int			new_garb_node(void *address, t_garbage *garbage, unsigned long size);
 void		destroy_garbage_node(t_garb_node *node);
 t_garbage	*init_garbage(void);
 void		print_err(char *error);
 t_garb_node	*find_by_address(void *address, t_garbage *garbage);
 t_garb_node	*find_before_node(t_garb_node *node, t_garbage *garbage);
 void		error_log(char *error, bool erno);
-
+int			init_static(t_garbage **_static, void *arg);
+int			is_destroyed(bool setter, bool value);
 #endif

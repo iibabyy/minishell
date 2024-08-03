@@ -13,5 +13,6 @@ char ***search_aliases(int fd);
 char	**line_to_alias(char *line);
 void	clear_3d_array(char ***alias, int end);
 char	***get_alias(char ***init_alias);
+char	**add_alias(char **array, char *line, int start);
 
 #endif

@@ -12,6 +12,9 @@ int main()
 	t_command *command;
 	t_command *last;
 	int array[1024] = {0};
+
+	init_aliases();
+	init_error_log();
 	while (1)
 	{
 		str = readline("\033[0;36mminishell \033[0;33m✗\033[0m ");

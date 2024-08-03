@@ -12,6 +12,7 @@ void	destroy_tokens(t_token *tokens);
 void	destroy_here_docs(t_here_doc *here_doc);
 void	destroy_redirections(t_redirection *redirection);
 void	destroy_parsing(t_parsing *data);
+void	init_error_log();
 void	error_log(char *error, bool errno);
 
 #endif

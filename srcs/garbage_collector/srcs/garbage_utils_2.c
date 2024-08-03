@@ -8,10 +8,11 @@ t_garb_node	*find_by_address(void *address, t_garbage *garbage)
 	while (node != NULL)
 	{
 		if (node->address == address)
-			break ;
+			return (node);
 		node = node->next;
 	}
-	return (node);
+	error_log("find_by_address: address not found", false);
+	return (NULL);
 }
 
 t_garb_node	*find_before_node(t_garb_node *node, t_garbage *garbage)
@@ -27,5 +28,23 @@ t_garb_node	*find_before_node(t_garb_node *node, t_garbage *garbage)
 			return (before_node);
 		before_node = before_node->next;
 	}
+	error_log("find_before_node: address not found", false);
 	return (NULL);
+}
+
+int	init_static(t_garbage **_static, void *arg)
+{
+	if (arg == NULL)
+		return (EXIT_FAILURE);
+	*_static = (t_garbage *)arg;
+	return (EXIT_SUCCESS);
+}
+
+int	is_destroyed(bool setter, bool value)
+{
+	static int	is_destroy = NOT_DEFINED;
+
+	if (setter == true)
+		is_destroy = value;
+	return (is_destroy);
 }
