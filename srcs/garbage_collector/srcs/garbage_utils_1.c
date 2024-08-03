@@ -22,6 +22,7 @@ t_garbage	*init_garbage(void)
 	if (garbage == NULL)
 		return (error_log("init_garbage: malloc() failed:", true), NULL);
 	garbage->first = NULL;
+	ft_realloc(garbage, 1);
 	ft_free(garbage);
 	destroy_garbage(garbage);
 	return (garbage);
@@ -33,7 +34,7 @@ void	destroy_garbage_node(t_garb_node *node_to_destroy)
 	free(node_to_destroy);
 }
 
-int	new_garb_node(void *address, t_garbage *garbage)
+int	new_garb_node(void *address, t_garbage *garbage, unsigned long size)
 {
 	t_garb_node	*new_node;
 
@@ -41,6 +42,7 @@ int	new_garb_node(void *address, t_garbage *garbage)
 	if (new_node == NULL)
 		return (error_log("new_garb_node: malloc() failed:", true), EXIT_FAILURE);
 	new_node->address = address;
+	new_node->size = size;
 	new_node->next = garbage->first;
 	garbage->first = new_node;
 	return (EXIT_SUCCESS);

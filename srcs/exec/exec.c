@@ -38,6 +38,7 @@ char *get_path(char *command, char **paths)
     return(NULL);
 }
 
+/*function to dup fd to std*/
 void redirect_std(t_command *command, int *fd, bool is_pipe)
 {
         if (command->infile == STDIN_FILENO)

@@ -13,6 +13,7 @@ typedef struct s_data
 typedef struct s_garb_node
 {
 	void				*address;
+	unsigned long		size;
 	struct s_garb_node	*next;
 }	t_garb_node;
 

@@ -50,7 +50,7 @@ void	error_log(char *error, bool errno)
 	static int	error_num = 0;
 	int	error_log_fd;
 
-	error_log_fd = open(ERROR_LOG_FILE, O_WRONLY | O_CREAT | O_APPEND);
+	error_log_fd = open(ERROR_LOG_FILE, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (error_log_fd == -1)
 		return ;
 	if (++error_num != 1)
@@ -72,4 +72,16 @@ void	error_log(char *error, bool errno)
 			return (ft_close_fd(&error_log_fd),
 				print_err("error_log: put_str() failed", true));
 	ft_close_fd(&error_log_fd);
+}
+
+void	init_error_log()
+{
+	int	fd;
+
+	unlink(ERROR_LOG_FILE);
+	fd = open(ERROR_LOG_FILE, O_WRONLY | O_CREAT, 0644);
+	if (fd == -1)
+		return ;
+	write (fd, "\0", 1);
+	close(fd);
 }
