@@ -7,11 +7,13 @@
 # define MAX_ALIAS 128
 
 char	***get_alias(char ***init_alias);
-int	check_if_alias(char **command, char ***aliases);
+int	check_if_alias(t_command *command, char ***aliases);
 int	init_aliases();
 char ***search_aliases(int fd);
 char	**line_to_alias(char *line);
 void	clear_3d_array(char ***alias, int end);
 char	***get_alias(char ***init_alias);
+char	**add_alias(char **array, char *line, int start);
+char	**insert_alias(char **command, char **alias);
 
 #endif

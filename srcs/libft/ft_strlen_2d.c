@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   garbage_collector.h                                :+:      :+:    :+:   */
+/*   ft_strlen_2d.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/27 22:31:32 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/03 11:39:19 by ibaby            ###   ########.fr       */
+/*   Created: 2024/08/03 13:10:26 by ibaby             #+#    #+#             */
+/*   Updated: 2024/08/03 13:14:09 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GARBAGE_COLLECTOR_H
-# define GARBAGE_COLLECTOR_H
+#include "../../includes/libft.h"
 
-# include "structs.h"
+size_t	ft_strlen_2d(char **str_2d)
+{
+	int	i;
 
-void	*ft_malloc(unsigned long size);
-void	*ft_realloc(void *ptr, unsigned long size_to_add);
-void	ft_free(void *address);
-void	destroy_garbage(t_garbage *NULL_PARAM);
-
-#endif
+	i = 0;
+	while (str_2d[i] != NULL)
+		++i;
+	return (i);
+}

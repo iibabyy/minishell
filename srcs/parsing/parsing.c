@@ -22,7 +22,8 @@ t_command	*parse(char	*input)
 	// if (open_redirections(data.redirection) == EXIT_FAILURE
 	// 		&& redirections_number(data.token) != 0)
 	// 	return (destroy_parsing(&data), NULL);
-	
+	if (replace_aliases(last_command(data.command)) == EXIT_FAILURE)
+		return (destroy_parsing(&data), NULL);
 	if (data.command->previous != NULL)
 		return (data.command->previous);
 	return (data.command);

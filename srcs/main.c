@@ -15,7 +15,11 @@ int main()
 {
 	char *str;
 	t_command *command;
+	t_command *last;
+	int array[1024] = {0};
 
+	init_aliases();
+	init_error_log();
 	while (1)
 	{
 		str = readline("\033[0;36mminishell \033[0;33m✗\033[0m ");
@@ -25,7 +29,14 @@ int main()
 			break ;
 		}
 		command = parse(str);
-		print_AST(command);
+		if (command == NULL)
+			continue ;
+		last = command;
+		while (last->previous)
+			last = last->previous;
+		printTree(last, 0, 0, array);
+		ft_memset(array, 0, sizeof(int) * 1024);
+		command = NULL;
 		free(str);
 	}
 	destroy_garbage(0);
@@ -43,17 +54,24 @@ void	print_AST(t_command *command)
 
 void print_command(t_command *command)
 {
+	int i;
+
+	i = -1;
     if (command->type == COMMAND)
     {
-		printf("%s ({%s})", command->command[0], str_join_2d(&command->command[1], ", "));
-	if (command->infile != STDIN_FILENO)
-		printf(" | infile: %i", command->infile);
-	else
-		printf(" | infile: STD");
-	if (command->outfile != STDOUT_FILENO)
-		printf(" | outfile: %i", command->outfile);
-	else
-		printf(" | outfile: STD");
+		printf("%s", command->command[++i]);
+		while (command->command[++i] != NULL)
+		{
+			printf(" (\"%s\")", command->command[i]);
+		}
+		if (command->infile != STDIN_FILENO)
+			printf(" | infile: %i", command->infile);
+		else
+			printf(" | infile: STD");
+		if (command->outfile != STDOUT_FILENO)
+			printf(" | outfile: %i", command->outfile);
+		else
+			printf(" | outfile: STD");
 	}
 	else
 		printf ("%s", operator_type_to_str(command->type));
