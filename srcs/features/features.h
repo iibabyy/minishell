@@ -3,7 +3,7 @@
 
 #include "../../includes/minishell.h"
 
-# define MSHRC "/home/idrissa/42/projects/minishell/.mshrc"
+# define MSHRC ".mshrc"
 # define MAX_ALIAS 128
 
 char	***get_alias(char ***init_alias);

@@ -9,18 +9,16 @@ void printTree(t_command *command, int depth, int isRight, int *branch);
 t_command	*last_command(t_command *current);
 void	print_AST(t_command *command);
 void    exec_command(t_command *);
-
+void    exec_single_command(t_command *);
 /*				*/
 
 int main()
 {
 	char *str;
 	t_command *command;
-	t_command *last;
-	int array[1024] = {0};
 
-	init_aliases();
-	init_error_log();
+	//init_aliases();
+	//init_error_log();
 	while (1)
 	{
 		str = readline("\033[0;36mminishell \033[0;33m✗\033[0m ");
@@ -31,8 +29,15 @@ int main()
 		}
 		command = parse(str);
 		print_AST(command);
-		exec_command(command);
+		if (command->previous == NULL)
+		{
+			printf("only one \n");
+			exec_single_command(command);
+		}
+		else
+			exec_command(command);
 		free(str);
+		printf("debuuug\n");
 	}
 	destroy_garbage(0);
 	return (0);
