@@ -29,10 +29,12 @@ int	open_here_doc(t_redirection *redirection)
 {
 	t_here_doc	*here_doc;
 	char		*input;
+	int			*command_infile;
 
 	if (redirection->type != HERE_DOC)
 		return (parse_err(TOKEN_ERR, redirection->token->content),
 				EXIT_FAILURE);
+	command_infile = &redirection->command->infile;
 	here_doc = redirection->here_doc;
 	input = get_input(here_doc->end_of_file->content, HEREDOC_PROMPT, true);
 	if (input == NULL)
@@ -40,7 +42,9 @@ int	open_here_doc(t_redirection *redirection)
 	ft_putstr_fd(input, here_doc->pipe[1]);
 	ft_free(input);
 	ft_close_fd(&here_doc->pipe[1]);
-	redirection->command->infile_fd = here_doc->pipe[0];
+	if (is_standart_fd(*command_infile) == false)
+		ft_close_fd(command_infile);
+	*command_infile = here_doc->pipe[0];
 	return (EXIT_SUCCESS);
 }
 
