@@ -67,11 +67,12 @@ char	**insert_alias(char **command, char **alias)
 		* (ft_strlen_2d(command) + ft_strlen_2d(alias)));
 	if (new_command == NULL)
 		return (command);
-	while (alias[++i] != NULL)
+	while (alias[++i + 1] != NULL)
 		new_command[i] = alias[i + 1];
 	while (command[++j + 1] != NULL)
 		new_command[i + j] = command[j + 1];
 	new_command[i + j] = NULL;
+	print_2d_array_nl(command);
 	ft_free(command);
 	return (new_command);
 }
