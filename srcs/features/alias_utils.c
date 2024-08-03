@@ -48,11 +48,30 @@ char	**add_alias(char **array, char *line, int start)
 	i = 0;
 	while (alias_val[i] != NULL)
 	{
-		array[1 + i] = alias_val[i];
+		array[i] = alias_val[i];
 		++i;
 	}
-	array[i + 1] = NULL;
+	array[i] = NULL;
 	return (ft_free(alias_val), array);
 }
 
-char	
+char	**insert_alias(char **command, char **alias)
+{
+	char	**new_command;
+	int		i;
+	int		j;
+
+	i = -1;
+	j = -1;
+	new_command = ft_malloc(sizeof(char *)
+		* (ft_strlen_2d(command) + ft_strlen_2d(alias)));
+	if (new_command == NULL)
+		return (command);
+	while (alias[++i] != NULL)
+		new_command[i] = alias[i];
+	while (command[++j + 1] != NULL)
+		new_command[i + j] = command[j + 1];
+	new_command[i + j] = NULL;
+	ft_free(command);
+	return (new_command);
+}

@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 22:20:39 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/03 12:29:08 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/08/03 14:40:50 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,20 @@ char	*get_next_line(int fd)
 	str = ft_strdup(save[fd]);
 	buffer = ft_malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!str || !buffer)
-		return (free(buffer), free(str), NULL);
+		return (ft_free(buffer), ft_free(str), NULL);
 	while (is_nl(str) == 0 && byte_read > 0)
 	{
 		byte_read = read(fd, buffer, BUFFER_SIZE);
 		if (byte_read < 0)
-			return (ft_clean(save[fd]), free(buffer), free(str), NULL);
-		free((buffer[byte_read] = '\0', str = ft_re_strjoin(str, buffer),
-				NULL));
+			return (ft_clean(save[fd]), ft_free(buffer), ft_free(str), NULL);
+		buffer[byte_read] = '\0';
+		str = ft_re_strjoin(str, buffer);
 		if (!str)
-			return (free(buffer), NULL);
+			return (ft_free(buffer), NULL);
 	}
 	after_line(str, save[fd]);
 	str = re_before_line(str);
-	return (free(buffer), str);
+	return (ft_free(buffer), str);
 }
 
 void	ft_clean(char *save)

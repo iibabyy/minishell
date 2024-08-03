@@ -12,7 +12,7 @@ int	replace_aliases(t_command *last_command)
 	}
 	if (last_command == NULL)
 		return (EXIT_SUCCESS);
-	if (check_if_alias(&last_command->command, alias) == EXIT_FAILURE)
+	if (check_if_alias(last_command, alias) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	if (replace_aliases(last_command->left) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
@@ -21,17 +21,22 @@ int	replace_aliases(t_command *last_command)
 	return (EXIT_SUCCESS);
 }
 
-int	check_if_alias(char ***command, char ***aliases)
+int	check_if_alias(t_command *command, char ***aliases)
 {
-	char	*alias;
 	int		i;
+	int		type;
+	char	**command_arr;
 
 	i = -1;
-	while (aliases[++i])
+	type = command->type;
+	command_arr = command->command;
+	while (aliases[++i] != NULL)
 	{
-		if (ft_strcmp(aliases[i][0], (*command)[0]) == 0)
+		if (type != COMMAND)
+			continue ;
+		if (ft_strcmp(aliases[i][0], command_arr[0]) == 0)
 		{
-			*command = insert_alias(*command, aliases[i]);
+			command->command = insert_alias(command_arr, aliases[i]);
 			return (EXIT_SUCCESS);
 		}
 	}
@@ -60,23 +65,23 @@ char ***search_aliases(int fd)
 	int		i;
 
 	i = -1;
-	aliases = ft_calloc(MAX_ALIAS, sizeof(char **));
+	aliases = ft_calloc(MAX_ALIAS + 1, sizeof(char **));
 	if (aliases == NULL)
 		return (NULL);
-	do
+	while (++i < MAX_ALIAS)
 	{
-		++i;
 		line = get_next_line(fd);
 		if (line == NULL)
 			break ;
 		if (ft_strncmp(line, "alias ", 6) == 0)
 		{
 			aliases[i] = line_to_alias(line);
-			if (aliases[i] != NULL)
+			if (aliases[i] == NULL)
 				continue ;
+			--i;
 		}
 		ft_free(line);
-	}	while (line != NULL && i < MAX_ALIAS);
+	}
 	aliases[i] = NULL;
 	if (aliases[0] == NULL)
 		return (ft_free(aliases), NULL);

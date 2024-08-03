@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:35:02 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/03 11:39:57 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/08/03 13:14:16 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ char		*ft_re_remove_char(char *str, char c);
 char		*re_join_gnl(int fd, char *str_address);
 char		*read_file(int fd);
 int			print_file(int fd);
+size_t		ft_strlen_2d(char **str_2d);
 
 //	libft functions
 

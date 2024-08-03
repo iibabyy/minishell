@@ -43,7 +43,6 @@ int	word_to_token(char **input, int i, int *end, t_token **tokens)
 	if (is_quotes((*input)[i]) == true)
 	{
 		len = quotes_size(input, i + 1, (*input)[i]);
-		printf("len: %i\n", len);
 		*end = ++i + len + 1;
 	}
 	else
@@ -51,7 +50,6 @@ int	word_to_token(char **input, int i, int *end, t_token **tokens)
 	word = ft_substr(*input, i, len);
 	if (word == NULL)
 		return (EXIT_FAILURE);
-	printf("word: %s\n", word);
 	new_token = ft_lstnew(word);
 	if (new_token == NULL)
 		return (ft_free(word), EXIT_FAILURE);

@@ -77,6 +77,8 @@ SRCS =	count_char.c	\
 		read_file.c 	\
 		re_join_gnl.c	\
 		print_file.c	\
+		ft_strlen_2d.c \
+
 #	Loading bar	#
 
 G                = \e[92m
