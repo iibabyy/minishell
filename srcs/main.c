@@ -48,12 +48,12 @@ void print_command(t_command *command)
     if (command->type == COMMAND)
     {
 		printf("%s ({%s})", command->command[0], str_join_2d(&command->command[1], ", "));
-	if (command->infile_fd != STDIN_FILENO)
-		printf(" | infile: %i", command->infile_fd);
+	if (command->infile != STDIN_FILENO)
+		printf(" | infile: %i", command->infile);
 	else
 		printf(" | infile: STD");
-	if (command->outfile_fd != STDOUT_FILENO)
-		printf(" | outfile: %i", command->outfile_fd);
+	if (command->outfile != STDOUT_FILENO)
+		printf(" | outfile: %i", command->outfile);
 	else
 		printf(" | outfile: STD");
 	}

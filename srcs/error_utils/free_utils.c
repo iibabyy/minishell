@@ -11,12 +11,12 @@ void	destroy_commands(t_command *command)
 		destroy_commands(command->left);
 	if (command->right != NULL)
 		destroy_commands(command->right);
-	if (command->infile_fd != STDIN_FILENO)
-		ft_close_fd(&command->infile_fd);
-	if (command->outfile_fd != STDOUT_FILENO)
-		ft_close_fd(&command->outfile_fd);
-	destroy_redirections(command->infile);
-	destroy_redirections(command->outfile);
+	if (command->infile != STDIN_FILENO)
+		ft_close_fd(&command->infile);
+	if (command->outfile != STDOUT_FILENO)
+		ft_close_fd(&command->outfile);
+	destroy_redirections(command->redirections);
+	destroy_redirections(command->redirections);
 	ft_free(command);
 }
 

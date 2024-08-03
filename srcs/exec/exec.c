@@ -38,38 +38,68 @@ char *get_path(char *command, char **paths)
     return(NULL);
 }
 
-void redirect_std(t_command *command)
+void redirect_std(t_command *command, int *fd, bool is_pipe)
 {
-        open(command->outfile->file->content, command->outfile->o_flags);
-        printf("Nom de l'outfile: %s\n", command->outfile->file->content);
-        if (dup2(command->infile_fd, STDIN_FILENO) == -1)
-                print_err_and_exit("dup", 1, false);
-        close (command->infile_fd);
-        printf("Num de l' infile: %d\n", command->infile_fd);
-        if (dup2(command->outfile_fd, STDOUT_FILENO) == -1)
-                print_err_and_exit("dup", 1, false);
-         close (command->outfile_fd);
-        printf("Num de l'outfile %d\n", command->outfile_fd);
+        if (command->infile == STDIN_FILENO)
+        {
+            if (is_pipe)
+            {
+                dup2(fd[0], STDIN_FILENO);
+            }
+            close(fd[0]);
+        }
+        else
+        {
+            if (dup2(command->infile, STDIN_FILENO) == -1)
+                    print_err_and_exit("dup", 1, false);
+            close(command->infile);
+            if (is_pipe)
+                close(fd[0]);
+        }
+        if (command->outfile == STDOUT_FILENO)
+        {
+            if (is_pipe)
+                dup2(fd[1], STDOUT_FILENO);
+            close(fd[1]);
+        }
+        else
+        {
+            if (dup2(command->outfile, STDOUT_FILENO) == -1)
+                    print_err_and_exit("dup", 1, false);
+            close(command->outfile);
+            if (is_pipe)
+                close(fd[1]);
+        }
 }
+    
 void exec_command(t_command *command)
 {
     t_exec_data *exec;
-    //int fd[2];
+    int fd[2];
     pid_t pid;
-
-    /*if (pipe(fd) == - 1)
+    bool is_pipe;
+    
+    if (command == NULL)
+        return;
+    if(command->type == PIPE)
     {
-        perror("pipe");
-        exit(EXIT_FAILURE);
-    }*/
+        exec_command(command->right);
+        return;
+    }
+    if (command->previous && command->previous->type == PIPE)
+    {
+        if (pipe(fd) == - 1)
+        {
+            perror("pipe");
+            exit(EXIT_FAILURE);
+        }
+        is_pipe = true;
+    }
+    else
+    {
+        is_pipe = false;
+    }
 
-   if(!command)
-    return;
-   if (command->type == PIPE)
-   {
-         exec_command(command->left);
-         return;
-   }
     pid = fork();
     if (pid == 0)
     {
@@ -86,13 +116,17 @@ void exec_command(t_command *command)
                 print_err_and_exit(command->command[0] , 1, false);
             }
         }
-        open_redirections(command);
-        redirect_std(command);
+
+        redirect_std(command, fd, is_pipe);
         execve(exec->command_path, command->command, NULL);     
     }
     else
     {
        wait(NULL);
-       exec_command(command->previous);
+       if(command->previous)
+       {
+            exec_command(command->previous);
+            return;
+       }
     }
 }

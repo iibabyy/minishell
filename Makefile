@@ -47,6 +47,8 @@ FILES =	srcs/error_utils/free_and_exit.c	\
 		srcs/parsing/redirections.c			\
 		srcs/parsing/utils.c				\
 		srcs/exec/exec.c					\
+		srcs/features/alias_utils.c			\
+		srcs/features/alias.c				\
 
 OBJ = $(FILES:.c=.o)
 
