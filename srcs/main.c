@@ -26,6 +26,7 @@ int main()
 			break ;
 		}
 		command = parse(str);
+		print_AST(command);
 		exec_command(command);
 		print_AST(command);
 		free(str);
