@@ -54,6 +54,8 @@ int	init_aliases()
 	aliases = search_aliases(mshrc_fd);
 	if (aliases == NULL)
 		return (EXIT_FAILURE);
+	printf("test\n");
+	print_2d_array(aliases[0]);
 	get_alias(aliases);
 	return (EXIT_SUCCESS);
 }
@@ -76,9 +78,6 @@ char ***search_aliases(int fd)
 		if (ft_strncmp(line, "alias ", 6) == 0)
 		{
 			aliases[i] = line_to_alias(line);
-			if (aliases[i] == NULL)
-				continue ;
-			--i;
 		}
 		ft_free(line);
 	}
