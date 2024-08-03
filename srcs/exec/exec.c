@@ -63,6 +63,8 @@ void exec_command(t_command *command)
         exit(EXIT_FAILURE);
     }*/
 
+   if(!command)
+    return;
    if (command->type == PIPE)
    {
          exec_command(command->left);
@@ -84,12 +86,13 @@ void exec_command(t_command *command)
                 print_err_and_exit(command->command[0] , 1, false);
             }
         }
-        /*printf("herrrre\n");
-        redirect_std(command);*/
+        //open_redirections(command);
+        redirect_std(command);
         execve(exec->command_path, command->command, NULL);     
     }
     else
+    {
        wait(NULL);
-       pipe(fd);
-       exec(command->previous);
+       exec_command(command->previous);
+    }
 }
