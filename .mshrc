@@ -1,2 +1,4 @@
 alias ls="ls --color=auto"
-alias cat="test ls"
+alias tree="tree -C"
+alias meeuh="cowsay"
+alias matrix="cmatrix"

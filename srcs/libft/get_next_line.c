@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 22:20:39 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/03 14:46:32 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/08/03 15:21:28 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*get_next_line(int fd)
 	buffer = ft_malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!str || !buffer)
 		return (ft_free(buffer), ft_free(str), NULL);
-	while (is_nl(str) == 0 && byte_read > 0)
+	while (is_newline(str) == 0 && byte_read > 0)
 	{
 		byte_read = read(fd, buffer, BUFFER_SIZE);
 		if (byte_read < 0)
