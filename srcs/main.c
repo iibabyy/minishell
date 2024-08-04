@@ -47,6 +47,7 @@ int main()
 		}
 		add_history(str);
 		command = parse(str);
+		free(str);
 		if (command == NULL)
 			continue ;
 		print_AST(command);
