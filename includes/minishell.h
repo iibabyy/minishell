@@ -30,7 +30,7 @@ int	replace_aliases(t_command *last_command);
 // lexing
 
 char		*replace_env_vars(char *input);
-t_token		*input_to_tokens(char **input);
+t_token		*input_to_tokens(char *input);
 char		*get_input(char *end_of_file, char *prompt, bool quotes);
 
 // parsing

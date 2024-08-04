@@ -5,10 +5,10 @@
 
 /*  Priorities	*/
 
-# define SUB_SH_WEIGHT 3
-# define PIPE_WEIGHT 2
+# define SUB_SH_WEIGHT 0
 # define AND_WEIGHT 1
 # define OR_WEIGHT 1
+# define PIPE_WEIGHT 2
 # define HEREDOC_PROMPT "heredoc> "
 
 t_command		*token_to_ast(t_parsing *data);

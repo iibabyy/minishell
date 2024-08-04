@@ -27,7 +27,6 @@ int	add_redirection_to_command(t_parsing *data, int type)
 	if (redirection == NULL)
 		return (EXIT_FAILURE);
 	redirect_add_back(&data->command->redirections, redirection);
-	data->curr_token = data->curr_token->next;
 	return (EXIT_SUCCESS);
 }
 

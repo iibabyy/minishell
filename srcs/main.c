@@ -9,14 +9,31 @@ void printTree(t_command *command, int depth, int isRight, int *branch);
 t_command	*last_command(t_command *current);
 void	print_AST(t_command *command);
 
-/*				*/
+/*		Test lexing		*/
+// int main()
+// {
+// 	while (1)
+// 	{
+// 		char *test = readline("\033[0;36mminishell \033[0;33m✗\033[0m ");
+// 		t_token	*tokens = parse(test);
+// 		if (tokens == NULL)
+// 			continue ;
+// 		while (tokens != NULL)
+// 		{
+// 			printf("(%s:)\"%s\" ", type_to_str(tokens->type), tokens->content);
+// 			tokens = tokens->next;
+// 		}
+// 		printf("\n");
+// 	}
+// 	return 0;
+// }
+
+/*		Test parsing	*/
 
 int main()
 {
 	char *str;
 	t_command *command;
-	t_command *last;
-	int array[1024] = {0};
 
 	init_aliases();
 	init_error_log();
@@ -28,15 +45,11 @@ int main()
 			free(str);
 			break ;
 		}
+		add_history(str);
 		command = parse(str);
 		if (command == NULL)
 			continue ;
-		last = command;
-		while (last->previous)
-			last = last->previous;
-		printTree(last, 0, 0, array);
-		ft_memset(array, 0, sizeof(int) * 1024);
-		command = NULL;
+		print_AST(command);
 		free(str);
 	}
 	destroy_garbage(0);
@@ -54,24 +67,35 @@ void	print_AST(t_command *command)
 
 void print_command(t_command *command)
 {
-	int i;
+	int 	i;
+	char	*infile = "STDIN";
+	char	*outfile = "STDOUT";
 
 	i = -1;
-    if (command->type == COMMAND)
+    if (command->type == COMMAND || command->type == SUB_SHELL)
     {
-		printf("%s", command->command[++i]);
+		if (command->type == SUB_SHELL)
+			printf("(\"%s\")", command->command[++i]);
+		else
+			printf("%s", command->command[++i]);
 		while (command->command[++i] != NULL)
 		{
 			printf(" (\"%s\")", command->command[i]);
 		}
-		if (command->infile != STDIN_FILENO)
-			printf(" | infile: %i", command->infile);
-		else
-			printf(" | infile: STD");
-		if (command->outfile != STDOUT_FILENO)
-			printf(" | outfile: %i", command->outfile);
-		else
-			printf(" | outfile: STD");
+		if (command->redirections != NULL)
+		{
+			while (command->redirections != NULL)
+			{
+				if (command->redirections->type == OUTPUT || command->redirections->type == APPEND_OUTPUT)
+					outfile = command->redirections->file->content;
+				else if (command->redirections->type == INPUT)
+					infile = command->redirections->file->content;
+				else if (command->redirections->type == HERE_DOC)
+					infile = "HERE_DOC";
+				command->redirections = command->redirections->next;
+			}
+		}
+		printf(" | infile: %s | outfile: %s", infile, outfile);
 	}
 	else
 		printf ("%s", operator_type_to_str(command->type));
@@ -122,5 +146,7 @@ char *type_to_str(int type)
 		return (ft_strdup("OPERATOR"));
 	if (type == REDIRECTION)
 		return (ft_strdup("REDIRECTION"));
+	if (type == PARENTHESIS)
+		return (ft_strdup("PARENTHESIS"));
 	return (NULL);
 }

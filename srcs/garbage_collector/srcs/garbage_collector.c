@@ -22,7 +22,7 @@ void	*ft_malloc(unsigned long size)
 	}
 	ptr = malloc(size);
 	if (ptr == NULL)
-		return (error_log("ft_malloc: malloc() failed:", true), NULL);
+		return (print_err(MALLOC_FAILED, true), NULL);
 	if (new_garb_node(ptr, garbage, size) == EXIT_FAILURE)
 		return (free(ptr), NULL);
 	return (ptr);

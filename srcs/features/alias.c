@@ -32,7 +32,7 @@ int	check_if_alias(t_command *command, char ***aliases)
 	command_arr = command->command;
 	while (aliases[++i] != NULL)
 	{
-		if (type != COMMAND)
+		if (type != COMMAND || command_arr[0] == NULL)
 			continue ;
 		if (ft_strcmp(aliases[i][0], command_arr[0]) == 0)
 		{

@@ -39,18 +39,34 @@ int	args_number(t_token *token)
 	return (i);
 }
 
-t_command	*create_command(t_parsing *data)
+t_command	*init_command(t_parsing *data)
 {
 	t_command	*command;
 
-	command = init_command(data);
+	(void)data;
+	command = ft_calloc(1, sizeof(t_command));
 	if (command == NULL)
 		return (NULL);
-	data->command = command;
-	if (add_words_to_command(data) == EXIT_FAILURE)
+	command->infile = STDIN_FILENO;
+	command->outfile = STDOUT_FILENO;
+	command->previous = NULL;
+	command->type = COMMAND;
+	command->command = ft_malloc(sizeof(char *) * (args_number(data->curr_token) + 2));
+	if (command->command == NULL)
 		return (NULL);
+	command->command[0] = NULL;
 	return (command);
 }
+
+t_command	*last_command(t_command *current)
+{
+	if (current == NULL)
+		return (NULL);
+	while (current->previous != NULL)
+		current = current->previous;
+	return (current);
+}
+
 int	add_words_to_command(t_parsing *data)
 {
 	t_command	*command;
@@ -62,26 +78,20 @@ int	add_words_to_command(t_parsing *data)
 	i = 0;
 	while (data->curr_token != NULL && data->curr_token->type != OPERATOR)
 	{
-		while (data->curr_token != NULL && (data->curr_token->type == WORD))
+		if (data->curr_token->type == WORD)
+			command->command[i++] = data->curr_token->content;
+		else if (data->curr_token->type == PARENTHESIS)
 		{
 			command->command[i++] = data->curr_token->content;
-			data->curr_token = data->curr_token->next;
+			command->type = SUB_SHELL;
 		}
-		while (data->curr_token != NULL && data->curr_token->type == REDIRECTION)
+		else if (data->curr_token->type == REDIRECTION)
 		{
 			if (add_redirection(data) == EXIT_FAILURE)
 				return (command->command[i] = NULL, EXIT_FAILURE);
 		}
+		data->curr_token = data->curr_token->next;
 	}
 	command->command[i] = NULL;
 	return (EXIT_SUCCESS);
-}
-
-t_command	*last_command(t_command *current)
-{
-	if (current == NULL)
-		return (NULL);
-	while (current->previous != NULL)
-		current = current->previous;
-	return (current);
 }
