@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:25:56 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/04 22:26:41 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/08/04 22:45:32 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@
 # define E1 "Error: use ft_malloc before any other garbage_collector functions"
 # define E2 "Error: can't use an garbage function after using destroy_garbage()"
 # define E3 "Error: use of ft_free on an address non allocated by ft_malloc()"
-# define MALLOC_FAILED "Error: garbage_collector: malloc failed"
 # define WRITE_ERROR "Error: garbage_collector: write function failed"
 # define NOT_DEFINED 3
 # define SETTER 1
@@ -40,7 +39,7 @@ int			new_garb_node(void *address, t_garbage *garbage,
 				unsigned long size);
 void		destroy_garbage_node(t_garb_node *node);
 t_garbage	*init_garbage(void);
-void		print_err(char *error);
+void		print_err(char *error, bool erno);
 t_garb_node	*find_by_address(void *address, t_garbage *garbage);
 t_garb_node	*find_before_node(t_garb_node *node, t_garbage *garbage);
 void		error_log(char *error, bool erno);

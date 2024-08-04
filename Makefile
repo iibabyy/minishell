@@ -50,6 +50,7 @@ FILES =	srcs/error_utils/free_and_exit.c	\
 		srcs/parsing/utils.c				\
 		srcs/features/alias_utils.c			\
 		srcs/features/alias.c				\
+		srcs/test_utils.c					\
 
 OBJ = $(FILES:.c=.o)
 
@@ -111,7 +112,10 @@ fclean : clean
 
 ac : all clean
 
-re : fclean all
+re :
+	@make -s fclean
+	@echo ""
+	@make -s all
 
 s :
 	@make -sC $(LIBFT_DIR)

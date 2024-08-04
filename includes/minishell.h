@@ -21,11 +21,14 @@
 #include "garbage_collector.h"
 #include "error.h"
 
+// minishell
+void		minishell(void);
+int			init_minishell(void);
+
 // features
 
-int	init_aliases();
-int	replace_aliases(t_command *last_command);
-
+int			init_aliases();
+int			replace_aliases(t_command *last_command);
 
 // lexing
 
