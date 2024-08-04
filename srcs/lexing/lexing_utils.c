@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lexing_utils.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/04 22:15:07 by ibaby             #+#    #+#             */
+/*   Updated: 2024/08/04 22:15:08 by ibaby            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "lexing.h"
 
 t_token	*init_token(char **input, int start)
@@ -39,9 +51,10 @@ int	new_word_token(t_token **tokens, char *word)
 int	metachar_size(char **input, int start)
 {
 	int			i;
-	
+
 	i = 0;
-	while (is_meta_char((*input), start + i) == true && (*input)[start + i] != ' ')
+	while (is_meta_char((*input), start + i) == true
+		&& (*input)[start + i] != ' ')
 		++i;
 	return (i);
 }

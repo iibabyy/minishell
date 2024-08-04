@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing_utils.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/04 22:08:56 by ibaby             #+#    #+#             */
+/*   Updated: 2024/08/04 22:08:57 by ibaby            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "parsing.h"
 
 int	token_to_operator_type(t_token *token)
@@ -51,7 +63,8 @@ t_command	*init_command(t_parsing *data)
 	command->outfile = STDOUT_FILENO;
 	command->previous = NULL;
 	command->type = COMMAND;
-	command->command = ft_malloc(sizeof(char *) * (args_number(data->curr_token) + 2));
+	command->command = ft_malloc
+		(sizeof(char *) * (args_number(data->curr_token) + 2));
 	if (command->command == NULL)
 		return (NULL);
 	command->command[0] = NULL;

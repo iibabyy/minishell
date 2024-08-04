@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lexing.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/04 22:15:43 by ibaby             #+#    #+#             */
+/*   Updated: 2024/08/04 22:34:27 by ibaby            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "lexing.h"
 
 /*
@@ -19,7 +31,7 @@ t_token	*input_to_tokens(char *input)
 		while (input[i] == ' ')
 			++i;
 		token_start = i;
-		while (is_meta_char(input, i) == false && input[i] != '\0') //TODO: the while stop if an metachar appears even in a string ("cat 'ab|c'"")
+		while (is_meta_char(input, i) == false && input[i] != '\0')
 			++i;
 		if (word_to_token(&input, token_start, &i, &tokens) == EXIT_FAILURE)
 			return (add_history(input), ft_lstclear(&tokens, ft_free), NULL);
@@ -32,11 +44,10 @@ t_token	*input_to_tokens(char *input)
 	return (tokens);
 }
 
-
 int	word_to_token(char **input, int i, int *end, t_token **tokens)
 {
 	char	*word;
-	int 	len;
+	int		len;
 
 	if (*end - i == 0 || (*input)[i] == '\0')
 		return (EXIT_SUCCESS);

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   env_var.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/04 22:33:50 by ibaby             #+#    #+#             */
+/*   Updated: 2024/08/04 22:33:51 by ibaby            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "lexing.h"
 
 char	*replace_env_vars(char *input)
@@ -8,8 +20,6 @@ char	*replace_env_vars(char *input)
 	int		start;
 
 	(i = 0, y = 0);
-	if (input == NULL || count_char(input, '$') == 0)
-		return (input);
 	array = ft_malloc(sizeof(char *) * (count_char(input, '$') * 10));
 	if (array == NULL)
 		return (ft_free(input), NULL);

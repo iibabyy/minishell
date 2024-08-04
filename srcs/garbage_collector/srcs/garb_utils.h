@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   garb_utils.h                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/04 22:25:56 by ibaby             #+#    #+#             */
+/*   Updated: 2024/08/04 22:26:41 by ibaby            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef GARB_UTILS_H
 # define GARB_UTILS_H
 
@@ -24,7 +36,8 @@
 # define READER 0
 
 t_garb_node	*find_in_garbage(void *address, t_garbage *garbage);
-int			new_garb_node(void *address, t_garbage *garbage, unsigned long size);
+int			new_garb_node(void *address, t_garbage *garbage,
+				unsigned long size);
 void		destroy_garbage_node(t_garb_node *node);
 t_garbage	*init_garbage(void);
 void		print_err(char *error);

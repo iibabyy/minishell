@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   alias.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/04 22:06:03 by ibaby             #+#    #+#             */
+/*   Updated: 2024/08/04 22:24:11 by ibaby            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "features.h"
 
 int	replace_aliases(t_command *last_command)
@@ -43,10 +55,10 @@ int	check_if_alias(t_command *command, char ***aliases)
 	return (EXIT_SUCCESS);
 }
 
-int	init_aliases()
+int	init_aliases(void)
 {
 	char	***aliases;
-	int	mshrc_fd;
+	int		mshrc_fd;
 
 	mshrc_fd = open(MSHRC, O_RDONLY);
 	if (mshrc_fd == -1)
@@ -58,7 +70,7 @@ int	init_aliases()
 	return (EXIT_SUCCESS);
 }
 
-char ***search_aliases(int fd)
+char	***search_aliases(int fd)
 {
 	char	***aliases;
 	char	*line;

@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 07:17:02 by ibaby             #+#    #+#             */
-/*   Updated: 2024/07/31 07:25:06 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/08/04 22:12:42 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*ft_remove_char(char *str, char c)
 	int		size;
 	int		i;
 	int		j;
-	
+
 	size = ft_strlen(str) - count_char(str, c);
 	if (size == 0 || c == '\0')
 		return (NULL);

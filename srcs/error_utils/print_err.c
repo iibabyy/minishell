@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   print_err.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/04 22:05:52 by ibaby             #+#    #+#             */
+/*   Updated: 2024/08/04 22:23:27 by ibaby            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "errors_utils.h"
 
 void	print_err(char *err, bool errno)
@@ -26,7 +38,7 @@ void	parse_err(char *error, char *token)
 		{
 			token = ft_strdup(token);
 			if (token == NULL)
-				return (print_err("parse_err: ft_strdup() failed", false));
+				return (error_log("parse_err: ft_strdup() failed", false));
 			token[3] = '\0';
 		}
 		ft_putstr_fd("Error: ", STDERR_FILENO);
@@ -36,7 +48,7 @@ void	parse_err(char *error, char *token)
 		ft_putendl_fd("'", STDERR_FILENO);
 		if (ft_strlen(token) > 3)
 			ft_free(token);
-		}
+	}
 }
 
 void	print_err_and_exit(char *err, int status, bool errno)
@@ -48,33 +60,23 @@ void	print_err_and_exit(char *err, int status, bool errno)
 void	error_log(char *error, bool errno)
 {
 	static int	error_num = 0;
-	int	error_log_fd;
+	int			error_log_fd;
 
 	error_log_fd = open(ERROR_LOG_FILE, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (error_log_fd == -1)
 		return ;
 	if (++error_num != 1)
-		if (ft_putstr_fd("\n\n", error_log_fd) == -1)
-			return (ft_close_fd(&error_log_fd),
-				print_err("error_log: put_str() failed", true));
-	if (ft_putnbr_fd(error_num, error_log_fd) == -1)
-		return (ft_close_fd(&error_log_fd),
-			print_err("error_log: put_nbr() failed", true));
-	if (ft_putstr_fd(".\n", error_log_fd) == -1)
-		return (ft_close_fd(&error_log_fd),
-			print_err("error_log: put_str() failed", true));
-	if (error != NULL)
-		if (ft_putstr_fd(error, error_log_fd) == -1)
-		return (ft_close_fd(&error_log_fd),
-			print_err("error_log: put_str() failed", true));
+		ft_putstr_fd("\n\n", error_log_fd);
+	ft_putnbr_fd(error_num, error_log_fd);
+	ft_putstr_fd(".\n", error_log_fd);
 	if (errno == true)
-		if (ft_putstr_fd(strerror(errno), error_log_fd) == -1)
-			return (ft_close_fd(&error_log_fd),
-				print_err("error_log: put_str() failed", true));
+		perror(error);
+	else if (error != NULL)
+		ft_putendl_fd(error, error_log_fd);
 	ft_close_fd(&error_log_fd);
 }
 
-void	init_error_log()
+void	init_error_log(void)
 {
 	int	fd;
 

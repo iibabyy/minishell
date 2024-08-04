@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/04 22:10:49 by ibaby             #+#    #+#             */
+/*   Updated: 2024/08/04 22:30:54 by ibaby            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "parsing.h"
 
 /*
@@ -9,6 +21,8 @@ t_command	*parse(char	*input)
 {
 	t_parsing	data;
 
+	if (input == NULL)
+		return (NULL);
 	ft_memset(&data, 0, sizeof(t_data));
 	data.error = false;
 	input = replace_env_vars(input);
@@ -19,9 +33,6 @@ t_command	*parse(char	*input)
 	data.command = token_to_ast(&data);
 	if (data.command == NULL)
 		return (destroy_parsing(&data), NULL);
-	// if (open_redirections(data.redirection) == EXIT_FAILURE
-	// 		&& redirections_number(data.token) != 0)
-	// 	return (destroy_parsing(&data), NULL);
 	if (replace_aliases(last_command(data.command)) == EXIT_FAILURE)
 		return (destroy_parsing(&data), NULL);
 	if (data.command->previous != NULL)
@@ -107,7 +118,7 @@ t_command	*init_operator(t_parsing *data, t_command *left_command)
 	if (data->curr_token->next == NULL)
 		return (parse_err(TOKEN_ERR, data->curr_token->content), NULL);
 	if (data->curr_token->next->type != WORD
-			&& data->curr_token->next->type != SUB_SHELL)
+		&& data->curr_token->next->type != SUB_SHELL)
 		return (parse_err(TOKEN_ERR, data->curr_token->content), NULL);
 	data->curr_token = data->curr_token->next;
 	return (operator);
