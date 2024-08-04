@@ -1,5 +1,5 @@
 #include "../includes/minishell.h"
-
+#include "exec/exec.h"
 /*		UTILS	*/
 
 char *type_to_str(int type);
@@ -8,15 +8,17 @@ char *operator_type_to_str(int type);
 void printTree(t_command *command, int depth, int isRight, int *branch);
 t_command	*last_command(t_command *current);
 void	print_AST(t_command *command);
-void    exec_command(t_command *);
-void    exec_single_command(t_command *);
+
 /*				*/
 
 int main()
 {
 	char *str;
 	t_command *command;
+	int fd[2];
 
+	fd[0] = -1;
+	fd[1] = -1;
 	//init_aliases();
 	//init_error_log();
 	while (1)
@@ -29,15 +31,11 @@ int main()
 		}
 		command = parse(str);
 		print_AST(command);
-		if (command->previous == NULL)
-		{
-			printf("only one \n");
-			exec_single_command(command);
-		}
+		if(command-> type == COMMAND)
+			exec_command(command, false);
 		else
-			exec_command(command);
+			exec_command(last_command(command), true);
 		free(str);
-		printf("debuuug\n");
 	}
 	destroy_garbage(0);
 	return (0);
