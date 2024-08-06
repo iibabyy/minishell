@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:42:32 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/04 23:31:12 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/08/06 16:15:27 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,11 @@ void	minishell(void)
 	char		*str;
 
 	str = readline("\033[0;36mminishell \033[0;33m✗\033[0m ");
-	if (ft_strcmp(str, "exit") == 0)
+	if (ft_strncmp(str, "exit", 4) == 0)
 	{
 		free(str);
 		destroy_garbage(NULL);
-		exit(ft_atoi(str + 4));
+		exit(EXIT_SUCCESS);
 	}
 	add_history(str);
 	command = parse(str);

@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:15:07 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/04 22:15:08 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/08/06 16:12:46 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,10 +97,7 @@ int	parenthesis_size(char **input, int start)
 			--parenthesis;
 		if ((*input)[start + i] == '\0')
 		{
-			ft_putstr_fd("syntaxe error near unexpected token: `(",
-				STDERR_FILENO);
-			ft_putstr_fd(&(*input)[start], STDERR_FILENO);
-			ft_putstr_fd("'\n", STDERR_FILENO);
+			parse_err(TOKEN_ERR, "(");
 			return (-1);
 		}
 		if (parenthesis == 0 && (*input)[start + i] == ')')
