@@ -15,12 +15,9 @@ int main()
 {
 	char *str;
 	t_command *command;
-	int fd[2];
-
-	fd[0] = -1;
-	fd[1] = -1;
-	//init_aliases();
-	//init_error_log();
+	
+	init_aliases();
+	init_error_log();
 	while (1)
 	{
 		str = readline("\033[0;36mminishell \033[0;33m✗\033[0m ");
@@ -34,7 +31,7 @@ int main()
 		if(command-> type == COMMAND)
 			exec_command(command, false);
 		else
-			exec_command(last_command(command), true);
+			exec_command(command, true);
 		free(str);
 	}
 	destroy_garbage(0);
