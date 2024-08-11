@@ -6,7 +6,7 @@ void	ft_dup2(int *fd1, int fd2)
 {
 	if (dup2(*fd1, fd2) == -1)
 		exit(1);
-	ft_close(fd1);
+    fprintf(stderr, "DUP %d TO %d\n", *fd1, fd2);
 }
 
 void	ft_close(int *fd)
@@ -16,10 +16,9 @@ void	ft_close(int *fd)
 		return ;
 	if (close(*fd) == -1)
 	{
-		*fd = -1;
+		perror("close");
         exit(1);
 	}
-	*fd = -1;
 }
 
 void	ft_pipe(int fd[2])
@@ -33,8 +32,6 @@ void init_data(t_exec_data *data, t_command *command)
         if (data->path_to_join == NULL)
             exit(1);
         data->command_path = create_command_path(data , command);
-        if (data->command_path == NULL)
-            print_err_and_exit("Command not found\n", 1, false);
 }
 
 void    exec_single_command(t_command *command)

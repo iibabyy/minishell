@@ -41,6 +41,7 @@ char *create_command_path(t_exec_data *data, t_command *command)
            data->command_path = ft_strdup(command->command[0]);
            return (data->command_path);
         }
-        data->command_path = get_path(command->command[0], data->path_to_join);
+        if (command && command->command)
+            data->command_path = get_path(command->command[0], data->path_to_join);
         return(data->command_path);
 }
