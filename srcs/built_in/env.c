@@ -1,5 +1,27 @@
 # include "built_in.h"
 
+int	env(char **args)
+{
+	static t_env	*env = NULL;
+	t_env_var		*temp;
+	
+	if (env == NULL)
+		env = get_env(NULL);
+	if (env == NULL || env->first == NULL)
+		return (EXIT_SUCCESS);
+	temp = env->first;
+	while (temp != NULL)
+	{
+		if (temp->value != NULL)
+		{
+			if (printf("%s=%s\n", temp->variable, temp->value) == -1)
+				return (EXIT_FAILURE);
+		}
+		temp = temp->next;
+	}
+	return (EXIT_SUCCESS);
+}
+
 void	init_env(char **env_arg)
 {
 	t_env		*env;

@@ -10,8 +10,8 @@ int	unset(char **args)
 		env = get_env(NULL);
 	if (env == NULL || env->first == NULL)
 		return (EXIT_SUCCESS);
-	if (parse_unset_args(args) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
+	// if (parse_unset_args(args) == EXIT_FAILURE)
+	// 	return (EXIT_FAILURE);
 	i = -1;
 	while (args[++i] != NULL)
 	{
@@ -21,7 +21,6 @@ int	unset(char **args)
 			if (ft_strcmp(args[i], temp->variable) == 0)
 			{
 				delete_env_var(env, temp);
-				return (EXIT_SUCCESS);
 			}
 			temp = temp->next;
 		}
@@ -50,9 +49,4 @@ void	delete_env_var(t_env *env, t_env_var *var)
 		}
 		temp = temp->next;
 	}
-}
-
-int	parse_unset_args(char **args)
-{
-	
 }

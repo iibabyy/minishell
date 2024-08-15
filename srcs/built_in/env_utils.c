@@ -2,8 +2,6 @@
 
 void	add_env_var(t_env *env, t_env_var *new)
 {
-	t_env_var	*temp;
-
 	if (new == NULL)
 		return ;
 	if (env->first == NULL)
@@ -11,10 +9,8 @@ void	add_env_var(t_env *env, t_env_var *new)
 		env->first = new;
 		return ;
 	}
-	temp = env->first;
-	while (temp->next != NULL)
-		temp = temp->next;
-	temp->next = new;
+	new->next = env->first;
+	env->first = new;
 }
 
 char	*variable_name(char *env_line)
