@@ -59,13 +59,17 @@ int	parse_alias_arg(char *arg)
 	int	i;
 
 	i = 0;
-	while (arg[i] == ' ' && arg[i] != '0')
-		++i;
-	if (arg[i] == '\0' || (ft_isalpha(arg[i]) == 0 && arg[i] != '_'))
+	if (arg[i] == ' ' || arg[i] == '\0')
+		return (print_err("export: wrong argument format", false),
+				EXIT_FAILURE);
+	if (ft_isalpha(arg[i]) == 0 && arg[i] != '_')
 		return (print_err("alias: wrong argument format", false),
 				EXIT_FAILURE);
 	while (arg[i] != '=' && arg[i] != '\0' && arg[i] != ' ')
 		++i;
+	if (arg[i] == ' ' || arg[i] == '\0')
+		return (print_err("alias: wrong argument format", false),
+				EXIT_FAILURE);
 	if (arg[++i] == ' ' || arg[i] == '\0')
 		return (print_err("alias: wrong argument format", false),
 				EXIT_FAILURE);

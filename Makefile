@@ -125,7 +125,7 @@ re :
 s :
 	@make -sC $(LIBFT_DIR)
 	@make -sC $(GARBAGE_COLLECTOR_DIR)
-	@make
+	@make -s
 
 res :
 	@make re -sC $(LIBFT_DIR)

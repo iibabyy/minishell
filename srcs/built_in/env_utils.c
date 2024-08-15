@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 15:18:49 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/15 15:18:50 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/08/15 20:49:36 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	add_env_var(t_env *env, t_env_var *new)
 {
+	t_env_var	*tmp;
+
 	if (new == NULL)
 		return ;
 	if (env->first == NULL)
@@ -21,8 +23,10 @@ void	add_env_var(t_env *env, t_env_var *new)
 		env->first = new;
 		return ;
 	}
-	new->next = env->first;
-	env->first = new;
+	tmp = env->first;
+	while (tmp->next != NULL)
+		tmp = tmp->next;
+	tmp->next = new;
 }
 
 char	*variable_name(char *env_line)
@@ -47,7 +51,7 @@ char	*variable_value(char *env_line)
 	return (value);
 }
 
-t_env	*get_env(t_env *only_for_init)
+t_env	*get_env_list(t_env *only_for_init)
 {
 	static t_env	*env = NULL;
 
