@@ -92,4 +92,18 @@ typedef struct s_redirection
 	struct s_redirection	*next;
 }	t_redirection;
 
+//	built_in
+
+typedef struct s_env_var
+{
+	char				*variable;
+	char				*value;
+	struct s_env_var	*next;
+}	t_env_var;
+
+typedef struct s_env
+{
+	t_env_var	*first;
+}	t_env;
+
 #endif

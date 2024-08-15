@@ -51,6 +51,8 @@ FILES =	srcs/error_utils/free_and_exit.c	\
 		srcs/features/alias_utils.c			\
 		srcs/features/alias.c				\
 		srcs/test_utils.c					\
+		srcs/built_in/env_utils.c			\
+		srcs/built_in/env.c					\
 
 OBJ = $(FILES:.c=.o)
 
