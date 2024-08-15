@@ -17,13 +17,10 @@ int main()
 	t_command *command;
 	t_exec_data *data;
     data = ft_calloc(sizeof(t_exec_data), 1);
+	data->pid = ft_calloc (sizeof(int) , 10);
 
 	while (1)
 	{
-		data->fd[0] = -1;
-		data->fd[1] = -1;
-		data->prev_fd[0] = -1;
-		data->prev_fd[1] = -1;
 		str = readline("\033[0;36mminishell \033[0;33m✗\033[0m ");
 		if (ft_strcmp(str, "exit") == 0)
 		{
@@ -32,7 +29,7 @@ int main()
 		}
 		command = parse(str);
 		print_AST(command);
-		exec_command(command, data, false);
+		exec_command(command, data);
 		free(str);
 	}
 	destroy_garbage(0);

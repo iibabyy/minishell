@@ -5,7 +5,8 @@ Take an string as parameter.
 Return the first operator of an AST.
 Return NULL if an error occurs
 */
-t_command	*parse(char	*input)
+t_command	*
+parse(char	*input)
 {
 	t_parsing	data;
 
@@ -24,9 +25,7 @@ t_command	*parse(char	*input)
 	// 	return (destroy_parsing(&data), NULL);
 	if (replace_aliases(last_command(data.command)) == EXIT_FAILURE)
 		return (destroy_parsing(&data), NULL);
-	if (data.command->previous != NULL)
-		return (data.command->previous);
-	return (data.command);
+	return (last_command(data.command));
 }
 
 t_command	*token_to_ast(t_parsing *data)

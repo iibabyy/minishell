@@ -2,11 +2,11 @@
 #include "exec.h"
 #include <unistd.h>
 
-void	ft_dup2(int *fd1, int fd2)
+void ft_dup2(int *fd1, int fd2)
 {
 	if (dup2(*fd1, fd2) == -1)
 		exit(1);
-    fprintf(stderr, "DUP %d TO %d\n", *fd1, fd2);
+    ft_close(fd1);
 }
 
 void	ft_close(int *fd)
@@ -19,6 +19,7 @@ void	ft_close(int *fd)
 		perror("close");
         exit(1);
 	}
+    *fd = -1;
 }
 
 void	ft_pipe(int fd[2])
@@ -34,14 +35,11 @@ void init_data(t_exec_data *data, t_command *command)
         data->command_path = create_command_path(data , command);
 }
 
-void    exec_single_command(t_command *command)
+int   exec_single_command(t_command *command, t_exec_data *exec)
 {
     pid_t pid;
-    t_exec_data *exec;
-    int status;
+    int status = 0;
 
-    if (command == NULL)
-        return;
     pid = fork();
     if (pid == 0)
     {
@@ -49,13 +47,19 @@ void    exec_single_command(t_command *command)
         if (exec == NULL)
             print_err_and_exit(NULL, 1, false);
         init_data(exec, command);
+        fprintf(stderr, "%s\n", exec->command_path);
         open_redirections(command);
         ft_dup2(&command->infile, STDIN_FILENO);
         ft_dup2(&command->outfile, STDOUT_FILENO);
-        execve(exec->command_path, command->command, NULL);     
+        execve(exec->command_path, command->command, NULL);
+        perror("Command not found ");
+        exit(127);     
     }
     else
     {
-       waitpid(pid, &status, 0);
+      free((ft_close(&command->infile), ft_close(&command->outfile), NULL));
+      waitpid(pid, &status, 0);
+      fprintf(stderr, "%d\n", status);
     }
+    return (status);
 }
