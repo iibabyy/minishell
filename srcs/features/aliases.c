@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   alias.c                                            :+:      :+:    :+:   */
+/*   aliases.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:06:03 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/04 22:24:11 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/08/15 18:19:05 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,18 +80,18 @@ char	***search_aliases(int fd)
 	aliases = ft_calloc(MAX_ALIAS + 1, sizeof(char **));
 	if (aliases == NULL)
 		return (NULL);
-	while (++i < MAX_ALIAS)
+	while (i < MAX_ALIAS)
 	{
 		line = get_next_line(fd);
-		if (line == NULL)
+		if (line == NULL || *line == '\0')
 			break ;
 		if (ft_strncmp(line, "alias ", 6) == 0)
-		{
-			aliases[i] = line_to_alias(line);
-		}
+			aliases[++i] = line_to_alias(line);
 		ft_free(line);
+		line = NULL;
 	}
-	aliases[i] = NULL;
+	if (i >= MAX_ALIAS)
+		error_log("max aliases reached. Cannot add one", false);
 	if (aliases[0] == NULL)
 		return (ft_free(aliases), NULL);
 	return (aliases);
@@ -106,12 +106,12 @@ char	**line_to_alias(char *line)
 	i = 6;
 	while (line[i] == ' ' && line[i] != '\0')
 		++i;
-	if (line[i] == '\0')
+	if (line[i] == '\0' || (ft_isalpha(line[i]) == 0 && line[i] != '_'))
 		return (NULL);
 	start = i;
+	printf("alias: %i\n", i);
 	while (line[i] != '=')
-		if (ft_isalpha(line[i++]) == false)
-			return (NULL);
+		++i;
 	alias = ft_malloc(sizeof(char *) * (count_char(line + i + 2, ' ') + 3));
 	if (alias == NULL)
 		return (NULL);

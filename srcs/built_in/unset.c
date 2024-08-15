@@ -1,4 +1,16 @@
-# include "built_in.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   unset.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/15 15:19:16 by ibaby             #+#    #+#             */
+/*   Updated: 2024/08/15 17:49:49 by ibaby            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "built_in.h"
 
 int	unset(char **args)
 {
@@ -12,7 +24,7 @@ int	unset(char **args)
 		return (EXIT_SUCCESS);
 	// if (parse_unset_args(args) == EXIT_FAILURE)
 	// 	return (EXIT_FAILURE);
-	i = -1;
+	i = 0;
 	while (args[++i] != NULL)
 	{
 		temp = env->first;
@@ -32,8 +44,8 @@ void	delete_env_var(t_env *env, t_env_var *var)
 {
 	t_env_var	*temp;
 
-	if (env == NULL || env->first == NULL)
-		return (NULL);
+	if (env == NULL || env->first == NULL || var == NULL)
+		return ;
 	temp = env->first;
 	if (temp == var)
 	{
@@ -42,7 +54,7 @@ void	delete_env_var(t_env *env, t_env_var *var)
 	}
 	while (temp->next != NULL)
 	{
-		if (temp->next = var)
+		if (temp->next == var)
 		{
 			temp->next = var->next;
 			return (destroy_var_node(var));

@@ -52,18 +52,15 @@ void print_command(t_command *command)
 		{
 			printf(" (\"%s\")", command->command[i]);
 		}
-		if (command->redirections != NULL)
+		while (command->redirections != NULL)
 		{
-			while (command->redirections != NULL)
-			{
-				if (command->redirections->type == OUTPUT || command->redirections->type == APPEND_OUTPUT)
-					outfile = command->redirections->file->content;
-				else if (command->redirections->type == INPUT)
-					infile = command->redirections->file->content;
-				else if (command->redirections->type == HERE_DOC)
-					infile = "HERE_DOC";
-				command->redirections = command->redirections->next;
-			}
+			if (command->redirections->type == OUTPUT || command->redirections->type == APPEND_OUTPUT)
+				outfile = command->redirections->file->content;
+			else if (command->redirections->type == INPUT)
+				infile = command->redirections->file->content;
+			else if (command->redirections->type == HERE_DOC)
+				infile = "HERE_DOC";
+			command->redirections = command->redirections->next;
 		}
 		printf(" | infile: %s | outfile: %s", infile, outfile);
 	}

@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:27:12 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/04 22:27:13 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/08/15 15:12:04 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ bool	is_meta_char(char *input, int index)
 	c = input[index];
 	if (c == '\0')
 		return (false);
-	else if (ft_strchr("|<>$* ", c) != NULL)
+	else if (ft_strchr("|<>* ", c) != NULL)
 		return (true);
 	else if (c == '&' && input[index + 1] == '&')
 		return (true);

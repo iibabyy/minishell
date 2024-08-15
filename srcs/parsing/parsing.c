@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:10:49 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/06 14:16:12 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/08/15 15:14:37 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,11 @@ t_command	*parse(char	*input)
 		return (NULL);
 	ft_memset(&data, 0, sizeof(t_data));
 	data.error = false;
-	input = replace_env_vars(input);
+	// input = replace_env_vars(input);
 	data.token = input_to_tokens(input);
 	if (data.token == NULL)
 		return (destroy_parsing(&data), NULL);
+	add_history(input);
 	data.curr_token = data.token;
 	data.command = token_to_ast(&data);
 	if (data.command == NULL)

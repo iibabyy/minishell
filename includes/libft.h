@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:35:02 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/03 13:14:16 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/08/15 17:34:36 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-#include "../srcs/libft/get_next_line.h"
-#include "garbage_collector.h"
-#include "structs.h"
+# include "../srcs/libft/get_next_line.h"
+# include "garbage_collector.h"
+# include "structs.h"
 
 //	AMAZING functions 
 
@@ -49,6 +49,7 @@ char		*re_join_gnl(int fd, char *str_address);
 char		*read_file(int fd);
 int			print_file(int fd);
 size_t		ft_strlen_2d(char **str_2d);
+char		*insert_str(char *str, char *insert, int index);
 
 //	libft functions
 

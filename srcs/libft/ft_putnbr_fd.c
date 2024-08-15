@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 20:14:29 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/04 22:13:21 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/08/15 15:22:11 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ int	ft_putnbr_fd(int n, int fd)
 	int		check;
 	int		temp;
 
-	(c = (long)n, check = 0, temp = 0);
+	free((c = (long)n, check = 0, temp = 0, NULL));
 	if (c < 0)
 	{
 		if (ft_putchar_fd('-', fd) == -1)
 			return (-1);
-		(++check, c = -c);
+		free((++check, c = -c, NULL));
 	}
 	if (c >= 10)
 	{

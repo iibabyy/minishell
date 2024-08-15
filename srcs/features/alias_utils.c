@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:24:38 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/04 22:24:39 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/08/15 14:31:16 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ char	**insert_alias(char **command, char **alias)
 	while (command[++j + 1] != NULL)
 		new_command[i + j] = command[j + 1];
 	new_command[i + j] = NULL;
-	print_2d_array_nl(command);
 	ft_free(command);
 	return (new_command);
 }

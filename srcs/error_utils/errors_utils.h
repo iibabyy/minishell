@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:05:38 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/04 22:46:33 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/08/15 18:07:41 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include "../../includes/garbage_collector.h"
 # include "../../includes/libft.h"
 
-# define ERROR_LOG_FILE "/home/idrissa/42/projects/minishell/.error_log"
+# define ERROR_LOG_FILE "/home/ibaby/Desktop/circle_3/minishell/.error_log"
 
 void	free_all(t_data *data);
 void	print_err(char *err, bool errno);

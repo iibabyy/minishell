@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:33:50 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/06 14:16:00 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/08/15 15:33:19 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,30 @@
 
 char	*replace_env_vars(char *input)
 {
-	int		i;
-	int		y;
 	char	**array;
-	int		start;
+	char	*new_input;
 
-	(i = 0, y = 0);
 	if (count_char(input, '$') == 0)
 		return (input);
+	array = replace_dollars(input);
+	if (array == NULL)
+		return (NULL);
+	new_input = str_join_2d_and_free(array, "");
+	return (new_input);
+}
+
+char	**replace_dollars(char *input)
+{
+	char	**array;
+	int		start;
+	int		i;
+	int		y;
+
+	i = 0;
+	y = 0;
 	array = ft_malloc(sizeof(char *) * (count_char(input, '$') * 10));
 	if (array == NULL)
-		return (ft_free(input), NULL);
+		return (NULL);
 	while (input[i] != '\0')
 	{
 		start = i;
@@ -32,15 +45,14 @@ char	*replace_env_vars(char *input)
 			++i;
 		array[y] = ft_substr(input, start, i - start);
 		if (array[y++] == NULL)
-			return (ft_free(input), free_2d_array((void ***)&array), NULL);
+			return (free_2d_array((void ***)&array), NULL);
 		if (input[i] == '\0')
 			break ;
 		array[y] = env_to_string(input, &i);
 		if (array[y++] == NULL)
-			return (ft_free(input), free_2d_array((void ***)&array), NULL);
+			return (free_2d_array((void ***)&array), NULL);
 	}
-	array[y] = NULL;
-	return (ft_free(input), str_join_2d_and_free(array, ""));
+	return (array[y] = NULL, array);
 }
 
 char	*env_to_string(char	*str, int *dollar_index)

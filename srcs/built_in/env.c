@@ -1,14 +1,27 @@
-# include "built_in.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   env.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/15 15:18:15 by ibaby             #+#    #+#             */
+/*   Updated: 2024/08/15 15:18:36 by ibaby            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "built_in.h"
 
 int	env(char **args)
 {
 	static t_env	*env = NULL;
 	t_env_var		*temp;
-	
+
 	if (env == NULL)
 		env = get_env(NULL);
 	if (env == NULL || env->first == NULL)
 		return (EXIT_SUCCESS);
+	(void)args;
 	temp = env->first;
 	while (temp != NULL)
 	{
@@ -30,7 +43,7 @@ void	init_env(char **env_arg)
 		return ;
 	env = ft_malloc(sizeof(t_env) * 1);
 	if (env == NULL)
-		return (NULL);
+		return ;
 	env->first = create_env(env_arg);
 	if (env->first == NULL)
 		return (ft_free(env));
@@ -54,7 +67,7 @@ t_env_var	*create_env(char **env)
 		if (temp->next == NULL)
 			return (NULL);
 		if (env[i] == NULL)
-			break;
+			break ;
 		temp = temp->next;
 	}
 	temp->next = NULL;

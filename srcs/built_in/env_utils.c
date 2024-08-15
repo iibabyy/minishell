@@ -1,4 +1,16 @@
-# include "built_in.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   env_utils.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/15 15:18:49 by ibaby             #+#    #+#             */
+/*   Updated: 2024/08/15 15:18:50 by ibaby            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "built_in.h"
 
 void	add_env_var(t_env *env, t_env_var *new)
 {
@@ -35,12 +47,15 @@ char	*variable_value(char *env_line)
 	return (value);
 }
 
-t_env	get_env(t_env *only_for_init)
+t_env	*get_env(t_env *only_for_init)
 {
 	static t_env	*env = NULL;
 
 	if (env == NULL)
-		return (env = only_for_init, NULL);
+	{
+		env = only_for_init;
+		return (NULL);
+	}
 	return (env);
 }
 
