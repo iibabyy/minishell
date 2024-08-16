@@ -47,19 +47,18 @@ int   exec_single_command(t_command *command, t_exec_data *exec)
         if (exec == NULL)
             print_err_and_exit(NULL, 1, false);
         init_data(exec, command);
-        fprintf(stderr, "%s\n", exec->command_path);
         open_redirections(command);
         ft_dup2(&command->infile, STDIN_FILENO);
         ft_dup2(&command->outfile, STDOUT_FILENO);
         execve(exec->command_path, command->command, NULL);
-        perror("Command not found ");
+        ft_putstr_fd("Minishell : command not found : ", 2);
+        ft_putendl_fd(command->command[0], 2);
         exit(127);     
     }
     else
     {
       free((ft_close(&command->infile), ft_close(&command->outfile), NULL));
       waitpid(pid, &status, 0);
-      fprintf(stderr, "%d\n", status);
     }
-    return (status);
+    return (WEXITSTATUS(status));
 }

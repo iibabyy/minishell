@@ -9,7 +9,7 @@ int exec_or(t_command *node, t_exec_data *data)
     int status;
 
     status = exec_command(node->left, data);
-    if(status != 0)
+    if(WEXITSTATUS(status) != 0)
         status = exec_command(node->right, data);
     return(status);
 }
@@ -19,7 +19,7 @@ int exec_and(t_command *node, t_exec_data *data)
     int status;
 
     status = exec_command(node->left, data);
-    if(status == 0)
+    if(WEXITSTATUS(status) == 0)
         status = exec_command(node->right, data);
     return(status);
 }
@@ -39,7 +39,8 @@ int wait_all( t_exec_data *data, int i)
 
 int exec_pipe(t_command *node, t_exec_data *data)
 {
-    int status = 0;
+    int status1 = 0;
+    int status2 = 0;
 
     int pid[2];
     int fd[2];
@@ -48,22 +49,24 @@ int exec_pipe(t_command *node, t_exec_data *data)
     if (pid[0] == 0)
     {
         free((ft_close(&fd[0]), ft_dup2(&fd[1], STDOUT_FILENO), NULL));
-        status = exec_command(node->left, data);
-        exit(status);
+        status1 = exec_command(node->left, data);
+        exit(status1);
     }
     pid[1] = fork();
     if (pid[1] == 0)
     {
         free((ft_close(&fd[1]), ft_dup2(&fd[0], STDIN_FILENO), NULL));
-        status = exec_command(node->right, data);
-        exit(status);
+        status2 = exec_command(node->right, data);
+        exit(status2);
     }
     free((ft_close(&fd[0]), ft_close(&fd[1]), NULL));
     free((ft_close(&node->left->infile), ft_close(&node->right->infile), NULL));
     free((ft_close(&node->left->outfile), ft_close(&node->right->outfile), NULL));
-    free((waitpid(pid[0], &status, 0), waitpid(pid[1], &status, 0), NULL));
-    return(status);
+    waitpid(pid[0], &status1, 0);
+    waitpid(pid[1], &status2, 0);
+    return (status2);
 }
+
 
 int exec_command(t_command *node, t_exec_data *data)
 {
