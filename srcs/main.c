@@ -2,38 +2,71 @@
 #include "exec/exec.h"
 /*		UTILS	*/
 
-char *type_to_str(int type);
-void	print_command(t_command *command);
-char *operator_type_to_str(int type);
-void printTree(t_command *command, int depth, int isRight, int *branch);
+char		*type_to_str(int type);
+void		print_command(t_command *command);
+char 		*operator_type_to_str(int type);
+void 		printTree(t_command *command, int depth, int isRight, int *branch);
 t_command	*last_command(t_command *current);
-void	print_AST(t_command *command);
+void		print_AST(t_command *command);
 
 /*				*/
+void handle_sigint(int sig)
+{
+	printf("\n");
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_redisplay();
+	(void) sig;
+}
+bool	is_only_space(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == 32)
+			++i;
+		else
+			return (false);
+	}
+	return (true);
+}
 
 int main()
 {
 	char *str;
 	t_command *command;
 	t_exec_data *data;
+	int status;
+
+	status = 0;
     data = ft_calloc(sizeof(t_exec_data), 1);
 	data->pid = ft_calloc (sizeof(int) , 10);
 
 	while (1)
 	{
-		str = readline("\033[0;36mminishell \033[0;33m✗\033[0m ");
+		signal(SIGINT, &handle_sigint);
+		signal(SIGQUIT, SIG_IGN);
+		if ((str = readline("\033[0;36mminishell \033[0;33m✗\033[0m ")) == NULL)
+		{
+			printf("exit\n");
+			exit(status);
+		}
 		if (ft_strcmp(str, "exit") == 0)
 		{
 			free(str);
 			break ;
 		}
-		command = parse(str);
-		print_AST(command);
-		exec_command(command, data);
-		free(str);
+		if (!is_only_space(str))
+		{
+			command = parse(str);
+			status = exec_command(command, data);
+			free(str);
+		}
 	}
 	destroy_garbage(0);
-	return (0);
+	exit (status);
 }
 
 void	print_AST(t_command *command)

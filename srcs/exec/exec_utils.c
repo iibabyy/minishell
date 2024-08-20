@@ -34,12 +34,17 @@ void init_data(t_exec_data *data, t_command *command)
             exit(1);
         data->command_path = create_command_path(data , command);
 }
-
+void sigint_child(int sig)
+{
+    (void)sig;
+    ft_putstr_fd("\n", 1);
+}
 int   exec_single_command(t_command *command, t_exec_data *exec)
 {
     pid_t pid;
     int status = 0;
 
+    signal(SIGINT, &sigint_child);
     pid = fork();
     if (pid == 0)
     {

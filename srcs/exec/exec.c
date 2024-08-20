@@ -4,6 +4,9 @@
 #include "exec.h"
 #include <unistd.h>
 
+void sigint_child(int sig);
+void handle_sigint(int sig);
+
 int exec_or(t_command *node, t_exec_data *data)
 {
     int status;
@@ -46,6 +49,7 @@ int exec_pipe(t_command *node, t_exec_data *data)
     int fd[2];
     ft_pipe(fd);
     pid[0] = fork();
+    signal(SIGINT, &sigint_child);
     if (pid[0] == 0)
     {
         free((ft_close(&fd[0]), ft_dup2(&fd[1], STDOUT_FILENO), NULL));
@@ -64,6 +68,7 @@ int exec_pipe(t_command *node, t_exec_data *data)
     free((ft_close(&node->left->outfile), ft_close(&node->right->outfile), NULL));
     waitpid(pid[0], &status1, 0);
     waitpid(pid[1], &status2, 0);
+    signal(SIGINT, &handle_sigint);
     return (status2);
 }
 
@@ -80,7 +85,5 @@ int exec_command(t_command *node, t_exec_data *data)
         status = exec_and(node, data);
     else if (node->type == PIPE)
         status = exec_pipe(node, data);
-    else
-        fprintf(stderr,"NULL NODE\n");
     return (status);
 }
