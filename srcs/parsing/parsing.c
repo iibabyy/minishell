@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:10:49 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/15 15:14:37 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/08/20 22:24:46 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ t_command	*create_command(t_parsing *data)
 	data->command = command;
 	if (add_words_to_command(data) == EXIT_FAILURE)
 		return (NULL);
+	if (command->command[0] == NULL)
+		return (parse_err(TOKEN_ERR, data->curr_token->content), NULL);
 	if (command->type == SUB_SHELL && command->command[1] != NULL)
 		return (parse_err(TOKEN_ERR, command->command[1]), NULL);
 	return (command);
