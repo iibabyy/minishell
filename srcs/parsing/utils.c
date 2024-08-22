@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/04 22:07:45 by ibaby             #+#    #+#             */
+/*   Updated: 2024/08/04 22:07:46 by ibaby            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "parsing.h"
 
 int	redirections_number(t_token *token)
@@ -19,7 +31,7 @@ int	type_to_oflags(int type)
 	if (type == OUTPUT)
 		return (O_WRONLY | O_CREAT);
 	if (type == APPEND_OUTPUT)
-		return (O_WRONLY| O_CREAT | O_APPEND);
+		return (O_WRONLY | O_CREAT | O_APPEND);
 	if (type == INPUT)
 		return (O_RDONLY);
 	if (type == HERE_DOC)

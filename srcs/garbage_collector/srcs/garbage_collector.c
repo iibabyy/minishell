@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   garbage_collector.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/04 22:25:32 by ibaby             #+#    #+#             */
+/*   Updated: 2024/08/04 22:25:33 by ibaby            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "garb_utils.h"
 
 /*	this function works like the real malloc function,
@@ -22,7 +34,7 @@ void	*ft_malloc(unsigned long size)
 	}
 	ptr = malloc(size);
 	if (ptr == NULL)
-		return (error_log("ft_malloc: malloc() failed:", true), NULL);
+		return (print_err(MALLOC_FAILED, true), NULL);
 	if (new_garb_node(ptr, garbage, size) == EXIT_FAILURE)
 		return (free(ptr), NULL);
 	return (ptr);
@@ -31,8 +43,8 @@ void	*ft_malloc(unsigned long size)
 void	*ft_realloc(void *ptr, unsigned long size_to_add)
 {
 	static t_garbage	*garbage = NULL;
-	t_garb_node	*ptr_node;
-	unsigned char	*new_ptr;
+	t_garb_node			*ptr_node;
+	unsigned char		*new_ptr;
 
 	if (ptr == NULL || is_destroyed(READER, false) != false)
 		return (NULL);

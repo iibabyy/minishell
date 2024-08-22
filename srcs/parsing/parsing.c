@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/04 22:10:49 by ibaby             #+#    #+#             */
+/*   Updated: 2024/08/15 15:14:37 by ibaby            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "parsing.h"
 
 /*
@@ -10,19 +22,19 @@ parse(char	*input)
 {
 	t_parsing	data;
 
+	if (input == NULL)
+		return (NULL);
 	ft_memset(&data, 0, sizeof(t_data));
 	data.error = false;
-	input = replace_env_vars(input);
-	data.token = input_to_tokens(&input);
+	// input = replace_env_vars(input);
+	data.token = input_to_tokens(input);
 	if (data.token == NULL)
 		return (destroy_parsing(&data), NULL);
+	add_history(input);
 	data.curr_token = data.token;
 	data.command = token_to_ast(&data);
 	if (data.command == NULL)
 		return (destroy_parsing(&data), NULL);
-	// if (open_redirections(data.redirection) == EXIT_FAILURE
-	// 		&& redirections_number(data.token) != 0)
-	// 	return (destroy_parsing(&data), NULL);
 	if (replace_aliases(last_command(data.command)) == EXIT_FAILURE)
 		return (destroy_parsing(&data), NULL);
 	return (last_command(data.command));
@@ -69,20 +81,18 @@ t_command	*create_ast(t_parsing *data, t_command *left)
 	return (operator);
 }
 
-t_command	*init_command(t_parsing *data)
+t_command	*create_command(t_parsing *data)
 {
 	t_command	*command;
 
-	(void)data;
-	command = ft_calloc(1, sizeof(t_command));
+	command = init_command(data);
 	if (command == NULL)
 		return (NULL);
-	command->infile = STDIN_FILENO;
-	command->outfile = STDOUT_FILENO;
-	command->previous = NULL;
-	command->type = COMMAND;
-	command->command = ft_malloc(sizeof(char *) * (args_number(data->curr_token) + 2));
-	command->command[0] = NULL;
+	data->command = command;
+	if (add_words_to_command(data) == EXIT_FAILURE)
+		return (NULL);
+	if (command->type == SUB_SHELL && command->command[1] != NULL)
+		return (parse_err(TOKEN_ERR, command->command[1]), NULL);
 	return (command);
 }
 
@@ -105,7 +115,10 @@ t_command	*init_operator(t_parsing *data, t_command *left_command)
 		return (parse_err(TOKEN_ERR, current->content), NULL);
 	operator->left = left_command;
 	operator->right = NULL;
-	if (data->curr_token->next == NULL || data->curr_token->next->type != WORD)
+	if (data->curr_token->next == NULL)
+		return (parse_err(TOKEN_ERR, data->curr_token->content), NULL);
+	if (data->curr_token->next->type != WORD
+		&& data->curr_token->next->type != SUB_SHELL)
 		return (parse_err(TOKEN_ERR, data->curr_token->content), NULL);
 	data->curr_token = data->curr_token->next;
 	return (operator);

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/15 15:08:49 by ibaby             #+#    #+#             */
+/*   Updated: 2024/08/15 17:47:07 by ibaby            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef	MINISHELL_H
 #define MINISHELL_H
 
@@ -21,16 +33,20 @@
 #include "garbage_collector.h"
 #include "error.h"
 
+// minishell
+
+void		minishell(void);
+int			init_minishell(char **env);
+
 // features
 
-int	init_aliases();
-int	replace_aliases(t_command *last_command);
-
+int			init_aliases();
+int			replace_aliases(t_command *last_command);
 
 // lexing
 
 char		*replace_env_vars(char *input);
-t_token		*input_to_tokens(char **input);
+t_token		*input_to_tokens(char *input);
 char		*get_input(char *end_of_file, char *prompt, bool quotes);
 
 // parsing
@@ -38,6 +54,15 @@ char		*get_input(char *end_of_file, char *prompt, bool quotes);
 t_command	*parse(char	*input);
 int			open_redirections(t_command	*command);
 t_command	*last_command(t_command *current);
+
+// built-ins
+
+int			alias(char **arg);
+void		init_env(char **env_arg);
+int			env(char **args);
+int			unset(char **args);
+int			export(char	**args);
+
 
 // debug
 

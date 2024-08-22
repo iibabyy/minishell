@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 20:14:21 by ibaby             #+#    #+#             */
-/*   Updated: 2024/07/28 23:50:54 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/08/15 19:42:32 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ char	**ft_split(const char *s, char sep)
 	int		check;
 
 	words = count_words(s, sep);
-	if (s[ft_strlen(s) - 1] == sep)
+	if (*s != '\0' && s[ft_strlen(s) - 1] == sep)
 		words--;
 	if (words < 0 || *s == '\0')
 	{

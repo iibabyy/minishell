@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   redirections.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/04 22:08:33 by ibaby             #+#    #+#             */
+/*   Updated: 2024/08/04 22:08:34 by ibaby            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "parsing.h"
 
 int	add_redirection(t_parsing *data)
@@ -27,7 +39,6 @@ int	add_redirection_to_command(t_parsing *data, int type)
 	if (redirection == NULL)
 		return (EXIT_FAILURE);
 	redirect_add_back(&data->command->redirections, redirection);
-	data->curr_token = data->curr_token->next;
 	return (EXIT_SUCCESS);
 }
 

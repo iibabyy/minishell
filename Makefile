@@ -32,12 +32,12 @@ GARBAGE_COLLECTOR = $(GARBAGE_COLLECTOR_DIR)garbage_collector.a
 
 # Minishell
 
-FILES =	srcs/error_utils/free_and_exit.c	\
+FILES =	srcs/main.c							\
+		srcs/error_utils/free_and_exit.c	\
 		srcs/error_utils/print_err.c		\
 		srcs/error_utils/free_utils.c		\
 		srcs/lexing/check_char.c			\
 		srcs/lexing/lexing.c				\
-		srcs/main.c					\
 		srcs/lexing/lexing_utils.c			\
 		srcs/lexing/env_var.c				\
 		srcs/parsing/parsing_utils.c		\
@@ -50,7 +50,13 @@ FILES =	srcs/error_utils/free_and_exit.c	\
 		srcs/exec/exec_utils.c              \
 		srcs/exec/create_path.c             \
 		srcs/features/alias_utils.c			\
-		srcs/features/alias.c				\
+		srcs/features/aliases.c				\
+		srcs/test_utils.c					\
+		srcs/built_in/env_utils.c			\
+		srcs/built_in/env.c					\
+		srcs/built_in/export.c				\
+		srcs/built_in/unset.c				\
+		srcs/built_in/alias.c				\
 
 OBJ = $(FILES:.c=.o)
 
@@ -112,12 +118,15 @@ fclean : clean
 
 ac : all clean
 
-re : fclean all
+re :
+	@make -s fclean
+	@echo ""
+	@make -s all
 
 s :
 	@make -sC $(LIBFT_DIR)
 	@make -sC $(GARBAGE_COLLECTOR_DIR)
-	@make
+	@make -s
 
 res :
 	@make re -sC $(LIBFT_DIR)

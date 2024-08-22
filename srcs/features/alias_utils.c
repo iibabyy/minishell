@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   alias_utils.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/04 22:24:38 by ibaby             #+#    #+#             */
+/*   Updated: 2024/08/15 14:31:16 by ibaby            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "features.h"
 
 void	clear_3d_array(char ***alias, int end)
@@ -29,7 +41,7 @@ char	***get_alias(char ***init_alias)
 char	**add_alias(char **array, char *line, int start)
 {
 	char	**alias_val;
-	int	i;
+	int		i;
 
 	i = 0;
 	while (line[start + i] != '\n' && line[start + i] != '\0')
@@ -64,7 +76,7 @@ char	**insert_alias(char **command, char **alias)
 	i = -1;
 	j = -1;
 	new_command = ft_malloc(sizeof(char *)
-		* (ft_strlen_2d(command) + ft_strlen_2d(alias)));
+			* (ft_strlen_2d(command) + ft_strlen_2d(alias)));
 	if (new_command == NULL)
 		return (command);
 	while (alias[++i + 1] != NULL)
@@ -72,7 +84,6 @@ char	**insert_alias(char **command, char **alias)
 	while (command[++j + 1] != NULL)
 		new_command[i + j] = command[j + 1];
 	new_command[i + j] = NULL;
-	print_2d_array_nl(command);
 	ft_free(command);
 	return (new_command);
 }

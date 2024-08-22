@@ -1,14 +1,26 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/04 22:10:05 by ibaby             #+#    #+#             */
+/*   Updated: 2024/08/04 22:10:06 by ibaby            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PARSING_H
 # define PARSING_H
 
-#include "../../includes/minishell.h"
+# include "../../includes/minishell.h"
 
 /*  Priorities	*/
 
-# define SUB_SH_WEIGHT 3
-# define PIPE_WEIGHT 2
+# define SUB_SH_WEIGHT 0
 # define AND_WEIGHT 1
 # define OR_WEIGHT 1
+# define PIPE_WEIGHT 2
 # define HEREDOC_PROMPT "heredoc> "
 
 t_command		*token_to_ast(t_parsing *data);
@@ -31,11 +43,10 @@ t_command		*create_command(t_parsing *data);
 int				weight_by_type(int type);
 int				next_operator_weight(t_parsing *data);
 t_command		*last_command(t_command *current);
-t_redirection	*init_others_redirection(t_parsing *data, int type, int o_flags);
+t_redirection	*init_others_redirection(t_parsing *data, int type, int oflags);
 void			redirect_add_back(t_redirection **lst, t_redirection *redirect);
 bool			is_standart_fd(int fd);
-
 t_redirection	*init_here_doc(t_parsing *data);
-int	open_here_doc(t_redirection *redirection);
+int				open_here_doc(t_redirection *redirection);
 
 #endif

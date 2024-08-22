@@ -6,28 +6,25 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 17:35:51 by ibaby             #+#    #+#             */
-/*   Updated: 2024/07/28 23:52:17 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/08/15 20:44:33 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/libft.h"
 #include <stdarg.h>
 
-void	ft_multi_free(int pointers_num, void **pointer1, void **pointer2, ...)
+void	ft_multi_free(int pointers_num, void *pointer1, void *pointer2, ...)
 {
 	va_list			ap;
-	unsigned char	**pointer;
+	unsigned char	*pointer;
 
 	va_start(ap, pointer2);
 	ft_free(pointer1);
-	*pointer1 = NULL;
 	ft_free(pointer2);
-	*pointer2 = NULL;
 	pointers_num -= 2;
 	while (pointers_num-- > 0)
 	{
-		pointer = va_arg(ap, unsigned char **);
-		ft_free((void **)pointer);
-		*pointer = NULL;
+		pointer = va_arg(ap, unsigned char *);
+		ft_free(pointer);
 	}
 }

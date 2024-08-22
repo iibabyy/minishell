@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   garbage_utils_1.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/04 22:26:02 by ibaby             #+#    #+#             */
+/*   Updated: 2024/08/04 22:26:03 by ibaby            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "garb_utils.h"
 
 t_garb_node	*find_in_garbage(void *address, t_garbage *garbage)
@@ -40,7 +52,8 @@ int	new_garb_node(void *address, t_garbage *garbage, unsigned long size)
 
 	new_node = malloc(sizeof(t_garb_node) * 1);
 	if (new_node == NULL)
-		return (error_log("new_garb_node: malloc() failed:", true), EXIT_FAILURE);
+		return (error_log("new_garb_node: malloc() failed:", true),
+			EXIT_FAILURE);
 	new_node->address = address;
 	new_node->size = size;
 	new_node->next = garbage->first;

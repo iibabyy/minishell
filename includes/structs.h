@@ -24,10 +24,11 @@ typedef struct s_garbage
 
 //	Lexing
 
-# define WORD 1			//	commands, arguments, etc...
-# define OPERATOR 2			//	|, ||, &&, () and newlines.
+# define WORD 1				//	commands, arguments, etc...
+# define OPERATOR 2			//	|, || and &&.
 # define REDIRECTION 3		//	<, <<, >, >>.
 # define STRING 4			// "abcde...", etc...
+# define PARENTHESIS 5		// (...)
 
 typedef struct s_token
 {
@@ -90,5 +91,19 @@ typedef struct s_redirection
 	int						o_flags;
 	struct s_redirection	*next;
 }	t_redirection;
+
+//	built_in
+
+typedef struct s_env_var
+{
+	char				*variable;
+	char				*value;
+	struct s_env_var	*next;
+}	t_env_var;
+
+typedef struct s_env
+{
+	t_env_var	*first;
+}	t_env;
 
 #endif

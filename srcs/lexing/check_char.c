@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_char.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/04 22:27:12 by ibaby             #+#    #+#             */
+/*   Updated: 2024/08/15 15:12:04 by ibaby            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "lexing.h"
 
 bool	is_meta_char(char *input, int index)
@@ -7,7 +19,7 @@ bool	is_meta_char(char *input, int index)
 	c = input[index];
 	if (c == '\0')
 		return (false);
-	else if (ft_strchr("|<>$* ", c) != NULL)
+	else if (ft_strchr("|<>* ", c) != NULL)
 		return (true);
 	else if (c == '&' && input[index + 1] == '&')
 		return (true);
@@ -49,25 +61,19 @@ bool	is_quotes(char c)
 		return (false);
 }
 
-int	quotes_size(char **input, int start, char eof)
+int	char_type(char *str, int index)
 {
-	char	*temp;
-	int		i;
-	
-	i = 0;
-	while (1)
-	{
-		if ((*input)[start + i] == '\0')
-		{
-			temp = get_input(&eof, QUOTES_PROMPT, true);
-			*input = ft_re_strjoin(*input, temp);
-			if (temp == NULL || *input == NULL)
-				return (error_log("quotes_size: get_input() failed", false),
-					ft_free(*input), ft_free(temp), -1);
-		}
-		if ((*input)[start + i] == eof)
-			break ;
-		++i;
-	}
-	return (i);
+	char	c;
+
+	c = str[index];
+	if (is_quotes(c) == true)
+		return (WORD);
+	if (is_redirection(c) == true)
+		return (REDIRECTION);
+	if (ft_strchr("|()", c) != NULL)
+		return (OPERATOR);
+	if (c == '&' && str[index + 1] == '&')
+		return (OPERATOR);
+	error_log("unknow token\n", false);
+	return (-1);
 }

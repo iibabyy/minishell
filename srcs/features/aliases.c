@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   aliases.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/04 22:06:03 by ibaby             #+#    #+#             */
+/*   Updated: 2024/08/15 18:54:41 by ibaby            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "features.h"
 
 int	replace_aliases(t_command *last_command)
@@ -32,7 +44,7 @@ int	check_if_alias(t_command *command, char ***aliases)
 	command_arr = command->command;
 	while (aliases[++i] != NULL)
 	{
-		if (type != COMMAND)
+		if (type != COMMAND || command_arr[0] == NULL)
 			continue ;
 		if (ft_strcmp(aliases[i][0], command_arr[0]) == 0)
 		{
@@ -43,10 +55,10 @@ int	check_if_alias(t_command *command, char ***aliases)
 	return (EXIT_SUCCESS);
 }
 
-int	init_aliases()
+int	init_aliases(void)
 {
 	char	***aliases;
-	int	mshrc_fd;
+	int		mshrc_fd;
 
 	mshrc_fd = open(MSHRC, O_RDONLY);
 	if (mshrc_fd == -1)
@@ -58,7 +70,7 @@ int	init_aliases()
 	return (EXIT_SUCCESS);
 }
 
-char ***search_aliases(int fd)
+char	***search_aliases(int fd)
 {
 	char	***aliases;
 	char	*line;
@@ -68,18 +80,18 @@ char ***search_aliases(int fd)
 	aliases = ft_calloc(MAX_ALIAS + 1, sizeof(char **));
 	if (aliases == NULL)
 		return (NULL);
-	while (++i < MAX_ALIAS)
+	while (i < MAX_ALIAS)
 	{
 		line = get_next_line(fd);
-		if (line == NULL)
+		if (line == NULL || *line == '\0')
 			break ;
 		if (ft_strncmp(line, "alias ", 6) == 0)
-		{
-			aliases[i] = line_to_alias(line);
-		}
+			aliases[++i] = line_to_alias(line);
 		ft_free(line);
+		line = NULL;
 	}
-	aliases[i] = NULL;
+	if (i >= MAX_ALIAS)
+		error_log("max aliases reached. Cannot add one", false);
 	if (aliases[0] == NULL)
 		return (ft_free(aliases), NULL);
 	return (aliases);
@@ -94,12 +106,11 @@ char	**line_to_alias(char *line)
 	i = 6;
 	while (line[i] == ' ' && line[i] != '\0')
 		++i;
-	if (line[i] == '\0')
+	if (line[i] == '\0' || (ft_isalpha(line[i]) == 0 && line[i] != '_'))
 		return (NULL);
 	start = i;
 	while (line[i] != '=')
-		if (ft_isalpha(line[i++]) == false)
-			return (NULL);
+		++i;
 	alias = ft_malloc(sizeof(char *) * (count_char(line + i + 2, ' ') + 3));
 	if (alias == NULL)
 		return (NULL);

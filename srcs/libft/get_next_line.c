@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 22:20:39 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/03 15:21:28 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/08/15 18:10:52 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 char	*get_next_line(int fd)
 {
 	char		*buffer;
-	static char	save[MAX_FD][BUFFER_SIZE + 1];
+	static char	save[MAX_FD][BUFFER_SIZE + 1] = {0};
 	char		*str;
 	int			byte_read;
 
