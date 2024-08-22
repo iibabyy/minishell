@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mdembele <mdembele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:42:32 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/15 20:12:09 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/08/22 14:24:10 by mdembele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,7 @@ t_command	*last_command(t_command *current);
 void		print_AST(t_command *command);
 
 /*				*/
-void handle_sigint(int sig)
-{
-	printf("\n");
-	rl_replace_line("", 0);
-	rl_on_new_line();
-	rl_redisplay();
-	(void) sig;
-}
+
 bool	is_only_space(char *str)
 {
 	int	i;
@@ -97,7 +90,8 @@ int	main(int ac, char **av, char **envp)
 			command = parse(str);
 			if (command != NULL)
 			{	
-				print_AST(command);
+    			printf("%p\n", command->redirections);
+				// print_AST(command);
 				exec_command(command, data);
 			}
 		}

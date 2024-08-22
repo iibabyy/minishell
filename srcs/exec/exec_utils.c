@@ -34,36 +34,30 @@ void init_data(t_exec_data *data, t_command *command)
             exit(1);
         data->command_path = create_command_path(data , command);
 }
-void sigint_child(int sig)
-{
-    (void)sig;
-    ft_putstr_fd("\n", 1);
-}
+
 int   exec_single_command(t_command *command, t_exec_data *exec)
 {
     pid_t pid;
     int status = 0;
 
-    signal(SIGINT, &sigint_child);
+    if (command->previous == NULL)
+        signal(SIGINT, &sigint_child);
+    else
+        signal(SIGINT, &null_sigint);
     pid = fork();
     if (pid == 0)
     {
-        exec = ft_calloc(1, sizeof(t_exec_data));
-        if (exec == NULL)
-            print_err_and_exit(NULL, 1, false);
         init_data(exec, command);
         open_redirections(command);
+        printf("infile: %i\noutfile: %i\n", command->infile, command->outfile);
         ft_dup2(&command->infile, STDIN_FILENO);
         ft_dup2(&command->outfile, STDOUT_FILENO);
         execve(exec->command_path, command->command, NULL);
         ft_putstr_fd("Minishell : command not found : ", 2);
         ft_putendl_fd(command->command[0], 2);
-        exit(127);     
+        exit(127);
     }
     else
-    {
-      free((ft_close(&command->infile), ft_close(&command->outfile), NULL));
       waitpid(pid, &status, 0);
-    }
     return (WEXITSTATUS(status));
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mdembele <mdembele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 15:19:09 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/15 21:18:34 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/08/22 14:54:37 by mdembele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,11 +87,12 @@ int	parse_export_arg(char *arg)
 	int	i;
 
 	i = 0;
-	if (arg[i] == ' ' || arg[i] == '\0')
-		return (print_err("export: wrong argument format", false),
-				EXIT_FAILURE);
-	if (ft_isalpha(arg[i]) == 0 && arg[i] != '_')
-		return (print_err("export: wrong argument format", false),
-				EXIT_FAILURE);
+	(void)arg;
+	// if (arg[i] == ' ' || arg[i] == '\0')
+	// 	return (print_err("export: wrong argument format", false),
+	// 			EXIT_FAILURE);
+	// if (ft_isalpha(arg[i]) == 0 && arg[i] != '_')
+	// 	return (print_err("export: wrong argument format", false),
+	// 			EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
