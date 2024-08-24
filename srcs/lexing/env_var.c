@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:33:50 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/20 23:07:07 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/08/25 00:35:41 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,6 @@ int	replace_tokens_env_vars(t_token *token)
 			if (temp_token == NULL)
 				return (EXIT_FAILURE);
 			temp = token->next;
-			printf("temp last: %p\ntoken next: %p\n", last_token(temp_token)->next, token);
 			last_token(temp_token)->next = token->next;
 			token->next = temp_token;
 			token = temp;

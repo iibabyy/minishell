@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:15:07 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/20 22:56:56 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/08/25 00:35:16 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,5 +92,5 @@ t_token	*last_token(t_token *token)
 		return (NULL);
 	while (token->next != NULL)
 		token = token->next;
-	return (token->next);
+	return (token);
 }
