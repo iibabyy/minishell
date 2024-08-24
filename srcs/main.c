@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:42:32 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/15 20:12:09 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/08/20 22:36:41 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int	main(int ac, char **av, char **envp)
 	{
 		str = readline("\033[0;36mminishell \033[0;33m✗\033[0m ");
 		add_history(str);
-		str = replace_env_vars(str);
 		arg = ft_split(str, ' ');
 		if (arg[0] == NULL)
 			continue ;

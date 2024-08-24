@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:15:43 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/15 15:32:48 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/08/20 22:55:46 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ t_token	*input_to_tokens(char *input)
 			return (add_history(input), ft_lstclear(&tokens, ft_free), NULL);
 	}
 	add_history(input);
-	// replace_env_vars(tokens);
+	if (replace_tokens_env_vars(tokens) == EXIT_FAILURE)
+		return (ft_lstclear(&tokens, ft_free), NULL);
 	return (tokens);
 }
 
@@ -109,4 +110,25 @@ int	new_parenthesis(char **input, int start, int *end, t_token **token)
 	ft_lstadd_back(token, new_token);
 	*end = start + len + 1;
 	return (EXIT_SUCCESS);
+}
+
+t_token	*init_token(char **input, int start)
+{
+	t_token	*new_token;
+	char	*content;
+	int		len;
+
+	new_token = ft_calloc(1, sizeof(t_token) * 1);
+	if (new_token == NULL)
+		return (NULL);
+	new_token->next = NULL;
+	new_token->type = char_type(*input, start);
+	len = metachar_size(input, start);
+	if (len == -1 || new_token->type == -1)
+		return (ft_free(new_token), NULL);
+	content = ft_substr(*input, start, len);
+	if (content == NULL)
+		return (ft_free(new_token), NULL);
+	new_token->content = content;
+	return (new_token);
 }

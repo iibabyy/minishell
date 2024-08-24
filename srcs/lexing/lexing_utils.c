@@ -6,32 +6,11 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:15:07 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/06 16:12:46 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/08/20 22:56:56 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexing.h"
-
-t_token	*init_token(char **input, int start)
-{
-	t_token	*new_token;
-	char	*content;
-	int		len;
-
-	new_token = ft_calloc(1, sizeof(t_token) * 1);
-	if (new_token == NULL)
-		return (NULL);
-	new_token->next = NULL;
-	new_token->type = char_type(*input, start);
-	len = metachar_size(input, start);
-	if (len == -1 || new_token->type == -1)
-		return (ft_free(new_token), NULL);
-	content = ft_substr(*input, start, len);
-	if (content == NULL)
-		return (ft_free(new_token), NULL);
-	new_token->content = content;
-	return (new_token);
-}
 
 int	new_word_token(t_token **tokens, char *word)
 {
@@ -105,4 +84,13 @@ int	parenthesis_size(char **input, int start)
 		++i;
 	}
 	return (i);
+}
+
+t_token	*last_token(t_token *token)
+{
+	if (token == NULL)
+		return (NULL);
+	while (token->next != NULL)
+		token = token->next;
+	return (token->next);
 }

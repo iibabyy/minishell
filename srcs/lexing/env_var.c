@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:33:50 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/20 22:18:39 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/08/20 23:07:07 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,4 +102,33 @@ char    *split_env_var(char *env)
             return (error_log("split_env_var: multi_strjoin failed", false), NULL);
     }
     return (str_join_2d_and_free(splited_env, " "));
+}
+
+int	replace_tokens_env_vars(t_token *token)
+{
+	t_token	*temp_token;
+	t_token	*temp;
+
+	if (token == NULL)
+		return (EXIT_SUCCESS);
+	while (token != NULL)
+	{
+		if (token->content != NULL && ft_strchr(token->content, '$') != NULL)
+		{
+			token->content = replace_env_vars(token->content);
+			if (token->content == NULL)
+				return (EXIT_FAILURE);
+			temp_token = input_to_tokens(token->content);
+			if (temp_token == NULL)
+				return (EXIT_FAILURE);
+			temp = token->next;
+			printf("temp last: %p\ntoken next: %p\n", last_token(temp_token)->next, token);
+			last_token(temp_token)->next = token->next;
+			token->next = temp_token;
+			token = temp;
+		}
+		else
+			token = token->next;
+	}
+	return (EXIT_SUCCESS);
 }
