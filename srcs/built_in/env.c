@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 15:18:15 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/15 21:07:06 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/08/24 15:49:58 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	env(char **args)
 	temp = env->first;
 	while (temp != NULL)
 	{
+		printf("%s:\n", temp->variable);
 		if (temp->value != NULL)
 		{
 			if (printf("%s=%s\n", temp->variable, temp->value) == -1)
