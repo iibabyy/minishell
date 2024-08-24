@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:10:05 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/04 22:10:06 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/08/25 00:18:48 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 # define PIPE_WEIGHT 2
 # define HEREDOC_PROMPT "heredoc> "
 
-t_command		*token_to_ast(t_parsing *data);
-t_command		*create_ast(t_parsing *data, t_command *left);
+t_command		*token_to_ast(t_parsing *data, int weight);
+t_command		*create_ast(t_parsing *data, t_command *left, int weight);
 t_command		*init_command(t_parsing *data);
 int				add_words_to_command(t_parsing *data);
 int				add_redirection(t_parsing *data);

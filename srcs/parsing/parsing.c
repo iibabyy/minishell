@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:10:49 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/20 22:30:17 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/08/25 00:20:45 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_command	*parse(char	*input)
 		return (destroy_parsing(&data), NULL);
 	add_history(input);
 	data.curr_token = data.token;
-	data.command = token_to_ast(&data);
+	data.command = token_to_ast(&data, 0);
 	if (data.command == NULL)
 		return (destroy_parsing(&data), NULL);
 	if (replace_aliases(last_command(data.command)) == EXIT_FAILURE)
@@ -41,7 +41,7 @@ t_command	*parse(char	*input)
 	return (data.command);
 }
 
-t_command	*token_to_ast(t_parsing *data)
+t_command	*token_to_ast(t_parsing *data, int weight)
 {
 	t_command	*first_command;
 
@@ -49,24 +49,24 @@ t_command	*token_to_ast(t_parsing *data)
 	data->command = first_command;
 	if (first_command == NULL)
 		return (destroy_parsing(data), NULL);
-	data->command = create_ast(data, first_command);
+	data->command = create_ast(data, first_command, weight);
 	if (data->error == true)
 		return (NULL);
 	return (first_command);
 }
 
-t_command	*create_ast(t_parsing *data, t_command *left)
+t_command	*create_ast(t_parsing *data, t_command *left, int weight)
 {
 	t_command	*operator;
 
-	if (data->curr_token == NULL)
+	if (data->curr_token == NULL || next_operator_weight(data) <= weight)
 		return (NULL);
 	operator = init_operator(data, left);
 	if (operator == NULL)
 		return (destroy_parsing(data), NULL);
 	if (operator->weight < next_operator_weight(data))
 	{
-		operator->right = last_command(token_to_ast(data));
+		operator->right = last_command(token_to_ast(data, operator->weight));
 		if (operator->right == NULL)
 			return (destroy_parsing(data), NULL);
 	}
@@ -78,7 +78,7 @@ t_command	*create_ast(t_parsing *data, t_command *left)
 	}
 	left->previous = operator;
 	operator->right->previous = operator;
-	operator->previous = create_ast(data, operator);
+	operator->previous = create_ast(data, operator, weight);
 	return (operator);
 }
 
