@@ -1,5 +1,3 @@
-#	colors	#
-
 BLACK=	$(shell tput -Txterm setaf 0)
 RED= 	$(shell tput -Txterm setaf 1)
 GREEN= 	$(shell tput -Txterm setaf 2)
@@ -48,6 +46,10 @@ FILES =	srcs/main.c							\
 		srcs/parsing/redirection_utils.c	\
 		srcs/parsing/redirections.c			\
 		srcs/parsing/utils.c				\
+		srcs/exec/exec.c					\
+		srcs/exec/exec_utils.c              \
+		srcs/exec/create_path.c             \
+		srcs/exec/signal.c					\
 		srcs/features/alias_utils.c			\
 		srcs/features/aliases.c				\
 		srcs/test_utils.c					\
