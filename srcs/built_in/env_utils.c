@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 15:18:49 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/24 16:02:08 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/08/26 17:24:35 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ char	*variable_value(char *env_line)
 	// }
 	// if (i == 1 )
 	// if (start[i] == '"' )
+	if (ft_strchr(env_line, '=') == NULL)
+		return (NULL);
 	value = ft_strdup(ft_strchr(env_line, '=') + 1);
 	return (value);
 }

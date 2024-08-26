@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 15:19:09 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/26 16:20:41 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/08/26 16:23:56 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,11 +89,11 @@ int	parse_export_arg(char *arg)
 
 	i = 0;
 	(void)arg;
-	// if (arg[i] == ' ' || arg[i] == '\0')
-	// 	return (print_err("export: wrong argument format", false),
-	// 			EXIT_FAILURE);
-	// if (ft_isalpha(arg[i]) == 0 && arg[i] != '_')
-	// 	return (print_err("export: wrong argument format", false),
-	// 			EXIT_FAILURE);
+	if (arg[i] == ' ' || arg[i] == '\0')
+		return (print_err("export: wrong argument format", false),
+				EXIT_FAILURE);
+	if (ft_isalpha(arg[i]) == 0 && arg[i] != '_')
+		return (print_err("export: wrong argument format", false),
+				EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }

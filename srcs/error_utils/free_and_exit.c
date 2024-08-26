@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:05:42 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/04 22:05:43 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/08/26 16:33:05 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,4 +24,10 @@ void	free_all(t_data *data)
 {
 	(void)data;
 	destroy_garbage(NULL);
+}
+
+void	print_err_and_exit(char *err, int status, bool errno)
+{
+	print_err(err, errno);
+	exit(status);
 }

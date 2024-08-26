@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:42:32 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/26 16:21:14 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/08/26 17:04:27 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,13 +70,10 @@ int	main(int ac, char **av, char **envp)
 		arg = ft_split(str, ' ');
 		if (arg[0] == NULL)
 			continue ;
-		printf("%s:\n\n", str);
 		if (ft_strcmp(arg[0], "export") == 0)
 			export(arg);
 		else if (ft_strcmp(arg[0], "unset") == 0)
 			unset(arg);
-		else if (ft_strcmp(arg[0], "alias") == 0)
-			alias(arg);
 		else if (ft_strcmp(arg[0], "env") == 0)
 			env(arg);
 		else if (ft_strcmp(arg[0], "exit") == 0)
@@ -89,11 +86,7 @@ int	main(int ac, char **av, char **envp)
 		{
 			command = parse(str);
 			if (command != NULL)
-			{	
-    			printf("%p\n", command->redirections);
-				// print_AST(command);
 				exec_command(command, data);
-			}
 		}
 		free(str);
 		free_2d_array((void ***)&arg);

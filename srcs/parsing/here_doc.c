@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:10:53 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/26 16:19:38 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/08/26 17:21:11 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	open_here_doc(t_redirection *redirection)
 			EXIT_FAILURE);
 	command_infile = &redirection->command->infile;
 	here_doc = redirection->here_doc;
-	input = get_input(here_doc->end_of_file->content, HEREDOC_PROMPT, true);
+	input = get_input(here_doc->end_of_file->content, HEREDOC_PROMPT, false);
 	if (input == NULL)
 		return (EXIT_FAILURE);
 	ft_putstr_fd(input, here_doc->pipe[1]);
@@ -34,7 +34,7 @@ int	open_here_doc(t_redirection *redirection)
 	*command_infile = here_doc->pipe[0];
 	return (EXIT_SUCCESS);
 }
-
+	
 static bool	is_limiter(char *input, char *limiter)
 {
 	size_t	input_len;
@@ -52,11 +52,11 @@ static bool	is_limiter(char *input, char *limiter)
 	{
 		return (true);
 	}
-	else
+	else if (input[input_len - 1] == '\0')
 	{
 		input[input_len - 1] = '\n';
-		return (false);
 	}
+	return (false);
 }
 
 char	*get_input(char *end_of_file, char *prompt, bool quotes)
@@ -73,7 +73,7 @@ char	*get_input(char *end_of_file, char *prompt, bool quotes)
 		input_join = ft_re_strjoin(input_join, "\n");
 		if (input_join == NULL)
 			return (NULL);
-		if (quotes == false && is_limiter(input, end_of_file) == 0)
+		if (quotes == false && is_limiter(input, end_of_file) == true)
 			return (free(input), input_join);
 		input_join = ft_re_strjoin(input_join, input);
 		if (input_join == NULL)

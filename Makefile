@@ -134,4 +134,4 @@ res :
 	@make re -sC $(GARBAGE_COLLECTOR_DIR)
 	@make
 
-.PHONY: all re clean fclean ac
+.PHONY: all re clean fclean ac s res
