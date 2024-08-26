@@ -94,5 +94,5 @@ int	parse_export_arg(char *arg)
 	// if (ft_isalpha(arg[i]) == 0 && arg[i] != '_')
 	// 	return (print_err("export: wrong argument format", false),
 	// 			EXIT_FAILURE);
-	return (EXIT_SUCCESS);
+	return (i);
 }

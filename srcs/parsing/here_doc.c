@@ -11,7 +11,11 @@
 /* ************************************************************************** */
 
 #include "parsing.h"
-
+void quit_heredoc(int sig)
+{
+	(void)sig;
+	exit(0);
+}
 int	open_here_doc(t_redirection *redirection)
 {
 	t_here_doc	*here_doc;
@@ -23,6 +27,7 @@ int	open_here_doc(t_redirection *redirection)
 			EXIT_FAILURE);
 	command_infile = &redirection->command->infile;
 	here_doc = redirection->here_doc;
+	signal(SIGINT, &quit_heredoc);
 	input = get_input(here_doc->end_of_file->content, HEREDOC_PROMPT, true);
 	if (input == NULL)
 		return (EXIT_FAILURE);
