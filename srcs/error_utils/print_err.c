@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:05:52 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/04 22:46:17 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/08/26 16:12:58 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,20 +34,11 @@ void	parse_err(char *error, char *token)
 	}
 	else if (token != NULL)
 	{
-		if (ft_strlen(token) > 3)
-		{
-			token = ft_strdup(token);
-			if (token == NULL)
-				return ((void)error_log("parse_err: ft_strdup failed", false));
-			token[3] = '\0';
-		}
 		ft_putstr_fd("Error: ", STDERR_FILENO);
 		ft_putstr_fd(error, STDERR_FILENO);
 		ft_putstr_fd(": `", STDERR_FILENO);
 		ft_putstr_fd(token, STDERR_FILENO);
 		ft_putendl_fd("'", STDERR_FILENO);
-		if (ft_strlen(token) > 3)
-			ft_free(token);
 	}
 }
 

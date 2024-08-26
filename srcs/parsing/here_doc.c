@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:10:53 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/04 22:10:57 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/08/26 16:12:28 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,8 @@ t_redirection	*init_here_doc(t_parsing *data)
 {
 	t_redirection	*redirection;
 
+	if (data->curr_token == NULL)
+		return (NULL);
 	redirection = ft_calloc(1, sizeof(t_redirection));
 	if (redirection == NULL)
 		return (NULL);
