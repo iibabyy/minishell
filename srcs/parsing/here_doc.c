@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdembele <mdembele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:10:53 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/22 14:46:44 by mdembele         ###   ########.fr       */
+/*   Updated: 2024/08/26 17:21:11 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	open_here_doc(t_redirection *redirection)
 	*command_infile = here_doc->pipe[0];
 	return (EXIT_SUCCESS);
 }
-
+	
 static bool	is_limiter(char *input, char *limiter)
 {
 	size_t	input_len;
@@ -57,11 +57,11 @@ static bool	is_limiter(char *input, char *limiter)
 	{
 		return (true);
 	}
-	else
+	else if (input[input_len - 1] == '\0')
 	{
 		input[input_len - 1] = '\n';
-		return (false);
 	}
+	return (false);
 }
 
 char	*get_input(char *end_of_file, char *prompt, bool quotes)
@@ -78,7 +78,7 @@ char	*get_input(char *end_of_file, char *prompt, bool quotes)
 		input_join = ft_re_strjoin(input_join, "\n");
 		if (input_join == NULL)
 			return (NULL);
-		if (quotes == false && is_limiter(input, end_of_file) == 0)
+		if (quotes == false && is_limiter(input, end_of_file) == true)
 			return (free(input), input_join);
 		input_join = ft_re_strjoin(input_join, input);
 		if (input_join == NULL)
@@ -96,6 +96,8 @@ t_redirection	*init_here_doc(t_parsing *data)
 {
 	t_redirection	*redirection;
 
+	if (data->curr_token == NULL)
+		return (NULL);
 	redirection = ft_calloc(1, sizeof(t_redirection));
 	if (redirection == NULL)
 		return (NULL);

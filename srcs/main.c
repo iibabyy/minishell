@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdembele <mdembele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:42:32 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/22 14:24:10 by mdembele         ###   ########.fr       */
+/*   Updated: 2024/08/26 17:04:27 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char 		*operator_type_to_str(int type);
 void 		printTree(t_command *command, int depth, int isRight, int *branch);
 t_command	*last_command(t_command *current);
 void		print_AST(t_command *command);
-
+void 		open_pipes_redirect(t_command *node);
 /*				*/
 
 bool	is_only_space(char *str)
@@ -70,13 +70,10 @@ int	main(int ac, char **av, char **envp)
 		arg = ft_split(str, ' ');
 		if (arg[0] == NULL)
 			continue ;
-		printf("%s:\n\n", str);
 		if (ft_strcmp(arg[0], "export") == 0)
 			export(arg);
 		else if (ft_strcmp(arg[0], "unset") == 0)
 			unset(arg);
-		else if (ft_strcmp(arg[0], "alias") == 0)
-			alias(arg);
 		else if (ft_strcmp(arg[0], "env") == 0)
 			env(arg);
 		else if (ft_strcmp(arg[0], "exit") == 0)
@@ -89,9 +86,8 @@ int	main(int ac, char **av, char **envp)
 		{
 			command = parse(str);
 			if (command != NULL)
-			{	
-    			printf("%p\n", command->redirections);
-				// print_AST(command);
+			{
+				open_pipes_redirect(command);
 				exec_command(command, data);
 			}
 		}

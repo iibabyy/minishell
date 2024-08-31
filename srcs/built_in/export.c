@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdembele <mdembele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 15:19:09 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/22 14:54:37 by mdembele         ###   ########.fr       */
+/*   Updated: 2024/08/26 16:23:56 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ int	export(char **args)
 	i = 0;
 	while (args[++i] != NULL)
 	{
-		parse_export_arg(args[i]);
+		if (parse_export_arg(args[i]) == EXIT_FAILURE)
+			continue ;
 		new_var = arg_to_env_var(args[i]);
 		if (new_var == NULL)
 			return (EXIT_FAILURE);
@@ -60,6 +61,7 @@ static t_env_var	*arg_to_env_var(char *arg)
 	char		*variable;
 	char		*value;
 
+	value = NULL;
 	if (ft_strchr(arg, '=') != NULL)
 	{
 		value = ft_strdup(ft_strchr(arg, '=') + 1);
@@ -75,10 +77,9 @@ static t_env_var	*arg_to_env_var(char *arg)
 		ft_multi_free(2, new_var->value, variable);
 	else
 		new_var = new_env_var(variable, NULL);
-	if (ft_strchr(arg, '=') != NULL)
-		new_var->value = value;
 	if (new_var == NULL)
 		return (ft_free(value), ft_free(variable), NULL);
+	new_var->value = value;
 	return (new_var);
 }
 
@@ -88,11 +89,11 @@ int	parse_export_arg(char *arg)
 
 	i = 0;
 	(void)arg;
-	// if (arg[i] == ' ' || arg[i] == '\0')
-	// 	return (print_err("export: wrong argument format", false),
-	// 			EXIT_FAILURE);
-	// if (ft_isalpha(arg[i]) == 0 && arg[i] != '_')
-	// 	return (print_err("export: wrong argument format", false),
-	// 			EXIT_FAILURE);
-	return (i);
+	if (arg[i] == ' ' || arg[i] == '\0')
+		return (print_err("export: wrong argument format", false),
+				EXIT_FAILURE);
+	if (ft_isalpha(arg[i]) == 0 && arg[i] != '_')
+		return (print_err("export: wrong argument format", false),
+				EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }

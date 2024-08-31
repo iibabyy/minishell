@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:25:18 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/04 22:25:19 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/08/26 16:58:10 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 
 # define MSHRC ".mshrc"
 # define MAX_ALIAS 128
+# define ALIAS_USAGE "alias: usage: abc=xyz"
 
 char	***get_alias(char ***init_alias);
 int		check_if_alias(t_command *command, char ***aliases);

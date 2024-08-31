@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:06:03 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/15 18:54:41 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/08/26 16:59:20 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,10 +107,12 @@ char	**line_to_alias(char *line)
 	while (line[i] == ' ' && line[i] != '\0')
 		++i;
 	if (line[i] == '\0' || (ft_isalpha(line[i]) == 0 && line[i] != '_'))
-		return (NULL);
+		return (error_log(ALIAS_USAGE, false), NULL);
 	start = i;
-	while (line[i] != '=')
+	while (line[i] != '=' && line[i] != '\0')
 		++i;
+	if (line[i] == '\0')
+		return (error_log(ALIAS_USAGE, false), NULL);
 	alias = ft_malloc(sizeof(char *) * (count_char(line + i + 2, ' ') + 3));
 	if (alias == NULL)
 		return (NULL);

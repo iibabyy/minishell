@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:15:31 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/15 15:33:00 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/08/20 22:57:16 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,8 @@ int		new_word_token(t_token **tokens, char *word);
 int		new_parenthesis(char **input, int start, int *end, t_token **token);
 int		parenthesis_size(char **input, int start);
 char	**replace_dollars(char *input);
+char    *split_env_var(char *env);
+int		replace_tokens_env_vars(t_token *token);
+t_token	*last_token(t_token *token);
 
 #endif
