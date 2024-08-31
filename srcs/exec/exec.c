@@ -26,7 +26,19 @@ int exec_and(t_command *node, t_exec_data *data)
         status = exec_command(node->right, data);
     return(status);
 }
+void open_pipes_redirect(t_command *node)
+{
 
+    if(node == NULL)
+        return ;
+    open_pipes_redirect(node->left);
+    open_pipes_redirect(node->right);
+    if(node->type == COMMAND)
+    {
+        open_redirections(node);
+    }
+    return ;
+}
 
 int exec_pipe(t_command *node, t_exec_data *data)
 {
