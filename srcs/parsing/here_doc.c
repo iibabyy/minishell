@@ -6,12 +6,16 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:10:53 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/26 17:21:11 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/08/31 18:54:34 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-
+void quit_heredoc(int sig)
+{
+	(void)sig;
+	exit(0);
+}
 int	open_here_doc(t_redirection *redirection)
 {
 	t_here_doc	*here_doc;
@@ -23,7 +27,8 @@ int	open_here_doc(t_redirection *redirection)
 			EXIT_FAILURE);
 	command_infile = &redirection->command->infile;
 	here_doc = redirection->here_doc;
-	input = get_input(here_doc->end_of_file->content, HEREDOC_PROMPT, false);
+	signal(SIGINT, &quit_heredoc);
+	input = get_input(here_doc->end_of_file->content, HEREDOC_PROMPT, true);
 	if (input == NULL)
 		return (EXIT_FAILURE);
 	ft_putstr_fd(input, here_doc->pipe[1]);
