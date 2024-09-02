@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:10:53 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/31 18:54:34 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/08/31 19:01:46 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	open_here_doc(t_redirection *redirection)
 	command_infile = &redirection->command->infile;
 	here_doc = redirection->here_doc;
 	signal(SIGINT, &quit_heredoc);
-	input = get_input(here_doc->end_of_file->content, HEREDOC_PROMPT, true);
+	input = get_input(here_doc->end_of_file->content, HEREDOC_PROMPT, false);
 	if (input == NULL)
 		return (EXIT_FAILURE);
 	ft_putstr_fd(input, here_doc->pipe[1]);
@@ -83,7 +83,7 @@ char	*get_input(char *end_of_file, char *prompt, bool quotes)
 		input_join = ft_re_strjoin(input_join, input);
 		if (input_join == NULL)
 			return (NULL);
-		if (quotes == true && ft_strchr(input, *end_of_file) != NULL)
+		if (quotes == true && ft_strstr(input, end_of_file) != NULL)
 			return (free(input), input_join);
 		if (input_join == NULL)
 			return (NULL);

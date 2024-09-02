@@ -79,7 +79,7 @@ SRCS =	count_char.c			\
 		print_file.c			\
 		ft_strlen_2d.c 			\
 		insert_str.c			\
-
+		ft_strstr.c				\
 
 #	Loading bar	#
 
