@@ -20,7 +20,7 @@ char 		*operator_type_to_str(int type);
 void 		printTree(t_command *command, int depth, int isRight, int *branch);
 t_command	*last_command(t_command *current);
 void		print_AST(t_command *command);
-
+void 		open_pipes_redirect(t_command *node);
 /*				*/
 
 bool	is_only_space(char *str)
@@ -86,7 +86,10 @@ int	main(int ac, char **av, char **envp)
 		{
 			command = parse(str);
 			if (command != NULL)
+			{
+				open_pipes_redirect(command);
 				exec_command(command, data);
+			}
 		}
 		free(str);
 		free_2d_array((void ***)&arg);
