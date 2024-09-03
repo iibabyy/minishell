@@ -1,28 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_re_strdup.c                                     :+:      :+:    :+:   */
+/*   lexing_utils_2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/31 22:34:18 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/03 22:19:19 by ibaby            ###   ########.fr       */
+/*   Created: 2024/09/03 22:44:22 by ibaby             #+#    #+#             */
+/*   Updated: 2024/09/03 22:50:28 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/libft.h"
-#include <stdlib.h>
+#include "lexing.h"
 
-char	*ft_re_strdup(const char *src)
+char	*quote_prompt(char quote)
 {
-	char	*str;
-	int		size;
-
-	size = ft_strlen((char *)src) + 1;
-	str = ft_malloc(sizeof(char) * size);
-	if (!str)
-		return (ft_free((void *)src), NULL);
-	ft_strlcpy(str, src, size);
-	ft_free((void *)src);
-	return (str);
+	if (quote == '"')
+		return (ft_strdup("dquote> ")); 
+	else if (quote == '\'')
+		return (ft_srd)
 }

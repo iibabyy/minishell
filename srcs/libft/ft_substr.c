@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 20:09:08 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/01 16:28:41 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/02 23:04:51 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,14 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	size_t	j;
 	size_t	size;
 
+	if (s == NULL)
+		return (NULL);
 	if (len > ft_strlen(s))
 		size = ft_strlen(s + start);
 	else
 		size = len;
 	str = ft_malloc(sizeof(char) * (size + 1));
-	if (!s || !str)
+	if (!str)
 		return (NULL);
 	i = start;
 	j = 0;

@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:15:07 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/25 00:35:16 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/03 22:53:10 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,15 @@ int	quotes_size(char **input, int start, char eof)
 	int		i;
 
 	i = 0;
+	printf("quotes_size\n");
 	while (1)
 	{
 		if ((*input)[start + i] == '\0')
 		{
-			temp = get_input(&eof, QUOTES_PROMPT, true);
+			if (eof == '"')
+				temp = get_input(&eof, "dquote> ", true);
+			else
+				temp = get_input(&eof, "quote> ", true);
 			*input = ft_re_strjoin(*input, temp);
 			if (temp == NULL || *input == NULL)
 				return (error_log("quotes_size: get_input() failed", false),

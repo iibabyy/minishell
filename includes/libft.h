@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:35:02 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/31 18:58:35 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/03 22:18:14 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 void		ft_close_fd(int *fd);
 char		*ft_re_strjoin(const char *s1, const char *s2);
 void		free_2d_array(void ***NULL_terminated_2d_array);
-char		*ft_re_strdup(char *src);
+char		*ft_re_strdup(const char *src);
 char		*multi_strjoin(int strings_number, char *s1, char *s2, ...);
 char		*multi_re_strjoin(int strings_number, char *s1, char *s2, ...);
 void		ft_multi_free(int pointers_num, void *ptr1, void *ptr2, ...);

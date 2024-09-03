@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:15:31 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/20 22:57:16 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/03 22:19:55 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # define PARENTHESIS_PROMPT ""
 
 t_token	*input_to_tokens(char *input);
-int		word_to_token(char **input, int start, int *end, t_token **tokens);
+int		word_to_token(char **input, int *start,  t_token **tokens);
 int		meta_to_token(char **input, int *index, t_token **tokens);
 bool	is_meta_char(char *input, int index);
 bool	is_operator(char *input, int index);

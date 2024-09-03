@@ -6,11 +6,15 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:15:43 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/26 17:32:02 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/03 22:41:49 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexing.h"
+
+char	*get_word(char **input, int *i, t_token **tokens);
+char	*join_quotes(char **input, char *word, int *i);
+char	*join_non_meta_char(char *input, char *word, int *i);
 
 /*
 Transform an input string in tokens
@@ -22,7 +26,6 @@ t_token	*input_to_tokens(char *input)
 {
 	t_token	*tokens;
 	int		i;
-	int		token_start;
 
 	i = 0;
 	tokens = NULL;
@@ -30,10 +33,7 @@ t_token	*input_to_tokens(char *input)
 	{
 		while (input[i] == ' ')
 			++i;
-		token_start = i;
-		while (is_meta_char(input, i) == false && input[i] != '\0')
-			++i;
-		if (word_to_token(&input, token_start, &i, &tokens) == EXIT_FAILURE)
+		if (word_to_token(&input, &i, &tokens) == EXIT_FAILURE)
 			return (add_history(input), ft_lstclear(&tokens, ft_free), NULL);
 		while (input[i] == ' ')
 			++i;
@@ -46,31 +46,109 @@ t_token	*input_to_tokens(char *input)
 	return (tokens);
 }
 
-int	word_to_token(char **input, int i, int *end, t_token **tokens)
+int	word_to_token(char **input, int *i, t_token **tokens)
 {
 	char	*word;
-	int		len;
 
-	if (*end - i == 0 || (*input)[i] == '\0')
-		return (EXIT_SUCCESS);
-	if ((*input)[i] == ')' || (*input)[i] == '(')
-		return (new_parenthesis(input, i, end, tokens));
-	if (is_quotes((*input)[i]) == true)
+	word = NULL;
+	while (is_meta_char(*input, *i) == false && (*input)[*i] != '\0')
 	{
-		len = quotes_size(input, i + 1, (*input)[i]);
-		if (len == -1)
+		word = join_non_meta_char(*input, word, i);
+		if (word == NULL && is_quotes((*input)[*i]) == false)
 			return (EXIT_FAILURE);
-		*end = ++i + len + 1;
+		word = join_quotes(input, word, i);
+		if (word == NULL)
+			return (EXIT_FAILURE);
 	}
-	else
-		len = *end - i;
-	word = ft_substr(*input, i, len);
-	if (word == NULL)
-		return (EXIT_FAILURE);
-	if (new_word_token(tokens, word) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
-	return (EXIT_SUCCESS);
+	printf("word: %s\n", word);
+	return (new_word_token(tokens, word));
 }
+
+// char	*get_word(char **input, int *i)
+// {
+// 	char	*word;
+
+// 	word = NULL;
+// 	while (is_meta_char(*input, *i) == false && (*input)[*i] != '\0')
+// 	{
+// 		word = join_non_meta_char(*input, word, i);
+// 		if (word == NULL)
+// 			return (NULL);
+// 		word = join_quotes(input, word, i);
+// 		if (word == NULL)
+// 			return (NULL);
+// 	}
+// 	return (word);
+// }
+
+char	*join_quotes(char **input, char *word, int *i)
+{
+	char	*temp;
+	char	quote;
+	int		start;
+
+	if (is_quotes((*input)[*i]) == false)
+		return (printf("Error 1\n"), word);
+	quote = (*input)[*i];
+	start = ++*i;
+	*i += quotes_size(input, start, quote);
+	if (*i == -1)
+		return (ft_free(word), NULL);
+	temp = ft_substr(*input, start, *i - start);
+	if (temp == NULL)
+		return (ft_free(word), NULL);
+	(*i)++;
+	word = ft_re_strjoin(word, temp);
+	ft_free(temp);
+	return (word);
+}
+
+char	*join_non_meta_char(char *input, char *word, int *i)
+{
+	char	*temp;
+	int	start;
+
+	start = *i;
+	while (is_meta_char(input, *i) == false && is_quotes(input[*i]) == false
+			&& input[*i] != '\0')
+	{
+		(*i)++;
+	}
+	if (*i == start)
+		return (word);
+	temp = ft_substr(input, start, *i - start);
+	if (temp == NULL)
+		return (ft_free(word), NULL);
+	word = ft_re_strjoin(word, temp);
+	ft_free(temp);
+	return (word);
+}
+
+// int	word_to_token(char **input, int i, int *end, t_token **tokens)
+// {
+// 	char	*word;
+// 	int		len;
+
+// 	if (*end - i == 0 || (*input)[i] == '\0')
+// 		return (EXIT_SUCCESS);
+// 	if ((*input)[i] == ')' || (*input)[i] == '(')
+// 		return (new_parenthesis(input, i, end, tokens));
+// 	if (is_quotes((*input)[i]) == true)
+// 	{
+// 		len = quotes_size(input, i + 1, (*input)[i]);
+// 		if (len == -1)
+// 			return (EXIT_FAILURE);
+// 		*end = ++i + len + 1;
+// 	}
+// 	else
+// 		len = *end - i;
+// 	word = ft_substr(*input, i, len);
+// 	if (word == NULL)
+// 		return (EXIT_FAILURE);
+// 	if (new_word_token(tokens, word) == EXIT_FAILURE)
+// 		return (EXIT_FAILURE);
+// 	return (EXIT_SUCCESS);
+// }
 
 int	meta_to_token(char **input, int *index, t_token **tokens)
 {
