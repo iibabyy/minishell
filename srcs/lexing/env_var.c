@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_var.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mdembele <mdembele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:33:50 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/25 00:35:41 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/04 16:38:21 by mdembele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,9 @@ char	*replace_env_vars(char *input)
 {
 	char	**array;
 	char	*new_input;
-
-	if (count_char(input, '$') == 0)
+	if(input == NULL)
+		return(NULL);
+	if (input && count_char(input, '$') == 0)
 		return (input);
 	array = replace_dollars(input);
 	if (array == NULL)
