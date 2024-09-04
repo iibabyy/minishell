@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:15:43 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/04 02:47:07 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/04 19:14:27 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,10 @@ int	word_to_token(char **input, int *i, t_token **tokens)
 	char	*word;
 
 	word = NULL;
+	if (is_parenthesis(*input, *i) == true)
+	{
+		return(join_parenthesis(*input, i, tokens));
+	}
 	while (is_meta_char(*input, *i) == false && (*input)[*i] != '\0')
 	{
 		word = join_non_meta_char(*input, word, i);
@@ -113,7 +117,7 @@ char	*join_non_meta_char(char *input, char *word, int *i)
 
 	start = *i;
 	while (is_meta_char(input, *i) == false && is_quotes(input[*i]) == false
-			&& input[*i] != '\0')
+			&& is_parenthesis(input, *i) == false && input[*i] != '\0')
 	{
 		(*i)++;
 	}
@@ -130,32 +134,6 @@ char	*join_non_meta_char(char *input, char *word, int *i)
 	return (word);
 }
 
-// int	word_to_token(char **input, int i, int *end, t_token **tokens)
-// {
-// 	char	*word;
-// 	int		len;
-
-// 	if (*end - i == 0 || (*input)[i] == '\0')
-// 		return (EXIT_SUCCESS);
-// 	if ((*input)[i] == ')' || (*input)[i] == '(')
-// 		return (new_parenthesis(input, i, end, tokens));
-// 	if (is_quotes((*input)[i]) == true)
-// 	{
-// 		len = quotes_size(input, i + 1, (*input)[i]);
-// 		if (len == -1)
-// 			return (EXIT_FAILURE);
-// 		*end = ++i + len + 1;
-// 	}
-// 	else
-// 		len = *end - i;
-// 	word = ft_substr(*input, i, len);
-// 	if (word == NULL)
-// 		return (EXIT_FAILURE);
-// 	if (new_word_token(tokens, word) == EXIT_FAILURE)
-// 		return (EXIT_FAILURE);
-// 	return (EXIT_SUCCESS);
-// }
-
 int	meta_to_token(char **input, int *index, t_token **tokens)
 {
 	t_token	*new_token;
@@ -170,19 +148,23 @@ int	meta_to_token(char **input, int *index, t_token **tokens)
 	return (EXIT_SUCCESS);
 }
 
-int	new_parenthesis(char **input, int start, int *end, t_token **token)
+int	join_parenthesis(char *input, int *i, t_token **tokens)
 {
-	char	*content;
 	t_token	*new_token;
+	char	*content;
+	int		start;
 	int		len;
 
-	if ((*input)[start++] == ')')
+	start = *i;
+	if (is_parenthesis(input, *i) == false)
+		return (EXIT_FAILURE);
+	if (input[*i++] == ')')
 		return (parse_err(TOKEN_ERR, ")"), EXIT_FAILURE);
-	len = parenthesis_size(input, start);
+	len = parenthesis_size(input, i);
 	if (len == -1)
-		return (error_log("new_parenthesis: quotes_size failed", false),
+		return (error_log("new_parenthesis: parenthesis_size failed", false),
 			EXIT_FAILURE);
-	content = ft_substr(*input, start, len);
+	content = ft_substr(input, start, len);
 	if (content == NULL)
 		return (error_log("new_parenthesis: ft_substr failed", false),
 			EXIT_FAILURE);
@@ -191,8 +173,7 @@ int	new_parenthesis(char **input, int start, int *end, t_token **token)
 		return (error_log("new_parenthesis: ft_substr failed", false),
 			EXIT_FAILURE);
 	new_token->type = PARENTHESIS;
-	ft_lstadd_back(token, new_token);
-	*end = start + len + 1;
+	ft_lstadd_back(tokens, new_token);
 	return (EXIT_SUCCESS);
 }
 

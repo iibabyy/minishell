@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:42:32 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/04 01:03:11 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/04 18:11:14 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ int	main(int ac, char **av, char **envp)
 	{
 		signal(SIGINT, &handle_sigint);
 		signal(SIGQUIT, SIG_IGN);
-		if ((str = readline("\033[0;32m➜  \033[0;36mminishell \033[0;33m✗\033[0m ")) == NULL)
+		str = readline("\033[0;32m➜  \033[0;36mminishell \033[0;33m✗\033[0m ");
+		if (str == NULL)
 		{
 			destroy_garbage(NULL);
 			printf("exit\n");
@@ -86,6 +87,7 @@ int	main(int ac, char **av, char **envp)
 			command = parse(str);
 			if (command != NULL)
 			{
+				print_AST(command);
 				open_pipes_redirect(command);
 				exec_command(command, data);
 			}

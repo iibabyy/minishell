@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:15:31 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/03 22:19:55 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/04 19:14:33 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,12 @@ char	*replace_env_vars(char *input);
 int		quotes_size(char **input, int start, char eof);
 int		new_word_token(t_token **tokens, char *word);
 int		new_parenthesis(char **input, int start, int *end, t_token **token);
-int		parenthesis_size(char **input, int start);
+int		parenthesis_size(char *input, int *start);
 char	**replace_dollars(char *input);
 char    *split_env_var(char *env);
 int		replace_tokens_env_vars(t_token *token);
 t_token	*last_token(t_token *token);
+bool	is_parenthesis(char *input, int index);
+int		join_parenthesis(char *input, int *i, t_token **tokens);
 
 #endif
