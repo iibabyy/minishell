@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:08:56 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/20 22:23:02 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/04 19:55:10 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,8 @@ int	add_words_to_command(t_parsing *data)
 			command->command[i++] = data->curr_token->content;
 		else if (data->curr_token->type == PARENTHESIS)
 		{
+			if (i != 0)
+				return (EXIT_FAILURE);
 			command->command[i++] = data->curr_token->content;
 			command->type = SUB_SHELL;
 		}

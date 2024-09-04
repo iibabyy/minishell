@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:10:49 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/04 01:29:02 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/04 20:09:44 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@ Take an string as parameter.
 Return the first operator of an AST.
 Return NULL if an error occurs
 */
-t_command	*
-parse(char	*input)
+t_command	*parse(char	*input)
 {
 	t_parsing	data;
 
@@ -32,7 +31,7 @@ parse(char	*input)
 		return (destroy_parsing(&data), NULL);
 	add_history(input);
 	data.curr_token = data.token;
-	data.command = token_to_ast(&data, 0);
+	data.command = token_to_ast(&data, -2);
 	if (data.command == NULL)
 		return (destroy_parsing(&data), NULL);
 	if (replace_aliases(last_command(data.command)) == EXIT_FAILURE)
