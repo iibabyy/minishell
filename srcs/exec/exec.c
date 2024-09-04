@@ -72,6 +72,7 @@ int exec_pipe(t_command *node, t_exec_data *data)
     waitpid(pid[1], &status2, 0);
     return (status2);
 }
+
 int exec_sub_shell(t_command *node, t_exec_data *data)
 {
     int pid;
@@ -79,6 +80,7 @@ int exec_sub_shell(t_command *node, t_exec_data *data)
     char **arg;
     t_command *command;
 
+    status = 0;
     pid = fork();
     if (pid == 0)
     {
@@ -95,9 +97,10 @@ int exec_sub_shell(t_command *node, t_exec_data *data)
     else
     {
         waitpid(pid, &status, 0);
-        return(status);
     }
+    return(status);
 }
+
 int exec_command(t_command *node, t_exec_data *data)
 {
     int status = 0;
