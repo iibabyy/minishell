@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 15:18:43 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/15 20:33:47 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/04 02:36:51 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ t_env		*get_env_list(t_env *only_for_init);
 void		destroy_var_node(t_env_var *node);
 void		delete_env_var(t_env *env, t_env_var *var);
 t_env_var	*get_env_struct(char *variable);
+char		*ft_getenv(char *var);
 
 int			parse_alias_arg(char *arg);
 char		***init_new_aliases(void);

@@ -53,7 +53,8 @@ FILES =	srcs/main.c							\
 		srcs/features/alias_utils.c			\
 		srcs/features/aliases.c				\
 		srcs/test_utils.c					\
-		srcs/built_in/env_utils.c			\
+		srcs/built_in/env_utils_1.c			\
+		srcs/built_in/env_utils_2.c			\
 		srcs/built_in/env.c					\
 		srcs/built_in/export.c				\
 		srcs/built_in/unset.c				\

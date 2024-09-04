@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 15:08:49 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/26 16:53:26 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/04 02:37:33 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,9 @@ t_command	*last_command(t_command *current);
 // built-ins
 
 int			alias(char **arg);
-void		init_env(char **env_arg);
 int			env(char **args);
+char		*ft_getenv(char *var);
+void		init_env(char **env_arg);
 int			unset(char **args);
 int			export(char	**args);
 

@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:42:32 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/04 00:37:32 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/04 01:03:11 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ int	main(int ac, char **av, char **envp)
 			printf("exit\n");
 			exit(status);
 		}
-		str = replace_env_vars(str);
 		add_history(str);
 		arg = ft_split(str, ' ');
 		if (arg[0] == NULL)

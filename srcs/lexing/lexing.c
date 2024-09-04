@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:15:43 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/03 22:41:49 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/04 02:47:07 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,6 @@ t_token	*input_to_tokens(char *input)
 			return (add_history(input), ft_lstclear(&tokens, ft_free), NULL);
 	}
 	add_history(input);
-	if (replace_tokens_env_vars(tokens) == EXIT_FAILURE)
-		return (ft_lstclear(&tokens, ft_free), NULL);
 	return (tokens);
 }
 
@@ -60,7 +58,6 @@ int	word_to_token(char **input, int *i, t_token **tokens)
 		if (word == NULL)
 			return (EXIT_FAILURE);
 	}
-	printf("word: %s\n", word);
 	return (new_word_token(tokens, word));
 }
 
@@ -88,7 +85,7 @@ char	*join_quotes(char **input, char *word, int *i)
 	int		start;
 
 	if (is_quotes((*input)[*i]) == false)
-		return (printf("Error 1\n"), word);
+		return (word);
 	quote = (*input)[*i];
 	start = ++*i;
 	*i += quotes_size(input, start, quote);
@@ -97,6 +94,12 @@ char	*join_quotes(char **input, char *word, int *i)
 	temp = ft_substr(*input, start, *i - start);
 	if (temp == NULL)
 		return (ft_free(word), NULL);
+	if (quote == '"')
+	{
+		temp = replace_env_vars(temp);
+		if (temp == NULL)
+			return (ft_free(word), NULL);
+	}
 	(*i)++;
 	word = ft_re_strjoin(word, temp);
 	ft_free(temp);
@@ -117,6 +120,9 @@ char	*join_non_meta_char(char *input, char *word, int *i)
 	if (*i == start)
 		return (word);
 	temp = ft_substr(input, start, *i - start);
+	if (temp == NULL)
+		return (ft_free(word), NULL);
+	temp = replace_env_vars(temp);
 	if (temp == NULL)
 		return (ft_free(word), NULL);
 	word = ft_re_strjoin(word, temp);

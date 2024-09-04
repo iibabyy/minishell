@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:10:53 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/04 00:21:12 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/04 01:23:29 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ char	*get_input(char *end_of_file, char *prompt, bool quotes)
 	input_join = NULL;
 	while (1)
 	{
-		input = replace_env_vars(readline(prompt));
+		input = readline(prompt);
 		if (input == NULL)
 			return (input_join);
 		input_join = ft_re_strjoin(input_join, "\n");
@@ -84,7 +84,7 @@ char	*get_input(char *end_of_file, char *prompt, bool quotes)
 		input_join = ft_re_strjoin(input_join, input);
 		if (input_join == NULL)
 			return (NULL);
-		if (quotes == true && ft_strstr(input, end_of_file) != NULL)
+		if (quotes == true && ft_strchr(input, *end_of_file) != NULL)
 			return (free(input), input_join);
 		if (input_join == NULL)
 			return (NULL);
