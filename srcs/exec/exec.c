@@ -110,8 +110,8 @@ int exec_command(t_command *node, t_exec_data *data)
         status = exec_single_command(node, data);
     else if(node->type == OR)
         status = exec_or(node, data);
-    else if(node->type == SUB_SHELL)
-        status = exec_sub_shell(node, data);
+    // else if(node->type == SUB_SHELL)
+    //     status = exec_sub_shell(node, data);
     else if (node->type == AND)
         status = exec_and(node, data);
     else if (node->type == PIPE)

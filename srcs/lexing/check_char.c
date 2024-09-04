@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:27:12 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/15 15:12:04 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/04 18:26:00 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,15 @@ bool	is_meta_char(char *input, int index)
 		return (true);
 	else
 		return (false);
+}
+
+bool	is_parenthesis(char *input, int index)
+{
+	if (input[index] == '(')
+		return (true);
+	if (input[index] == ')')
+		return (true);
+	return (false);
 }
 
 //	return true if input[index] is an operator
@@ -59,21 +68,4 @@ bool	is_quotes(char c)
 		return (true);
 	else
 		return (false);
-}
-
-int	char_type(char *str, int index)
-{
-	char	c;
-
-	c = str[index];
-	if (is_quotes(c) == true)
-		return (WORD);
-	if (is_redirection(c) == true)
-		return (REDIRECTION);
-	if (ft_strchr("|()", c) != NULL)
-		return (OPERATOR);
-	if (c == '&' && str[index + 1] == '&')
-		return (OPERATOR);
-	error_log("unknow token\n", false);
-	return (-1);
 }

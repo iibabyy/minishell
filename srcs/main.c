@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mdembele <mdembele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:42:32 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/26 17:04:27 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/04 19:44:21 by mdembele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,13 @@ int	main(int ac, char **av, char **envp)
 	{
 		signal(SIGINT, &handle_sigint);
 		signal(SIGQUIT, SIG_IGN);
-		if ((str = readline("\033[0;36mminishell \033[0;33m✗\033[0m ")) == NULL)
+		str = readline("\033[0;32m➜  \033[0;36mminishell \033[0;33m✗\033[0m ");
+		if (str == NULL)
 		{
 			destroy_garbage(NULL);
 			printf("exit\n");
 			exit(status);
 		}
-		str = replace_env_vars(str);
 		add_history(str);
 		arg = ft_split(str, ' ');
 		if (arg[0] == NULL)
@@ -87,7 +87,8 @@ int	main(int ac, char **av, char **envp)
 			command = parse(str);
 			if (command != NULL)
 			{
-				open_pipes_redirect(command);
+				print_AST(command);
+				//open_pipes_redirect(command);
 				exec_command(command, data);
 			}
 		}
@@ -105,5 +106,6 @@ int	init_minishell(char **env)
 	init_aliases();
 	init_error_log();
 	init_env(env);
+	 
 	return (EXIT_SUCCESS);
 }

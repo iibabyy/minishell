@@ -39,6 +39,7 @@ FILES =	srcs/main.c							\
 		srcs/lexing/check_char.c			\
 		srcs/lexing/lexing.c				\
 		srcs/lexing/lexing_utils.c			\
+		srcs/lexing/lexing_utils_2.c		\
 		srcs/lexing/env_var.c				\
 		srcs/parsing/parsing_utils.c		\
 		srcs/parsing/here_doc.c				\
@@ -53,7 +54,8 @@ FILES =	srcs/main.c							\
 		srcs/features/alias_utils.c			\
 		srcs/features/aliases.c				\
 		srcs/test_utils.c					\
-		srcs/built_in/env_utils.c			\
+		srcs/built_in/env_utils_1.c			\
+		srcs/built_in/env_utils_2.c			\
 		srcs/built_in/env.c					\
 		srcs/built_in/export.c				\
 		srcs/built_in/unset.c				\

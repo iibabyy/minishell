@@ -1,4 +1,4 @@
-alias ls="ls --color=auto"
+alias ls="ls --color=yes"
 alias tree="tree -C"
 alias meeuh="cowsay"
 alias matrix="cmatrix"

@@ -6,7 +6,7 @@
 /*   By: mdembele <mdembele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:33:50 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/04 16:38:21 by mdembele         ###   ########.fr       */
+/*   Updated: 2024/09/04 19:29:38 by mdembele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,14 +74,14 @@ char	*env_to_string(char	*str, int *dollar_index)
 	var = ft_substr(str, start, *dollar_index - start);
 	if (var == NULL)
 		return (NULL);
-	env = getenv(var);
+	env = ft_getenv(var);
 	ft_free(var);
 	if (env == NULL)
 		return (ft_strdup(""));
 	env = ft_strdup(env);
 	if (env == NULL)
 		return (error_log("env_to_string: ft_strdup failed", false), NULL);
-	return (split_env_var(env));
+	return (env);
 }
 
 char    *split_env_var(char *env)

@@ -17,7 +17,7 @@
 
 .double quotes :
 {
-	- ignore same meta characters as single quotes, except for '$'
+	- ignore same meta characters as single quotes, except for '$' and '"'
 	- ignore single quotes, but not double quotes
 }
 

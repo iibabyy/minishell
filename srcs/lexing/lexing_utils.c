@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:15:07 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/25 00:35:16 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/04 19:15:07 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,10 @@ int	quotes_size(char **input, int start, char eof)
 	{
 		if ((*input)[start + i] == '\0')
 		{
-			temp = get_input(&eof, QUOTES_PROMPT, true);
+			if (eof == '"')
+				temp = get_input(&eof, "dquote> ", true);
+			else
+				temp = get_input(&eof, "quote> ", true);
 			*input = ft_re_strjoin(*input, temp);
 			if (temp == NULL || *input == NULL)
 				return (error_log("quotes_size: get_input() failed", false),
@@ -61,29 +64,26 @@ int	quotes_size(char **input, int start, char eof)
 	return (i);
 }
 
-int	parenthesis_size(char **input, int start)
+int	parenthesis_size(char *input, int *i)
 {
 	int		parenthesis;
-	int		i;
 
-	i = 0;
 	parenthesis = 1;
 	while (1)
 	{
-		if ((*input)[start + i] == '(')
+		if (input[*i] == '(')
 			++parenthesis;
-		if ((*input)[start + i] == ')')
+		if (input[*i] == ')')
 			--parenthesis;
-		if ((*input)[start + i] == '\0')
+		if (input[*i] == '\0')
 		{
-			parse_err(TOKEN_ERR, "(");
+			parse_err(TOKEN_ERR, "newline");
 			return (-1);
 		}
-		if (parenthesis == 0 && (*input)[start + i] == ')')
+		if (parenthesis == 0 && input[(*i)++] == ')')
 			break ;
-		++i;
 	}
-	return (i);
+	return (*i - 1);
 }
 
 t_token	*last_token(t_token *token)

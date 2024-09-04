@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdembele <mdembele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:08:33 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/22 14:13:55 by mdembele         ###   ########.fr       */
+/*   Updated: 2024/09/04 17:27:26 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,7 @@ int	open_redirections(t_command	*command)
 	{
 		if (check_redirection(redirection) == EXIT_FAILURE)
 			return (destroy_redirections(command->redirections), EXIT_FAILURE);
-		if (redirection->type == HERE_DOC)
-		{
-			if (open_here_doc(redirection) == EXIT_FAILURE)
-				return (destroy_redirections(command->redirections),
-					EXIT_FAILURE);
-		}
-		else
+		if (redirection->type != HERE_DOC)
 		{
 			if (open_file(redirection) == EXIT_FAILURE)
 				return (destroy_redirections(command->redirections),

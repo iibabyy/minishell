@@ -1,39 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_substr.c                                        :+:      :+:    :+:   */
+/*   ft_strstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/19 20:09:08 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/02 23:04:51 by ibaby            ###   ########.fr       */
+/*   Created: 2024/08/31 18:57:19 by ibaby             #+#    #+#             */
+/*   Updated: 2024/08/31 18:58:00 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/libft.h"
-#include <stddef.h>
-#include <stdlib.h>
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+char	*ft_strstr(const char *big, const char *little)
 {
-	char	*str;
 	size_t	i;
 	size_t	j;
-	size_t	size;
+	char	*retval;
 
-	if (s == NULL)
-		return (NULL);
-	if (len > ft_strlen(s))
-		size = ft_strlen(s + start);
-	else
-		size = len;
-	str = ft_malloc(sizeof(char) * (size + 1));
-	if (!str)
-		return (NULL);
-	i = start;
+	i = 0;
 	j = 0;
-	while (s[i] != '\0' && j < len)
-		str[j++] = s[i++];
-	str[j] = '\0';
-	return (str);
+	if (ft_strlen((char *)little) == 0)
+		return ((char *)big);
+	while (big[i])
+	{
+		if (big[i] == little[j])
+		{
+			while (big[i + j] == little[j] && big[i + j] && little[j])
+			{
+				if (j + 1 == ft_strlen((char *)little))
+					return (retval = (char *)&big[i], retval);
+				j++;
+			}
+			j = 0;
+		}
+		i++;
+	}
+	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: mdembele <mdembele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:10:53 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/04 16:41:44 by mdembele         ###   ########.fr       */
+/*   Updated: 2024/09/04 19:27:51 by mdembele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	open_here_doc(t_redirection *redirection)
 	command_infile = &redirection->command->infile;
 	here_doc = redirection->here_doc;
 	signal(SIGINT, &quit_heredoc);
-	input = get_input(here_doc->end_of_file->content, HEREDOC_PROMPT, true);
+	input = get_input(here_doc->end_of_file->content, HEREDOC_PROMPT, false);
 	if (input == NULL)
 	{
 		return (EXIT_FAILURE);
@@ -78,7 +78,7 @@ char	*get_input(char *end_of_file, char *prompt, bool quotes)
 	input_join = NULL;
 	while (1)
 	{
-		input = replace_env_vars(readline(prompt));
+		input = readline(prompt);
 		if (input == NULL)
 			return (input_join);
 		input_join = ft_re_strjoin(input_join, "\n");

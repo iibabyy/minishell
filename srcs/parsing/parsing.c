@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:10:49 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/26 16:20:16 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/04 01:29:02 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ parse(char	*input)
 	data.error = false;
 	// input = replace_env_vars(input);
 	data.token = input_to_tokens(input);
-	if (data.token == NULL)
+	if (data.token == NULL) 
 		return (destroy_parsing(&data), NULL);
 	add_history(input);
 	data.curr_token = data.token;
