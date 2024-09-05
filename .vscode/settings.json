@@ -2,7 +2,8 @@
 	"files.associations": {
 		"lexing.h": "c",
 		"minishell.h": "c",
-		"features.h": "c"
+		"features.h": "c",
+		"garbage_collector.h": "c"
 	},
 	"C_Cpp.errorSquiggles": "disabled",
 	"cSpell.words": [

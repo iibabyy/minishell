@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:42:32 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/05 18:38:36 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/05 21:30:06 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ int	main(int ac, char **av, char **envp)
 	{
 		signal(SIGINT, &handle_sigint);
 		signal(SIGQUIT, SIG_IGN);
-		str = readline("\033[0;32m➜  \033[0;36mminishell \033[0;33m✗\033[0m ");
+		printf("%s", minishell_prompt());
+		str = readline("");
 		if (str == NULL)
 		{
 			destroy_garbage(NULL);

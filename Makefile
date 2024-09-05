@@ -61,6 +61,7 @@ FILES =	srcs/main.c							\
 		srcs/built_in/unset.c				\
 		srcs/built_in/alias.c				\
 		srcs/features/history.c				\
+		srcs/features/prompt.c				\
 
 OBJ = $(FILES:.c=.o)
 
