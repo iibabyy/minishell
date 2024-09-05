@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 15:19:09 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/31 18:54:25 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/06 00:45:24 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,12 @@ static t_env_var	*arg_to_env_var(char *arg)
 		value = ft_strdup(ft_strchr(arg, '=') + 1);
 		if (value == NULL)
 			return (NULL);
+		if (*value == '"')
+		{
+			value = ft_strtrim(value, "\"");
+			if (value == NULL)
+				return (NULL);
+		}
 		*ft_strchr(arg, '=') = '\0';
 	}
 	variable = ft_strdup(arg);
@@ -88,7 +94,18 @@ int	parse_export_arg(char *arg)
 	int	i;
 
 	i = 0;
-	(void)arg;
+	if (arg[i] == '"')
+	{
+		if (arg[ft_strlen(arg) - 1] != '"')
+			return (print_err("export: wrong argument format", false),
+				EXIT_FAILURE);
+	}
+	if (arg[i] == '\'')
+	{
+		if (arg[ft_strlen(arg) - 1] != '\'')
+			return (print_err("export: wrong argument format", false),
+				EXIT_FAILURE);
+	}
 	if (arg[i] == ' ' || arg[i] == '\0')
 		return (print_err("export: wrong argument format", false),
 				EXIT_FAILURE);

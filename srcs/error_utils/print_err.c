@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:05:52 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/26 16:46:41 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/05 23:52:01 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	parse_err(char *error, char *token)
 	}
 }
 
-void	error_log(char *error, bool errno)
+void	error_log(char *error)
 {
 	static int	error_num = 0;
 	int			error_log_fd;
@@ -54,9 +54,7 @@ void	error_log(char *error, bool errno)
 		ft_putstr_fd("\n\n", error_log_fd);
 	ft_putnbr_fd(error_num, error_log_fd);
 	ft_putstr_fd(".\n", error_log_fd);
-	if (errno == true)
-		perror(error);
-	else if (error != NULL)
+	if (error != NULL)
 		ft_putendl_fd(error, error_log_fd);
 	ft_close_fd(&error_log_fd);
 }

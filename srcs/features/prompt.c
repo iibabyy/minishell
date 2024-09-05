@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 00:42:23 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/05 21:27:52 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/06 01:06:07 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,37 @@ char	*minishell_prompt()
 		return (ft_strdup(MINISHELL_PROMPT));
 	if (prompt != NULL && ft_strcmp(pwd, ft_getenv("PWD")) == 0)
 		return (prompt);
-	prompt = ft_strdup("\033[0;32m➜  \033[0;36m\033[1mminishell ");
+	prompt = ft_strdup("\001\033[0;32m\002➜  \001\033[0;36m\033[1m\002");
 	if (prompt == NULL)
 		return (ft_strdup(MINISHELL_PROMPT));
+	prompt = add_dir_name(prompt);
 	prompt = add_git_head(prompt);
-	prompt = ft_re_strjoin(prompt, "\033[0;33m✗ \033[0m");
+	prompt = ft_re_strjoin(prompt, "\001\033[33;1m\002 ✗\001\033[0m\002 ");
 	if (prompt == NULL || *prompt == '\0')
 		return (ft_free(prompt), ft_strdup(MINISHELL_PROMPT));
-	printf("prompt: [%s]\n", prompt);
 	return (prompt);
+}
+
+char	*add_dir_name(char *prompt)
+{
+	char	*dir;
+	char	*temp;
+
+	temp = ft_getenv("PWD");
+	if (temp == NULL || ft_strrchr(temp, '/') == NULL)
+	{
+		dir = ft_strjoin(prompt, "minishell");
+		if (dir == NULL)
+			return (prompt);
+		return (ft_free(prompt), ft_free(temp), dir);
+	}
+	dir = ft_strrchr(temp, '/') + 1;
+	if (*dir == '\0')
+		dir = "/";
+	dir = ft_strjoin(prompt, dir);
+	if (dir == NULL)
+		return (prompt);
+	return (ft_free(prompt), dir);
 }
 
 char	*add_git_head(char *prompt)
@@ -52,11 +74,10 @@ char	*add_git_head(char *prompt)
 		*ft_strrchr(temp, '\n') = '\0';
 	if (temp == NULL)
 		return (prompt);
-	printf("temp: [%s]\n", temp);
 	if (ft_strrchr(temp, '/') == NULL)
 		return (ft_free(temp), prompt);
-	git = multi_strjoin(3, "\033[0;34m\033[1mgit:(\033[0;31m\033[1m",
-			ft_strrchr(temp, '/') + 1, "\033[0;34m\033[1m) ");
+	git = multi_strjoin(3, " \001\033[0;34m\033[1m\002git:(\001\033[0;31m\033[1m\002",
+			ft_strrchr(temp, '/') + 1, "\001\033[0;34m\033[1m\002)");
 	ft_free(temp);
 	if (git == NULL)
 		return (prompt);

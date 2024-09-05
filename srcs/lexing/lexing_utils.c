@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:15:07 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/05 15:52:17 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/05 23:42:31 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ int	parenthesis_size(char *input, int *i)
 	parenthesis = 1;
 	while (1)
 	{
-		printf("input[%i]: '%c'\n", *i, input[*i]);
 		if (input[*i] == '(')
 			++parenthesis;
 		if (input[*i] == ')')

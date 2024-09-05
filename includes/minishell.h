@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 15:08:49 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/05 20:06:22 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/05 23:40:01 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 #include "garbage_collector.h"
 #include "error.h"
 
+	extern volatile sig_atomic_t g_signal;
 // minishell
 
 # define MINISHELL_PROMPT "\033[0;32m➜  \033[0;36mminishell \033[0;33m✗\033[0m "
@@ -64,6 +65,7 @@ t_command	*last_command(t_command *current);
 
 int			alias(char **arg);
 int			env(char **args);
+char		**env_tab(void);
 char		*ft_getenv(char *var);
 void		init_env(char **env_arg);
 int			unset(char **args);

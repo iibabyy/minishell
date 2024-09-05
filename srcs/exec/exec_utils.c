@@ -52,7 +52,7 @@ int   exec_single_command(t_command *command, t_exec_data *exec)
         ft_dup2(&command->outfile, STDOUT_FILENO);
         if (command->command == NULL || command->command[0] == NULL)
 			exit (0);
-		execve(exec->command_path, command->command, NULL);
+		execve(exec->command_path, command->command, env_tab());
         ft_putstr_fd("Minishell : command not found : ", 2);
         ft_putendl_fd(command->command[0], 2);
         exit(127);

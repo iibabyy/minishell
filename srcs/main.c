@@ -6,12 +6,14 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:42:32 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/05 21:30:06 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/06 01:02:20 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include "exec/exec.h"
+
+volatile sig_atomic_t g_signal = 0;
 
 /*		UTILS	*/
 
@@ -59,10 +61,10 @@ int	main(int ac, char **av, char **envp)
 	data->pid = ft_calloc (sizeof(int) , 10);
 	while (1)
 	{
+		g_signal = 0;
 		signal(SIGINT, &handle_sigint);
 		signal(SIGQUIT, SIG_IGN);
-		printf("%s", minishell_prompt());
-		str = readline("");
+		str = readline(minishell_prompt());
 		if (str == NULL)
 		{
 			destroy_garbage(NULL);
@@ -93,6 +95,7 @@ int	main(int ac, char **av, char **envp)
 			free(str);
 			if (command != NULL)
 			{
+				// print_AST(command);
 				open_pipes_redirect(command);
 				exec_command(command, data);
 			}

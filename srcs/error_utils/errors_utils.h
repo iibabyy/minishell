@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:05:38 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/05 16:13:08 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/05 23:48:12 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	destroy_tokens(t_token *tokens);
 void	destroy_here_docs(t_here_doc *here_doc);
 void	destroy_redirections(t_redirection *redirection);
 void	destroy_parsing(t_parsing *data);
-void	error_log(char *error, bool errno);
+void	error_log(char *error);
 void	built_in_error(char *function, char *error, bool errno);
 
 #endif

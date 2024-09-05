@@ -3,7 +3,10 @@
 		"lexing.h": "c",
 		"minishell.h": "c",
 		"features.h": "c",
-		"garbage_collector.h": "c"
+		"garbage_collector.h": "c",
+		"resource.h": "c",
+		"exec.h": "c",
+		"errors_utils.h": "c"
 	},
 	"C_Cpp.errorSquiggles": "disabled",
 	"cSpell.words": [
