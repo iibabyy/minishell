@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:15:07 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/04 20:32:04 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/05 15:45:31 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,10 @@ int	quotes_size(char **input, int start, char eof)
 int	parenthesis_size(char *input, int *i)
 {
 	int	parenthesis;
-	int	start;
+	// int	start;
 
 	parenthesis = 1;
-	start
+	// start = *i;
 	while (1)
 	{
 		printf("input[%i]: '%c'\n", *i, input[*i]);
@@ -88,7 +88,7 @@ int	parenthesis_size(char *input, int *i)
 		++*i;
 	}
 	++*i;
-	return (*i - 1);
+	return (*i - 2);
 }
 
 t_token	*last_token(t_token *token)
