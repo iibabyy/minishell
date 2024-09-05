@@ -6,15 +6,15 @@ void	ft_addhistory(char	*str)
 
 	if (str == NULL)
 		return ;
-	add_and_save(str);
 	if (get_last_history(NULL, false) != NULL
 		&& ft_strcmp(str, get_last_history(NULL, false)) == 0)
 		return ;
+	add_and_save(str);
 	fd = open(HISTORY_FILE, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd == -1)
-		return (close(fd), error_log("ft_addhistory", true));
+		return (perror("add_history"), (void)close(fd));
 	if (ft_putendl_fd(str, fd) == -1)
-		return (close(fd), error_log("ft_addhistory", true));
+		return ((void)close(fd));
 	ft_close_fd(&fd);
 }
 
@@ -25,7 +25,7 @@ void	init_history(void)
 
 	fd = open(HISTORY_FILE, O_RDONLY);
 	if (fd == -1)
-		return (error_log("ft_addhistory", true), ft_close_fd(&fd));
+		return (perror("init_history"), ft_close_fd(&fd));
 	str = get_next_line(fd);
 	if (str == NULL)
 		return (ft_close_fd(&fd));
