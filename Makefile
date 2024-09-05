@@ -60,6 +60,7 @@ FILES =	srcs/main.c							\
 		srcs/built_in/export.c				\
 		srcs/built_in/unset.c				\
 		srcs/built_in/alias.c				\
+		srcs/features/history.c				\
 
 OBJ = $(FILES:.c=.o)
 

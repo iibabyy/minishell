@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 15:08:49 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/04 02:37:33 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/05 16:31:03 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,10 @@ int			init_minishell(char **env);
 
 // features
 
-int			init_aliases();
+int			init_aliases(void);
 int			replace_aliases(t_command *last_command);
+void		init_history(void);
+void		ft_addhistory(char	*str);
 
 // lexing
 

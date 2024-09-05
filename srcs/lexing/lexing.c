@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:15:43 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/04 20:29:52 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/05 16:59:32 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_token	*input_to_tokens(char *input)
 		if (meta_to_token(&input, &i, &tokens) == EXIT_FAILURE)
 			return (add_history(input), ft_lstclear(&tokens, ft_free), NULL);
 	}
-	add_history(input);
+	ft_addhistory(input);
 	return (tokens);
 }
 
