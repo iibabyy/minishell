@@ -118,6 +118,7 @@ fclean : clean
 	@make fclean -sC $(LIBFT_DIR)
 	@make fclean -sC $(GARBAGE_COLLECTOR_DIR)
 	@rm -f $(NAME)
+	@rm -f .error_log
 	@echo "$(BLUE)Minishell cleaned ! ✅$(END)"
 
 ac : all clean
@@ -135,6 +136,6 @@ s :
 res :
 	@make re -sC $(LIBFT_DIR)
 	@make re -sC $(GARBAGE_COLLECTOR_DIR)
-	@make
+	@make -s
 
 .PHONY: all re clean fclean ac s res

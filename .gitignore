@@ -1,5 +1,6 @@
 minishell
 *.txt
+.error_log
 a.out
 
 # Prerequisites
