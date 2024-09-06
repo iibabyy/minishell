@@ -100,6 +100,7 @@ int	open_file(t_redirection *redirection)
 	int	fd;
 
 	fd = open(redirection->file->content, redirection->o_flags, 0644);
+	printf("num de l outfile %d\n", fd);
 	if (fd == -1)
 		return (perror(redirection->file->content), EXIT_FAILURE);
 	type = redirection->type;

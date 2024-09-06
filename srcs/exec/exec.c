@@ -74,30 +74,46 @@ int exec_pipe(t_command *node, t_exec_data *data)
     return (status2);
 }
 
-// int exec_sub_shell(t_command *node, t_exec_data *data)
-// {
-// 	int pid;
-// 	int status;
+int exec_sub_shell(t_command *node, t_exec_data *data)
+{
+    int pid;
+    int status;
+    char **arg;
+    t_command *command;
 
-// 	pid = fork();
-// 	if (pid == 0)
-// 	{
-		
-// 	}
-// 	else
-// 		waitpid(pid, &status, 0);
-// }
+    status = 0;
+    pid = fork();
+    if (pid == 0)
+    {
+        arg = ft_split(node->command[0], ' ');
+		if (arg[0] == NULL)
+			exit(0) ;
+		else
+		{
+			command = parse(node->command[0]);
+			if (command != NULL)
+				status = exec_command(command, data);
+            exit(status);
+		}
+    }
+    else
+    {
+        waitpid(pid, &status, 0);
+    }
+    return(status);
+}
 
 int exec_command(t_command *node, t_exec_data *data)
 {
     int status = 0;
 
+    //open_redirections(node);
     if (node->type == COMMAND)
         status = exec_single_command(node, data);
     else if(node->type == OR)
         status = exec_or(node, data);
-	// else if(node->type == SUB_SHELL)
-	// 	status = exec_sub_shell(node, data);
+    else if(node->type == SUB_SHELL)
+        status = exec_sub_shell(node, data);
     else if (node->type == AND)
         status = exec_and(node, data);
     else if (node->type == PIPE)
