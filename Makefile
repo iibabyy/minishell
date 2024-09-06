@@ -32,7 +32,9 @@ GARBAGE_COLLECTOR = $(GARBAGE_COLLECTOR_DIR)garbage_collector.a
 
 # Minishell
 
-FILES =	srcs/main.c							\
+FILES =	srcs/minishell/minishell.c			\
+		srcs/minishell/utils.c				\
+		srcs/minishell/test_utils.c			\
 		srcs/error_utils/free_and_exit.c	\
 		srcs/error_utils/print_err.c		\
 		srcs/error_utils/free_utils.c		\
@@ -53,7 +55,6 @@ FILES =	srcs/main.c							\
 		srcs/exec/signal.c					\
 		srcs/features/alias_utils.c			\
 		srcs/features/aliases.c				\
-		srcs/test_utils.c					\
 		srcs/built_in/env_utils_1.c			\
 		srcs/built_in/env_utils_2.c			\
 		srcs/built_in/env.c					\
@@ -62,6 +63,7 @@ FILES =	srcs/main.c							\
 		srcs/built_in/alias.c				\
 		srcs/features/history.c				\
 		srcs/features/prompt.c				\
+		srcs/exec/signal_utils.c			\
 
 OBJ = $(FILES:.c=.o)
 

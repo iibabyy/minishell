@@ -9,7 +9,8 @@
 		"errors_utils.h": "c",
 		"readline.h": "c",
 		"history.h": "c",
-		"parsing.h": "c"
+		"parsing.h": "c",
+		"utils.h": "c"
 	},
 	"C_Cpp.errorSquiggles": "disabled",
 	"cSpell.words": [

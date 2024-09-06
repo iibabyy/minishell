@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 15:08:49 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/06 11:28:12 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/06 15:26:20 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ extern volatile sig_atomic_t g_signal;
 
 void		minishell(void);
 int			init_minishell(char **env);
-char		*minishell_prompt();
+char		*minishell_prompt(void);
+int			exec(t_command *command);
 
 // features
 
@@ -74,9 +75,8 @@ int			export(char	**args);
 
 // signals
 
-void handle_sigint(int sig);
-void quit_heredoc(int sig);
-void sigint_child(int sig);
+void	set_parent_signals(void);
+void	set_child_signals(void);
 
 // debug
 

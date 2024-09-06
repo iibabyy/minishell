@@ -47,7 +47,8 @@ int   exec_single_command(t_command *command, t_exec_data *exec)
     pid = fork();
     if (pid == 0)
     {
-        init_data(exec, command);
+        set_child_signals();
+		init_data(exec, command);
         ft_dup2(&command->infile, STDIN_FILENO);
         ft_dup2(&command->outfile, STDOUT_FILENO);
         if (command->command == NULL || command->command[0] == NULL)
