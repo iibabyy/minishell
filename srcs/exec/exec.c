@@ -7,13 +7,43 @@
 void sigint_child(int sig);
 void handle_sigint(int sig);
 
+bool should_fork(t_command *node)
+{
+    if (node->type == SUB_SHELL
+        || (node->type == COMMAND && is_built_in(node) == false))
+        return (true);
+    return (false);
+}
+int forking_node(t_command *node, t_exec_data *data)
+{
+    int pid;
+    int status;
+
+    pid = fork();
+    if (pid == 0)
+    {
+        status = exec_command(node, data);
+        exit(status);
+    }
+    waitpid(pid, &status, 0);
+    return (WEXITSTATUS(status));
+}
+
 int exec_or(t_command *node, t_exec_data *data)
 {
     int status;
 
-    status = exec_command(node->left, data);
-    if(WEXITSTATUS(status) != 0)
-        status = exec_command(node->right, data);
+    if (should_fork(node->left))
+        status = forking_node(node->left, data);
+    else
+        status = exec_command(node->left, data);
+    if(status != 0)
+    {
+        if (should_fork(node->right))
+            status = forking_node(node->right, data);
+        else
+            status = exec_command(node->right, data);
+    }
     return(status);
 }
 
@@ -21,9 +51,17 @@ int exec_and(t_command *node, t_exec_data *data)
 {
     int status;
 
-    status = exec_command(node->left, data);
-    if(WEXITSTATUS(status) == 0)
-        status = exec_command(node->right, data);
+    if (should_fork(node->left))
+        status = forking_node(node->left, data);
+    else
+        status = exec_command(node->left, data);
+    if(status == 0 && g_signal == 0)
+    {
+        if (should_fork(node->right))
+            status = forking_node(node->right, data);
+        else
+            status = exec_command(node->right, data);
+    }
     return(status);
 }
 
@@ -49,7 +87,6 @@ int exec_pipe(t_command *node, t_exec_data *data)
     int pid[2];
     int fd[2];
     ft_pipe(fd);
-    signal(SIGINT, &sigint_child);
     pid[0] = fork();
     if (pid[0] == 0)
     {
@@ -78,23 +115,20 @@ int exec_sub_shell(t_command *node, t_exec_data *data)
 {
     int pid;
     int status;
-    char **arg;
     t_command *command;
 
     status = 0;
     pid = fork();
     if (pid == 0)
     {
-        arg = ft_split(node->command[0], ' ');
-		if (arg[0] == NULL)
-			exit(0) ;
-		else
-		{
-			command = parse(node->command[0]);
-			if (command != NULL)
-				status = exec_command(command, data);
-            exit(status);
-		}
+		// set_parent_signals();
+        open_redirections(node);
+        ft_dup2(&node->infile, STDIN_FILENO);
+        ft_dup2(&node->outfile, STDOUT_FILENO);
+		command = parse(node->command[0]);
+		if (command != NULL)
+			status = exec_command(command, data);
+        exit(status);
     }
     else
     {
@@ -102,14 +136,34 @@ int exec_sub_shell(t_command *node, t_exec_data *data)
     }
     return(status);
 }
+int exec_builtin(t_command *node)
+{
+    int status;
 
+    status = 0;
+    if(ft_strcmp("unset", node->command[0]) == 0)
+        status = unset(node->command);
+    // if(ft_strcmp("cd", node->command[0]) == 0)
+    //     return (true);
+    // if(ft_strcmp("pwd", node->command[0]) == 0)
+    //     return (true);
+    // if(ft_strcmp("ex", node->command[0]) == 0)
+    //     return (true);
+    // if(ft_strcmp("exit", node->command[0]) == 0)
+        // fonction_exit(node->command[0]);
+    return(status);
+}
 int exec_command(t_command *node, t_exec_data *data)
 {
     int status = 0;
 
-    //open_redirections(node);
     if (node->type == COMMAND)
-        status = exec_single_command(node, data);
+    {
+        if (is_built_in(node))
+            status = exec_builtin(node);
+        else
+            status = exec_single_command(node, data);
+    }
     else if(node->type == OR)
         status = exec_or(node, data);
     else if(node->type == SUB_SHELL)

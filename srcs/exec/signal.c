@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mdembele <mdembele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 12:47:24 by mdembele          #+#    #+#             */
-/*   Updated: 2024/09/06 15:12:53 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/06 20:16:38 by mdembele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,3 +43,4 @@ void	set_child_signals(void)
     signal(SIGTSTP, SIG_IGN);
     signal(SIGINT, SIG_DFL);
 }
+// int return_signal_code(int status,)
