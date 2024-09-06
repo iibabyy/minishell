@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 00:42:23 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/06 02:42:57 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/06 13:20:35 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*minishell_prompt()
 		return (ft_strdup(MINISHELL_PROMPT));
 	prompt = add_dir_name(prompt);
 	prompt = add_git_head(prompt);
-	prompt = ft_re_strjoin(prompt, "\001\033[33;1m\002 ✗\001\033[0m\002 ");
+	prompt = ft_re_strjoin(prompt, "\001\033[33;1m\002✗\001\033[0m\002 ");
 	if (prompt == NULL || *prompt == '\0')
 		return (ft_free(prompt), ft_strdup(MINISHELL_PROMPT));
 	return (prompt);
@@ -42,7 +42,7 @@ char	*add_dir_name(char *prompt)
 	temp = ft_getenv("PWD");
 	if (temp == NULL || ft_strrchr(temp, '/') == NULL)
 	{
-		dir = ft_strjoin(prompt, "minishell");
+		dir = ft_strjoin(prompt, "minishell ");
 		if (dir == NULL)
 			return (prompt);
 		return (ft_free(prompt), ft_free(temp), dir);
@@ -50,7 +50,7 @@ char	*add_dir_name(char *prompt)
 	dir = ft_strrchr(temp, '/') + 1;
 	if (*dir == '\0')
 		dir = "/";
-	dir = ft_strjoin(prompt, dir);
+	dir = multi_strjoin(3, prompt, dir, " ");
 	if (dir == NULL)
 		return (prompt);
 	return (ft_free(prompt), dir);
@@ -75,8 +75,8 @@ char	*add_git_head(char *prompt)
 		return (prompt);
 	if (ft_strrchr(temp, '/') == NULL)
 		return (ft_free(temp), prompt);
-	git = multi_strjoin(3, " \001\033[0;34m\033[1m\002git:(\001\033[0;31m\033[1m\002",
-			ft_strrchr(temp, '/') + 1, "\001\033[0;34m\033[1m\002)");
+	git = multi_strjoin(3, "\001\033[0;34m\033[1m\002git:(\001\033[0;31m\033[1m\002",
+			ft_strrchr(temp, '/') + 1, "\001\033[0;34m\033[1m\002) ");
 	ft_free(temp);
 	if (git == NULL)
 		return (prompt);

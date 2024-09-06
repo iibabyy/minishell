@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 12:47:24 by mdembele          #+#    #+#             */
-/*   Updated: 2024/09/06 04:30:05 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/06 11:24:56 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void handle_sigint(int sig)
 {
 	printf("\n");
 	g_signal = sig + 128;
-	// rl_done = 1;
+	rl_done = 1;
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();

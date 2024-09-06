@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 15:08:49 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/06 04:32:34 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/06 11:28:12 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@
 #include "garbage_collector.h"
 #include "error.h"
 
-	extern volatile sig_atomic_t g_signal;
+extern volatile sig_atomic_t g_signal;
+
 // minishell
 
 # define MINISHELL_PROMPT "\033[0;32m➜  \033[0;36mminishell \033[0;33m✗\033[0m "

@@ -8,7 +8,8 @@
 		"exec.h": "c",
 		"errors_utils.h": "c",
 		"readline.h": "c",
-		"history.h": "c"
+		"history.h": "c",
+		"parsing.h": "c"
 	},
 	"C_Cpp.errorSquiggles": "disabled",
 	"cSpell.words": [
