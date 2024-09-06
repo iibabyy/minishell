@@ -6,16 +6,16 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:05:52 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/05 23:52:01 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/06 17:14:03 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "errors_utils.h"
 
-void	print_err(char *err, bool errno)
+void	print_err(char *err, bool erno)
 {
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
-	if (errno == true)
+	if (erno == true)
 	{
 		perror(err);
 	}
@@ -42,7 +42,7 @@ void	parse_err(char *error, char *token)
 	}
 }
 
-void	error_log(char *error)
+void	error_log(char *error, bool erno)
 {
 	static int	error_num = 0;
 	int			error_log_fd;
@@ -54,6 +54,11 @@ void	error_log(char *error)
 		ft_putstr_fd("\n\n", error_log_fd);
 	ft_putnbr_fd(error_num, error_log_fd);
 	ft_putstr_fd(".\n", error_log_fd);
+	if (erno == true)
+	{
+		ft_putstr_fd(error, error_log_fd);
+		ft_putendl_fd(strerror(errno), error_log_fd);
+	}
 	if (error != NULL)
 		ft_putendl_fd(error, error_log_fd);
 	ft_close_fd(&error_log_fd);

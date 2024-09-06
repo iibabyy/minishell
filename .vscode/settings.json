@@ -10,7 +10,11 @@
 		"readline.h": "c",
 		"history.h": "c",
 		"parsing.h": "c",
-		"utils.h": "c"
+		"utils.h": "c",
+		"built_in.h": "c",
+		"error.h": "c",
+		"structs.h": "c",
+		"stdbool.h": "c"
 	},
 	"C_Cpp.errorSquiggles": "disabled",
 	"cSpell.words": [

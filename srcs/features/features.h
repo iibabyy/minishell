@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:25:18 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/06 00:33:39 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/06 16:52:35 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # define MAX_ALIAS 128
 # define HISTORY_FILE "/tmp/.history"
 # define ALIAS_USAGE "alias: usage: abc=xyz"
+# define MINISHELL_PROMPT "\033[0;32m➜  \033[0;36mminishell \033[0;33m✗\033[0m "
 
 char	***get_alias(char ***init_alias);
 int		check_if_alias(t_command *command, char ***aliases);
