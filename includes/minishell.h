@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 15:08:49 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/05 23:40:01 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/06 04:32:34 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,11 @@ void		init_env(char **env_arg);
 int			unset(char **args);
 int			export(char	**args);
 
+// signals
+
+void handle_sigint(int sig);
+void quit_heredoc(int sig);
+void sigint_child(int sig);
 
 // debug
 

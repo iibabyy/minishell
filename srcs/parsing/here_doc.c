@@ -6,17 +6,12 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:10:53 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/04 19:26:27 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/06 04:36:47 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-void quit_heredoc(int sig)
-{
-	(void)sig;
-	exit(0);
-}
 int	open_here_doc(t_redirection *redirection)
 {
 	t_here_doc	*here_doc;
@@ -28,12 +23,14 @@ int	open_here_doc(t_redirection *redirection)
 			EXIT_FAILURE);
 	command_infile = &redirection->command->infile;
 	here_doc = redirection->here_doc;
-	signal(SIGINT, &quit_heredoc);
 	input = get_input(here_doc->end_of_file->content, HEREDOC_PROMPT, false);
-	if (input == NULL)
+	if (g_signal != 0)
 		return (EXIT_FAILURE);
-	ft_putstr_fd(input, here_doc->pipe[1]);
-	ft_free(input);
+	if (input != NULL)
+	{
+		ft_putstr_fd(input, here_doc->pipe[1]);
+		ft_free(input);
+	}
 	ft_close_fd(&here_doc->pipe[1]);
 	if (is_standart_fd(*command_infile) == false)
 		ft_close_fd(command_infile);
@@ -71,11 +68,12 @@ char	*get_input(char *end_of_file, char *prompt, bool quotes)
 	char	*input_join;
 
 	input_join = NULL;
+	signal(SIGINT, &quit_heredoc);
 	while (1)
 	{
 		input = readline(prompt);
-		if (input == NULL)
-			return (input_join);
+		if (input == NULL || g_signal != 0)
+			return (check_heredoc_sig(input_join, end_of_file));
 		if (quotes == true || input_join != NULL)
 		{
 			input_join = ft_re_strjoin(input_join, "\n");
@@ -91,6 +89,7 @@ char	*get_input(char *end_of_file, char *prompt, bool quotes)
 			return (free(input), input_join);
 		free(input);
 	}
+	signal(SIGINT, &handle_sigint);
 	return (input_join);
 }
 
@@ -116,12 +115,19 @@ t_redirection	*init_here_doc(t_parsing *data)
 	return (redirection);
 }
 
-// char	*here_doc_subshell(char *input)
-// {
-// 	char	*subshell;
-
-// 	subshell = ft_strdup(ft_strchr(input, '('));
-// 	if (subshell == NULL)
-// 		return (input);
-// 	if (ft_strchr(subshell, ')')
-// }
+char	*check_heredoc_sig(char *input, char *eof)
+{
+	if (g_signal != 0)
+	{
+		printf("salut\n");
+		return (ft_free(input), NULL);
+	}
+	else
+	{	ft_putstr_fd
+			("minishell: warning: here-document delimited by end-of-file (wanted `",
+				STDERR_FILENO);
+		ft_putstr_fd(eof, STDERR_FILENO);
+		ft_putendl_fd("')", STDERR_FILENO);
+	}
+	return (input);
+}

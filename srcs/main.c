@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:42:32 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/06 02:38:24 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/06 04:25:17 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int	main(int ac, char **av, char **envp)
 			free(str);
 			if (command != NULL)
 			{
-				// print_AST(command);
+				print_AST(command);
 				open_pipes_redirect(command);
 				exec_command(command, data);
 			}

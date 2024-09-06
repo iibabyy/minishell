@@ -6,7 +6,9 @@
 		"garbage_collector.h": "c",
 		"resource.h": "c",
 		"exec.h": "c",
-		"errors_utils.h": "c"
+		"errors_utils.h": "c",
+		"readline.h": "c",
+		"history.h": "c"
 	},
 	"C_Cpp.errorSquiggles": "disabled",
 	"cSpell.words": [
