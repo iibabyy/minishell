@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:15:43 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/04 19:14:27 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/04 20:29:52 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_token	*input_to_tokens(char *input)
 		while (input[i] == ' ')
 			++i;
 		if (word_to_token(&input, &i, &tokens) == EXIT_FAILURE)
-			return (add_history(input), ft_lstclear(&tokens, ft_free), NULL);
+			return (add_history(input), NULL);
 		while (input[i] == ' ')
 			++i;
 		if (meta_to_token(&input, &i, &tokens) == EXIT_FAILURE)
@@ -155,11 +155,11 @@ int	join_parenthesis(char *input, int *i, t_token **tokens)
 	int		start;
 	int		len;
 
-	start = *i;
 	if (is_parenthesis(input, *i) == false)
 		return (EXIT_FAILURE);
-	if (input[*i++] == ')')
+	if (input[(*i)++] == ')')
 		return (parse_err(TOKEN_ERR, ")"), EXIT_FAILURE);
+	start = *i;
 	len = parenthesis_size(input, i);
 	if (len == -1)
 		return (error_log("new_parenthesis: parenthesis_size failed", false),

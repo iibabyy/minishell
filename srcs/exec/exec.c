@@ -91,7 +91,8 @@ int exec_sub_shell(t_command *node, t_exec_data *data)
 		{
 			command = parse(node->command[0]);
 			if (command != NULL)
-				exec_command(command, data);
+				status = exec_command(command, data);
+            exit(status);
 		}
     }
     else
@@ -105,13 +106,13 @@ int exec_command(t_command *node, t_exec_data *data)
 {
     int status = 0;
 
-    open_redirections(node);
+    //open_redirections(node);
     if (node->type == COMMAND)
         status = exec_single_command(node, data);
     else if(node->type == OR)
         status = exec_or(node, data);
-    // else if(node->type == SUB_SHELL)
-    //     status = exec_sub_shell(node, data);
+    else if(node->type == SUB_SHELL)
+        status = exec_sub_shell(node, data);
     else if (node->type == AND)
         status = exec_and(node, data);
     else if (node->type == PIPE)
