@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:10:53 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/06 04:36:47 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/06 14:38:39 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,15 +78,15 @@ char	*get_input(char *end_of_file, char *prompt, bool quotes)
 		{
 			input_join = ft_re_strjoin(input_join, "\n");
 			if (input_join == NULL)
-				return (NULL);
+				return (signal(SIGINT, &handle_sigint), NULL);
 		}
 		if (quotes == false && is_limiter(input, end_of_file) == true)
-			return (free(input), input_join);
+			return (free(input), signal(SIGINT, &handle_sigint), input_join);
 		input_join = ft_re_strjoin(input_join, input);
 		if (input_join == NULL)
-			return (NULL);
+			return (signal(SIGINT, &handle_sigint), NULL);
 		if (quotes == true && ft_strchr(input, *end_of_file) != NULL)
-			return (free(input), input_join);
+			return (free(input), signal(SIGINT, &handle_sigint), input_join);
 		free(input);
 	}
 	signal(SIGINT, &handle_sigint);
@@ -117,6 +117,7 @@ t_redirection	*init_here_doc(t_parsing *data)
 
 char	*check_heredoc_sig(char *input, char *eof)
 {
+	signal(SIGINT, &handle_sigint);
 	if (g_signal != 0)
 	{
 		printf("salut\n");

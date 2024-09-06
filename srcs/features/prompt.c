@@ -6,13 +6,15 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 00:42:23 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/06 13:20:35 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/06 14:36:00 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "features.h"
 
 void	close_and_re(int fd);
+
+//\001\033[33;1m\002✗
 
 char	*minishell_prompt()
 {
@@ -28,7 +30,7 @@ char	*minishell_prompt()
 		return (ft_strdup(MINISHELL_PROMPT));
 	prompt = add_dir_name(prompt);
 	prompt = add_git_head(prompt);
-	prompt = ft_re_strjoin(prompt, "\001\033[33;1m\002✗\001\033[0m\002 ");
+	prompt = ft_re_strjoin(prompt, "\001\033[0m\002 ");
 	if (prompt == NULL || *prompt == '\0')
 		return (ft_free(prompt), ft_strdup(MINISHELL_PROMPT));
 	return (prompt);
