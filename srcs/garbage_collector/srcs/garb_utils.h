@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:25:56 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/04 22:45:32 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/06 23:19:11 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 # define NOT_DEFINED 3
 # define SETTER 1
 # define READER 0
+# define GETTER 0
 
 t_garb_node	*find_in_garbage(void *address, t_garbage *garbage);
 int			new_garb_node(void *address, t_garbage *garbage,
@@ -45,4 +46,6 @@ t_garb_node	*find_before_node(t_garb_node *node, t_garbage *garbage);
 void		error_log(char *error, bool erno);
 int			init_static(t_garbage **_static, void *arg);
 int			is_destroyed(bool setter, bool value);
+t_garbage	*get_garbage(t_garbage *garb, bool setter);
+
 #endif

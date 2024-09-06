@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:25:32 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/06 18:40:00 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/06 23:21:54 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,4 +117,23 @@ void	destroy_garbage(t_garbage *garb)
 	}
 	free(garbage);
 	is_destroyed(SETTER, true);
+}
+
+void 	clear_garbage(t_garbage *garb)
+{
+	t_garbage	*garbage;
+	t_garb_node	*node;
+	t_garb_node	*temp;
+
+	garbage = get_garbage(NULL, GETTER);
+	if (garbage == NULL)
+		return ;
+	node = garbage->first;
+	while (node != NULL)
+	{
+		temp = node;
+		node = node->next;
+		destroy_garbage_node(temp);
+	}
+	garbage->first = NULL;
 }
