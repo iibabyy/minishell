@@ -26,6 +26,7 @@ int exec_and(t_command *node, t_exec_data *data)
         status = exec_command(node->right, data);
     return(status);
 }
+
 void open_pipes_redirect(t_command *node)
 {
 
@@ -52,7 +53,7 @@ int exec_pipe(t_command *node, t_exec_data *data)
     pid[0] = fork();
     if (pid[0] == 0)
     {
-        signal(SIGINT, null_sigint);
+        set_child_signals();
         free((ft_close(&fd[0]), ft_dup2(&fd[1], STDOUT_FILENO), NULL));
         status1 = exec_command(node->left, data);
         exit(status1);
@@ -60,7 +61,7 @@ int exec_pipe(t_command *node, t_exec_data *data)
     pid[1] = fork();
     if (pid[1] == 0)
     {
-        signal(SIGINT, null_sigint);
+        set_child_signals();
         free((ft_close(&fd[1]), ft_dup2(&fd[0], STDIN_FILENO), NULL));
         status2 = exec_command(node->right, data);
         exit(status2);

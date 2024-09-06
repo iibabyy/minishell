@@ -1,11 +1,22 @@
 {
 	"files.associations": {
 		"lexing.h": "c",
-		"minishell.h": "c"
+		"minishell.h": "c",
+		"features.h": "c",
+		"garbage_collector.h": "c",
+		"resource.h": "c",
+		"exec.h": "c",
+		"errors_utils.h": "c",
+		"readline.h": "c",
+		"history.h": "c",
+		"parsing.h": "c",
+		"utils.h": "c"
 	},
 	"C_Cpp.errorSquiggles": "disabled",
 	"cSpell.words": [
+		"addhistory",
 		"mminishell",
-		"MSHRC"
+		"MSHRC",
+		"strtrim"
 	]
 }

@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:25:18 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/26 16:58:10 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/06 00:33:39 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 
 # define MSHRC ".mshrc"
 # define MAX_ALIAS 128
+# define HISTORY_FILE "/tmp/.history"
 # define ALIAS_USAGE "alias: usage: abc=xyz"
 
 char	***get_alias(char ***init_alias);
@@ -28,5 +29,9 @@ void	clear_3d_array(char ***alias, int end);
 char	***get_alias(char ***init_alias);
 char	**add_alias(char **array, char *line, int start);
 char	**insert_alias(char **command, char **alias);
+char	*get_last_history(char *str, bool set);
+void	add_and_save(char *str);
+char	*add_git_head(char *prompt);
+char	*add_dir_name(char *prompt);
 
 #endif

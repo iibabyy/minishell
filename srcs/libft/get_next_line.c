@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 22:20:39 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/15 18:10:52 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/06 02:37:23 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,11 +88,13 @@ char	*re_before_line(char *all)
 
 	i = 0;
 	if (!all)
-		return (ft_free(all), NULL);
+		return (NULL);
 	while (all[i] != '\n' && all[i])
 		i++;
 	if (all[i] == '\n')
 		i++;
+	if (i == 0 && all[i] == '\0')
+		return (NULL);
 	dest = ft_malloc(sizeof(char) * (i + 1));
 	if (!dest)
 		return (ft_free(all), NULL);

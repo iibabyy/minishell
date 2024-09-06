@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 15:08:49 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/04 02:37:33 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/06 15:26:20 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,23 @@
 #include "garbage_collector.h"
 #include "error.h"
 
+extern volatile sig_atomic_t g_signal;
+
 // minishell
+
+# define MINISHELL_PROMPT "\033[0;32m➜  \033[0;36mminishell \033[0;33m✗\033[0m "
 
 void		minishell(void);
 int			init_minishell(char **env);
+char		*minishell_prompt(void);
+int			exec(t_command *command);
 
 // features
 
-int			init_aliases();
+int			init_aliases(void);
 int			replace_aliases(t_command *last_command);
+void		init_history(void);
+void		ft_addhistory(char	*str);
 
 // lexing
 
@@ -59,11 +67,16 @@ t_command	*last_command(t_command *current);
 
 int			alias(char **arg);
 int			env(char **args);
+char		**env_tab(void);
 char		*ft_getenv(char *var);
 void		init_env(char **env_arg);
 int			unset(char **args);
 int			export(char	**args);
 
+// signals
+
+void	set_parent_signals(void);
+void	set_child_signals(void);
 
 // debug
 

@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:05:38 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/26 16:45:15 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/05 23:48:12 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include "../../includes/garbage_collector.h"
 # include "../../includes/libft.h"
 
-# define ERROR_LOG_FILE "/home/ibaby/Desktop/circle_3/minishell/.error_log"
+# define ERROR_LOG_FILE ".error_log"
 
 void	free_all(t_data *data);
 void	print_err(char *err, bool errno);
@@ -31,7 +31,7 @@ void	destroy_tokens(t_token *tokens);
 void	destroy_here_docs(t_here_doc *here_doc);
 void	destroy_redirections(t_redirection *redirection);
 void	destroy_parsing(t_parsing *data);
-void	error_log(char *error, bool errno);
+void	error_log(char *error);
 void	built_in_error(char *function, char *error, bool errno);
 
 #endif

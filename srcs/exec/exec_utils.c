@@ -47,13 +47,14 @@ int   exec_single_command(t_command *command, t_exec_data *exec)
     pid = fork();
     if (pid == 0)
     {
-        init_data(exec, command);
-        open_redirections(command);
+        set_child_signals();
+		init_data(exec, command);
         ft_dup2(&command->infile, STDIN_FILENO);
         ft_dup2(&command->outfile, STDOUT_FILENO);
-        printf("num de l'outfile %d\n", command->outfile);
-        execve(exec->command_path, command->command, NULL);
-        ft_putstr_fd("Minishell : command not found : ", 2);
+        if (command->command == NULL || command->command[0] == NULL)
+			exit (0);
+		execve(exec->command_path, command->command, env_tab());
+        ft_putstr_fd("minishell : command not found : ", 2);
         ft_putendl_fd(command->command[0], 2);
         exit(127);
     }
