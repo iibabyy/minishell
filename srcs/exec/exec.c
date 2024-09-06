@@ -22,6 +22,7 @@ int forking_node(t_command *node, t_exec_data *data)
     pid = fork();
     if (pid == 0)
     {
+		set_child_signals();
         status = exec_command(node, data);
         exit(status);
     }
@@ -111,6 +112,8 @@ int exec_pipe(t_command *node, t_exec_data *data)
     return (status2);
 }
 
+void	print_command(t_command *command);
+
 int exec_sub_shell(t_command *node, t_exec_data *data)
 {
     int pid;
@@ -118,16 +121,19 @@ int exec_sub_shell(t_command *node, t_exec_data *data)
     t_command *command;
 
     status = 0;
+	(void)data;
     pid = fork();
     if (pid == 0)
     {
 		// set_parent_signals();
-        open_redirections(node);
+    	open_redirections(node);
         ft_dup2(&node->infile, STDIN_FILENO);
         ft_dup2(&node->outfile, STDOUT_FILENO);
 		command = parse(node->command[0]);
 		if (command != NULL)
-			status = exec_command(command, data);
+			status = exec(command);
+		else
+			status = EXIT_FAILURE;
         exit(status);
     }
     else

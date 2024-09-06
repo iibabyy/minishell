@@ -42,6 +42,7 @@ void	init_history(void)
 			return (ft_close_fd(&fd));
 		add_and_save(str);
 	}
+	ft_close_fd(&fd);
 }
 
 void	add_and_save(char *str)
