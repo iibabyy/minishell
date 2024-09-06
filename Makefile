@@ -32,7 +32,7 @@ GARBAGE_COLLECTOR = $(GARBAGE_COLLECTOR_DIR)garbage_collector.a
 
 # Minishell
 
-FILES =	srcs/minishell/minishell.c			\
+FILES =	srcs/minishell/Minishell.c			\
 		srcs/minishell/utils.c				\
 		srcs/minishell/test_utils.c			\
 		srcs/error_utils/free_and_exit.c	\
