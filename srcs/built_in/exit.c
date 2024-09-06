@@ -5,7 +5,7 @@ int	exit(char **arg)
 	int	i;
 
 	if (arg == NULL)
-		exit ()
+		free_and_exit()
 }
 
 

@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 02:13:15 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/06 18:41:11 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/06 21:22:19 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char	**env_tab(void)
 		return (NULL);
 	if (env_num(env) == 0)
 		return (NULL);
-	res = ft_malloc(sizeof(char *) * env_num(env) + 1);
+	res = ft_malloc(sizeof(char *) * (env_num(env) + 1));
 	if (res == NULL)
 		return (malloc_failed("env_tab"), NULL);
 	i = 0;

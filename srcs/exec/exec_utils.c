@@ -37,7 +37,9 @@ void init_data(t_exec_data *data, t_command *command)
 
 bool is_built_in(t_command *node)
 {
-    if(ft_strcmp("echo", node->command[0]) == 0)
+    if (node->command == NULL)
+		return (false);
+	if(ft_strcmp("echo", node->command[0]) == 0)
         return (true);
     if(ft_strcmp("cd", node->command[0]) == 0)
         return (true);
