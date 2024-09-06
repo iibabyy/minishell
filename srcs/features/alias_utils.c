@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:24:38 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/06 17:01:33 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/06 18:41:11 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ char	**insert_alias(char **command, char **alias)
 	new_command = ft_malloc(sizeof(char *)
 			* (ft_strlen_2d(command) + ft_strlen_2d(alias)));
 	if (new_command == NULL)
-		return (command);
+		return (malloc_failed("insert_alias"), command);
 	while (alias[++i + 1] != NULL)
 		new_command[i] = alias[i + 1];
 	while (command[++j + 1] != NULL)

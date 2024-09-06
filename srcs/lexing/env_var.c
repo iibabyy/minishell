@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:33:50 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/04 02:37:08 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/06 18:40:40 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	**replace_dollars(char *input)
 	y = 0;
 	array = ft_malloc(sizeof(char *) * (count_char(input, '$') * 10));
 	if (array == NULL)
-		return (NULL);
+		return (malloc_failed("replace_dollars"), NULL);
 	while (input[i] != '\0')
 	{
 		start = i;

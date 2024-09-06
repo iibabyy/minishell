@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:10:53 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/06 15:49:30 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/06 18:52:44 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ t_redirection	*init_here_doc(t_parsing *data)
 		return (NULL);
 	redirection->here_doc = ft_malloc(sizeof(t_here_doc));
 	if (redirection->here_doc == NULL)
-		return (NULL);
+		return (malloc_failed("init_here_doc"), NULL);
 	if (pipe(redirection->here_doc->pipe) == -1)
 		return (parse_err(NULL, NULL), NULL);
 	redirection->here_doc->token = data->curr_token;

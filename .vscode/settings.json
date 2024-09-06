@@ -14,7 +14,12 @@
 		"built_in.h": "c",
 		"error.h": "c",
 		"structs.h": "c",
-		"stdbool.h": "c"
+		"stdbool.h": "c",
+		"includes.h": "c",
+		"term.h": "c",
+		"libft.h": "c",
+		"dirent.h": "c",
+		"errno.h": "c"
 	},
 	"C_Cpp.errorSquiggles": "disabled",
 	"cSpell.words": [

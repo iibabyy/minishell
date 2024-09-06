@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 22:20:39 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/06 02:37:23 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/06 18:51:49 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ char	*get_next_line(int fd)
 	str = ft_strdup(save[fd]);
 	buffer = ft_malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!str || !buffer)
-		return (ft_free(buffer), ft_free(str), NULL);
+		return (ft_free(buffer), ft_free(str),
+			malloc_failed("get_next_line"), NULL);
 	while (is_newline(str) == 0 && byte_read > 0)
 	{
 		byte_read = read(fd, buffer, BUFFER_SIZE);
@@ -41,8 +42,7 @@ char	*get_next_line(int fd)
 		if (!str)
 			return (ft_free(buffer), NULL);
 	}
-	after_line(str, save[fd]);
-	str = re_before_line(str);
+	(after_line(str, save[fd]), str = re_before_line(str));
 	return (ft_free(buffer), str);
 }
 
@@ -97,7 +97,7 @@ char	*re_before_line(char *all)
 		return (NULL);
 	dest = ft_malloc(sizeof(char) * (i + 1));
 	if (!dest)
-		return (ft_free(all), NULL);
+		return (ft_free(all), malloc_failed("re_before_line"), NULL);
 	test = i;
 	while (i >= 0)
 	{
