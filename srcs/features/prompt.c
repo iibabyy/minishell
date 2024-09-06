@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 00:42:23 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/06 02:41:27 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/06 02:42:57 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,13 @@ void	close_and_re(int fd);
 
 char	*minishell_prompt()
 {
-	static char	*prompt = NULL;
+	char	*prompt = NULL;
 	char	*pwd = NULL;
 
 	if (pwd == NULL)
 		pwd = ft_getenv("PWD");
 	if (pwd == NULL)
 		return (ft_strdup(MINISHELL_PROMPT));
-	if (prompt != NULL && ft_strcmp(pwd, ft_getenv("PWD")) == 0)
-		return (prompt);
 	prompt = ft_strdup("\001\033[0;32m\002➜  \001\033[0;36m\033[1m\002");
 	if (prompt == NULL)
 		return (ft_strdup(MINISHELL_PROMPT));
