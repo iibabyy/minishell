@@ -1,24 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_close_fd.c                                      :+:      :+:    :+:   */
+/*   error_code.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/12 21:22:37 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/06 17:08:08 by ibaby            ###   ########.fr       */
+/*   Created: 2024/09/06 16:56:06 by ibaby             #+#    #+#             */
+/*   Updated: 2024/09/06 16:59:03 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include "../../includes/libft.h"
-#include "../../includes/error.h"
+#include "errors_utils.h"
 
-void	ft_close_fd(int *fd)
+int	errcode(int errcode, bool setter)
 {
-	if (*fd == -1)
-		return ;
-	if (close(*fd) == -1)
-		error_log("ft_close_fd: close() failed:", true);
-	*fd = -1;
+	static int	code = 0;
+
+	if (setter == false)
+		return (code);
+	else
+		return (code = errcode);
 }

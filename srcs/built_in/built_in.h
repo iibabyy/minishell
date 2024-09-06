@@ -6,14 +6,14 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 15:18:43 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/04 02:36:51 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/06 16:48:35 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILT_IN_H
 # define BUILT_IN_H
 
-# include "../../includes//minishell.h"
+# include "../../includes/minishell.h"
 
 t_env_var	*create_env(char **env);
 t_env_var	*new_env_var(char *variable, char *value);

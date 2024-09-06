@@ -60,7 +60,6 @@ FILES =	srcs/minishell/minishell.c			\
 		srcs/built_in/env.c					\
 		srcs/built_in/export.c				\
 		srcs/built_in/unset.c				\
-		srcs/built_in/alias.c				\
 		srcs/features/history.c				\
 		srcs/features/prompt.c				\
 		srcs/exec/signal_utils.c			\

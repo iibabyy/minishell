@@ -6,40 +6,17 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 15:08:49 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/06 15:26:20 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/06 16:52:17 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef	MINISHELL_H
 #define MINISHELL_H
 
-# include <stdlib.h>
-# include <stdio.h>
-# include <unistd.h>
-# include <fcntl.h>
-# include <stdbool.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include <sys/types.h>
-# include <sys/wait.h>
-# include <sys/time.h>
-# include <sys/resource.h>
-# include <curses.h>
-# include <term.h>
-# include <dirent.h>
-
-#include "structs.h"
-#include "libft.h"
-#include "garbage_collector.h"
-#include "error.h"
-
-extern volatile sig_atomic_t g_signal;
+# include "includes.h"
 
 // minishell
 
-# define MINISHELL_PROMPT "\033[0;32m➜  \033[0;36mminishell \033[0;33m✗\033[0m "
-
-void		minishell(void);
 int			init_minishell(char **env);
 char		*minishell_prompt(void);
 int			exec(t_command *command);
@@ -60,12 +37,11 @@ char		*get_input(char *end_of_file, char *prompt, bool quotes);
 // parsing
 
 t_command	*parse(char	*input);
-int			open_redirections(t_command	*command);
 t_command	*last_command(t_command *current);
+int			open_redirections(t_command	*command);
 
 // built-ins
 
-int			alias(char **arg);
 int			env(char **args);
 char		**env_tab(void);
 char		*ft_getenv(char *var);
