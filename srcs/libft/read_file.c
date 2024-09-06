@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:12:18 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/04 22:12:24 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/06 02:37:48 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ char	*read_file(int fd)
 	temp = get_next_line(fd);
 	if (temp == NULL)
 		return (NULL);
+	str = NULL;
 	while (temp != NULL)
 	{
 		str = ft_re_strjoin(str, temp);

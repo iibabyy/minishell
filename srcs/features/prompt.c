@@ -6,13 +6,13 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 00:42:23 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/06 01:06:07 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/06 02:20:37 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "features.h"
 
-//\033[0;33m✗
+void	close_and_re(int fd);
 
 char	*minishell_prompt()
 {
@@ -70,6 +70,7 @@ char	*add_git_head(char *prompt)
 	if (fd == -1)
 		return (prompt);
 	temp = get_next_line(fd);
+	close_and_re(fd);
 	if (ft_strrchr(temp, '\n') != NULL)
 		*ft_strrchr(temp, '\n') = '\0';
 	if (temp == NULL)
@@ -85,4 +86,10 @@ char	*add_git_head(char *prompt)
 	if (temp == NULL)
 		return (ft_free(git), prompt);
 	return (ft_free(prompt), ft_free(git), temp);
+}
+
+void	close_and_re(int fd)
+{
+	close(fd);
+	lseek(fd, 0, SEEK_SET);
 }
