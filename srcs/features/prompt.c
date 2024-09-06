@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 00:42:23 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/06 02:20:37 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/06 02:41:27 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	close_and_re(int fd);
 char	*minishell_prompt()
 {
 	static char	*prompt = NULL;
-	static char	*pwd = NULL;
+	char	*pwd = NULL;
 
 	if (pwd == NULL)
 		pwd = ft_getenv("PWD");
