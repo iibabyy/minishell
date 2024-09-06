@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mdembele <mdembele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 15:41:37 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/06 15:49:04 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/06 18:41:30 by mdembele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ char	*get_line(int last_status)
 	char	*str;
 
 	str = readline(minishell_prompt());
+	if (g_signal != 0)
+		return (NULL);
 	if (str == NULL)
 	{
 		destroy_garbage(NULL);

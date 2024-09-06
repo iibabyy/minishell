@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mdembele <mdembele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:08:33 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/04 17:27:26 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/06 17:24:01 by mdembele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,6 @@ int	open_file(t_redirection *redirection)
 	int	fd;
 
 	fd = open(redirection->file->content, redirection->o_flags, 0644);
-	printf("num de l outfile %d\n", fd);
 	if (fd == -1)
 		return (perror(redirection->file->content), EXIT_FAILURE);
 	type = redirection->type;

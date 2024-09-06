@@ -35,15 +35,26 @@ void init_data(t_exec_data *data, t_command *command)
         data->command_path = create_command_path(data , command);
 }
 
+bool is_built_in(t_command *node)
+{
+    if(ft_strcmp("echo", node->command[0]) == 0)
+        return (true);
+    if(ft_strcmp("cd", node->command[0]) == 0)
+        return (true);
+    if(ft_strcmp("pwd", node->command[0]) == 0)
+        return (true);
+    if(ft_strcmp("unset", node->command[0]) == 0)
+        return (true);
+    if(ft_strcmp("exit", node->command[0]) == 0)
+        return (true);
+    return(false);
+}
+
 int   exec_single_command(t_command *command, t_exec_data *exec)
 {
     pid_t pid;
     int status = 0;
 
-    if (command->previous == NULL)
-        signal(SIGINT, &sigint_child);
-    else
-        signal(SIGINT, &null_sigint);
     pid = fork();
     if (pid == 0)
     {

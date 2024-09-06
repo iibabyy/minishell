@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mdembele <mdembele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:10:49 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/06 15:33:42 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/06 20:23:35 by mdembele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ t_command	*parse(char	*input)
 		return (destroy_parsing(&data), NULL);
 	if (replace_aliases(last_command(data.command)) == EXIT_FAILURE)
 		return (destroy_parsing(&data), NULL);
+	fprintf(stderr, "salut\n");
 	return (last_command(data.command));
 }
 
