@@ -6,13 +6,11 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 00:42:23 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/07 21:49:53 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/07 22:11:48 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "features.h"
-
-//	
 
 char	*minishell_prompt()
 {
@@ -68,71 +66,34 @@ char	*add_git_head(char *prompt)
 	char	*git;
 	char	*temp;
 	
-	temp = git_line("HEAD");
+	temp = git_head();
 	if (temp == NULL)
 		return (prompt);
-	if (ft_strrchr(temp, '\n') != NULL)
-		*ft_strrchr(temp, '\n') = '\0';
-	if (ft_strrchr(temp, '/') == NULL)
-		return (ft_free(temp), prompt);
 	git = multi_strjoin(3, "\001\033[34;1m\002git:(\001\033[31;1m\002",
-			ft_strrchr(temp, '/') + 1, "\001\033[34;1m\002) ");
+			temp, "\001\033[34;1m\002) ");
+	ft_free(temp);
 	if (git == NULL)
 		return (prompt);
 	temp = ft_strjoin(prompt, git);
+	ft_free(git);
 	if (temp == NULL)
-		return (ft_free(git), prompt);
+		return (prompt);
 	temp = add_git_delay(temp);
-	return (ft_free(prompt), ft_free(git), temp);
+	return (ft_free(prompt), temp);
 }
 
 char	*add_git_delay(char *prompt)
 {
-	char	*git;
-	char	*temp;
-	
-	git = git_line("refs/heads/main");
-	if (ft_strrchr(git, '\n') != NULL)
-		*ft_strrchr(git, '\n') = '\0';
-	temp = git_line("refs/remotes/origin/main");
-	if (temp == NULL || git == NULL)
-		return (prompt);
-	if (ft_strcmp(git, temp) == 0)
-		return (prompt);
-	(ft_free(git), ft_free(temp));
-	git = ft_strjoin(prompt, "\001\033[33;1m\002✗");
-	if (git == NULL)
-		return (prompt);
-	return (ft_free(prompt), git);
-}
+	char	*head;
 
-char	*git_line(char *git_file)
-{
-	char	*path;
-	char	*temp;
-	int		i;
-
-	i = -1;
-	path = ft_strdup(".git/");
-	if (path == NULL)
+	head = git_head();
+	if (head == NULL)
 		return (NULL);
-	while (access(path, X_OK) != 0)
-	{
-		if (++i > 20)
-			return (NULL);
-		temp = path;
-		path = ft_strjoin("../", path);
-		ft_free(temp);
-		if (path == NULL)
-			return (NULL);
-	}
-	path = ft_strjoin(".git/", git_file);
-	if (path == NULL)
-		return (NULL);
-	i = open(path, O_RDONLY);
-	if (i == -1)
-		return (ft_free(path), NULL);
-	temp = get_next_line(i);
-	close_and_re(i);
-	return (ft_free(path), temp);
+	if (is_delayed(head) != true)
+		return (ft_free(head), prompt);
+	ft_free(head);
+	head = ft_strjoin(prompt, "\001\033[33;1m\002✗");
+	if (head == NULL)
+		return (prompt);
+	return (ft_free(prompt), head);
 }
