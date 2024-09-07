@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:25:18 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/07 23:18:56 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/07 23:48:14 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # define MAX_ALIAS 128
 # define HISTORY_FILE "/tmp/.history"
 # define ALIAS_USAGE "alias: usage: abc=xyz"
-# define MINISHELL_PROMPT "\001\033[0;36m\002minishell \001\033[0m\002 "
+# define MINISHELL_PROMPT "\001\033[36;1m\002minishell \001\033[0m\002 "
 
 char	***get_alias(char ***init_alias);
 int		check_if_alias(t_command *command, char ***aliases);
@@ -41,6 +41,6 @@ char	*git_head(void);
 int	is_delayed(char *head);
 char	*git_remote_ref(char *head);
 char	*git_local_ref(char *head);
-char	*dir_name(void);
+char	*add_arrow(void);
 
 #endif

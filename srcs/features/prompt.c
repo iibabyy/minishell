@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 00:42:23 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/07 23:27:30 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/07 23:48:50 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*minishell_prompt()
 		pwd = ft_getenv("PWD");
 	if (pwd == NULL)
 		return (ft_strdup(MINISHELL_PROMPT));
-	prompt = ft_strdup("\001\033[32;5m\002➜  \033[0m\001\033[36;1m\002");
+	prompt = add_arrow();
 	if (prompt == NULL)
 		return (ft_strdup(MINISHELL_PROMPT));
 	prompt = add_dir_name(prompt);
@@ -39,7 +39,12 @@ char	*add_dir_name(char *prompt)
 
 	temp = ft_getcwd();
 	if (temp == NULL || ft_strchr(temp, '/') == NULL)
-		return (ft_strdup("minishell "));
+	{
+		dir = ft_strjoin(prompt, "minishell ");
+		if (dir == NULL)
+			return (prompt);
+		return (ft_free(prompt), dir);
+	}
 	if (ft_getenv("HOME") != NULL && ft_strcmp(ft_getenv("HOME"), temp) == 0)
 		dir = ft_strdup("~ ");
 	else if (*(ft_strrchr(temp, '/') + 1) == '\0')
@@ -47,14 +52,12 @@ char	*add_dir_name(char *prompt)
 	else
 		dir = ft_strjoin(ft_strrchr(temp, '/') + 1, " ");
 	if (dir == NULL)
-		return (NULL);
+		return (prompt);
+	temp = ft_strjoin(prompt, dir);
+	ft_free(dir);
 	if (temp == NULL)
 		return (prompt);
-	dir = ft_strjoin(prompt, temp);
-	ft_free(temp);
-	if (dir == NULL)
-		return (prompt);
-	return (ft_free(prompt), dir);
+	return (ft_free(prompt), temp);
 }
 
 char	*add_git_head(char *prompt)
@@ -94,11 +97,17 @@ char	*add_git_delay(char *prompt)
 	return (ft_free(prompt), head);
 }
 
-char	*dir_name(void)
+char	*add_arrow(void)
 {
-	char	*dir;
-	char	*pwd;
+	char	*color;
+	char	*arrow;
 
-	
-	return (dir);
+	if (get_code(0, false) == EXIT_SUCCESS)
+		color = "\001\033[32;5m\002";
+	else
+		color = "\001\033[31;5m\002";
+	arrow = ft_strjoin(color, "➜  \001\033[36;1m\002");
+	if (arrow == NULL)
+		return (NULL);
+	return (arrow);
 }
