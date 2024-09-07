@@ -56,7 +56,7 @@ int   exec_single_command(t_command *command, t_exec_data *exec)
 {
     pid_t pid;
     int status = 0;
-
+    char **cd_args;
     pid = fork();
     if (pid == 0)
     {
@@ -69,11 +69,24 @@ int   exec_single_command(t_command *command, t_exec_data *exec)
         if (command->command == NULL || command->command[0] == NULL)
 			exit (0);
 		execve(exec->command_path, command->command, env_tab());
+        if(access(command->command[0], X_OK) == 0 && ft_strlen_2d(command->command) == 1 && command->previous == NULL )
+        {
+            if (chdir(command->command[0]) != -1)
+                exit(250);
+        }
         ft_putstr_fd("minishell : command not found : ", 2);
         ft_putendl_fd(command->command[0], 2);
         exit(127);
     }
     else
       waitpid(pid, &status, 0);
+    if(WEXITSTATUS(status) == 250)
+    {
+        cd_args = malloc(sizeof(char *) * 2);
+        cd_args[0] = ft_strdup("cd");
+        cd_args[1] = ft_strdup(command->command[0]);
+        cd_args[2] = NULL;
+        return(cd(cd_args));
+    }
     return (WEXITSTATUS(status));
 }
