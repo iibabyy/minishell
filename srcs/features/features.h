@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:25:18 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/07 20:13:04 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/07 21:47:33 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ char	*get_last_history(char *str, bool set);
 void	add_and_save(char *str);
 char	*add_git_head(char *prompt);
 char	*add_dir_name(char *prompt);
-char	*git_path();
+char	*git_line(char *git_file);
 void	close_and_re(int fd);
+char	*add_git_delay(char *prompt);
 
 #endif

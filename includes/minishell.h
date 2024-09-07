@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 15:08:49 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/07 19:17:47 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/07 20:45:10 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ void		init_env(char **env_arg);
 int			unset(char **args);
 int			export(char	**args);
 int 		cd(char	**args);
+int			pwd(char **arg);
+char		*ft_getcwd(void);
 
 // signals
 

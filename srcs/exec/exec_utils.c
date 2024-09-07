@@ -47,8 +47,8 @@ bool is_built_in(t_command *node)
         return (true);
     if(ft_strcmp("unset", node->command[0]) == 0)
         return (true);
-    if(ft_strcmp("exit", node->command[0]) == 0)
-        return (true);
+    // if(ft_strcmp("exit", node->command[0]) == 0)
+    //     return (true);
     return(false);
 }
 
