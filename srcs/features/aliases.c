@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:06:03 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/07 23:59:19 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/08 00:17:25 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,14 @@ int	replace_aliases(t_command *last_command)
 int	check_if_alias(t_command *command, char ***aliases)
 {
 	int		i;
-	int		type;
 	char	**command_arr;
 
 	i = -1;
-	type = command->type;
 	command_arr = command->command;
+	if (command->type != COMMAND || command_arr[0] == NULL)
+		return (EXIT_SUCCESS);
 	while (aliases[++i] != NULL)
 	{
-		if (type != COMMAND || command_arr[0] == NULL)
-			continue ;
 		if (ft_strcmp(aliases[i][0], command_arr[0]) == 0)
 		{
 			command->command = insert_alias(command_arr, aliases[i]);

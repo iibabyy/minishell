@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:33:50 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/06 20:29:31 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/08 00:37:33 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	**replace_dollars(char *input)
 
 	i = 0;
 	y = 0;
-	array = ft_malloc(sizeof(char *) * (count_char(input, '$') * 10));
+	array = ft_malloc(sizeof(char *) * (count_char(input, '$') * 2 + 2));
 	if (array == NULL)
 		return (malloc_failed("replace_dollars"), NULL);
 	while (input[i] != '\0')
@@ -63,12 +63,10 @@ char	*env_to_string(char	*str, int *dollar_index)
 	int		start;
 
 	start = ++*dollar_index;
+	if (str[*dollar_index] == '?')
+		return (++*dollar_index, ft_itoa(get_code(0, false)));
 	if (ft_isalpha(str[*dollar_index]) == false && str[*dollar_index] != '_')
-	{
-		++*dollar_index;
-		var = ft_strdup("");
-		return (var);
-	}
+		return (NULL);
 	while (ft_isalnum(str[*dollar_index]) == true || str[*dollar_index] == '_')
 		++*dollar_index;
 	var = ft_substr(str, start, *dollar_index - start);
@@ -77,7 +75,7 @@ char	*env_to_string(char	*str, int *dollar_index)
 	env = ft_getenv(var);
 	ft_free(var);
 	if (env == NULL)
-		return (ft_strdup(""));
+		return (NULL);
 	env = ft_strdup(env);
 	if (env == NULL)
 		return (error_log("env_to_string: ft_strdup failed", false), NULL);

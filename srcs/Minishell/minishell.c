@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:42:32 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/07 17:19:18 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/08 00:31:47 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ int	main(int ac, char **av, char **envp)
 			continue;
 		}
 		command = parse(str);
+		if (command == NULL)
+			continue ;
 		print_AST(command);
 		exec(command);
 		clear_garbage();
