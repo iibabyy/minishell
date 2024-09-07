@@ -28,7 +28,7 @@ char *get_path(char *command, char **paths)
             return(finalpath);
         i++;
     }
-    return(NULL);
+    return(command);
 }
 
 char *create_command_path(t_exec_data *data, t_command *command)
@@ -36,8 +36,6 @@ char *create_command_path(t_exec_data *data, t_command *command)
         data->path_to_join = ft_split(getenv("PATH"), ':');
         if (data->path_to_join == NULL)
         {
-           if (access(command->command[0], X_OK) == 1)
-                print_err_and_exit("Command not found", 1, false);
            data->command_path = ft_strdup(command->command[0]);
            return (data->command_path);
         }
