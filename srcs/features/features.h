@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:25:18 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/07 23:48:14 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/07 23:59:26 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "../../includes/minishell.h"
 
-# define MSHRC ".mshrc"
+# define ALIAS ".alias"
 # define MAX_ALIAS 128
 # define HISTORY_FILE "/tmp/.history"
 # define ALIAS_USAGE "alias: usage: abc=xyz"

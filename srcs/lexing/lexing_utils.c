@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:15:07 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/07 15:35:22 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/08 00:05:28 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ int	parenthesis_size(char *input, int *i)
 		++*i;
 		++j;
 	}
+	if (j == 0)
+		return (parse_err(TOKEN_ERR, ")"), -1);
 	++*i;
 	return (j);
 }

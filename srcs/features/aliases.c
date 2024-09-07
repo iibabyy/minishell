@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:06:03 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/07 16:41:30 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/07 23:59:19 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	init_aliases(void)
 	char	***aliases;
 	int		mshrc_fd;
 
-	mshrc_fd = open(MSHRC, O_RDONLY);
+	mshrc_fd = open(ALIAS, O_RDONLY);
 	if (mshrc_fd == -1)
 		return (error_log("init aliases:", true), EXIT_FAILURE);
 	aliases = search_aliases(mshrc_fd);
