@@ -6,21 +6,40 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 22:44:22 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/04 19:15:21 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/08 01:39:47 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexing.h"
 
+char	*replace_wave(char *input)
+{
+	char	*res;
+	char	*home;
+	int		i;
+	int		y;
 
-
-// char	*quote_prompt(char quote)
-// {
-// 	if (quote == '"')
-// 		return (ft_strdup("dquote> ")); 
-// 	else if (quote == '\'')
-// 		return (ft_srd)
-// }
+	home = ft_getenv("HOME");
+	if (count_char(input, '~') == 0 || home == NULL)
+		return (input);
+	res = ft_malloc(sizeof(char) * (ft_strlen(input)+ (count_char(input, '~')
+			* ft_strlen(home))));
+	if (res == NULL)
+		return (input);
+	i = -1;
+	y = 0;
+	while (input[++i] != '\0')
+	{
+		if (input[i] == '~')
+		{
+			ft_memcpy(res + y, home, sizeof(char) * ft_strlen(home));
+			y += ft_strlen(home);
+		}
+		else
+			res[y++] = input[i];
+	}
+	return (res[y] = '\0', res);
+}
 
 int	char_type(char *str, int index)
 {
