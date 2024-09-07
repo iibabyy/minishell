@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:35:02 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/03 22:18:14 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/06 20:13:04 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include "../srcs/libft/get_next_line.h"
 # include "garbage_collector.h"
 # include "structs.h"
+# include "error.h"
 
 //	AMAZING functions 
 

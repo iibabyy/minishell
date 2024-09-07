@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:05:52 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/06 17:14:03 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/06 18:53:45 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,4 +74,15 @@ void	init_error_log(void)
 		return ;
 	write (fd, "\0", 1);
 	close(fd);
+}
+
+void	malloc_failed(char *function)
+{
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
+	if (function != NULL)
+	{
+		ft_putstr_fd(function, STDERR_FILENO);
+		ft_putstr_fd("(): ", STDERR_FILENO);
+	}
+	perror("Malloc failed");
 }

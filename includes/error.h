@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 15:17:53 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/06 17:15:15 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/06 18:35:11 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,6 @@ void	destroy_redirections(t_redirection *redirection);
 void	destroy_parsing(t_parsing *data);
 void	init_error_log(void);
 void	error_log(char *error, bool erno);
+void	malloc_failed(char *function);
 
 #endif

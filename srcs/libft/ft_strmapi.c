@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 20:11:21 by ibaby             #+#    #+#             */
-/*   Updated: 2024/07/28 23:53:39 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/06 18:50:29 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 	i = 0;
 	str = ft_malloc(sizeof(char) * (ft_strlen((char *)s) + 1));
 	if (!str)
-		return (NULL);
+		return (malloc_failed("ft_strmapi"), NULL);
 	while (i < ft_strlen((char *)s))
 	{
 		str[i] = f(i, s[i]);

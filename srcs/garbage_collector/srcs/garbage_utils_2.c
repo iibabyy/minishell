@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:26:49 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/04 22:26:50 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/06 23:15:43 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,14 @@ int	is_destroyed(bool setter, bool value)
 	if (setter == true)
 		is_destroy = value;
 	return (is_destroy);
+}
+
+t_garbage	*get_garbage(t_garbage *garb, bool setter)
+{
+	static garbage	*garbage = NULL;
+
+	if (setter == READER)
+		return (garbage);
+	garbage = garb;
+	return (NULL);
 }

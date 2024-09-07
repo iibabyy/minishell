@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:06:03 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/06 17:01:12 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/06 21:30:28 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,9 @@ int	init_aliases(void)
 		return (error_log("init aliases:", true), EXIT_FAILURE);
 	aliases = search_aliases(mshrc_fd);
 	if (aliases == NULL)
-		return (EXIT_FAILURE);
+		return (close(mshrc_fd), EXIT_FAILURE);
 	get_alias(aliases);
-	return (EXIT_SUCCESS);
+	return (close(mshrc_fd), EXIT_SUCCESS);
 }
 
 char	***search_aliases(int fd)
@@ -115,7 +115,7 @@ char	**line_to_alias(char *line)
 		return (error_log(ALIAS_USAGE, false), NULL);
 	alias = ft_malloc(sizeof(char *) * (count_char(line + i + 2, ' ') + 3));
 	if (alias == NULL)
-		return (NULL);
+		return (malloc_failed("line_to_alias"), NULL);
 	alias[0] = ft_substr(line, start, i - start);
 	if (alias[0] == NULL)
 		return (ft_free(alias), NULL);

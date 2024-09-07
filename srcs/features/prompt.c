@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 00:42:23 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/06 14:36:00 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/06 23:02:06 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void	close_and_re(int fd);
 
-//\001\033[33;1m\002✗
+//	\001\033[33;1m\002✗
+//
 
 char	*minishell_prompt()
 {
@@ -25,7 +26,7 @@ char	*minishell_prompt()
 		pwd = ft_getenv("PWD");
 	if (pwd == NULL)
 		return (ft_strdup(MINISHELL_PROMPT));
-	prompt = ft_strdup("\001\033[0;32m\002➜  \001\033[0;36m\033[1m\002");
+	prompt = ft_strdup("\001\033[32;5m\002➜\033[0m  \001\033[36;1m\002");
 	if (prompt == NULL)
 		return (ft_strdup(MINISHELL_PROMPT));
 	prompt = add_dir_name(prompt);
@@ -77,8 +78,8 @@ char	*add_git_head(char *prompt)
 		return (prompt);
 	if (ft_strrchr(temp, '/') == NULL)
 		return (ft_free(temp), prompt);
-	git = multi_strjoin(3, "\001\033[0;34m\033[1m\002git:(\001\033[0;31m\033[1m\002",
-			ft_strrchr(temp, '/') + 1, "\001\033[0;34m\033[1m\002) ");
+	git = multi_strjoin(3, "\001\033[34;1m\002git:(\001\033[31;1m\002",
+			ft_strrchr(temp, '/') + 1, "\001\033[34;1m\002) ");
 	ft_free(temp);
 	if (git == NULL)
 		return (prompt);

@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:15:07 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/05 23:42:31 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/06 22:38:09 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,10 @@ int	quotes_size(char **input, int start, char eof)
 int	parenthesis_size(char *input, int *i)
 {
 	int	parenthesis;
+	int	j;
 
 	parenthesis = 1;
+	j = 0;
 	while (1)
 	{
 		if (input[*i] == '(')
@@ -83,9 +85,10 @@ int	parenthesis_size(char *input, int *i)
 		if (parenthesis == 0 && input[*i] == ')')
 			break ;
 		++*i;
+		++j;
 	}
 	++*i;
-	return (*i - 2);
+	return (j);
 }
 
 t_token	*last_token(t_token *token)

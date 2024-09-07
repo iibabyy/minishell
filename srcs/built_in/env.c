@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 15:18:15 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/26 17:23:27 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/06 18:54:05 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	init_env(char **env_arg)
 		return ;
 	env = ft_malloc(sizeof(t_env) * 1);
 	if (env == NULL)
-		return ;
+		return (malloc_failed("init_env"));
 	env->first = create_env(env_arg);
 	if (env->first == NULL)
 		return (ft_free(env));
@@ -81,7 +81,7 @@ t_env_var	*new_env_var(char *variable, char *value)
 
 	new = ft_malloc(sizeof(t_env_var) * 1);
 	if (new == NULL)
-		return (NULL);
+		return (malloc_failed("new_env_var"), NULL);
 	if (variable != NULL)
 	{
 		new->variable = ft_strdup(variable);

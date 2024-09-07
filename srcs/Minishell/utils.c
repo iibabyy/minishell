@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdembele <mdembele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 15:41:37 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/06 21:30:29 by mdembele         ###   ########.fr       */
+/*   Updated: 2024/09/06 22:39:25 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ int	exec(t_command *command)
 	if (command == NULL)
 		return (0);
 	// print_AST(command);
-	open_pipes_redirect(command);
 	ft_memset(&data, 0, sizeof(t_exec_data));
 	data.pid = ft_calloc (sizeof(int) , 10);
 	status = exec_command(command, &data);

@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:34:20 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/03 20:43:27 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/06 18:50:19 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*ft_strjoin(const char *s1, const char *s2)
 	len = ft_strlen((char *)s1) + ft_strlen((char *)s2);
 	str = ft_malloc(sizeof(char) * (len + 5));
 	if (!str)
-		return (NULL);
+		return (malloc_failed("ft_strjoin"), NULL);
 	ft_strlcpy(str, s1, ft_strlen(s1) + 1);
 	ft_strlcat(str, s2, len + 1);
 	return (str);

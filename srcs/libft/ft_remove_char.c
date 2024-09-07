@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 07:17:02 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/04 22:12:42 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/06 18:43:00 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*ft_remove_char(char *str, char c)
 		return (NULL);
 	new = ft_malloc(sizeof(char) * (size + 1));
 	if (new == NULL)
-		return (NULL);
+		return (malloc_failed("ft_remove_char"), NULL);
 	i = -1;
 	j = -1;
 	while (str[++i])
