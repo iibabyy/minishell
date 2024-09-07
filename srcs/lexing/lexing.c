@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:15:43 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/06 22:38:46 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/07 15:35:50 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,11 @@ t_token	*input_to_tokens(char *input)
 		while (input[i] == ' ')
 			++i;
 		if (word_to_token(&input, &i, &tokens) == EXIT_FAILURE)
-			return (add_history(input), NULL);
+			return (ft_addhistory(input), NULL);
 		while (input[i] == ' ')
 			++i;
 		if (meta_to_token(&input, &i, &tokens) == EXIT_FAILURE)
-			return (add_history(input), ft_lstclear(&tokens, ft_free), NULL);
+			return (ft_addhistory(input), ft_lstclear(&tokens, ft_free), NULL);
 	}
 	ft_addhistory(input);
 	return (tokens);
@@ -53,7 +53,8 @@ int	word_to_token(char **input, int *i, t_token **tokens)
 	{
 		return(join_parenthesis(*input, i, tokens));
 	}
-	while (is_meta_char(*input, *i) == false && (*input)[*i] != '\0')
+	while (is_meta_char(*input, *i) == false &&
+			is_parenthesis(*input, *i) == false && (*input)[*i] != '\0')
 	{
 		word = join_non_meta_char(*input, word, i);
 		if (word == NULL && is_quotes((*input)[*i]) == false)
@@ -62,6 +63,8 @@ int	word_to_token(char **input, int *i, t_token **tokens)
 		if (word == NULL)
 			return (EXIT_FAILURE);
 	}
+	if (word == NULL)
+		return (EXIT_SUCCESS);
 	return (new_word_token(tokens, word));
 }
 

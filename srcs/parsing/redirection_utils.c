@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:08:00 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/04 17:02:31 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/07 17:10:39 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ t_redirection	*init_others_redirection(t_parsing *data, int type, int o_flags)
 	redirection->command = data->command;
 	redirection->token = data->curr_token;
 	data->curr_token = data->curr_token->next;
+	if (data->curr_token->type == PARENTHESIS)
+		return (parse_err(TOKEN_ERR, "parenthesis"), ft_free(redirection), NULL);
 	redirection->file = data->curr_token;
 	return (redirection);
 }

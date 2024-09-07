@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdembele <mdembele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:08:33 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/06 17:24:01 by mdembele         ###   ########.fr       */
+/*   Updated: 2024/09/07 15:54:36 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ int	open_redirections(t_command	*command)
 				return (destroy_redirections(command->redirections),
 					EXIT_FAILURE);
 		}
+		else
+			redirection->command->infile = redirection->here_doc->pipe[0];
 		redirection = redirection->next;
 	}
 	return (EXIT_SUCCESS);
@@ -110,5 +112,6 @@ int	open_file(t_redirection *redirection)
 	if (is_standart_fd(*target_cmd_fd) == false)
 		ft_close_fd(target_cmd_fd);
 	*target_cmd_fd = fd;
+	printf("fd === %i\n", fd);
 	return (EXIT_SUCCESS);
 }

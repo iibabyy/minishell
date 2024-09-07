@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:42:32 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/06 20:34:27 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/07 17:19:18 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,15 @@ int	main(int ac, char **av, char **envp)
 {
 	char		*str;
 	t_command	*command;
-	int			last_status;
 
 	(void)av;
 	if (ac != 1)
 		return (EXIT_FAILURE);
-	last_status = 0;
 	init_minishell(envp);
 	while (1)
 	{
 		set_parent_signals();
-		str = get_line(last_status);
+		str = get_line();
 		if (g_signal != 0)
 		{
 			g_signal = 0;
@@ -36,7 +34,8 @@ int	main(int ac, char **av, char **envp)
 		}
 		command = parse(str);
 		print_AST(command);
-		last_status = exec(command);
+		exec(command);
+		clear_garbage();
 	}
 	return (0);
 }

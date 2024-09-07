@@ -62,8 +62,10 @@ int   exec_single_command(t_command *command, t_exec_data *exec)
     {
         set_child_signals();
 		init_data(exec, command);
-        ft_dup2(&command->infile, STDIN_FILENO);
-        ft_dup2(&command->outfile, STDOUT_FILENO);
+        if (open_redirections(command) == EXIT_FAILURE)
+            exit(EXIT_FAILURE);
+        dup2(command->infile, STDIN_FILENO);
+        dup2(command->outfile, STDOUT_FILENO);
         if (command->command == NULL || command->command[0] == NULL)
 			exit (0);
 		execve(exec->command_path, command->command, env_tab());

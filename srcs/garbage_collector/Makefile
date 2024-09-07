@@ -14,6 +14,7 @@ END= 	$(shell tput -Txterm sgr0)
 SRCS =	srcs/garbage_collector.c	\
 		srcs/garbage_utils_1.c		\
 		srcs/garbage_utils_2.c		\
+		srcs/garbage_collector_2.c	\
 
 #	Loading bar	#
 

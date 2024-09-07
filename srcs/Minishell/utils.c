@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 15:41:37 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/07 15:15:48 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/07 17:40:29 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	init_minishell(char **env)
 	return (EXIT_SUCCESS);
 }
 
-char	*get_line(int last_status)
+char	*get_line(void)
 {
 	char	*str;
 
@@ -31,20 +31,13 @@ char	*get_line(int last_status)
 		return (NULL);
 	if (str == NULL)
 	{
-		destroy_garbage(NULL);
+		destroy_garbage();
 		printf("exit\n");
-		exit(last_status);
+		exit(get_code(0, GET));
 	}
 	if (is_only_space(str) == true)
 		return (free(str), NULL);
-	if (ft_strcmp(str, "export") == 0)
-		return (free(str), export(ft_split(str, ' ')), NULL);
-	else if (ft_strcmp(str, "unset") == 0)
-		return (free(str), unset(ft_split(str, ' ')), NULL);
-	else if (ft_strcmp(str, "env") == 0)
-		return (free(str), env(ft_split(str, ' ')), NULL);
-	else
-		return (str);
+	return (str);
 }
 
 int	exec(t_command *command)

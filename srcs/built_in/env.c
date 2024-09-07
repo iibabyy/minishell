@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 15:18:15 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/06 18:54:05 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/07 17:22:54 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	init_env(char **env_arg)
 	env = ft_malloc(sizeof(t_env) * 1);
 	if (env == NULL)
 		return (malloc_failed("init_env"));
+	lock(env);
 	env->first = create_env(env_arg);
 	if (env->first == NULL)
 		return (ft_free(env));
@@ -67,8 +68,6 @@ t_env_var	*create_env(char **env)
 		temp->next = new_env_var(variable_name(env[i]), variable_value(env[i]));
 		if (temp->next == NULL)
 			return (NULL);
-		if (env[i] == NULL)
-			break ;
 		temp = temp->next;
 	}
 	temp->next = NULL;
@@ -87,6 +86,7 @@ t_env_var	*new_env_var(char *variable, char *value)
 		new->variable = ft_strdup(variable);
 		if (new->variable == NULL)
 			return (ft_free(new), NULL);
+		lock(new->variable);
 	}
 	else
 		new->variable = NULL;
@@ -95,11 +95,12 @@ t_env_var	*new_env_var(char *variable, char *value)
 		new->value = ft_strdup(value);
 		if (new->value == NULL)
 			return (ft_free(new->variable), ft_free(new), NULL);
+		lock(new->value);
 	}
 	else
 		new->value = NULL;
 	new->next = NULL;
-	return (new);
+	return (lock(new), new);
 }
 
 t_env_var	*get_env_struct(char *variable)

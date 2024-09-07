@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   history.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/07 15:23:33 by ibaby             #+#    #+#             */
+/*   Updated: 2024/09/07 17:15:51 by ibaby            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "features.h"
 
 void	ft_addhistory(char	*str)
@@ -12,7 +24,8 @@ void	ft_addhistory(char	*str)
 	add_and_save(str);
 	fd = open(HISTORY_FILE, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd == -1)
-		return (perror("add_history"), (void)close(fd));
+		return (error_log("add_history: open(history_file)", true),
+			(void)close(fd));
 	if (ft_putendl_fd(str, fd) == -1)
 		return ((void)close(fd));
 	ft_close_fd(&fd);
@@ -25,7 +38,8 @@ void	init_history(void)
 
 	fd = open(HISTORY_FILE, O_RDONLY);
 	if (fd == -1)
-		return (perror("init_history"), ft_close_fd(&fd));
+		return (error_log("init_history: open(history_file)", true),
+			ft_close_fd(&fd));
 	str = get_next_line(fd);
 	if (str == NULL)
 		return (ft_close_fd(&fd));
@@ -63,6 +77,6 @@ char	*get_last_history(char *str, bool set)
 	static char	*save = NULL;
 
 	if (set == true)
-		return (save = ft_strdup(str), NULL);
+		return (save = ft_strdup(str), lock(save), NULL);
 	return (save);
 }

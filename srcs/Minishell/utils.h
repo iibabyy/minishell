@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 15:36:24 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/06 15:48:55 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/07 15:56:36 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "../../includes/minishell.h"
 # include "../exec/exec.h"
 
-char		*get_line(int last_status);
+char		*get_line(void);
 int			exec(t_command *command);
 char		*type_to_str(int type);
 void		print_command(t_command *command);

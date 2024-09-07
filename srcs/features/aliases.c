@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:06:03 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/06 21:30:28 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/07 16:41:30 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,17 +76,18 @@ char	***search_aliases(int fd)
 	char	*line;
 	int		i;
 
-	i = -1;
+	i = 0;
 	aliases = ft_calloc(MAX_ALIAS + 1, sizeof(char **));
 	if (aliases == NULL)
 		return (NULL);
+	lock(aliases);
 	while (i < MAX_ALIAS)
 	{
 		line = get_next_line(fd);
 		if (line == NULL || *line == '\0')
 			break ;
 		if (ft_strncmp(line, "alias ", 6) == 0)
-			aliases[++i] = line_to_alias(line);
+			lock((aliases[i] = line_to_alias(line), aliases[i++]));
 		ft_free(line);
 		line = NULL;
 	}

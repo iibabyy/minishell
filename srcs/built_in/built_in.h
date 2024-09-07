@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 15:18:43 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/06 16:48:35 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/07 19:37:56 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,10 @@ void		destroy_var_node(t_env_var *node);
 void		delete_env_var(t_env *env, t_env_var *var);
 t_env_var	*get_env_struct(char *variable);
 char		*ft_getenv(char *var);
-int         change_directory(t_command *cd);
-int			parse_alias_arg(char *arg);
-char		***init_new_aliases(void);
-char		**create_alias(char *arg);
-void		add_back_aliases(char ***aliases, char **alias);
-
+int			cd_error(char *err, bool erno);
+int			create_and_add_env_var(char *variable, char *value);
+char		*ft_getcwd(void);
+int			update_pwd(char *old_pwd);
 int			parse_export_arg(char *arg);
 int			print_export_var(t_env *env);
 

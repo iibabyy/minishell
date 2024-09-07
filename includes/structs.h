@@ -13,8 +13,9 @@ typedef struct s_data
 typedef struct s_garb_node
 {
 	void				*address;
-	unsigned long		size;
 	struct s_garb_node	*next;
+	unsigned long		size;
+	bool				locked;
 }	t_garb_node;
 
 typedef struct s_garbage

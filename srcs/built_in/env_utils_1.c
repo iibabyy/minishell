@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_utils.c                                        :+:      :+:    :+:   */
+/*   env_utils_1.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 15:18:49 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/26 17:24:35 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/07 16:31:42 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,9 @@ char	*variable_name(char *env_line)
 	while (env_line[i] != '=')
 		++i;
 	name = ft_substr(env_line, 0, i);
+	if (name == NULL)
+		return (malloc_failed("env: variable_name"), NULL);
+	lock(name);
 	return (name);
 }
 

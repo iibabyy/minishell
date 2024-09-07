@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:24:38 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/06 18:41:11 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/07 17:03:59 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,15 +56,15 @@ char	**add_alias(char **array, char *line, int start)
 	alias_val = ft_split(line + start, ' ');
 	if (alias_val == NULL)
 		return (ft_free(alias_val),
-			error_log("add_alias: ft_split failed:", true), NULL);
+			malloc_failed("add_alias"), NULL);
 	i = 0;
 	while (alias_val[i] != NULL)
 	{
 		array[i + 1] = alias_val[i];
-		++i;
+		lock(array[++i]);
 	}
 	array[i + 1] = NULL;
-	return (ft_free(alias_val), array);
+	return (ft_free(alias_val), lock(array), lock(array[0]), array);
 }
 
 char	**insert_alias(char **command, char **alias)

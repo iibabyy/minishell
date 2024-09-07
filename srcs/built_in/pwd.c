@@ -3,25 +3,37 @@
 int	pwd(char **arg)
 {
 	char	*pwd;
-	int		size;
 
 	(void)arg;
+	pwd = ft_getcwd();
+	if (pwd == NULL)
+		return (EXIT_FAILURE);
+	printf("%s\n", pwd);
+	ft_free(pwd);
+	return (EXIT_FAILURE);
+}
+
+char	*ft_getcwd(void)
+{
+	char	*pwd;
+	int		size;
+
 	size = 128;
 	pwd = ft_malloc(sizeof(char) * size);
 	if (pwd == NULL)
-		return (malloc_failed("pwd"), EXIT_FAILURE);
+		return (malloc_failed("ft_getcwd"), NULL);
 	if (getcwd(pwd, size) != NULL)
-		return (printf("%s\n", pwd), EXIT_SUCCESS);
+		return (pwd);
 	while (errno == ERANGE)
 	{
 		ft_free(pwd);
 		size = size * 2;
 		pwd = ft_malloc(sizeof(char) * size);
 		if (pwd == NULL)
-			return (malloc_failed("pwd"), EXIT_FAILURE);
+			return (malloc_failed("ft_getcwd"), NULL);
 		if (getcwd(pwd, size) != NULL)
-			return (printf("%s\n", pwd), EXIT_SUCCESS);
+			return (pwd);
 	}
 	ft_free(pwd);
-	return (EXIT_FAILURE);
+	return (NULL);
 }

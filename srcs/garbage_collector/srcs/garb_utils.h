@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:25:56 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/06 23:19:11 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/07 16:38:42 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@
 t_garb_node	*find_in_garbage(void *address, t_garbage *garbage);
 int			new_garb_node(void *address, t_garbage *garbage,
 				unsigned long size);
-void		destroy_garbage_node(t_garb_node *node);
+void		destroy_garbage_node(t_garb_node *node, t_garbage *garbage);
 t_garbage	*init_garbage(void);
 void		print_err(char *error, bool erno);
 t_garb_node	*find_by_address(void *address, t_garbage *garbage);

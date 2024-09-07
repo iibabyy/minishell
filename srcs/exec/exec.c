@@ -175,7 +175,7 @@ int exec_builtin(t_command *node)
     if(ft_strcmp("unset", node->command[0]) == 0)
         status = unset(node->command);
     if(ft_strcmp("cd", node->command[0]) == 0)
-        change_directory(node);
+        cd(node->command);
     // if(ft_strcmp("pwd", node->command[0]) == 0)
     //     return (true);
     // if(ft_strcmp("ex", node->command[0]) == 0)
@@ -203,5 +203,6 @@ int exec_command(t_command *node, t_exec_data *data)
         status = exec_and(node, data);
     else if (node->type == PIPE)
         status = exec_pipe(node, data);
+    get_code(status, SET);
     return (status);
 }

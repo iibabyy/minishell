@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:10:53 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/06 20:29:35 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/07 15:46:54 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,10 @@ int	open_here_doc(t_redirection *redirection)
 {
 	t_here_doc	*here_doc;
 	char		*input;
-	int			*command_infile;
 
 	if (redirection->type != HERE_DOC)
 		return (parse_err(TOKEN_ERR, redirection->token->content),
 			EXIT_FAILURE);
-	command_infile = &redirection->command->infile;
 	here_doc = redirection->here_doc;
 	input = get_input(here_doc->end_of_file->content, HEREDOC_PROMPT, false);
 	if (g_signal != 0)
@@ -32,9 +30,6 @@ int	open_here_doc(t_redirection *redirection)
 		ft_free(input);
 	}
 	ft_close_fd(&here_doc->pipe[1]);
-	if (is_standart_fd(*command_infile) == false)
-		ft_close_fd(command_infile);
-	*command_infile = here_doc->pipe[0];
 	return (EXIT_SUCCESS);
 }
 	
@@ -111,21 +106,4 @@ t_redirection	*init_here_doc(t_parsing *data)
 	data->curr_token = data->curr_token->next;
 	redirection->here_doc->end_of_file = data->curr_token;
 	return (redirection);
-}
-
-char	*check_heredoc_sig(char *input, char *eof)
-{
-	if (g_signal != 0)
-	{
-		// printf("ok\n");
-		return (ft_free(input), NULL);
-	}
-	else
-	{	ft_putstr_fd
-			("minishell: warning: here-document delimited by end-of-file (wanted `",
-				STDERR_FILENO);
-		ft_putstr_fd(eof, STDERR_FILENO);
-		ft_putendl_fd("')", STDERR_FILENO);
-	}
-	return (input);
 }

@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:25:32 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/06 23:21:54 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/07 17:24:19 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,23 +70,17 @@ void	ft_free(void *address)
 {
 	static t_garbage	*garbage = NULL;
 	t_garb_node			*node_to_free;
-	t_garb_node			*temp;
 
 	if (address == NULL)
 		return ;
 	if (is_destroyed(READER, false) != false)
 		return ;
 	if (garbage == NULL)
-		return ((void)init_static(&garbage, address));
+		return (garbage = get_garbage(NULL, GETTER), (void)0);
 	node_to_free = find_by_address(address, garbage);
 	if (node_to_free == NULL)
 		return ;
-	temp = find_before_node(node_to_free, garbage);
-	if (temp == NULL)
-		garbage->first = node_to_free->next;
-	else
-		temp->next = node_to_free->next;
-	destroy_garbage_node(node_to_free);
+	destroy_garbage_node(node_to_free, garbage);
 	return ;
 }
 
@@ -95,7 +89,7 @@ by 'ft_malloc( )' but not freed by 'ft_free( )'.
 Use it with a NULL parameter.
 Make sure to use this function at the very end, because the others
 functions are disabled after that.*/
-void	destroy_garbage(t_garbage *garb)
+void	destroy_garbage(void)
 {
 	static t_garbage	*garbage = NULL;
 	t_garb_node			*node;
@@ -105,7 +99,7 @@ void	destroy_garbage(t_garbage *garb)
 		return ;
 	if (garbage == NULL)
 	{
-		init_static(&garbage, garb);
+		get_garbage(NULL, GETTER);
 		return ;
 	}
 	node = garbage->first;
@@ -113,13 +107,18 @@ void	destroy_garbage(t_garbage *garb)
 	{
 		temp = node;
 		node = node->next;
-		destroy_garbage_node(temp);
+		destroy_garbage_node(temp, garbage);
 	}
 	free(garbage);
 	is_destroyed(SETTER, true);
 }
 
-void 	clear_garbage(t_garbage *garb)
+/*
+Clear the garbage collector:
+free() all the addresses allocated by ft_malloc() function
+don't free the addresses locked by lock() function
+*/
+void 	clear_garbage(void)
 {
 	t_garbage	*garbage;
 	t_garb_node	*node;
@@ -133,7 +132,7 @@ void 	clear_garbage(t_garbage *garb)
 	{
 		temp = node;
 		node = node->next;
-		destroy_garbage_node(temp);
+		if (temp->locked == false)
+			destroy_garbage_node(temp, garbage);
 	}
-	garbage->first = NULL;
 }
