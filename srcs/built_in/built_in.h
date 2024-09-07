@@ -25,7 +25,7 @@ void		destroy_var_node(t_env_var *node);
 void		delete_env_var(t_env *env, t_env_var *var);
 t_env_var	*get_env_struct(char *variable);
 char		*ft_getenv(char *var);
-
+int         change_directory(t_command *cd);
 int			parse_alias_arg(char *arg);
 char		***init_new_aliases(void);
 char		**create_alias(char *arg);

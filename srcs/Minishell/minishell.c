@@ -35,6 +35,7 @@ int	main(int ac, char **av, char **envp)
 			continue;
 		}
 		command = parse(str);
+		print_AST(command);
 		last_status = exec(command);
 	}
 	return (0);

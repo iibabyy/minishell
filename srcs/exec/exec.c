@@ -1,12 +1,11 @@
 #include "../../includes/minishell.h"
 #include "exec.h"
-#include "../../includes/minishell.h"
+#include "../built_in/built_in.h"
 #include "exec.h"
 #include <unistd.h>
 
-void sigint_child(int sig);
-void handle_sigint(int sig);
-
+#define LEFT_NODE 0
+#define RIGHT_NODE 1
 bool should_fork(t_command *node)
 {
     if (node->type == SUB_SHELL
@@ -80,35 +79,61 @@ void open_pipes_redirect(t_command *node)
     return ;
 }
 
+int forking_pipe_node(t_command *node, t_exec_data *data, int pos, int fd[])
+{
+    int pid;
+    int status;
+
+    pid = fork();
+    if (pid == 0)
+    {
+		set_child_signals();
+        if(pos == LEFT_NODE)
+            free((ft_close(&fd[0]), ft_dup2(&fd[1], STDOUT_FILENO), NULL));
+        else
+            free((ft_close(&fd[1]), ft_dup2(&fd[0], STDIN_FILENO), NULL));
+        status = exec_command(node, data);
+        exit(status);
+    }
+    return (pid);
+}
+
 int exec_pipe(t_command *node, t_exec_data *data)
 {
     int status1 = 0;
     int status2 = 0;
-
     int pid[2];
     int fd[2];
+    bool wait_lr[2];
+
     ft_pipe(fd);
-    pid[0] = fork();
-    if (pid[0] == 0)
+    if (should_fork(node->left))
     {
-        set_child_signals();
-        free((ft_close(&fd[0]), ft_dup2(&fd[1], STDOUT_FILENO), NULL));
-        status1 = exec_command(node->left, data);
-        exit(status1);
+        pid[0] = forking_pipe_node(node->left, data, LEFT_NODE, fd);
+        wait_lr[0] = true;
     }
-    pid[1] = fork();
-    if (pid[1] == 0)
+    else
     {
-        set_child_signals();
-        free((ft_close(&fd[1]), ft_dup2(&fd[0], STDIN_FILENO), NULL));
+        status1 = exec_command(node->left, data);
+        wait_lr[0] = false;
+    }
+    if (should_fork(node->right))
+    {
+        pid[1] = forking_pipe_node(node->right, data, RIGHT_NODE, fd);
+        wait_lr[1] = true;
+    }
+    else
+    {
         status2 = exec_command(node->right, data);
-        exit(status2);
+        wait_lr[1] = false;
     }
     (ft_close(&fd[0]), ft_close(&fd[1]));
     (ft_close(&node->left->infile), ft_close(&node->right->infile));
     (ft_close(&node->left->outfile), ft_close(&node->right->outfile));
-    waitpid(pid[0], &status1, 0);
-    waitpid(pid[1], &status2, 0);
+    if(wait_lr[0] == true)
+        waitpid(pid[0], &status1, 0);
+    if (wait_lr[1] == true)
+        waitpid(pid[1], &status2, 0);
     return (status2);
 }
 
@@ -149,8 +174,8 @@ int exec_builtin(t_command *node)
     status = 0;
     if(ft_strcmp("unset", node->command[0]) == 0)
         status = unset(node->command);
-    // if(ft_strcmp("cd", node->command[0]) == 0)
-    //     return (true);
+    if(ft_strcmp("cd", node->command[0]) == 0)
+        change_directory(node);
     // if(ft_strcmp("pwd", node->command[0]) == 0)
     //     return (true);
     // if(ft_strcmp("ex", node->command[0]) == 0)

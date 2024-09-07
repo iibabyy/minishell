@@ -64,6 +64,7 @@ FILES =	srcs/Minishell/minishell.c			\
 		srcs/features/prompt.c				\
 		srcs/exec/signal_utils.c			\
 		srcs/built_in/pwd.c					\
+		srcs/built_in/cd.c					\
 
 OBJ = $(FILES:.c=.o)
 
