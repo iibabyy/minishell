@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 21:53:22 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/07 22:08:43 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/07 22:15:26 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,9 @@ int	is_delayed(char *head)
 	if (remote == NULL)
 		return (-1);
 	if (ft_strcmp(local, remote) == 0)
-		return (true);
-	else
 		return (false);
+	else
+		return (true);
 }
 
 char	*remote_ref(char *head)
