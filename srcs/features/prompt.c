@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 00:42:23 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/07 23:48:50 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/07 23:56:45 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ char	*add_arrow(void)
 		color = "\001\033[32;5m\002";
 	else
 		color = "\001\033[31;5m\002";
-	arrow = ft_strjoin(color, "➜  \001\033[36;1m\002");
+	arrow = ft_strjoin(color, "➜  \001\033[0m\033[36;1m\002");
 	if (arrow == NULL)
 		return (NULL);
 	return (arrow);
