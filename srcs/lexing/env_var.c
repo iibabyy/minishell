@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:33:50 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/08 01:17:33 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/08 01:40:52 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ char	*replace_env_vars(char *input)
 
 	if (input == NULL)
 		return(input);
-	input = replace_wave(input);
 	if (count_char(input, '$') == 0)
 		return (input);
 	array = replace_dollars(input);

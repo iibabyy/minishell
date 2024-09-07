@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:15:43 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/08 00:05:39 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/08 01:41:27 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ char	*join_non_meta_char(char *input, char *word, int *i)
 		return (ft_free(word), NULL);
 	word = ft_re_strjoin(word, temp);
 	ft_free(temp);
+	word = replace_wave(word);
 	return (word);
 }
 

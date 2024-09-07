@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 22:44:22 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/08 01:39:47 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/08 01:46:56 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,29 +16,29 @@ char	*replace_wave(char *input)
 {
 	char	*res;
 	char	*home;
+	char	**temp;
 	int		i;
-	int		y;
 
 	home = ft_getenv("HOME");
 	if (count_char(input, '~') == 0 || home == NULL)
 		return (input);
-	res = ft_malloc(sizeof(char) * (ft_strlen(input)+ (count_char(input, '~')
-			* ft_strlen(home))));
-	if (res == NULL)
+	temp = ft_split(input, ' ');
+	if (temp == NULL || temp[0] == NULL)
 		return (input);
 	i = -1;
-	y = 0;
-	while (input[++i] != '\0')
+	while (temp[++i] != NULL)
 	{
-		if (input[i] == '~')
+		if (ft_strcmp(temp[i], "~") == 0)
 		{
-			ft_memcpy(res + y, home, sizeof(char) * ft_strlen(home));
-			y += ft_strlen(home);
+			temp[i] = ft_strdup(home);
+			if (temp[i] == NULL)
+				return (free_2d_array((void ***)&temp), input);
 		}
-		else
-			res[y++] = input[i];
 	}
-	return (res[y] = '\0', res);
+	res = str_join_2d_and_free(temp, " ");
+	if (res == NULL)
+		return (input);
+	return (res);
 }
 
 int	char_type(char *str, int index)
