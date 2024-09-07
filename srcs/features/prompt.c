@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 00:42:23 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/07 22:11:48 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/07 23:27:30 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*minishell_prompt()
 		return (ft_strdup(MINISHELL_PROMPT));
 	prompt = add_dir_name(prompt);
 	prompt = add_git_head(prompt);
-	prompt = ft_re_strjoin(prompt, "\001\033[0m\002 ");
+	prompt = ft_re_strjoin(prompt, "\001\033[0m\002");
 	if (prompt == NULL || *prompt == '\0')
 		return (ft_free(prompt), ft_strdup(MINISHELL_PROMPT));
 	return (prompt);
@@ -38,24 +38,20 @@ char	*add_dir_name(char *prompt)
 	char	*temp;
 
 	temp = ft_getcwd();
-	if (temp == NULL || ft_strrchr(temp, '/') == NULL)
-	{
-		dir = ft_strjoin(prompt, "minishell ");
-		if (dir == NULL)
-			return (prompt);
-		return (ft_free(prompt), ft_free(temp), dir);
-	}
+	if (temp == NULL || ft_strchr(temp, '/') == NULL)
+		return (ft_strdup("minishell "));
 	if (ft_getenv("HOME") != NULL && ft_strcmp(ft_getenv("HOME"), temp) == 0)
-	{
-		dir = ft_strjoin(prompt, "~");
-		if (dir == NULL)
-			return (prompt);
-		return (ft_free(temp), ft_free(prompt), dir);
-	}
-	dir = ft_strrchr(temp, '/') + 1;
-	if (*dir == '\0')
-		dir = "/";
-	dir = multi_strjoin(3, prompt, dir, " ");
+		dir = ft_strdup("~ ");
+	else if (*(ft_strrchr(temp, '/') + 1) == '\0')
+		dir = ft_strdup("/ ");
+	else
+		dir = ft_strjoin(ft_strrchr(temp, '/') + 1, " ");
+	if (dir == NULL)
+		return (NULL);
+	if (temp == NULL)
+		return (prompt);
+	dir = ft_strjoin(prompt, temp);
+	ft_free(temp);
 	if (dir == NULL)
 		return (prompt);
 	return (ft_free(prompt), dir);
@@ -96,4 +92,13 @@ char	*add_git_delay(char *prompt)
 	if (head == NULL)
 		return (prompt);
 	return (ft_free(prompt), head);
+}
+
+char	*dir_name(void)
+{
+	char	*dir;
+	char	*pwd;
+
+	
+	return (dir);
 }

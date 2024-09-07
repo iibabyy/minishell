@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 21:53:22 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/07 22:15:26 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/07 23:17:06 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,10 @@ int	is_delayed(char *head)
 	char	*local;
 	char	*remote;
 
-	local = local_ref(head);
+	local = git_local_ref(head);
 	if (local == NULL)
 		return (-1);
-	remote = remote_ref(head);
+	remote = git_remote_ref(head);
 	if (remote == NULL)
 		return (-1);
 	if (ft_strcmp(local, remote) == 0)
@@ -83,7 +83,7 @@ int	is_delayed(char *head)
 		return (true);
 }
 
-char	*remote_ref(char *head)
+char	*git_remote_ref(char *head)
 {
 	char	*git;
 
@@ -93,7 +93,7 @@ char	*remote_ref(char *head)
 	return (git_line(git));
 }
 
-char	*local_ref(char *head)
+char	*git_local_ref(char *head)
 {
 	char	*git;
 
