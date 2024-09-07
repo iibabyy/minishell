@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 00:42:23 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/07 23:56:45 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/08 00:41:19 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ char	*add_git_delay(char *prompt)
 	if (is_delayed(head) != true)
 		return (ft_free(head), prompt);
 	ft_free(head);
-	head = ft_strjoin(prompt, "\001\033[33;1m\002✗");
+	head = ft_strjoin(prompt, "\001\033[33;1m\002✗ ");
 	if (head == NULL)
 		return (prompt);
 	return (ft_free(prompt), head);

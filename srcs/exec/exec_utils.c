@@ -55,19 +55,7 @@ bool is_built_in(t_command *node)
 }
 int test_cd(char *str)
 {
-    char **cd_args;
-    char	*actual_path;
-	char	*dir;
-
-    cd_args = malloc(sizeof(char *) * 2);
-    cd_args[0] = ft_strdup("cd");
-    cd_args[1] = ft_strdup(str);
-    cd_args[2] = NULL;
-    actual_path = ft_getenv("PWD");
-    dir = cd_args[1];
-    if (chdir(dir) == -1)
-		return (EXIT_FAILURE);
-	if (update_pwd(actual_path) == EXIT_FAILURE)
+	if (chdir(str) == -1)
 		return (EXIT_FAILURE);
     return (250);
 }
@@ -75,7 +63,7 @@ int exec_cd(char *str)
 {
     char **cd_args;
 
-    cd_args = malloc(sizeof(char *) * 2);
+    cd_args = ft_malloc(sizeof(char *) * 3);
     cd_args[0] = ft_strdup("cd");
     cd_args[1] = ft_strdup(str);
     cd_args[2] = NULL;
