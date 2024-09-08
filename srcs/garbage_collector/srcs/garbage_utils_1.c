@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:26:02 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/07 17:13:00 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/08 03:36:28 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ t_garbage	*init_garbage(void)
 	if (garbage == NULL)
 		return (malloc_failed("init_garbage: malloc() failed:"), NULL);
 	garbage->first = NULL;
+	is_destroyed(SETTER, false);
 	get_garbage(garbage, SETTER);
 	ft_free(NULL);
 	destroy_garbage();

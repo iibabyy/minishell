@@ -143,4 +143,8 @@ res :
 	@make re -sC $(GARBAGE_COLLECTOR_DIR)
 	@make -s
 
+leak : $(NAME)
+	@make -s
+	@valgrind --track-fds=yes --leak-check=full --show-below-main=no --show-leak-kinds=all --suppressions=.supp.supp ./minishell
+
 .PHONY: all re clean fclean ac s res

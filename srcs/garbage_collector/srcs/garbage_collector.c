@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:25:32 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/07 17:24:19 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/08 03:39:58 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ void	*ft_realloc(void *ptr, unsigned long size_to_add)
 	if (new_ptr == NULL)
 		return (ft_free(ptr), NULL);
 	ft_memcpy(new_ptr, ptr, ptr_node->size);
-	ft_free(ptr);
 	return ((void *)new_ptr);
 }
 
@@ -72,14 +71,14 @@ void	ft_free(void *address)
 	t_garb_node			*node_to_free;
 
 	if (address == NULL)
-		return ;
+		return ((void)printf("not Free'd 1\n"));
 	if (is_destroyed(READER, false) != false)
-		return ;
+		return ((void)printf("not Free'd 2\n"));
 	if (garbage == NULL)
 		return (garbage = get_garbage(NULL, GETTER), (void)0);
 	node_to_free = find_by_address(address, garbage);
 	if (node_to_free == NULL)
-		return ;
+		return ((void)printf("not Free'd 3\n"));
 	destroy_garbage_node(node_to_free, garbage);
 	return ;
 }
@@ -99,7 +98,7 @@ void	destroy_garbage(void)
 		return ;
 	if (garbage == NULL)
 	{
-		get_garbage(NULL, GETTER);
+		garbage = get_garbage(NULL, GETTER);
 		return ;
 	}
 	node = garbage->first;
