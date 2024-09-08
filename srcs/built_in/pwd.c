@@ -10,7 +10,7 @@ int	pwd(char **arg)
 		return (EXIT_FAILURE);
 	printf("%s\n", pwd);
 	ft_free(pwd);
-	return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }
 
 char	*ft_getcwd(void)
