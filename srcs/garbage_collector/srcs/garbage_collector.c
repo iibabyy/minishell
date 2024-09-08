@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:25:32 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/08 03:39:58 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/08 03:41:23 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,14 +71,14 @@ void	ft_free(void *address)
 	t_garb_node			*node_to_free;
 
 	if (address == NULL)
-		return ((void)printf("not Free'd 1\n"));
+		return ;
 	if (is_destroyed(READER, false) != false)
-		return ((void)printf("not Free'd 2\n"));
+		return ;
 	if (garbage == NULL)
 		return (garbage = get_garbage(NULL, GETTER), (void)0);
 	node_to_free = find_by_address(address, garbage);
 	if (node_to_free == NULL)
-		return ((void)printf("not Free'd 3\n"));
+		return ;
 	destroy_garbage_node(node_to_free, garbage);
 	return ;
 }
