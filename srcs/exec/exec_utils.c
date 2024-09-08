@@ -49,15 +49,20 @@ bool is_built_in(t_command *node)
         return (true);
     if(ft_strcmp("unset", node->command[0]) == 0)
         return (true);
+    if(ft_strcmp("export", node->command[0]) == 0)
+        return (true);
     if(ft_strcmp("exit", node->command[0]) == 0)
         return (true);
     return(false);
 }
 int test_cd(char *str)
 {
-	if (chdir(str) == -1)
-		return (EXIT_FAILURE);
-    return (250);
+	if(access(command->command[0], X_OK) == 0 && ft_strlen_2d(command->command) == 1 && command->previous == NULL )
+	{
+		if (chdir(str) == -1)
+			return (EXIT_FAILURE);
+	}
+	return (EXIT_SUCCESS);
 }
 int exec_cd(char *str)
 {
@@ -87,7 +92,7 @@ int   exec_single_command(t_command *command, t_exec_data *exec)
 		execve(exec->command_path, command->command, env_tab());
         if(access(command->command[0], X_OK) == 0 && ft_strlen_2d(command->command) == 1 && command->previous == NULL )
         {
-            if (test_cd(command->command[0]) == 250)
+            if (test_cd(command->command[0]) == EXIT_SUCCESS)
                 exit(250);
         }
         ft_putstr_fd("minishell : command not found : ", 2);
