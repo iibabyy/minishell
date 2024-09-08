@@ -41,15 +41,12 @@ char	*get_line(void)
 
 int	exec(t_command *command)
 {
-	t_exec_data data;
 	int			status;
 
 	set_parent_exec_signals();
 	if (command == NULL)
 		return (0);
-	ft_memset(&data, 0, sizeof(t_exec_data));
-	data.pid = ft_calloc (sizeof(int) , 10);
-	status = exec_command(command, &data);
+	status = exec_command(command);
 	if (status== 128 + SIGSTOP)
 		ft_putstr_fd("Quit (core dumped)\n", STDERR_FILENO);
 	return (status);

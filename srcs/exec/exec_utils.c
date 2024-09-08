@@ -4,40 +4,6 @@
 
 int	update_pwd(char *old_pwd);
 
-void ft_dup2(int *fd1, int fd2)
-{
-	if (dup2(*fd1, fd2) == -1)
-		free_and_exit(1);
-    ft_close(fd1);
-}
-
-void	ft_close(int *fd)
-{
-	if (*fd == -1 || *fd == STDIN_FILENO || *fd == STDERR_FILENO
-		|| *fd == STDOUT_FILENO)
-		return ;
-	if (close(*fd) == -1)
-	{
-		perror("close");
-        free_and_exit(1);
-	}
-    *fd = -1;
-}
-
-void	ft_pipe(int fd[2])
-{
-	if (pipe(fd) == -1)
-		free_and_exit(1);
-}
-
-void init_data(t_exec_data *data, t_command *command)
-{
-        data->path_to_join = ft_calloc(sizeof(char *), 1);
-        if (data->path_to_join == NULL)
-            free_and_exit(1);
-        data->command_path = create_command_path(data , command);
-}
-
 bool is_built_in(t_command *node)
 {
     if (node->command == NULL || node->command[0] == NULL)
@@ -72,15 +38,33 @@ int exec_cd(char *str)
     cd_args[2] = NULL;
     return(cd(cd_args));
 }
-int   exec_single_command(t_command *command, t_exec_data *exec)
+
+void execve_error(char *str)
+{
+    if (strchr(str, '/'))
+    {
+        ft_putstr_fd("minishell: No such file or directory: ", 2);
+        ft_putendl_fd(str, 2);
+        free_and_exit(127);
+    }
+    else
+    {
+        ft_putstr_fd("minishell : Command not found : ", 2);
+        ft_putendl_fd(str, 2);
+        free_and_exit(127);
+    }
+}
+int   exec_single_command(t_command *command)
 {
     pid_t pid;
     int status = 0;
-    
+    t_exec_data *exec;
+
     pid = fork();
     if (pid == 0)
     {
         set_child_signals();
+        exec = ft_malloc(sizeof(t_exec_data));
 		init_data(exec, command);
         if (open_redirections(command) == EXIT_FAILURE)
             free_and_exit(EXIT_FAILURE);
@@ -93,9 +77,7 @@ int   exec_single_command(t_command *command, t_exec_data *exec)
             if (test_cd(command->command[0]) == EXIT_SUCCESS)
                 free_and_exit(250);
         }
-        ft_putstr_fd("minishell : command not found : ", 2);
-        ft_putendl_fd(command->command[0], 2);
-        free_and_exit(127);
+        execve_error(command->command[0]);
     }
     waitpid(pid, &status, 0);
     if(WEXITSTATUS(status) == 250)

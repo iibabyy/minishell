@@ -51,6 +51,8 @@ FILES =	srcs/Minishell/minishell.c			\
 		srcs/parsing/utils.c				\
 		srcs/exec/exec.c					\
 		srcs/exec/exec_utils.c              \
+		srcs/exec/exec_utils2.c				\
+		srcs/exec/exec_utils3.c				\
 		srcs/exec/create_path.c             \
 		srcs/exec/signal.c					\
 		srcs/features/alias_utils.c			\

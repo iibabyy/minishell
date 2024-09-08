@@ -13,20 +13,19 @@ typedef struct s_exec_data
 {
     char *command_path;
     char **path_to_join;
-    int fd[2];
-    int prev_fd[2];
-    bool end;
-    pid_t  pid_l;
-    pid_t  *pid;
-    pid_t  pid_r;
-    char    **envp;
 }     t_exec_data;
 
 char    *create_command_path(t_exec_data *data, t_command *command);
 void    init_data(t_exec_data *data, t_command *command);
-int     exec_command(t_command *command, t_exec_data *data);
-int     exec_single_command(t_command *command, t_exec_data *exec);
+int     exec_command(t_command *command);
+int     forking_node(t_command *node);
+int     exec_sub_shell(t_command *node);
+int     exec_builtin(t_command *node);
+int     exec_and(t_command *node);
+int     exec_or(t_command *node);
+int     exec_single_command(t_command *command);
 bool    is_built_in(t_command *node);
+bool    should_fork(t_command *node);
 void	ft_close(int *fd);
 void	ft_pipe(int fd[2]);
 void	ft_dup2(int *fd1, int fd2);
