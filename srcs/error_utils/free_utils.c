@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:05:47 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/08 03:53:10 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/08 04:52:22 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@ void	destroy_commands(t_command *command)
 		ft_close_fd(&command->infile);
 	if (command->outfile != STDOUT_FILENO)
 		ft_close_fd(&command->outfile);
-	destroy_redirections(command->redirections);
-	destroy_redirections(command->redirections);
 	ft_free(command);
 }
 
@@ -62,8 +60,6 @@ void	destroy_redirections(t_redirection *redirection)
 		redirection = redirection->next;
 		if (temp->type == HERE_DOC)
 			destroy_here_docs(temp->here_doc);
-		ft_close(&redirection->command->infile);
-		ft_close(&redirection->command->outfile);
 		ft_free(temp);
 	}
 }
