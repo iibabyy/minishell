@@ -29,6 +29,7 @@ void	ft_pipe(int fd[2])
 	if (pipe(fd) == -1)
 		free_and_exit(1);
 }
+
 void init_data(t_exec_data *data, t_command *command)
 {
         data->path_to_join = ft_calloc(sizeof(char *), 1);

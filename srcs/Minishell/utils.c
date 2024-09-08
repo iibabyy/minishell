@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 15:41:37 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/08 04:03:59 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/08 04:07:50 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ int	exec(t_command *command)
 	set_parent_exec_signals();
 	if (command == NULL)
 		return (0);
-	// print_AST(command);
 	ft_memset(&data, 0, sizeof(t_exec_data));
 	data.pid = ft_calloc (sizeof(int) , 10);
 	status = exec_command(command, &data);
