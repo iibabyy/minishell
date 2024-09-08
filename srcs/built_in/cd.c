@@ -1,6 +1,8 @@
 #include "built_in.h"
 #include "../exec/exec.h"
 
+static int	cd_oldpwd(void);
+
 int cd(char	**args)
 {
     char	*actual_path;
@@ -8,6 +10,8 @@ int cd(char	**args)
 
 	if (ft_strlen_2d(args) > 2)
 		return (cd_error("too many arguments", false));
+	if (args[1] != NULL && ft_strcmp(args[1], "-") == 0)
+		return (cd_oldpwd());
 	actual_path = ft_getenv("PWD");
     if (args[1] != NULL)
 		dir = args[1];
@@ -19,6 +23,23 @@ int cd(char	**args)
 	}
 	if (chdir(dir) == -1)
 		return (cd_error(NULL, true));
+	if (update_pwd(actual_path) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
+    return(0);
+}
+
+static int	cd_oldpwd(void)
+{
+	char	*actual_path;
+	char	*oldpwd;
+
+	oldpwd = ft_getenv("OLDPWD");
+	if (oldpwd == NULL)
+		return (cd_error("OLDPWD not set", false));
+	actual_path = ft_getenv("PWD");
+	if (chdir(oldpwd) == -1)
+		return (cd_error(NULL, true));
+	ft_putendl_fd(oldpwd, STDERR_FILENO);
 	if (update_pwd(actual_path) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
     return(0);

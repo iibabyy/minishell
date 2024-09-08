@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:05:52 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/06 18:53:45 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/08 22:15:02 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,15 @@ void	parse_err(char *error, char *token)
 
 void	error_log(char *error, bool erno)
 {
-	static int	error_num = 0;
+	static int	error_num = -1;
 	int			error_log_fd;
+	static char	*error_log_file = NULL;
 
-	error_log_fd = open(ERROR_LOG_FILE, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	if (error_num == -1)
+		return (error_log_file = error, ++error_num, (void)0);
+	else if (error_log_file == NULL)
+		return ;
+	error_log_fd = open(error_log_file, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (error_log_fd == -1)
 		return ;
 	if (++error_num != 1)
@@ -66,13 +71,21 @@ void	error_log(char *error, bool erno)
 
 void	init_error_log(void)
 {
-	int	fd;
+	int		fd;
+	char	*pwd;
 
-	unlink(ERROR_LOG_FILE);
-	fd = open(ERROR_LOG_FILE, O_WRONLY | O_CREAT, 0644);
+	pwd = ft_getcwd();
+	if (pwd == NULL)
+		return (error_log(NULL, false));
+	pwd = ft_re_strjoin(pwd, "/.error_log");
+	if (pwd == NULL)
+		return (error_log(NULL, false));
+	unlink(pwd);
+	fd = open(pwd, O_WRONLY | O_CREAT, 0644);
 	if (fd == -1)
 		return ;
-	write (fd, "\0", 1);
+	lock(pwd);
+	error_log(pwd, false);
 	close(fd);
 }
 

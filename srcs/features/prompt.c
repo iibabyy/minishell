@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 00:42:23 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/08 00:41:19 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/08 21:57:43 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ char	*add_git_delay(char *prompt)
 
 	head = git_head();
 	if (head == NULL)
-		return (NULL);
+		return (prompt);
 	if (is_delayed(head) != true)
 		return (ft_free(head), prompt);
 	ft_free(head);
