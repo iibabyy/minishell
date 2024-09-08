@@ -77,7 +77,7 @@ int exec_or(t_command *node)
 		status = exec_command(node->left);
 	status = get_code(0, false);
 	if (status == 128 + SIGQUIT)
-		ft_putstr_fd("Quit\n", STDERR_FILENO);
+		ft_putstr_fd("Quit (core dumped)\n", STDERR_FILENO);
 	if (status == 128 + SIGINT)
 		ft_putstr_fd("\n", STDERR_FILENO);
 	if((status != 0 && status <= 128) || status == 128 + SIGQUIT)
@@ -88,7 +88,7 @@ int exec_or(t_command *node)
 			status = exec_command(node->right);
 		status = get_code(0, false);
 		if (status == 128 + SIGQUIT)
-			ft_putstr_fd("Quit\n", STDERR_FILENO);
+			ft_putstr_fd("Quit (core dumped)\n", STDERR_FILENO);
 		if (status == 128 + SIGINT)
 			ft_putstr_fd("\n", STDERR_FILENO);
 	}
@@ -105,7 +105,7 @@ int exec_and(t_command *node)
 		status = exec_command(node->left);
 	status = get_code(0, false);
 	if (status == 128 + SIGQUIT)
-		ft_putstr_fd("Quit\n", STDERR_FILENO);
+		ft_putstr_fd("Quit (core dumped)\n", STDERR_FILENO);
 	if (status == 128 + SIGINT)
 		ft_putstr_fd("\n", STDERR_FILENO);
 	if(status == 0)
@@ -116,7 +116,7 @@ int exec_and(t_command *node)
 			status = exec_command(node->right);
 		status = get_code(0, false);
 		if (status == 128 + SIGQUIT)
-			ft_putstr_fd("Quit\n", STDERR_FILENO);
+			ft_putstr_fd("Quit (core dumped)\n", STDERR_FILENO);
 		if (status == 128 + SIGINT)
 			ft_putstr_fd("\n", STDERR_FILENO);
 	}
