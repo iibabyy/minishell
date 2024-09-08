@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 14:48:18 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/07 15:43:58 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/09 00:52:45 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,16 @@ int	get_code(int error_code, bool setter)
 		return (code);
 	code = error_code;
 	return (code);
+}
+
+void	set_exit_code(int status)
+{
+	if (WIFSIGNALED(status))
+		get_code(128 + WTERMSIG(status), SET);
+	else if (WIFSTOPPED(status))
+		get_code(128 + WSTOPSIG(status), SET);
+	else if (WIFEXITED(status))
+		get_code(WEXITSTATUS(status), SET);
 }
 
 char	*check_heredoc_sig(char *input, char *eof)

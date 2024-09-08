@@ -33,5 +33,6 @@ void	ft_dup2(int *fd1, int fd2);
 int		sig_event(void);
 void    if_sigint(int sig);
 void	set_parent_exec_signals(void);
+void	set_exit_code(int status);
 
 #endif

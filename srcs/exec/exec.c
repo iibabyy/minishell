@@ -82,7 +82,8 @@ int	exec_pipe(t_command *node)
 	(ft_close(&node->left->outfile), ft_close(&node->right->outfile));
 	waitpid(pid[0], &status, 0);
 	waitpid(pid[1], &status, 0);
-	return (status);
+	set_exit_code(status);
+	return (get_code(0, false));
 }
 
 int	exec_command(t_command *node)
@@ -105,6 +106,5 @@ int	exec_command(t_command *node)
 		status = exec_and(node);
 	else if (node->type == PIPE)
 		status = exec_pipe(node);
-	get_code(status, SET);
 	return (status);
 }

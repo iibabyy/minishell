@@ -63,7 +63,8 @@ int forking_node(t_command *node)
 		free_and_exit(status);
 	}
 	waitpid(pid, &status, 0);
-	return (WEXITSTATUS(status));
+	set_exit_code(status);
+	return (get_code(0, false));
 }
 
 int exec_or(t_command *node)
@@ -74,12 +75,22 @@ int exec_or(t_command *node)
 		status = forking_node(node->left);
 	else
 		status = exec_command(node->left);
-	if(status != 0)
+	status = get_code(0, false);
+	if (status == 128 + SIGQUIT)
+		ft_putstr_fd("Quit\n", STDERR_FILENO);
+	if (status == 128 + SIGINT)
+		ft_putstr_fd("\n", STDERR_FILENO);
+	if((status != 0 && status <= 128) || status == 128 + SIGQUIT)
 	{
 		if (should_fork(node->right))
 			status = forking_node(node->right);
 		else
 			status = exec_command(node->right);
+		status = get_code(0, false);
+		if (status == 128 + SIGQUIT)
+			ft_putstr_fd("Quit\n", STDERR_FILENO);
+		if (status == 128 + SIGINT)
+			ft_putstr_fd("\n", STDERR_FILENO);
 	}
 	return(status);
 }
@@ -92,12 +103,22 @@ int exec_and(t_command *node)
 		status = forking_node(node->left);
 	else
 		status = exec_command(node->left);
-	if(status == 0 && g_signal == 0)
+	status = get_code(0, false);
+	if (status == 128 + SIGQUIT)
+		ft_putstr_fd("Quit\n", STDERR_FILENO);
+	if (status == 128 + SIGINT)
+		ft_putstr_fd("\n", STDERR_FILENO);
+	if(status == 0)
 	{
 		if (should_fork(node->right))
 			status = forking_node(node->right);
 		else
 			status = exec_command(node->right);
+		status = get_code(0, false);
+		if (status == 128 + SIGQUIT)
+			ft_putstr_fd("Quit\n", STDERR_FILENO);
+		if (status == 128 + SIGINT)
+			ft_putstr_fd("\n", STDERR_FILENO);
 	}
 	return(status);
 }
