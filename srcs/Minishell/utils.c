@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 15:41:37 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/07 17:40:29 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/08 03:02:56 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*get_line(void)
 	{
 		destroy_garbage();
 		printf("exit\n");
-		exit(get_code(0, GET));
+		free_and_exit(get_code(0, GET));
 	}
 	if (is_only_space(str) == true)
 		return (free(str), NULL);

@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 15:17:53 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/06 18:35:11 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/08 03:04:33 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "structs.h"
 
 int		errcode(int errcode, bool setter);
-void	free_all(t_data *data);
+void	free_all(void);
 void	print_err(char *err, bool erno);
 void	print_err_and_exit(char *err, int status, bool erno);
 void	parse_err(char *error, char *token);
@@ -28,5 +28,6 @@ void	destroy_parsing(t_parsing *data);
 void	init_error_log(void);
 void	error_log(char *error, bool erno);
 void	malloc_failed(char *function);
+void	free_and_exit(int status);
 
 #endif

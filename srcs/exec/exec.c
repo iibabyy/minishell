@@ -23,7 +23,7 @@ int forking_node(t_command *node, t_exec_data *data)
 	{
 		set_child_signals();
 		status = exec_command(node, data);
-		exit(status);
+		free_and_exit(status);
 	}
 	waitpid(pid, &status, 0);
 	return (WEXITSTATUS(status));
@@ -93,7 +93,7 @@ int forking_pipe_node(t_command *node, t_exec_data *data, int pos, int fd[])
 		else
 			free((ft_close(&fd[1]), ft_dup2(&fd[0], STDIN_FILENO), NULL));
 		status = exec_command(node, data);
-		exit(status);
+		free_and_exit(status);
 	}
 	return (pid);
 }
@@ -159,7 +159,7 @@ int exec_sub_shell(t_command *node, t_exec_data *data)
 			status = exec(command);
 		else
 			status = EXIT_FAILURE;
-		exit(status);
+		free_and_exit(status);
 	}
 	else
 	{

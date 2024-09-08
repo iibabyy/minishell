@@ -6,23 +6,20 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:05:42 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/07 15:19:29 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/08 03:05:22 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "errors_utils.h"
 
-void	free_and_exit(char *err, int status, struct s_data *data, bool erno)
+void	free_and_exit(int status)
 {
-	free_all(data);
-	if (err != NULL || erno == true)
-		print_err(err, erno);
+	free_all();
 	exit(status);
 }
 
-void	free_all(t_data *data)
+void	free_all(void)
 {
-	(void)data;
 	destroy_garbage();
 }
 

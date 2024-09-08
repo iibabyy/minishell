@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:05:38 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/06 17:14:22 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/08 03:05:04 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 
 # define ERROR_LOG_FILE ".error_log"
 
-void	free_all(t_data *data);
+void	free_all(void);
 void	print_err(char *err, bool erno);
 void	print_err_and_exit(char *err, int status, bool erno);
 void	parse_err(char *error, char *token);
