@@ -1,5 +1,4 @@
 #include "../../includes/minishell.h"
-#include "exec.h"
 #include "../built_in/built_in.h"
 #include "exec.h"
 #include <unistd.h>
@@ -9,35 +8,48 @@
 
 void	print_command(t_command *command);
 
-bool should_fork(t_command *node)
+bool	should_fork(t_command *node)
 {
-	if (node->type == SUB_SHELL
-		|| (node->type == COMMAND && is_built_in(node) == false))
+	if (node->type == SUB_SHELL || (node->type == COMMAND
+			&& is_built_in(node) == false))
 		return (true);
 	return (false);
 }
 
-int forking_pipe_node(t_command *node, int pos, int fd[])
+int	forking_pipe_node(t_command *node, int pos)
 {
-	int pid;
-	int status;
+	int	pid;
+	int	status;
+	int	fd[2];
 
+	ft_pipe(fd);
 	pid = fork();
 	if (pid == 0)
 	{
 		set_child_signals();
-		if(pos == LEFT_NODE)
-			free((ft_close(&fd[0]), ft_dup2(&fd[1], STDOUT_FILENO), NULL));
+		if (pos == LEFT_NODE)
+		{
+			ft_close(&fd[0]);
+			ft_dup2(&fd[1], STDOUT_FILENO);
+		}
 		else
-			free((ft_close(&fd[1]), ft_dup2(&fd[0], STDIN_FILENO), NULL));
+		{
+			ft_close(&fd[1]);
+			ft_dup2(&fd[0], STDIN_FILENO);
+		}
 		status = exec_command(node);
 		free_and_exit(status);
 	}
+	ft_close(&fd[0]);
+	ft_close(&fd[1]);
 	return (pid);
 }
 
 /*void ffcd(t_command *node, int pid[2], bool wait_lr[2],  int status[2])
 {
+	int	status;
+	int	pid[2];
+
 	if (should_fork(node->left))
 	{
 		pid[0] = forking_pipe_node(node->left,LEFT_NODE, fd);
@@ -59,50 +71,24 @@ int forking_pipe_node(t_command *node, int pos, int fd[])
 		wait_lr[1] = false;
 	}
 }*/
-
-int exec_pipe(t_command *node)
+int	exec_pipe(t_command *node)
 {
-	int status[2];
-	int pid[2];
-	int fd[2];
-	bool wait_lr[2];
+	int	pid[2];
+	int	status;
 
-	ft_pipe(fd);
-	if (should_fork(node->left))
-	{
-		pid[0] = forking_pipe_node(node->left, LEFT_NODE, fd);
-		wait_lr[0] = true;
-	}
-	else
-	{
-		status[0] = exec_command(node->left);
-		wait_lr[0] = false;
-	}
-	if (should_fork(node->right))
-	{
-		pid[1] = forking_pipe_node(node->right, RIGHT_NODE, fd);
-		wait_lr[1] = true;
-	}
-	else
-	{
-		status[1] = exec_command(node->right);
-		wait_lr[1] = false;
-	}
-	(ft_close(&fd[0]), ft_close(&fd[1]));
+	pid[0] = forking_pipe_node(node->left, LEFT_NODE);
+	pid[1] = forking_pipe_node(node->right, RIGHT_NODE);
 	(ft_close(&node->left->infile), ft_close(&node->right->infile));
 	(ft_close(&node->left->outfile), ft_close(&node->right->outfile));
-	if(wait_lr[0] == true)
-		waitpid(pid[0], &status[0], 0);
-	if (wait_lr[1] == true)
-		waitpid(pid[1], &status[1], 0);
-	return (status[1]);
+	waitpid(pid[0], &status, 0);
+	waitpid(pid[1], &status, 0);
+	return (status);
 }
 
-
-int exec_command(t_command *node)
+int	exec_command(t_command *node)
 {
-	int status;
-	
+	int	status;
+
 	status = 0;
 	if (node->type == COMMAND)
 	{
@@ -111,9 +97,9 @@ int exec_command(t_command *node)
 		else
 			status = exec_single_command(node);
 	}
-	else if(node->type == OR)
+	else if (node->type == OR)
 		status = exec_or(node);
-	else if(node->type == SUB_SHELL)
+	else if (node->type == SUB_SHELL)
 		status = exec_sub_shell(node);
 	else if (node->type == AND)
 		status = exec_and(node);

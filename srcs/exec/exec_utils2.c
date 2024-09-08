@@ -7,7 +7,11 @@
 void ft_dup2(int *fd1, int fd2)
 {
 	if (dup2(*fd1, fd2) == -1)
-		free_and_exit(1);
+	{
+		fprintf(stderr, "fd === %i\n", *fd1);
+		perror("close");
+        free_and_exit(1);
+	}
     ft_close(fd1);
 }
 
@@ -27,7 +31,10 @@ void	ft_close(int *fd)
 void	ft_pipe(int fd[2])
 {
 	if (pipe(fd) == -1)
-		free_and_exit(1);
+	{
+		perror("pipe");
+        free_and_exit(1);
+	}
 }
 
 void init_data(t_exec_data *data, t_command *command)
