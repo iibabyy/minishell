@@ -80,6 +80,7 @@ SRCS =	count_char.c			\
 		ft_strlen_2d.c 			\
 		insert_str.c			\
 		ft_strstr.c				\
+		2dstr_join.c			\
 
 #	Loading bar	#
 

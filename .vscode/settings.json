@@ -19,7 +19,8 @@
 		"term.h": "c",
 		"libft.h": "c",
 		"dirent.h": "c",
-		"errno.h": "c"
+		"errno.h": "c",
+		"dirent_ext.h": "c"
 	},
 	"C_Cpp.errorSquiggles": "disabled",
 	"cSpell.words": [

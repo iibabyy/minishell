@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:15:43 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/08 01:41:27 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/08 15:49:13 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int	word_to_token(char **input, int *i, t_token **tokens)
 		word = join_non_meta_char(*input, word, i);
 		if (word == NULL && is_quotes((*input)[*i]) == false)
 			return (EXIT_FAILURE);
+		
 		word = join_quotes(input, word, i);
 		if (word == NULL)
 			return (EXIT_FAILURE);

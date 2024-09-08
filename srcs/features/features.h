@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:25:18 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/07 23:59:26 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/08 16:29:07 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define FEATURES_H
 
 # include "../../includes/minishell.h"
+# include "../exec/exec.h"
 
 # define ALIAS ".alias"
 # define MAX_ALIAS 128
