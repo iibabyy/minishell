@@ -33,7 +33,7 @@ char *get_path(char *command, char **paths)
 
 char *create_command_path(t_exec_data *data, t_command *command)
 {
-        data->path_to_join = ft_split(getenv("PATH"), ':');
+        data->path_to_join = ft_split(ft_getenv("PATH"), ':');
         if (data->path_to_join == NULL)
         {
            data->command_path = ft_strdup(command->command[0]);

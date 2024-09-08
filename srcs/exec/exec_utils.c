@@ -57,11 +57,8 @@ bool is_built_in(t_command *node)
 }
 int test_cd(char *str)
 {
-	if(access(command->command[0], X_OK) == 0 && ft_strlen_2d(command->command) == 1 && command->previous == NULL )
-	{
-		if (chdir(str) == -1)
-			return (EXIT_FAILURE);
-	}
+	if (chdir(str) == -1)
+		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
 int exec_cd(char *str)

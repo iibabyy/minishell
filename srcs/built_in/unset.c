@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 15:19:16 by ibaby             #+#    #+#             */
-/*   Updated: 2024/08/15 20:26:15 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/08 02:53:03 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	unset(char **args)
 {
 	static t_env	*env;
 	t_env_var		*node;
-	t_env_var		*temp;
 	int				i;
 
 	if (env == NULL)
@@ -26,14 +25,11 @@ int	unset(char **args)
 	i = 0;
 	while (args[++i] != NULL)
 	{
-		node = env->first;
-		while (node != NULL)
-		{
-			temp = node->next;
-			if (ft_strcmp(args[i], node->variable) == 0)
-				delete_env_var(env, node);
-			node = temp;
-		}
+		node = get_env_struct(args[i]);
+		if (node == NULL)
+			continue ;
+		if (ft_strcmp(args[i], node->variable) == 0)
+			delete_env_var(env, node);
 	}
 	return (EXIT_SUCCESS);
 }
