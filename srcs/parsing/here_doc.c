@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:10:53 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/07 15:46:54 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/08 04:43:07 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,8 @@ t_redirection	*init_here_doc(t_parsing *data)
 	redirection->type = HERE_DOC;
 	redirection->command = data->command;
 	data->curr_token = data->curr_token->next;
+	if (data->curr_token == NULL)
+		return (parse_err(TOKEN_ERR, "newline"), ft_free(redirection), NULL);
 	redirection->here_doc->end_of_file = data->curr_token;
 	return (redirection);
 }
