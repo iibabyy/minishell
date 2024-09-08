@@ -30,13 +30,8 @@ bool    is_built_in(t_command *node);
 void	ft_close(int *fd);
 void	ft_pipe(int fd[2]);
 void	ft_dup2(int *fd1, int fd2);
-void	sigint_child(int sig);
-void	handle_sigint(int sig);
-void	null_sigint(int sig);
-void	handle_sigint(int sig);
-void	quit_heredoc(int sig);
-void 	sigint_child(int sig);
 int		sig_event(void);
 void    if_sigint(int sig);
+void	set_parent_exec_signals(void);
 
 #endif

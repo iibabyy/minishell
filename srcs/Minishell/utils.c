@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 15:41:37 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/08 03:22:39 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/08 04:03:59 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int	exec(t_command *command)
 	t_exec_data data;
 	int			status;
 
+	set_parent_exec_signals();
 	if (command == NULL)
 		return (0);
 	// print_AST(command);
