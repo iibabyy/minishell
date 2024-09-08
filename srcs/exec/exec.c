@@ -172,6 +172,8 @@ int exec_builtin(t_command *node)
 	char	**args;
 
 	args = node->command;
+	if(ft_strcmp("echo", args[0]) == 0)
+		return(ec)
 	if(ft_strcmp("unset", args[0]) == 0)
 		return (unset(args));
 	if(ft_strcmp("cd", args[0]) == 0)

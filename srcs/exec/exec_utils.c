@@ -72,6 +72,22 @@ int exec_cd(char *str)
     cd_args[2] = NULL;
     return(cd(cd_args));
 }
+
+void execve_error(char *str)
+{
+    if (strchr(str, '/'))
+    {
+        ft_putstr_fd("minishell: No such file or directory: ", 2);
+        ft_putendl_fd(str, 2);
+        free_and_exit(127);
+    }
+    else
+    {
+        ft_putstr_fd("minishell : Command not found : ", 2);
+        ft_putendl_fd(str, 2);
+        free_and_exit(127);
+    }
+}
 int   exec_single_command(t_command *command, t_exec_data *exec)
 {
     pid_t pid;
@@ -93,9 +109,7 @@ int   exec_single_command(t_command *command, t_exec_data *exec)
             if (test_cd(command->command[0]) == EXIT_SUCCESS)
                 free_and_exit(250);
         }
-        ft_putstr_fd("minishell : command not found : ", 2);
-        ft_putendl_fd(command->command[0], 2);
-        free_and_exit(127);
+        execve_error(command->command[0]);
     }
     waitpid(pid, &status, 0);
     if(WEXITSTATUS(status) == 250)
