@@ -54,33 +54,58 @@ void execve_error(char *str)
         free_and_exit(127);
     }
 }
-int   exec_single_command(t_command *command)
+int   exec_single(t_command *command)
 {
     pid_t pid;
     int status = 0;
     t_exec_data *exec;
 
-    pid = fork();
-    if (pid == 0)
+    if (should_fork(command))
     {
-        set_child_signals();
-        exec = ft_malloc(sizeof(t_exec_data));
-		init_data(exec, command);
-        if (open_redirections(command) == EXIT_FAILURE)
-            free_and_exit(EXIT_FAILURE);
-		((dup2(command->infile, STDIN_FILENO), dup2(command->outfile, STDOUT_FILENO)));
-        if (command->command == NULL || command->command[0] == NULL)
-			(ft_close(&command->outfile), ft_close(&command->infile), free_and_exit(EXIT_FAILURE));
-		execve(exec->command_path, command->command, env_tab());
-		if(access(command->command[0], X_OK) == 0 && ft_strlen_2d(command->command) == 1 && command->previous == NULL )
+        pid = fork();
+        if (pid == 0)
         {
-            if (test_cd(command->command[0]) == EXIT_SUCCESS)
-                free_and_exit(250);
+            set_child_signals();
+            exec = ft_malloc(sizeof(t_exec_data));
+            init_data(exec, command);
+            if (open_redirections(command) == EXIT_FAILURE)
+                free_and_exit(EXIT_FAILURE);
+            ((dup2(command->infile, STDIN_FILENO), dup2(command->outfile, STDOUT_FILENO)));
+            if (command->command == NULL || command->command[0] == NULL)
+                (ft_close(&command->outfile), ft_close(&command->infile), free_and_exit(EXIT_FAILURE));
+            execve(exec->command_path, command->command, env_tab());
+            if(access(command->command[0], X_OK) == 0 && 
+                ft_strlen_2d(command->command) == 1 && command->previous == NULL )
+            {
+                if (test_cd(command->command[0]) == EXIT_SUCCESS)
+                    free_and_exit(250);
+            }
+            execve_error(command->command[0]);
         }
-        execve_error(command->command[0]);
+        waitpid(pid, &status, 0);
+        if(WEXITSTATUS(status) == 250)
+            return(exec_cd(command->command[0]));
+        return (WEXITSTATUS(status));
     }
-    waitpid(pid, &status, 0);
-    if(WEXITSTATUS(status) == 250)
-        return(exec_cd(command->command[0]));
-    return (WEXITSTATUS(status));
+    return(exec_builtin(command));
+}
+
+int   exec_single_command(t_command *command)
+{
+    t_exec_data *exec;
+
+    set_child_signals();
+    exec = ft_malloc(sizeof(t_exec_data));
+	init_data(exec, command);
+    if (open_redirections(command) == EXIT_FAILURE)
+    {
+        free_and_exit(EXIT_FAILURE);
+    }
+	dup2(command->infile, STDIN_FILENO);
+    dup2(command->outfile, STDOUT_FILENO);
+    if (command->command == NULL || command->command[0] == NULL)
+		(ft_close(&command->outfile), ft_close(&command->infile), free_and_exit(EXIT_FAILURE));
+	execve(exec->command_path, command->command, env_tab());
+    execve_error(command->command[0]);
+    return(0);
 }

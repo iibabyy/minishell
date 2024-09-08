@@ -46,7 +46,10 @@ int	exec(t_command *command)
 	set_parent_exec_signals();
 	if (command == NULL)
 		return (0);
-	status = exec_command(command);
+	if (command->type != COMMAND)
+		status = exec_command(command);
+	else
+		status = exec_single(command);
 	if (status== 128 + SIGSTOP)
 		ft_putstr_fd("Quit (core dumped)\n", STDERR_FILENO);
 	return (status);

@@ -32,6 +32,8 @@ int exec_builtin(t_command *node)
 {
 	char	**args;
 
+	if(node->command == NULL)
+		return (0);
 	args = node->command;
 	if(ft_strcmp("echo", args[0]) == 0)
 		return(0);
