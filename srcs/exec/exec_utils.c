@@ -41,6 +41,7 @@ int exec_cd(char *str)
 
 void execve_error(char *str)
 {
+	str = replace_newline(str);
     if (strchr(str, '/'))
     {
         ft_putstr_fd("minishell: No such file or directory: ", 2);

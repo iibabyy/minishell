@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 15:17:53 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/08 03:04:33 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/08 23:33:43 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,6 @@ void	init_error_log(void);
 void	error_log(char *error, bool erno);
 void	malloc_failed(char *function);
 void	free_and_exit(int status);
+char	*replace_newline(char *str);
 
 #endif

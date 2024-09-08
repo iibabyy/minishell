@@ -37,6 +37,7 @@ FILES =	srcs/Minishell/minishell.c			\
 		srcs/Minishell/test_utils.c			\
 		srcs/error_utils/free_and_exit.c	\
 		srcs/error_utils/print_err.c		\
+		srcs/error_utils/err_utils.c		\
 		srcs/error_utils/free_utils.c		\
 		srcs/lexing/check_char.c			\
 		srcs/lexing/lexing.c				\
@@ -54,20 +55,20 @@ FILES =	srcs/Minishell/minishell.c			\
 		srcs/exec/exec_utils2.c				\
 		srcs/exec/exec_utils3.c				\
 		srcs/exec/create_path.c             \
+		srcs/exec/signal_utils.c			\
 		srcs/exec/signal.c					\
 		srcs/features/alias_utils.c			\
 		srcs/features/aliases.c				\
+		srcs/features/history.c				\
+		srcs/features/prompt.c				\
+		srcs/features/prompt_utils.c		\
 		srcs/built_in/env_utils_1.c			\
 		srcs/built_in/env_utils_2.c			\
 		srcs/built_in/env.c					\
 		srcs/built_in/export.c				\
-		srcs/built_in/unset.c				\
-		srcs/features/history.c				\
-		srcs/features/prompt.c				\
-		srcs/exec/signal_utils.c			\
 		srcs/built_in/pwd.c					\
+		srcs/built_in/unset.c				\
 		srcs/built_in/cd.c					\
-		srcs/features/prompt_utils.c		\
 
 OBJ = $(FILES:.c=.o)
 

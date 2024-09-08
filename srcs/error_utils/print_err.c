@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:05:52 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/08 22:15:02 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/08 23:42:29 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	print_err(char *err, bool erno)
 {
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
+	err = replace_newline(err);
 	if (erno == true)
 	{
 		perror(err);
@@ -27,6 +28,7 @@ void	print_err(char *err, bool erno)
 
 void	parse_err(char *error, char *token)
 {
+	token = replace_newline(token);
 	if (token == NULL && error != NULL)
 	{
 		ft_putstr_fd("minishell: ", STDERR_FILENO);
@@ -59,6 +61,7 @@ void	error_log(char *error, bool erno)
 		ft_putstr_fd("\n\n", error_log_fd);
 	ft_putnbr_fd(error_num, error_log_fd);
 	ft_putstr_fd(".\n", error_log_fd);
+	error = replace_newline(error);
 	if (erno == true)
 	{
 		ft_putstr_fd(error, error_log_fd);

@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:08:33 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/08 02:08:08 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/08 23:43:45 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int	open_file(t_redirection *redirection)
 
 	fd = open(redirection->file->content, redirection->o_flags, 0644);
 	if (fd == -1)
-		return (perror(redirection->file->content), EXIT_FAILURE);
+		return (print_err(redirection->file->content, true), EXIT_FAILURE);
 	type = redirection->type;
 	if (type == INPUT)
 		target_cmd_fd = &redirection->command->infile;
