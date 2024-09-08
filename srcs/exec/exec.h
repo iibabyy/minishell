@@ -24,6 +24,7 @@ int     exec_builtin(t_command *node);
 int     exec_and(t_command *node);
 int     exec_or(t_command *node);
 int     exec_single_command(t_command *command);
+int     exec_single(t_command *command);
 bool    is_built_in(t_command *node);
 bool    should_fork(t_command *node);
 void	ft_close(int *fd);

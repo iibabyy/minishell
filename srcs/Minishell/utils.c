@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 15:41:37 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/08 16:35:05 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/08 22:25:09 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,10 @@ int	exec(t_command *command)
 	if (command == NULL)
 		return (EXIT_FAILURE);
 	set_parent_exec_signals();
-	status = exec_command(command);
+	if (command->type != COMMAND)
+		status = exec_command(command);
+	else
+		status = exec_single(command);
 	if (status== 128 + SIGSTOP)
 		ft_putstr_fd("Quit (core dumped)\n", STDERR_FILENO);
 	return (status);
