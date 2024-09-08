@@ -28,8 +28,7 @@ typedef struct s_garbage
 # define WORD 1				//	commands, arguments, etc...
 # define OPERATOR 2			//	|, || and &&.
 # define REDIRECTION 3		//	<, <<, >, >>.
-# define STRING 4			// "abcde...", etc...
-# define PARENTHESIS 5		// (...)
+# define PARENTHESIS 4		// (...)
 
 typedef struct s_token
 {

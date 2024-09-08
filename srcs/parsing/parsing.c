@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:10:49 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/08 00:14:56 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/08 02:22:09 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,9 +118,8 @@ t_command	*init_operator(t_parsing *data, t_command *left_command)
 	operator->right = NULL;
 	if (data->curr_token->next == NULL)
 		return (parse_err(TOKEN_ERR, data->curr_token->content), NULL);
-	if (data->curr_token->next->type != WORD
-		&& data->curr_token->next->type != SUB_SHELL)
-		return (parse_err(TOKEN_ERR, data->curr_token->content), NULL);
+	if (data->curr_token->next->type == OPERATOR)
+		return (parse_err(TOKEN_ERR, data->curr_token->next->content), NULL);
 	data->curr_token = data->curr_token->next;
 	return (operator);
 }

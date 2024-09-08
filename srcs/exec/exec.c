@@ -180,8 +180,6 @@ int exec_builtin(t_command *node)
 		return (pwd(args));
 	if(ft_strcmp("export", args[0]) == 0)
 		return (export(args));
-	if(ft_strcmp("unset", args[0]) == 0)
-		return (unset(args));
 	if(ft_strcmp("exit", args[0]) == 0)
 		return (0);
 	return(EXIT_FAILURE);
@@ -190,7 +188,7 @@ int exec_command(t_command *node, t_exec_data *data)
 {
 	int status;
 	
-    	status = 0;
+	status = 0;
 	if (node->type == COMMAND)
 	{
 		if (is_built_in(node))

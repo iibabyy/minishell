@@ -40,6 +40,7 @@ void print_command(t_command *command)
 	int 	i;
 	char	*infile = "STDIN";
 	char	*outfile = "STDOUT";
+	t_redirection	*redirect;
 
 	i = -1;
     if (command->type == COMMAND || command->type == SUB_SHELL)
@@ -52,15 +53,16 @@ void print_command(t_command *command)
 		{
 			printf(" (\"%s\")", command->command[i]);
 		}
-		while (command->redirections != NULL)
+		redirect = command->redirections;
+		while (redirect != NULL)
 		{
-			if (command->redirections->type == OUTPUT || command->redirections->type == APPEND_OUTPUT)
-				outfile = command->redirections->file->content;
-			else if (command->redirections->type == INPUT)
-				infile = command->redirections->file->content;
-			else if (command->redirections->type == HERE_DOC)
+			if (redirect->type == OUTPUT || redirect->type == APPEND_OUTPUT)
+				outfile = redirect->file->content;
+			else if (redirect->type == INPUT)
+				infile = redirect->file->content;
+			else if (redirect->type == HERE_DOC)
 				infile = "HERE_DOC";
-			command->redirections = command->redirections->next;
+			redirect = redirect->next;
 		}
 		printf(" | infile: %s | outfile: %s", infile, outfile);
 	}
@@ -107,8 +109,6 @@ char *type_to_str(int type)
 {
 	if (type == WORD)
 		return (ft_strdup("WORD"));
-	if (type == STRING)
-		return (ft_strdup("STRING"));
 	if (type == OPERATOR)
 		return (ft_strdup("OPERATOR"));
 	if (type == REDIRECTION)
