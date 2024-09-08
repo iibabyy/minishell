@@ -9,7 +9,7 @@ char *get_path(char *command, char **paths)
     char *finalpath;
 
     i = 0;
-    if (access(command, X_OK) == 0)
+    if (command == NULL || access(command, X_OK) == 0)
             return(command);
     while(paths[i])
     {

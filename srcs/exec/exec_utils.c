@@ -39,7 +39,7 @@ void init_data(t_exec_data *data, t_command *command)
 
 bool is_built_in(t_command *node)
 {
-    if (node->command == NULL)
+    if (node->command == NULL || node->command[0] == NULL)
 		return (false);
 	if(ft_strcmp("echo", node->command[0]) == 0)
         return (true);
@@ -85,9 +85,9 @@ int   exec_single_command(t_command *command, t_exec_data *exec)
             free_and_exit(EXIT_FAILURE);
 		((dup2(command->infile, STDIN_FILENO), dup2(command->outfile, STDOUT_FILENO)));
         if (command->command == NULL || command->command[0] == NULL)
-			free_and_exit (0);
+			(ft_close(&command->outfile), ft_close(&command->infile), free_and_exit(EXIT_FAILURE));
 		execve(exec->command_path, command->command, env_tab());
-        if(access(command->command[0], X_OK) == 0 && ft_strlen_2d(command->command) == 1 && command->previous == NULL )
+		if(access(command->command[0], X_OK) == 0 && ft_strlen_2d(command->command) == 1 && command->previous == NULL )
         {
             if (test_cd(command->command[0]) == EXIT_SUCCESS)
                 free_and_exit(250);

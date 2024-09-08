@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:10:05 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/06 04:07:18 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/08 03:52:01 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,6 @@ bool			is_standart_fd(int fd);
 t_redirection	*init_here_doc(t_parsing *data);
 int				open_here_doc(t_redirection *redirection);
 char			*check_heredoc_sig(char *input, char *eof);
+void			ft_close(int *fd);
 
 #endif
