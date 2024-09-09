@@ -93,7 +93,7 @@ int   exec_single(t_command *command)
 int   exec_single_command(t_command *command)
 {
     t_exec_data *exec;
-	set_child_signals();
+
 	exec = ft_malloc(sizeof(t_exec_data));
 	init_data(exec, command);
 	if (open_redirections(command) == EXIT_FAILURE)

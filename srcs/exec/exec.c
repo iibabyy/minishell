@@ -51,7 +51,7 @@ int	forking_pipe_node(t_command *node, int pos, int fd[])
 	pid = ft_fork(node);
 	if (pid == 0)
 	{
-		set_child_signals();
+		set_subshell_signals();
 		if (pos == LEFT_NODE)
 		{
 			ft_close(&fd[0]);
