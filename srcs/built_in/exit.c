@@ -1,17 +1,28 @@
 #include "built_in.h"
 
-int	exit(char **arg)
+static bool	first_error(bool getter);
+static bool	is_one_arg(char **arg);
+static bool	is_first_arg_ok(char **arg);
+
+int	ft_exit(char **arg)
 {
 	bool	one_arg;
 	bool	first_arg_ok;
 
-	if (arg[1] == NULL)
+	first_error(false);
+	ft_putendl_fd("exit", STDERR_FILENO);
+	if (arg == NULL || arg[1] == NULL)
 		free_and_exit(get_code(0, false));
-	one_arg = is_one_arg(arg);
 	first_arg_ok = is_first_arg_ok(arg);
+	if (first_arg_ok == false)
+		free_and_exit(2);
+	one_arg = is_one_arg(arg);
+	if (first_arg_ok == true && one_arg == true)
+		free_and_exit(get_code(0, false));
+	return (EXIT_FAILURE);
 }
 
-bool	is_first_arg_ok(char **arg)
+static bool	is_first_arg_ok(char **arg)
 {
 	int	i;
 	if (arg == NULL || arg[1] == NULL)
@@ -20,18 +31,37 @@ bool	is_first_arg_ok(char **arg)
 	while (arg[1][++i] != '\0')
 	{
 		if (ft_isdigit(arg[1][i]) == false)
+		{
+			if (first_error(true) == true)
+			{
+				ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
+				ft_putstr_fd(arg[1], STDERR_FILENO);
+				ft_putendl_fd(": numeric argument required", STDERR_FILENO);
+			}
 			return (false);
+		}
 	}
+	return (true);
 }
 
-bool	is_one_arg(char **arg)
+static bool	is_one_arg(char **arg)
 {
 	if (arg == NULL || arg[1] == NULL)
 		return (false);
 	if (arg[1] != NULL && arg[2] == NULL)
 		return (true);
-	ft_putstr_fd("", STDERR_FILENO);
+	if (first_error(true) == true)
+		print_err("exit: too many arguments", false);
 	return (false);
 }
 
-
+static bool	first_error(bool getter)
+{
+	static bool	first = true;
+	
+	if (getter == false)
+		return (first = true, true);
+	if (first == true)
+		return (first = false, true);
+	return (false);
+}

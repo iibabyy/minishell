@@ -69,6 +69,7 @@ FILES =	srcs/Minishell/minishell.c			\
 		srcs/built_in/pwd.c					\
 		srcs/built_in/unset.c				\
 		srcs/built_in/cd.c					\
+		srcs/built_in/exit.c				\
 
 OBJ = $(FILES:.c=.o)
 
