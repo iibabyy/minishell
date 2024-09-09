@@ -45,6 +45,8 @@ int exec_builtin(t_command *node)
 		return (pwd(args));
 	if(ft_strcmp("export", args[0]) == 0)
 		return (export(args));
+	if(ft_strcmp("env", args[0]) == 0)
+		return (env(args));
 	if(ft_strcmp("exit", args[0]) == 0)
 		return (0);
 	return(EXIT_FAILURE);
