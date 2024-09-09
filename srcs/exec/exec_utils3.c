@@ -28,10 +28,6 @@ int exec_sub_shell(t_command *node)
 	}
 	waitpid(pid, &status, 0);
 	set_exit_code(status);
-	// if (get_code(0, false) == 128 + SIGQUIT)
-	// 	ft_putstr_fd("Quit (core dumped)\n", STDERR_FILENO);
-	// if (get_code(0, false) == 128 + SIGINT)
-	// 	ft_putstr_fd("\n", STDERR_FILENO);
 	return(get_code(0, false));
 }
 

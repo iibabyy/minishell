@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:08:56 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/09 03:56:25 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/09 04:25:37 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,6 @@ int	add_words_to_command(t_parsing *data)
 		}
 		data->curr_token = data->curr_token->next;
 	}
-	command->command[i] = NULL;
-	return (EXIT_SUCCESS);
+	
+	return (command->command[i] = NULL, EXIT_SUCCESS);
 }
