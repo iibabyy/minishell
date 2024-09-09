@@ -8,7 +8,7 @@ int exec_sub_shell(t_command *node)
 {
 	t_command	*command;
 	int			status;
-	node->is_child = true;
+
 	set_subshell_signals();
 	open_redirections(node);
 	ft_dup2(&node->infile, STDIN_FILENO);
