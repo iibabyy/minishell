@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:08:56 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/09 04:25:37 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/09 22:23:31 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ t_command	*init_command(t_parsing *data)
 	if (command->command == NULL)
 		return (NULL);
 	command->command[0] = NULL;
-	command->is_subshell = false;
+	command->is_child = false;
 	return (command);
 }
 

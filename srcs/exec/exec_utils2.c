@@ -1,8 +1,5 @@
-#include "../../includes/minishell.h"
 #include "exec.h"
 #include "../built_in/built_in.h"
-#include "exec.h"
-#include <unistd.h>
 
 void ft_dup2(int *fd1, int fd2)
 {
@@ -43,4 +40,31 @@ void init_data(t_exec_data *data, t_command *command)
         if (data->path_to_join == NULL)
             free_and_exit(1);
         data->command_path = create_command_path(data , command);
+}
+
+int	ft_waitpid(int pid)
+{
+	int status;
+
+	if (waitpid(pid, &status, 0) == -1)
+		return (EXIT_FAILURE);
+	set_status(status);
+	status = get_status();
+	if (status == 128 + SIGQUIT)
+		ft_putstr_fd("Quit (core dumped)\n", STDERR_FILENO);
+	if (status == 128 + SIGINT)
+		ft_putstr_fd("\n", STDERR_FILENO);
+	return (status);
+}
+
+int	ft_fork(t_command *command)
+{
+	int	pid;
+
+	pid = fork();
+	if (pid == -1)
+		free_and_exit(EXIT_FAILURE);
+	if (pid == 0)
+		command->is_child = true;
+	return (pid);
 }

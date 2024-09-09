@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 00:42:23 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/08 21:57:43 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/09 22:12:55 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ char	*add_arrow(void)
 	char	*color;
 	char	*arrow;
 
-	if (get_code(0, false) == EXIT_SUCCESS)
+	if (get_status() == EXIT_SUCCESS)
 		color = "\001\033[32;5m\002";
 	else
 		color = "\001\033[31;5m\002";

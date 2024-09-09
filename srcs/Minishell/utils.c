@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 15:41:37 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/09 04:08:53 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/09 23:35:45 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	*get_line(void)
 	if (str == NULL)
 	{
 		printf("exit\n");
-		free_and_exit(get_code(0, GET));
+		free_and_exit(get_status());
 	}
 	if (is_only_space(str) == true)
 		return (free(str), NULL);
@@ -46,7 +46,7 @@ int	exec(t_command *command)
 	if (command == NULL)
 		return (EXIT_FAILURE);
 	set_parent_exec_signals();
-	if (command->type != COMMAND)
+	if (command->type != COMMAND && command->type != SUB_SHELL)
 		status = exec_command(command);
 	else
 		status = exec_single(command);

@@ -21,11 +21,10 @@ int	forking_pipe_node(t_command *node, int pos, int fd[])
 	int	pid;
 	int	status;
 
-	
-	pid = fork();
+	pid = ft_fork(node);
 	if (pid == 0)
 	{
-		set_child_signals();
+		set_subshell_signals();
 		if (pos == LEFT_NODE)
 		{
 			ft_close(&fd[0]);
@@ -44,29 +43,17 @@ int	forking_pipe_node(t_command *node, int pos, int fd[])
 int	exec_pipe(t_command *node)
 {
 	int	pid[2];
-	int	status;
 	int	fd[2];
 
 	ft_pipe(fd);
 	pid[0] = forking_pipe_node(node->left, LEFT_NODE, fd);
 	pid[1] = forking_pipe_node(node->right, RIGHT_NODE, fd);
-	ft_close(&fd[1]);
-	ft_close(&fd[0]);
+	(ft_close(&fd[1]), ft_close(&fd[0]));
 	(ft_close(&node->left->infile), ft_close(&node->right->infile));
 	(ft_close(&node->left->outfile), ft_close(&node->right->outfile));
-	waitpid(pid[0], &status, 0);
-	set_exit_code(status);
-	if (get_code(0, false) == 128 + SIGQUIT)
-		ft_putstr_fd("Quit (core dumped)\n", STDERR_FILENO);
-	if (get_code(0, false) == 128 + SIGINT)
-		ft_putstr_fd("\n", STDERR_FILENO);
-	waitpid(pid[1], &status, 0);
-	set_exit_code(status);
-	if (get_code(0, false) == 128 + SIGQUIT)
-		ft_putstr_fd("Quit (core dumped)\n", STDERR_FILENO);
-	if (get_code(0, false) == 128 + SIGINT)
-		ft_putstr_fd("\n", STDERR_FILENO);
-	return (get_code(0, false));
+	ft_waitpid(pid[0]);
+	ft_waitpid(pid[1]);
+	return (get_status());
 }
 
 int	exec_command(t_command *node)

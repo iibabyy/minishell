@@ -67,11 +67,13 @@ typedef struct s_command
 	struct s_command		*left;
 	struct s_command		*right;
 	struct s_command		*previous;
+	int						pid;
+	int						*pipe;
 	int						infile;
 	int						outfile;
 	int						type;
 	int						weight;
-	bool					is_subshell;
+	bool					is_child;
 }	t_command;
 
 typedef struct s_here_doc

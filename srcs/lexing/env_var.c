@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:33:50 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/08 01:40:52 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/09 22:12:55 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ char	*env_to_string(char	*str, int *dollar_index)
 
 	start = ++*dollar_index;
 	if (str[*dollar_index] == '?')
-		return (++*dollar_index, ft_itoa(get_code(0, false)));
+		return (++*dollar_index, ft_itoa(get_status()));
 	if (ft_isalpha(str[*dollar_index]) == false && str[*dollar_index] != '_')
 		return (NULL);
 	while (ft_isalnum(str[*dollar_index]) == true || str[*dollar_index] == '_')
