@@ -10,15 +10,15 @@ int	ft_exit(char **arg)
 	bool	first_arg_ok;
 
 	first_error(false);
-	ft_putendl_fd("exit", STDERR_FILENO);
+	printf("exit\n");
 	if (arg == NULL || arg[1] == NULL)
-		free_and_exit(get_code(0, false));
+		free_and_exit(get_status());
 	first_arg_ok = is_first_arg_ok(arg);
+	one_arg = is_one_arg(arg);
 	if (first_arg_ok == false)
 		free_and_exit(2);
-	one_arg = is_one_arg(arg);
 	if (first_arg_ok == true && one_arg == true)
-		free_and_exit(get_code(0, false));
+		free_and_exit(ft_atoi(arg[1]));
 	return (EXIT_FAILURE);
 }
 

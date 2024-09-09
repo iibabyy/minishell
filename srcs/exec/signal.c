@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 12:47:24 by mdembele          #+#    #+#             */
-/*   Updated: 2024/09/09 03:38:39 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/09 23:27:31 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void    if_sigint(int sig)
 {
     g_signal = 128 + sig;
     rl_done = 1;
-	get_code(g_signal, SET);
+	last_status_code(128 + sig, SET);
 }
 
 void	exit_subshell(int sig)

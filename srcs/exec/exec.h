@@ -33,7 +33,10 @@ void	ft_dup2(int *fd1, int fd2);
 int		sig_event(void);
 void    if_sigint(int sig);
 void	set_parent_exec_signals(void);
-void	set_exit_code(int status);
+void	set_status(int status);
 void	set_subshell_signals(void);
+int		ft_waitpid(int pid);
+int		last_status_code(int status, bool setter);
+int	ft_fork(t_command *command);
 
 #endif

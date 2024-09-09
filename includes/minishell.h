@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 15:08:49 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/09 02:56:07 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/09 22:13:38 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int			ft_exit(char **arg);
 
 void	set_parent_signals(void);
 void	set_child_signals(void);
-int		get_code(int error_code, bool setter);
+int		get_status(void);
 
 // debug
 
