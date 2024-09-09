@@ -6,13 +6,14 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 15:19:09 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/09 02:14:07 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/09 02:25:56 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "built_in.h"
 
 static t_env_var	*arg_to_env_var(char *arg);
+static void			export_err(char identifier);
 
 int	export(char **args)
 {
@@ -94,23 +95,21 @@ int	parse_export_arg(char *arg)
 	int	i;
 
 	i = 0;
-	if (arg[i] == '"')
+	if (ft_isalpha(arg[i]) == false && arg[i] != '_')
+		return (export_err(arg[i]), EXIT_FAILURE);
+	++i;
+	while (arg[i] != '\0' && arg[i] != '=')
 	{
-		if (arg[ft_strlen(arg) - 1] != '"')
-			return (print_err("export: not a valid identifier", false),
-				EXIT_FAILURE);
+		if (ft_isalnum(arg[i]) == false && arg[i] != '_')
+			return (export_err(arg[i]), EXIT_FAILURE);
+		++i;
 	}
-	if (arg[i] == '\'')
-	{
-		if (arg[ft_strlen(arg) - 1] != '\'')
-			return (print_err("export: not a valid identifier", false),
-				EXIT_FAILURE);
-	}
-	if (arg[i] == ' ' || arg[i] == '\0')
-		return (print_err("export: not a valid identifier", false),
-				EXIT_FAILURE);
-	if (ft_isalpha(arg[i]) == 0 && arg[i] != '_')
-		return (print_err("export: not a valid identifier", false),
-				EXIT_FAILURE);
 	return (EXIT_SUCCESS);
+}
+
+static void	export_err(char identifier)
+{
+	ft_putstr_fd("export: ", STDERR_FILENO);
+	ft_putchar_fd(identifier, STDERR_FILENO);
+	ft_putendl_fd(": not a valid identifier", STDERR_FILENO);
 }

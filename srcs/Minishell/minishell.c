@@ -6,13 +6,15 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:42:32 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/08 04:48:29 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/09 02:18:49 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 
 volatile sig_atomic_t g_signal = 0;
+
+//M
 
 int	main(int ac, char **av, char **envp)
 {
