@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 15:19:09 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/07 17:38:10 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/09 02:14:07 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,20 +97,20 @@ int	parse_export_arg(char *arg)
 	if (arg[i] == '"')
 	{
 		if (arg[ft_strlen(arg) - 1] != '"')
-			return (print_err("export: wrong argument format", false),
+			return (print_err("export: not a valid identifier", false),
 				EXIT_FAILURE);
 	}
 	if (arg[i] == '\'')
 	{
 		if (arg[ft_strlen(arg) - 1] != '\'')
-			return (print_err("export: wrong argument format", false),
+			return (print_err("export: not a valid identifier", false),
 				EXIT_FAILURE);
 	}
 	if (arg[i] == ' ' || arg[i] == '\0')
-		return (print_err("export: wrong argument format", false),
+		return (print_err("export: not a valid identifier", false),
 				EXIT_FAILURE);
 	if (ft_isalpha(arg[i]) == 0 && arg[i] != '_')
-		return (print_err("export: wrong argument format", false),
+		return (print_err("export: not a valid identifier", false),
 				EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
