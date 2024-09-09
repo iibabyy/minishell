@@ -16,35 +16,6 @@ bool	should_fork(t_command *node)
 	return (false);
 }
 
-int	forking_pipe_node(t_command *node, int pos)
-{
-	int	pid;
-	int	status;
-	int	fd[2];
-
-	ft_pipe(fd);
-	pid = fork();
-	if (pid == 0)
-	{
-		set_child_signals();
-		if (pos == LEFT_NODE)
-		{
-			ft_close(&fd[0]);
-			ft_dup2(&fd[1], STDOUT_FILENO);
-		}
-		else
-		{
-			ft_close(&fd[1]);
-			ft_dup2(&fd[0], STDIN_FILENO);
-		}
-		status = exec_command(node);
-		free_and_exit(status);
-	}
-	ft_close(&fd[0]);
-	ft_close(&fd[1]);
-	return (pid);
-}
-
 /*void ffcd(t_command *node, int pid[2], bool wait_lr[2],  int status[2])
 {
 	int	status;
@@ -71,18 +42,57 @@ int	forking_pipe_node(t_command *node, int pos)
 		wait_lr[1] = false;
 	}
 }*/
+
+int	forking_pipe_node(t_command *node, int pos, int fd[])
+{
+	int	pid;
+	int	status;
+
+	
+	pid = fork();
+	if (pid == 0)
+	{
+		set_child_signals();
+		if (pos == LEFT_NODE)
+		{
+			ft_close(&fd[0]);
+			ft_dup2(&fd[1], STDOUT_FILENO);
+		}
+		else
+		{
+			ft_close(&fd[1]);
+			ft_dup2(&fd[0], STDIN_FILENO);
+		}
+		status = exec_command(node);
+		free_and_exit(status);
+	}
+	return (pid);
+}
 int	exec_pipe(t_command *node)
 {
 	int	pid[2];
 	int	status;
+	int	fd[2];
 
-	pid[0] = forking_pipe_node(node->left, LEFT_NODE);
-	pid[1] = forking_pipe_node(node->right, RIGHT_NODE);
+	ft_pipe(fd);
+	pid[0] = forking_pipe_node(node->left, LEFT_NODE, fd);
+	pid[1] = forking_pipe_node(node->right, RIGHT_NODE, fd);
+	ft_close(&fd[1]);
+	ft_close(&fd[0]);
 	(ft_close(&node->left->infile), ft_close(&node->right->infile));
 	(ft_close(&node->left->outfile), ft_close(&node->right->outfile));
 	waitpid(pid[0], &status, 0);
+	set_exit_code(status);
+	if (get_code(0, false) == 128 + SIGQUIT)
+		ft_putstr_fd("Quit (core dumped)\n", STDERR_FILENO);
+	if (get_code(0, false) == 128 + SIGINT)
+		ft_putstr_fd("\n", STDERR_FILENO);
 	waitpid(pid[1], &status, 0);
 	set_exit_code(status);
+	if (get_code(0, false) == 128 + SIGQUIT)
+		ft_putstr_fd("Quit (core dumped)\n", STDERR_FILENO);
+	if (get_code(0, false) == 128 + SIGINT)
+		ft_putstr_fd("\n", STDERR_FILENO);
 	return (get_code(0, false));
 }
 

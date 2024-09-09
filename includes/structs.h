@@ -71,6 +71,7 @@ typedef struct s_command
 	int						outfile;
 	int						type;
 	int						weight;
+	bool					is_subshell;
 }	t_command;
 
 typedef struct s_here_doc

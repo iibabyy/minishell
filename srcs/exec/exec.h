@@ -34,5 +34,6 @@ int		sig_event(void);
 void    if_sigint(int sig);
 void	set_parent_exec_signals(void);
 void	set_exit_code(int status);
+void	set_subshell_signals(void);
 
 #endif

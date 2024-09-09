@@ -14,6 +14,8 @@ int exec_sub_shell(t_command *node)
 	pid = fork();
 	if (pid == 0)
 	{
+		node->is_subshell = true;
+		set_subshell_signals();
 		open_redirections(node);
 		ft_dup2(&node->infile, STDIN_FILENO);
 		ft_dup2(&node->outfile, STDOUT_FILENO);
@@ -25,7 +27,12 @@ int exec_sub_shell(t_command *node)
 		free_and_exit(status);
 	}
 	waitpid(pid, &status, 0);
-	return(status);
+	set_exit_code(status);
+	// if (get_code(0, false) == 128 + SIGQUIT)
+	// 	ft_putstr_fd("Quit (core dumped)\n", STDERR_FILENO);
+	// if (get_code(0, false) == 128 + SIGINT)
+	// 	ft_putstr_fd("\n", STDERR_FILENO);
+	return(get_code(0, false));
 }
 
 int exec_builtin(t_command *node)
@@ -84,6 +91,8 @@ int exec_or(t_command *node)
 		ft_putstr_fd("\n", STDERR_FILENO);
 	if((status != 0 && status <= 128) || status == 128 + SIGQUIT)
 	{
+		if (status == 128 + SIGQUIT)
+			return (status);
 		if (should_fork(node->right))
 			status = forking_node(node->right);
 		else
