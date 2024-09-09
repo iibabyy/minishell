@@ -6,19 +6,21 @@
 int exec_sub_shell(t_command *node)
 {
 	t_command	*command;
-	int			status;
 
 	set_subshell_signals();
 	open_redirections(node);
 	ft_dup2(&node->infile, STDIN_FILENO);
 	ft_dup2(&node->outfile, STDOUT_FILENO);
 	command = parse_subshell(node->command[0]);
-	if (command != NULL)
-		status = exec(command);
-	else
-		status = EXIT_FAILURE;
-	free_and_exit(status);
-	return (status);
+	if (command == NULL)
+		free_and_exit(EXIT_FAILURE);
+	exec(command);
+	if (command->sigint == true)
+		print_nl();
+	else if (command->sigquit == true)
+		print_quit();
+	free_and_exit(get_status());
+	return (get_status());
 }
 
 int exec_builtin(t_command *node)
@@ -56,7 +58,6 @@ int forking_node(t_command *node)
 	pid = ft_fork(node);
 	if (pid == 0)
 	{
-		set_child_signals();
 		exec_command(node);
 		free_and_exit(get_status());
 	}
@@ -73,16 +74,26 @@ int exec_or(t_command *node)
 	else
 		status = exec_command(node->left);
 	status = get_status();
-	if (status == 128 + SIGQUIT)
-		print_quit();
+	if (get_status() == 128 + SIGQUIT)
+	{
+		if (node->previous && node->previous->type == PIPE)
+			node->previous->sigquit = true;
+		else
+			node->sigquit = true;
+	}
 	if((status != 0 && status <= 128) || status == 128 + SIGQUIT)
 	{
 		if (should_fork(node->right))
 			status = forking_node(node->right);
 		else
 			status = exec_command(node->right);
-		if (status == 128 + SIGQUIT)
-			print_quit();
+		if (get_status() == 128 + SIGQUIT)
+		{
+			if (node->previous && node->previous->type == PIPE)
+				node->previous->sigquit = true;
+			else
+				node->sigquit = true;
+		}
 	}
 	return(get_status());
 }
@@ -96,16 +107,26 @@ int exec_and(t_command *node)
 	else
 		status = exec_command(node->left);
 	status = get_status();
-	if (status == 128 + SIGQUIT)
-		print_quit();
+	if (get_status() == 128 + SIGQUIT)
+	{
+		if (node->previous && node->previous->type == PIPE)
+			node->previous->sigquit = true;
+		else
+			node->sigquit = true;
+	}
 	if(status == 0)
 	{
 		if (should_fork(node->right))
 			status = forking_node(node->right);
 		else
 			status = exec_command(node->right);
-		if (status == 128 + SIGQUIT)
-			print_quit();
+		if (get_status() == 128 + SIGQUIT)
+		{
+			if (node->previous && node->previous->type == PIPE)
+				node->previous->sigquit = true;
+			else
+				node->sigquit = true;
+		}
 	}
 	return(get_status());
 }

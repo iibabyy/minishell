@@ -79,7 +79,7 @@ int	exec_pipe(t_command *node)
 	(ft_close(&node->left->infile), ft_close(&node->right->infile));
 	(ft_close(&node->left->outfile), ft_close(&node->right->outfile));
 	ft_waitpid(pid[0], node);
-	if (get_status() == 128 + SIGQUIT)
+	if (get_status() == 128 + SIGQUIT && node->left->type)
 	{
 		if (node->previous && node->previous->type == PIPE)
 			node->previous->sigquit = true;

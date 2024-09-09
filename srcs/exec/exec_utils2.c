@@ -62,7 +62,10 @@ int	ft_fork(t_command *command)
 	if (pid == -1)
 		free_and_exit(EXIT_FAILURE);
 	if (pid == 0)
+	{
 		command->is_child = true;
+		set_child_signals();
+	}
 	return (pid);
 }
 
