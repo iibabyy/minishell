@@ -74,6 +74,8 @@ typedef struct s_command
 	int						type;
 	int						weight;
 	bool					is_child;
+	bool					sigint;
+	bool					sigquit;
 }	t_command;
 
 typedef struct s_here_doc

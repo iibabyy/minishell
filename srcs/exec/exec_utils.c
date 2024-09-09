@@ -85,7 +85,7 @@ int   exec_single(t_command *command)
             // }
             // execve_error(command->command[0]);
         }
-		return (ft_waitpid(pid));
+		return (ft_waitpid(pid, command));
     }
     return(last_status_code(exec_command(command), SET), get_status());
 }

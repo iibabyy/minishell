@@ -1,7 +1,6 @@
 #include "../../includes/minishell.h"
 #include "exec.h"
 #include "../built_in/built_in.h"
-#include "exec.h"
 #include <unistd.h>
 
 int exec_sub_shell(t_command *node)
@@ -13,7 +12,7 @@ int exec_sub_shell(t_command *node)
 	open_redirections(node);
 	ft_dup2(&node->infile, STDIN_FILENO);
 	ft_dup2(&node->outfile, STDOUT_FILENO);
-	command = parse(node->command[0]);
+	command = parse_subshell(node->command[0]);
 	if (command != NULL)
 		status = exec(command);
 	else
@@ -61,7 +60,7 @@ int forking_node(t_command *node)
 		exec_command(node);
 		free_and_exit(get_status());
 	}
-	ft_waitpid(pid);
+	ft_waitpid(pid, node);
 	return (get_status());
 }
 
@@ -74,12 +73,16 @@ int exec_or(t_command *node)
 	else
 		status = exec_command(node->left);
 	status = get_status();
+	if (status == 128 + SIGQUIT)
+		print_quit();
 	if((status != 0 && status <= 128) || status == 128 + SIGQUIT)
 	{
 		if (should_fork(node->right))
 			status = forking_node(node->right);
 		else
 			status = exec_command(node->right);
+		if (status == 128 + SIGQUIT)
+			print_quit();
 	}
 	return(get_status());
 }
@@ -92,12 +95,17 @@ int exec_and(t_command *node)
 		status = forking_node(node->left);
 	else
 		status = exec_command(node->left);
+	status = get_status();
+	if (status == 128 + SIGQUIT)
+		print_quit();
 	if(status == 0)
 	{
 		if (should_fork(node->right))
 			status = forking_node(node->right);
 		else
 			status = exec_command(node->right);
+		if (status == 128 + SIGQUIT)
+			print_quit();
 	}
 	return(get_status());
 }

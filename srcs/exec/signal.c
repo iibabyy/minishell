@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 12:47:24 by mdembele          #+#    #+#             */
-/*   Updated: 2024/09/09 23:27:31 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/10 00:02:28 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,16 @@ void	set_subshell_signals(void)
 	signal(SIGQUIT, exit_subshell);
     signal(SIGTSTP, SIG_IGN);
     signal(SIGINT, exit_subshell);
+}
+
+void	print_nl()
+{
+	ft_putstr_fd("\n", STDERR_FILENO);
+}
+
+void	print_quit()
+{
+	ft_putstr_fd("Quit (core dumped)\n", STDERR_FILENO);
 }
 
 void	set_parent_exec_signals(void)
