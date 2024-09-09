@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 15:18:15 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/09 02:38:04 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/09 04:15:21 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@ int	env(char **args)
 	{
 		if (temp->value != NULL)
 		{
-			if (printf("%s=%s\n", temp->variable, temp->value) == -1)
-				return (EXIT_FAILURE);
+			printf("%s=%s\n", temp->variable, temp->value);
 		}
 		temp = temp->next;
 	}

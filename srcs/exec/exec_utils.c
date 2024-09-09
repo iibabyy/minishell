@@ -92,7 +92,7 @@ int   exec_single(t_command *command)
 		if (get_code(0, false) == 128 + SIGINT)
 			ft_putstr_fd("\n", STDERR_FILENO);
     }
-    return(exec_builtin(command));
+    return(set_exit_code(exec_builtin(command)), get_code(0, false));
 }
 
 int   exec_single_command(t_command *command)
