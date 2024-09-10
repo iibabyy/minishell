@@ -51,8 +51,22 @@ int	exec_pipe(t_command *node)
 	(ft_close(&fd[1]), ft_close(&fd[0]));
 	(ft_close(&node->left->infile), ft_close(&node->right->infile));
 	(ft_close(&node->left->outfile), ft_close(&node->right->outfile));
-	ft_waitpid(pid[0]);
-	ft_waitpid(pid[1]);
+	ft_waitpid(pid[0], node);
+	if (get_status() == 128 + SIGQUIT /*&& node->left->type*/)
+	{
+		if (node->previous && node->previous->type == PIPE)
+			node->previous->sigquit = true;
+		else
+			node->sigquit = true;
+	}
+	ft_waitpid(pid[1], node);
+	if (get_status() == 128 + SIGQUIT)
+	{
+		if (node->previous && node->previous->type == PIPE)
+			node->previous->sigquit = true;
+		else
+			node->sigquit = true;
+	}
 	return (get_status());
 }
 

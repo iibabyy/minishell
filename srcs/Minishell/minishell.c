@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:42:32 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/09 04:18:14 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/10 05:36:02 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 volatile sig_atomic_t g_signal = 0;
 
 //M
+void	print_sig();
 
 int	main(int ac, char **av, char **envp)
 {
@@ -37,8 +38,12 @@ int	main(int ac, char **av, char **envp)
 		command = parse(str);
 		if (command == NULL)
 			continue ;
-		print_AST(command);
+		// print_AST(command);
 		exec(command);
+		if (command->sigint == true)
+			print_nl();
+		else if (command->sigquit == true)
+			print_quit();
 		clear_garbage();
 	}
 	return (0);

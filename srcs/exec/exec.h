@@ -35,8 +35,13 @@ void    if_sigint(int sig);
 void	set_parent_exec_signals(void);
 void	set_status(int status);
 void	set_subshell_signals(void);
-int		ft_waitpid(int pid);
+int		ft_waitpid(int pid, t_command *command);
 int		last_status_code(int status, bool setter);
 int	ft_fork(t_command *command);
+void	print_nl();
+void	print_quit();
+void	print_sig();
+t_command	*parse_subshell(char *input);
+t_token	*input_to_tokens_subshell(char *input);
 
 #endif
