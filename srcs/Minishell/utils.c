@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 15:41:37 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/10 02:09:53 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/10 05:04:08 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,13 @@ int	init_minishell(char **env)
 char	*get_line(void)
 {
 	char	*str;
+	char	*temp;
 
-	str = readline(minishell_prompt());
+	temp = readline(minishell_prompt());
 	if (g_signal != 0)
 		return (NULL);
+	str = ft_strdup(temp);
+	free(temp);
 	if (str == NULL)
 	{
 		printf("exit\n");
@@ -43,12 +46,10 @@ int    exec(t_command *command)
 {
     int            status;
 
-    if (command == NULL)
-        return (EXIT_FAILURE);
-    if (command->is_child == true)
-        set_child_signals();
-    else
-        set_parent_exec_signals();
+	if (command == NULL)
+		return (EXIT_FAILURE);
+	if (command->is_child == false)
+		set_parent_exec_signals();
     if (command->type != COMMAND && command->type != SUB_SHELL)
         status = exec_command(command);
     else
@@ -108,6 +109,5 @@ t_token	*input_to_tokens_subshell(char *input)
 		if (meta_to_token(&input, &i, &tokens) == EXIT_FAILURE)
 			return (ft_addhistory(input), ft_lstclear(&tokens, ft_free), NULL);
 	}
-	ft_addhistory(input);
 	return (tokens);
 }

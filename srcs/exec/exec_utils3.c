@@ -15,8 +15,8 @@ int exec_sub_shell(t_command *node)
     if (command == NULL)
         free_and_exit(EXIT_FAILURE);
     command->is_child = true;
-    exec(command);
-    free_and_exit(get_status());
+    // if (should_fork(command))
+    free_and_exit(exec(command));
     return (get_status());
 }
 
