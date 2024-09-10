@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:05:42 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/08 03:05:22 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/10 20:17:02 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,5 @@ void	free_all(void)
 void	print_err_and_exit(char *err, int status, bool erno)
 {
 	print_err(err, erno);
-	exit(status);
+	free_and_exit(status);
 }

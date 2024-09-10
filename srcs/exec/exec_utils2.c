@@ -57,29 +57,3 @@ int    ft_waitpid(int pid, t_command *command)
         last_command(command)->sigquit = true;
     return (get_status());
 }
-
-int	ft_fork(t_command *command)
-{
-	int	pid;
-
-	pid = fork();
-	if (pid == -1)
-		free_and_exit(EXIT_FAILURE);
-	if (pid == 0)
-	{
-		command->is_child = true;
-		set_child_signals();
-	}
-	return (pid);
-}
-
-void	print_sig()
-{
-	int	status;
-
-	status = get_status();
-	if (status == 128 + SIGQUIT)
-		ft_putstr_fd("Quit (core dumped)\n", STDERR_FILENO);
-	if (status == 128 + SIGINT)
-		ft_putstr_fd("\n", STDERR_FILENO);
-}

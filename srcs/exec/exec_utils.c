@@ -43,7 +43,7 @@ int exec_cd(char *str)
 {
     char **cd_args;
 
-    cd_args = ft_malloc(sizeof(char *) * 3);
+	cd_args = ft_malloc(sizeof(char *) * 3);
     cd_args[0] = ft_strdup("cd");
     cd_args[1] = ft_strdup(str);
     cd_args[2] = NULL;

@@ -8,12 +8,40 @@
 
 void	print_command(t_command *command);
 
-bool	should_fork(t_command *node)
+int	exec_single_built_in(t_command *command)
 {
-	if (node->type == SUB_SHELL || (node->type == COMMAND
-			&& is_built_in(node) == false))
-		return (true);
-	return (false);
+	int	fd[2];
+	int	status;
+
+	pipe(fd);
+	dup2(STDIN_FILENO, fd[0]);
+	close(STDIN_FILENO);
+	dup2(STDOUT_FILENO, fd[1]);
+	close(STDOUT_FILENO);
+	open_redirections(command);
+	status = exec_single(command);
+	dup2(fd[0], STDIN_FILENO);
+	close(fd[0]);
+	dup2(fd[1], STDOUT_FILENO);
+	close(fd[1]);
+	return (status);
+}
+
+int    exec(t_command *command)
+{
+    int	status;
+
+	if (command == NULL)
+		return (EXIT_FAILURE);
+	if (command->is_child == false)
+		set_parent_exec_signals();
+    if (command->type != COMMAND && command->type != SUB_SHELL)
+        status = exec_command(command);
+	else if (command->type == COMMAND && is_built_in(command) == true)
+		status = exec_single_built_in(command);
+	else
+		status = exec_single(command);
+    return (status);
 }
 
 int	forking_pipe_node(t_command *node, int pos, int fd[])
