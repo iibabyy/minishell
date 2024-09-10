@@ -33,8 +33,6 @@ int exec_builtin(t_command *node)
 	// ft_close(&node->infile);
 	// ft_close(&node->outfile);
 	// set_child_signals();
-	if (open_redirections(node) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
 	if(ft_strcmp("echo", args[0]) == 0)
 		status = echo_minishell(args);
 	if(ft_strcmp("unset", args[0]) == 0)
