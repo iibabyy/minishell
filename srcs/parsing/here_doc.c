@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:10:53 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/08 14:54:46 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/10 17:29:44 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	open_here_doc(t_redirection *redirection)
 		ft_free(input);
 	}
 	ft_close_fd(&here_doc->pipe[1]);
+	ft_close_fd(&here_doc->pipe[0]);
 	return (EXIT_SUCCESS);
 }
 	
