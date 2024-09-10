@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:05:52 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/08 23:42:29 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/10 16:16:19 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	error_log(char *error, bool erno)
 		ft_putstr_fd(error, error_log_fd);
 		ft_putendl_fd(strerror(errno), error_log_fd);
 	}
-	if (error != NULL)
+	else if (error != NULL)
 		ft_putendl_fd(error, error_log_fd);
 	ft_close_fd(&error_log_fd);
 }

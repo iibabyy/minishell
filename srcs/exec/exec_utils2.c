@@ -49,6 +49,8 @@ int    ft_waitpid(int pid, t_command *command)
     if (waitpid(pid, &status, 0) == -1)
         return (EXIT_FAILURE);
     set_status(status);
+	if (command == NULL)
+		return (get_status());
     if (get_status() == 128 + SIGINT)
         last_command(command)->sigint = true;
     if (get_status() == 128 + SIGQUIT)
