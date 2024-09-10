@@ -6,21 +6,23 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 22:44:22 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/10 14:27:53 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/10 15:18:00 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexing.h"
 
+static bool	is_expandable(char *str);
+char	*replace_and_join(char **temp, char *to_replace, char *sep);
+static char	*expand_wave(char *str);
+
 char	*replace_wave(char *input)
 {
 	char	*res;
-	char	*home;
 	char	**temp;
 	int		i;
 
-	home = ft_getenv("HOME");
-	if (count_char(input, '~') == 0 || home == NULL)
+	if (input == NULL || count_char(input, '~') == 0)
 		return (input);
 	temp = ft_split(input, ' ');
 	if (temp == NULL || temp[0] == NULL)
@@ -28,9 +30,9 @@ char	*replace_wave(char *input)
 	i = -1;
 	while (temp[++i] != NULL)
 	{
-		if (ft_strcmp(temp[i], "~") == 0)
+		if (is_expandable(temp[i]) == true)
 		{
-			temp[i] = ft_strdup(home);
+			temp[i] = expand_wave(temp[i]);
 			if (temp[i] == NULL)
 				return (free_2d_array((void ***)&temp), input);
 		}
@@ -41,20 +43,65 @@ char	*replace_wave(char *input)
 	return (res);
 }
 
-// static bool	is_expandable(char *str)
-// {
-// 	char	*wave;
+static char	*expand_wave(char *str)
+{
+	char	*last;
+	char	**temp;
+	char	*res;
 
-// 	if (ft_strcmp(temp[i], "~") == 0)
-// 		return (true);
-// 	wave = ft_strchr(str, '~');
-// 	if (wave == NULL)
-// 		return (false);
-// 	while (wave != NULL)
+	last = "";
+	if (ft_strlen(str) > 0 && str[ft_strlen(str) - 1] == '/')
+		last = "/";
+	temp = ft_split(str, '/');
+	if (temp == NULL)
+		return (NULL);
+	if (temp[0][0] != '~')
+		return (free_2d_array((void ***)&temp), str);
+	temp[0] = ft_strdup(ft_getenv("HOME"));
+	if (temp[0] == NULL)
+		temp[0] = ft_strdup(getenv("HOME"));
+	if (temp[0] == NULL)
+		return (str);
+	res = str_join_2d_and_free(temp, "/");
+	if (res == NULL)
+		return (str);
+	res = ft_re_strjoin(res, last);
+	if (res == NULL)
+		return (str);
+	return (res);
+}
+
+// char	*replace_and_join(char **temp, char *to_replace, char *sep)
+// {
+// 	char	*str;
+// 	int		i;
+
+// 	if (temp == NULL)
+// 		return (NULL);
+// 	if (ft_strcmp(temp[i], to_replace) == 0)
 // 	{
-		
+// 		temp[i] = ft_strdup(ft_getenv("HOME"));
+// 		if (temp[i] == NULL)
+// 		{
+// 			temp[i] = ft_strdup(getenv("HOME"));
+// 			if (temp[i] == NULL)
+// 				return (str_join_2d(temp, sep));
+// 		}
 // 	}
+// 	str = str_join_2d_and_free(temp, sep);
+// 	if (str == NULL)
+// 		return (NULL);
+// 	return (str);
 // }
+
+static bool	is_expandable(char *str)
+{
+	if (str[0] != '~')
+		return (false);
+	if (str[0] == '~' && (str[1] == '/' || str[1] == '\0'))
+		return (true);
+	return (false);
+}
 
 int	char_type(char *str, int index)
 {
