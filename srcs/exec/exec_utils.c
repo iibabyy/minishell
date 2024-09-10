@@ -98,6 +98,7 @@ int   exec_single_command(t_command *command)
 	execve(exec->command_path, command->command, env_tab());
 	if (test_cd(command) == true)
 		free_and_exit(250);
+	(ft_close(&command->outfile), ft_close(&command->infile));
 	execve_error(command->command[0]);
 	return(get_status());
 }
