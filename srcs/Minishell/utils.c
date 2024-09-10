@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 15:41:37 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/10 00:36:44 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/10 02:09:53 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,18 +39,21 @@ char	*get_line(void)
 	return (str);
 }
 
-int	exec(t_command *command)
+int    exec(t_command *command)
 {
-	int			status;
+    int            status;
 
-	if (command == NULL)
-		return (EXIT_FAILURE);
-	set_parent_exec_signals();
-	if (command->type != COMMAND && command->type != SUB_SHELL)
-		status = exec_command(command);
-	else
-		status = exec_single(command);
-	return (status);
+    if (command == NULL)
+        return (EXIT_FAILURE);
+    if (command->is_child == true)
+        set_child_signals();
+    else
+        set_parent_exec_signals();
+    if (command->type != COMMAND && command->type != SUB_SHELL)
+        status = exec_command(command);
+    else
+        status = exec_single(command);
+    return (status);
 }
 
 bool	is_only_space(char *str)

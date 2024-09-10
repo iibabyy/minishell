@@ -42,16 +42,18 @@ void init_data(t_exec_data *data, t_command *command)
         data->command_path = create_command_path(data , command);
 }
 
-int	ft_waitpid(int pid, t_command *command)
+int    ft_waitpid(int pid, t_command *command)
 {
-	int status;
+    int status;
 
-	if (waitpid(pid, &status, 0) == -1)
-		return (EXIT_FAILURE);
-	set_status(status);
-	if (get_status() == 128 + SIGINT)
-		last_command(command)->sigint = true;
-	return (get_status());
+    if (waitpid(pid, &status, 0) == -1)
+        return (EXIT_FAILURE);
+    set_status(status);
+    if (get_status() == 128 + SIGINT)
+        last_command(command)->sigint = true;
+    if (get_status() == 128 + SIGQUIT)
+        last_command(command)->sigquit = true;
+    return (get_status());
 }
 
 int	ft_fork(t_command *command)

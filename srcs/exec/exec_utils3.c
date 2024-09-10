@@ -5,22 +5,19 @@
 
 int exec_sub_shell(t_command *node)
 {
-	t_command	*command;
+    t_command    *command;
 
-	set_subshell_signals();
-	open_redirections(node);
-	ft_dup2(&node->infile, STDIN_FILENO);
-	ft_dup2(&node->outfile, STDOUT_FILENO);
-	command = parse_subshell(node->command[0]);
-	if (command == NULL)
-		free_and_exit(EXIT_FAILURE);
-	exec(command);
-	if (command->sigint == true)
-		print_nl();
-	else if (command->sigquit == true)
-		print_quit();
-	free_and_exit(get_status());
-	return (get_status());
+    set_subshell_signals();
+    open_redirections(node);
+    ft_dup2(&node->infile, STDIN_FILENO);
+    ft_dup2(&node->outfile, STDOUT_FILENO);
+    command = parse_subshell(node->command[0]);
+    if (command == NULL)
+        free_and_exit(EXIT_FAILURE);
+    command->is_child = true;
+    exec(command);
+    free_and_exit(get_status());
+    return (get_status());
 }
 
 int exec_builtin(t_command *node)
@@ -67,35 +64,33 @@ int forking_node(t_command *node)
 
 int exec_or(t_command *node)
 {
-	int status;
+    int status;
 
-	if (should_fork(node->left))
-		status = forking_node(node->left);
-	else
-		status = exec_command(node->left);
-	status = get_status();
-	if (get_status() == 128 + SIGQUIT)
-	{
-		if (node->previous && node->previous->type == PIPE)
-			node->previous->sigquit = true;
-		else
-			node->sigquit = true;
-	}
-	if((status != 0 && status <= 128) || status == 128 + SIGQUIT)
-	{
-		if (should_fork(node->right))
-			status = forking_node(node->right);
-		else
-			status = exec_command(node->right);
-		if (get_status() == 128 + SIGQUIT)
-		{
-			if (node->previous && node->previous->type == PIPE)
-				node->previous->sigquit = true;
-			else
-				node->sigquit = true;
-		}
-	}
-	return(get_status());
+    if (should_fork(node->left))
+        status = forking_node(node->left);
+    else
+        status = exec_command(node->left);
+    status = get_status();
+    if (get_status() == 128 + SIGQUIT)
+    {
+		last_command(node)->sigquit = false;
+        ft_putstr_fd("Quit (core dumped)\n", STDERR_FILENO);
+    }
+    if((status != 0 && status <= 128) || status == 128 + SIGQUIT)
+    {
+        if (should_fork(node->right))
+            status = forking_node(node->right);
+        else
+            status = exec_command(node->right);
+        if (get_status() == 128 + SIGQUIT)
+        {
+            if (node->previous && node->previous->type == PIPE)
+                node->previous->sigquit = true;
+            else
+                node->sigquit = true;
+        }
+    }
+    return(get_status());
 }
 
 int exec_and(t_command *node)
