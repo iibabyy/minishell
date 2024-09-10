@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 15:08:49 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/09 22:13:38 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/11 00:33:28 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int			init_aliases(void);
 int			replace_aliases(t_command *last_command);
 void		init_history(void);
 void		ft_addhistory(char	*str);
+char		*replace_wildcard(char *str);
 
 // lexing
 
