@@ -6,11 +6,12 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:08:33 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/08 23:43:45 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/10 17:39:21 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+#include "../exec/exec.h"
 
 int	add_redirection(t_parsing *data)
 {
@@ -63,6 +64,10 @@ int	open_redirections(t_command	*command)
 		}
 		else
 			redirection->command->infile = redirection->here_doc->pipe[0];
+		if (redirection->command->infile != STDIN_FILENO)
+			ft_dup2(&redirection->command->infile, STDIN_FILENO);
+		if (redirection->command->infile != STDIN_FILENO)
+			ft_dup2(&redirection->command->outfile, STDIN_FILENO);
 		redirection = redirection->next;
 	}
 	return (EXIT_SUCCESS);

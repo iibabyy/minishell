@@ -9,8 +9,8 @@ int exec_sub_shell(t_command *node)
 
     set_subshell_signals();
     open_redirections(node);
-    ft_dup2(&node->infile, STDIN_FILENO);
-    ft_dup2(&node->outfile, STDOUT_FILENO);
+    // ft_dup2(&node->infile, STDIN_FILENO);
+    // ft_dup2(&node->outfile, STDOUT_FILENO);
     command = parse_subshell(node->command[0]);
     if (command == NULL)
         free_and_exit(EXIT_FAILURE);

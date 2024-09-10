@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:10:53 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/10 17:29:44 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/10 17:34:32 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ int	open_here_doc(t_redirection *redirection)
 			EXIT_FAILURE);
 	here_doc = redirection->here_doc;
 	input = get_input(here_doc->end_of_file->content, HEREDOC_PROMPT, false);
+	ft_close_fd(&here_doc->pipe[1]);
+	ft_close_fd(&here_doc->pipe[0]);
 	if (g_signal != 0)
 		return (EXIT_FAILURE);
 	if (input != NULL)
@@ -32,8 +34,6 @@ int	open_here_doc(t_redirection *redirection)
 		ft_putstr_fd(input, here_doc->pipe[1]);
 		ft_free(input);
 	}
-	ft_close_fd(&here_doc->pipe[1]);
-	ft_close_fd(&here_doc->pipe[0]);
 	return (EXIT_SUCCESS);
 }
 	
