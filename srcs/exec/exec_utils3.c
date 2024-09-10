@@ -30,8 +30,11 @@ int exec_builtin(t_command *node)
 	    return (EXIT_FAILURE);
     dup2(node->infile, STDIN_FILENO);
     dup2(node->outfile, STDOUT_FILENO);*/
-	ft_close(&node->infile);
-	ft_close(&node->outfile);
+	// ft_close(&node->infile);
+	// ft_close(&node->outfile);
+	// set_child_signals();
+	if (open_redirections(node) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
 	if(ft_strcmp("echo", args[0]) == 0)
 		status = echo_minishell(args);
 	if(ft_strcmp("unset", args[0]) == 0)
@@ -51,6 +54,8 @@ int exec_builtin(t_command *node)
 		status = ft_exit(args);
 	}
 	last_status_code(status, SET);
+	ft_close(&node->infile);
+	ft_close(&node->outfile);
 	return(status);
 }
 

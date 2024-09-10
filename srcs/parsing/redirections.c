@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:08:33 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/10 17:44:39 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/10 20:40:33 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,7 @@ int    open_redirections(t_command *command)
         else
         {
             redirection->command->infile = redirection->here_doc->pipe[0];
-            dup2(redirection->command->infile, STDIN_FILENO);
-            close(redirection->command->infile);
+            ft_dup2(&redirection->command->infile, STDIN_FILENO);
         }
         redirection = redirection->next;
     }
@@ -113,11 +112,11 @@ int    open_file(t_redirection *redirection)
     if (type == INPUT)
     {
         target_cmd_fd = &redirection->command->infile;
-        dup2(fd, STDIN_FILENO);
+        ft_dup2(&fd, STDIN_FILENO);
     }
     else
     {
-        dup2(fd, STDOUT_FILENO);
+        ft_dup2(&fd, STDOUT_FILENO);
         target_cmd_fd = &redirection->command->outfile;
     }
     if (is_standart_fd(*target_cmd_fd) == false)
