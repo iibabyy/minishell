@@ -24,15 +24,8 @@ int exec_builtin(t_command *node)
 {
 	char	**args;
 	int		status;
+	
 	args = node->command;
-
-    /*if (open_redirections(node) == EXIT_FAILURE)
-	    return (EXIT_FAILURE);
-    dup2(node->infile, STDIN_FILENO);
-    dup2(node->outfile, STDOUT_FILENO);*/
-	// ft_close(&node->infile);
-	// ft_close(&node->outfile);
-	// set_child_signals();
 	if(ft_strcmp("echo", args[0]) == 0)
 		status = echo_minishell(args);
 	if(ft_strcmp("unset", args[0]) == 0)

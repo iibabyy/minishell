@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 15:41:37 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/10 21:06:06 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/10 21:13:26 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,40 +40,6 @@ char	*get_line(void)
 	if (is_only_space(str) == true)
 		return (ft_free(str), NULL);
 	return (str);
-}
-
-int    exec(t_command *command)
-{
-    int	status;
-	int	fd[2];
-
-	if (command == NULL)
-		return (EXIT_FAILURE);
-	if (command->is_child == false)
-		set_parent_exec_signals();
-    if (command->type != COMMAND && command->type != SUB_SHELL)
-        status = exec_command(command);
-	else
-	{
-		if (command->type == COMMAND && is_built_in(command) == true)
-		{
-			pipe(fd);
-			dup2(STDIN_FILENO, fd[0]);
-			close(STDIN_FILENO);
-			dup2(STDOUT_FILENO, fd[1]);
-			close(STDOUT_FILENO);
-			open_redirections(command);
-		}
-		status = exec_single(command);
-		if (command->type == COMMAND && is_built_in(command) == true)
-		{
-			dup2(fd[0], STDIN_FILENO);
-			close(fd[0]);
-			dup2(fd[1], STDOUT_FILENO);
-			close(fd[1]);
-		}
-	}
-    return (status);
 }
 
 bool	is_only_space(char *str)
