@@ -16,33 +16,6 @@ bool	should_fork(t_command *node)
 	return (false);
 }
 
-/*void ffcd(t_command *node, int pid[2], bool wait_lr[2],  int status[2])
-{
-	int	status;
-	int	pid[2];
-
-	if (should_fork(node->left))
-	{
-		pid[0] = forking_pipe_node(node->left,LEFT_NODE, fd);
-		wait_lr[0] = true;
-	}
-	else
-	{
-		status[0] = exec_command(node->left);
-		wait_lr[0] = false;
-	}
-	if (should_fork(node->right))
-	{
-		pid[1] = forking_pipe_node(node->right, RIGHT_NODE, fd);
-		wait_lr[1] = true;
-	}
-	else
-	{
-		status[1] = exec_command(node->right);
-		wait_lr[1] = false;
-	}
-}*/
-
 int	forking_pipe_node(t_command *node, int pos, int fd[])
 {
 	int	pid;
@@ -79,7 +52,7 @@ int	exec_pipe(t_command *node)
 	(ft_close(&node->left->infile), ft_close(&node->right->infile));
 	(ft_close(&node->left->outfile), ft_close(&node->right->outfile));
 	ft_waitpid(pid[0], node);
-	if (get_status() == 128 + SIGQUIT && node->left->type)
+	if (get_status() == 128 + SIGQUIT /*&& node->left->type*/)
 	{
 		if (node->previous && node->previous->type == PIPE)
 			node->previous->sigquit = true;

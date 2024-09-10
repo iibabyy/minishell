@@ -15,8 +15,8 @@ int exec_sub_shell(t_command *node)
     if (command == NULL)
         free_and_exit(EXIT_FAILURE);
     command->is_child = true;
-    exec(command);
-    free_and_exit(get_status());
+    // if (should_fork(command))
+    free_and_exit(exec(command));
     return (get_status());
 }
 
@@ -26,8 +26,14 @@ int exec_builtin(t_command *node)
 	int		status;
 	args = node->command;
 
+    /*if (open_redirections(node) == EXIT_FAILURE)
+	    return (EXIT_FAILURE);
+    dup2(node->infile, STDIN_FILENO);
+    dup2(node->outfile, STDOUT_FILENO);*/
+	ft_close(&node->infile);
+	ft_close(&node->outfile);
 	if(ft_strcmp("echo", args[0]) == 0)
-		status = 0;
+		status = echo_minishell(args);
 	if(ft_strcmp("unset", args[0]) == 0)
 		status = unset(args);
 	if(ft_strcmp("cd", args[0]) == 0)

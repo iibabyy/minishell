@@ -24,11 +24,20 @@ bool is_built_in(t_command *node)
         return (true);
     return(false);
 }
-int test_cd(char *str)
+bool test_cd(t_command *command)
 {
-	if (chdir(str) == -1)
-		return (EXIT_FAILURE);
-	return (EXIT_SUCCESS);
+	if (command->previous != NULL || command->type != COMMAND)
+		return (false);
+	if (command->redirections != NULL)
+		return (false);
+	if (command->command == NULL || command->command[0] == NULL
+		|| command->command[1] != NULL)
+		return (false);
+	if(access(command->command[0], X_OK) != 0)
+		return (false);
+	if (chdir(command->command[0]) == -1)
+		return (false);
+	return (true);
 }
 int exec_cd(char *str)
 {
@@ -65,26 +74,9 @@ int   exec_single(t_command *command)
     {
         pid = ft_fork(command);
         if (pid == 0)
-        {
 			exec_command(command);
-            // set_child_signals();
-            // exec = ft_malloc(sizeof(t_exec_data));
-            // init_data(exec, command);
-            // if (open_redirections(command) == EXIT_FAILURE)
-            //     free_and_exit(EXIT_FAILURE);
-            // ((dup2(command->infile, STDIN_FILENO), dup2(command->outfile, STDOUT_FILENO)));
-            // if (command->command == NULL || command->command[0] == NULL)
-            //     (ft_close(&command->outfile), ft_close(&command->infile), free_and_exit(EXIT_FAILURE));
-            // execve(exec->command_path, command->command, env_tab());
-            // if(access(command->command[0], X_OK) == 0 && 
-            //     ft_strlen_2d(command->command) == 1 && command->previous == NULL)
-            // {
-            //     if (test_cd(command->command[0]) == EXIT_SUCCESS)
-            //         free_and_exit(250);
-            // }
-            // execve_error(command->command[0]);
-        }
-		ft_waitpid(pid, command);
+		if (ft_waitpid(pid, command) == 250)
+			last_status_code(exec_cd(command->command[0]), SET);
 		return (get_status());
     }
     return(last_status_code(exec_command(command), SET), get_status());
@@ -104,6 +96,9 @@ int   exec_single_command(t_command *command)
 	if (command->command == NULL || command->command[0] == NULL)
 		(ft_close(&command->outfile), ft_close(&command->infile), free_and_exit(EXIT_FAILURE));
 	execve(exec->command_path, command->command, env_tab());
+	if (test_cd(command) == true)
+		free_and_exit(250);
+	(ft_close(&command->outfile), ft_close(&command->infile));
 	execve_error(command->command[0]);
 	return(get_status());
 }

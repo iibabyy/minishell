@@ -10,7 +10,6 @@ int	ft_exit(char **arg)
 	bool	first_arg_ok;
 
 	first_error(false);
-	printf("exit\n");
 	if (arg == NULL || arg[1] == NULL)
 		free_and_exit(get_status());
 	first_arg_ok = is_first_arg_ok(arg);

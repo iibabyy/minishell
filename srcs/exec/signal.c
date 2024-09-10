@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 12:47:24 by mdembele          #+#    #+#             */
-/*   Updated: 2024/09/10 02:19:20 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/10 05:02:02 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ void	exit_subshell(int sig)
 
 void	set_subshell_signals(void)
 {
-	signal(SIGQUIT, SIG_DFL);
+	signal(SIGQUIT, exit_subshell);
     signal(SIGTSTP, SIG_IGN);
-    signal(SIGINT, SIG_DFL);
+    signal(SIGINT, exit_subshell);
 }
 
 void	print_nl()
