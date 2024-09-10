@@ -38,7 +38,7 @@ int	main(int ac, char **av, char **envp)
 		command = parse(str);
 		if (command == NULL)
 			continue ;
-		// print_AST(command);
+		print_AST(command);
 		exec(command);
 		if (command->sigint == true)
 			print_nl();

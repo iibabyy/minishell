@@ -31,5 +31,6 @@ char		*ft_getcwd(void);
 int			update_pwd(char *old_pwd);
 int			parse_export_arg(char *arg);
 int			print_export_var(t_env *env);
+int         echo_minishell(char **args);
 
 #endif

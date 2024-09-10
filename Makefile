@@ -70,6 +70,7 @@ FILES =	srcs/Minishell/minishell.c			\
 		srcs/built_in/unset.c				\
 		srcs/built_in/cd.c					\
 		srcs/built_in/exit.c				\
+		srcs/built_in/echo.c				\
 
 OBJ = $(FILES:.c=.o)
 
