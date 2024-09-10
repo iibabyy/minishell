@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 22:44:22 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/08 01:46:56 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/10 14:27:53 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,21 @@ char	*replace_wave(char *input)
 		return (input);
 	return (res);
 }
+
+// static bool	is_expandable(char *str)
+// {
+// 	char	*wave;
+
+// 	if (ft_strcmp(temp[i], "~") == 0)
+// 		return (true);
+// 	wave = ft_strchr(str, '~');
+// 	if (wave == NULL)
+// 		return (false);
+// 	while (wave != NULL)
+// 	{
+		
+// 	}
+// }
 
 int	char_type(char *str, int index)
 {

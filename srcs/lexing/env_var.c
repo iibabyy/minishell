@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:33:50 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/09 22:12:55 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/10 14:27:37 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ char	*env_to_string(char	*str, int *dollar_index)
 	env = ft_getenv(var);
 	ft_free(var);
 	if (env == NULL)
-		return (NULL);
+		env = "\0";
 	env = ft_strdup(env);
 	if (env == NULL)
 		return (error_log("env_to_string: ft_strdup failed", false), NULL);
