@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:15:43 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/10 16:57:26 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/11 22:23:26 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*get_word(char **input, int *i, t_token **tokens);
 char	*join_quotes(char **input, char *word, int *i);
-char	*join_non_meta_char(char *input, char *word, int *i);
+char	*join_non_meta_char(char **input, char *word, int *i);
 
 /*
 Transform an input string in tokens
@@ -28,6 +28,10 @@ t_token	*input_to_tokens(char *input)
 	int		i;
 
 	i = 0;
+	ft_addhistory(input);
+	input = replace_env_vars(input);
+	if (input == NULL)
+		return (NULL);
 	tokens = NULL;
 	while (input[i] != '\0')
 	{
@@ -40,7 +44,6 @@ t_token	*input_to_tokens(char *input)
 		if (meta_to_token(&input, &i, &tokens) == EXIT_FAILURE)
 			return (ft_addhistory(input), ft_lstclear(&tokens, ft_free), NULL);
 	}
-	ft_addhistory(input);
 	return (tokens);
 }
 
@@ -56,10 +59,9 @@ int	word_to_token(char **input, int *i, t_token **tokens)
 	while (is_meta_char(*input, *i) == false &&
 			is_parenthesis(*input, *i) == false && (*input)[*i] != '\0')
 	{
-		word = join_non_meta_char(*input, word, i);
+		word = join_non_meta_char(input, word, i);
 		if (word == NULL && is_quotes((*input)[*i]) == false)
 			return (EXIT_FAILURE);
-		
 		word = join_quotes(input, word, i);
 		if (word == NULL)
 			return (EXIT_FAILURE);
@@ -85,35 +87,26 @@ char	*join_quotes(char **input, char *word, int *i)
 	temp = ft_substr(*input, start, *i - start);
 	if (temp == NULL)
 		return (ft_free(word), NULL);
-	if (quote == '"')
-	{
-		temp = replace_env_vars(temp);
-		if (temp == NULL)
-			return (ft_free(word), NULL);
-	}
 	(*i)++;
 	word = ft_re_strjoin(word, temp);
 	ft_free(temp);
 	return (word);
 }
 
-char	*join_non_meta_char(char *input, char *word, int *i)
+char	*join_non_meta_char(char **input, char *word, int *i)
 {
 	char	*temp;
 	int	start;
 
 	start = *i;
-	while (is_meta_char(input, *i) == false && is_quotes(input[*i]) == false
-			&& is_parenthesis(input, *i) == false && input[*i] != '\0')
+	while (is_meta_char(*input, *i) == false && is_quotes((*input)[*i]) == false
+			&& is_parenthesis(*input, *i) == false && (*input)[*i] != '\0')
 	{
 		(*i)++;
 	}
 	if (*i == start)
 		return (word);
-	temp = ft_substr(input, start, *i - start);
-	if (temp == NULL)
-		return (ft_free(word), NULL);
-	temp = replace_env_vars(temp);
+	temp = ft_substr(*input, start, *i - start);
 	if (temp == NULL)
 		return (ft_free(word), NULL);
 	word = ft_re_strjoin(word, temp);

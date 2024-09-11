@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:15:31 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/08 01:15:02 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/11 21:40:10 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,8 @@ t_token	*last_token(t_token *token);
 bool	is_parenthesis(char *input, int index);
 int		join_parenthesis(char *input, int *i, t_token **tokens);
 char	*replace_wave(char *input);
+int		next_valid_dollar(char *str, int *i);
+int		skip_quotes(char *str, int *i);
+int		skip_parenthesis(char *str, int *i);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:33:50 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/10 16:59:59 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/11 21:59:54 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,10 @@ char	*replace_env_vars(char *input)
 		return (input);
 	array = replace_dollars(input);
 	if (array == NULL)
-		return (NULL);
+		return (input);
 	new_input = str_join_2d_and_free(array, "");
+	if (new_input == NULL)
+		return (NULL);
 	return (new_input);
 }
 
@@ -43,8 +45,8 @@ char	**replace_dollars(char *input)
 	while (input[i] != '\0')
 	{
 		start = i;
-		while (input[i] != '$' && input[i] != '\0')
-			++i;
+		if (next_valid_dollar(input, &i) == -1)
+			return (free_2d_array((void ***)&array), NULL);
 		array[y] = ft_substr(input, start, i - start);
 		if (array[y++] == NULL)
 			return (free_2d_array((void ***)&array), NULL);
@@ -55,6 +57,23 @@ char	**replace_dollars(char *input)
 			return (free_2d_array((void ***)&array), NULL);
 	}
 	return (array[y] = NULL, array);
+}
+
+char	*transform_env_value(char *value)
+{
+	char	**temp;
+	char	*str;
+
+	temp = ft_split(value, ' ');
+	if (temp == NULL)
+		return (NULL);
+	str = str_join_2d_and_free(temp, "' '");
+	if (str == NULL)
+		return (NULL);
+	str = multi_strjoin(3, "'", str, "'");
+	if (str == NULL)
+		return (NULL);
+	return (str);
 }
 
 char	*env_to_string(char	*str, int *dollar_index)
@@ -74,12 +93,11 @@ char	*env_to_string(char	*str, int *dollar_index)
 	if (var == NULL)
 		return (NULL);
 	env = ft_getenv(var);
-	ft_free(var);
 	if (env == NULL)
-		env = "\0";
-	env = ft_strdup(env);
+		return (ft_strdup(""));
+	env = transform_env_value(env);
 	if (env == NULL)
-		return (error_log("env_to_string: ft_strdup failed", false), NULL);
+		return (error_log("env_to_string: transform_env failed", false), NULL);
 	return (env);
 }
 
@@ -102,32 +120,4 @@ char    *split_env_var(char *env)
             return (error_log("split_env_var: multi_strjoin failed", false), NULL);
     }
     return (str_join_2d_and_free(splited_env, " "));
-}
-
-int	replace_tokens_env_vars(t_token *token)
-{
-	t_token	*temp_token;
-	t_token	*temp;
-
-	if (token == NULL)
-		return (EXIT_SUCCESS);
-	while (token != NULL)
-	{
-		if (token->content != NULL && ft_strchr(token->content, '$') != NULL)
-		{
-			token->content = replace_env_vars(token->content);
-			if (token->content == NULL)
-				return (EXIT_FAILURE);
-			temp_token = input_to_tokens(token->content);
-			if (temp_token == NULL)
-				return (EXIT_FAILURE);
-			temp = token->next;
-			last_token(temp_token)->next = token->next;
-			token->next = temp_token;
-			token = temp;
-		}
-		else
-			token = token->next;
-	}
-	return (EXIT_SUCCESS);
 }
