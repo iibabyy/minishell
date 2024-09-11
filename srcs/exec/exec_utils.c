@@ -95,7 +95,7 @@ int   exec_single_command(t_command *command)
 		(ft_close(&command->outfile), ft_close(&command->infile), free_and_exit(EXIT_FAILURE));
     if(ft_strchr(command->command[0] , '/'))
     {
-        if (access(command->command[0], F_OK) == 0 && chdir(command->command[0]) == 0)
+        if (access(command->command[0], F_OK) == 0 && (chdir(command->command[0]) == 0 || errno == EACCES))
         {
             ft_putstr_fd("minishell : ", 2);
             ft_putstr_fd(command->command[0], 2);
