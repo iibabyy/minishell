@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:35:02 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/08 16:12:25 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/11 00:21:30 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,9 @@ int			print_file(int fd);
 size_t		ft_strlen_2d(char **str_2d);
 char		*insert_str(char *str, char *insert, int index);
 char		*ft_strstr(const char *big, const char *little);
-char	**str2d_join(char **str1, char **str2);
-char	**str2djoin_and_free(char **str1, char **str2);
+char		**str2d_join(char **str1, char **str2);
+char		**str2djoin_and_free(char **str1, char **str2);
+char		**strdup2d(char **str);
 
 //	libft functions
 

@@ -72,6 +72,7 @@ FILES =	srcs/Minishell/minishell.c			\
 		srcs/built_in/exit.c				\
 		srcs/built_in/echo.c				\
 		srcs/exec/exec_utils_4.c			\
+		srcs/wildcard.c/wildcards.c			\
 
 OBJ = $(FILES:.c=.o)
 

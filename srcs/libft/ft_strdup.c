@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:34:18 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/06 18:43:50 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/11 00:21:12 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,4 +26,23 @@ char	*ft_strdup(const char *src)
 		return (malloc_failed("ft_strdup"), NULL);
 	ft_strlcpy(str, src, size);
 	return (str);
+}
+
+char	**strdup2d(char **str)
+{
+	char	**res;
+	int		i;
+
+	res = ft_malloc(sizeof(char *) * (ft_strlen_2d(str) + 1));
+	if (res == NULL)
+		return (NULL);
+	i = -1;
+	while (str[++i] != NULL)
+	{
+		res[i] = ft_strdup(str[i]);
+		if (res[i] == NULL)
+			return (free_2d_array((void ***)&res), NULL);
+	}
+	res[i] = NULL;
+	return (res);
 }
