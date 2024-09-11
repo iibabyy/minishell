@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:15:31 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/11 21:40:10 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/12 00:10:59 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,6 @@ char	*replace_wave(char *input);
 int		next_valid_dollar(char *str, int *i);
 int		skip_quotes(char *str, int *i);
 int		skip_parenthesis(char *str, int *i);
+char	*expand_wildcard(char *input);
 
 #endif
