@@ -99,7 +99,7 @@ int   exec_single_command(t_command *command)
         {
             ft_putstr_fd("minishell : ", 2);
             ft_putstr_fd(command->command[0], 2);
-            ft_putendl_fd("Is a directory", 2);
+            ft_putendl_fd(": Is a directory", 2);
             free_and_exit(126);
         }
     }
