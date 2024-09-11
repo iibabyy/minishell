@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mdembele <mdembele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:07:45 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/04 19:47:29 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/11 15:34:16 by mdembele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	redirections_number(t_token *token)
 int	type_to_oflags(int type)
 {
 	if (type == OUTPUT)
-		return (O_WRONLY | O_CREAT);
+		return (O_WRONLY | O_CREAT | O_TRUNC);
 	if (type == APPEND_OUTPUT)
 		return (O_WRONLY | O_CREAT | O_APPEND);
 	if (type == INPUT)

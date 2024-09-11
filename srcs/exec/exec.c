@@ -13,21 +13,27 @@ int	exec_single_built_in(t_command *command)
 	int	fd[2];
 	int	status;
 
-	pipe(fd);
-	dup2(STDIN_FILENO, fd[0]);
-	close(STDIN_FILENO);
-	dup2(STDOUT_FILENO, fd[1]);
-	close(STDOUT_FILENO);
-	open_redirections(command);
-	status = exec_single(command);
-	dup2(fd[0], STDIN_FILENO);
-	close(fd[0]);
-	dup2(fd[1], STDOUT_FILENO);
-	close(fd[1]);
+	if(command->redirections)
+	{
+		pipe(fd);
+		dup2(STDIN_FILENO, fd[0]);
+		dup2(STDOUT_FILENO, fd[1]);
+		open_redirections(command);
+		status = exec_single(command);
+		dup2(fd[0], STDIN_FILENO);
+		close(fd[0]);
+		dup2(fd[1], STDOUT_FILENO);
+		close(fd[1]);
+	}
+	else
+	{
+		open_redirections(command);
+		status = exec_single(command);
+	}
 	return (status);
 }
 
-int    exec(t_command *command)
+int	exec(t_command *command)
 {
     int	status;
 

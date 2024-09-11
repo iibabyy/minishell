@@ -91,10 +91,18 @@ int   exec_single_command(t_command *command)
 	init_data(exec, command);
 	if (open_redirections(command) == EXIT_FAILURE)
 		free_and_exit(EXIT_FAILURE);
-	// dup2(command->infile, STDIN_FILENO);
-	// dup2(command->outfile, STDOUT_FILENO);
 	if (command->command == NULL || command->command[0] == NULL)
 		(ft_close(&command->outfile), ft_close(&command->infile), free_and_exit(EXIT_FAILURE));
+    if(ft_strchr(command->command[0] , '/'))
+    {
+        if (access(command->command[0], F_OK) == 0 && chdir(command->command[0]) == 0)
+        {
+            ft_putstr_fd("minishell : ", 2);
+            ft_putstr_fd(command->command[0], 2);
+            ft_putendl_fd("Is a directory", 2);
+            free_and_exit(126);
+        }
+    }
 	execve(exec->command_path, command->command, env_tab());
 	if (test_cd(command) == true)
 		free_and_exit(250);
