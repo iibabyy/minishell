@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:33:50 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/11 21:59:54 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/13 00:50:59 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,9 +95,13 @@ char	*env_to_string(char	*str, int *dollar_index)
 	env = ft_getenv(var);
 	if (env == NULL)
 		return (ft_strdup(""));
-	env = transform_env_value(env);
-	if (env == NULL)
-		return (error_log("env_to_string: transform_env failed", false), NULL);
+	if (is_in_quotes(str, start - 1) == 0
+		&& is_in_parenthesis(str, start - 1) == 0)
+	{
+		env = transform_env_value(env);
+		if (env == NULL)
+			return (error_log("env_to_string: transform_env failed", false), NULL);
+	}
 	return (env);
 }
 

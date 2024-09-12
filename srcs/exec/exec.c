@@ -61,12 +61,10 @@ int	exec_single_built_in(t_command *command)
 
 int	exec(t_command *command)
 {
-    int	status;
-	struct termios	term;
+    int				status;
 	
 	if (command == NULL)
 		return (EXIT_FAILURE);
-	(tcgetattr(STDOUT_FILENO, &term));
 	if (command->is_child == false)
 		set_parent_exec_signals();
     if (command->type != COMMAND && command->type != SUB_SHELL)
@@ -75,7 +73,6 @@ int	exec(t_command *command)
 		status = exec_single_built_in(command);
 	else
 		status = exec_single(command);
-	(tcsetattr(STDOUT_FILENO, TCSANOW, &term));
 	return (status);
 }
 

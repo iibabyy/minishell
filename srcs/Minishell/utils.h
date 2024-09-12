@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 15:36:24 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/10 00:38:53 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/12 20:45:55 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void 		printTree(t_command *command, int depth, int isRight, int *branch);
 t_command	*last_command(t_command *current);
 void		print_AST(t_command *command);
 void 		open_pipes_redirect(t_command *node);
-bool	is_only_space(char *str);
+bool		is_only_space(char *str);
+void		minishell(void);
 
 #endif
