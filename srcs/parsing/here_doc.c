@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:10:53 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/10 17:34:32 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/12 17:45:18 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ int	open_here_doc(t_redirection *redirection)
 			EXIT_FAILURE);
 	here_doc = redirection->here_doc;
 	input = get_input(here_doc->end_of_file->content, HEREDOC_PROMPT, false);
+	if (pipe(redirection->here_doc->pipe) == -1)
+		return (print_err("Here-doc: pipe(): ", true), EXIT_FAILURE);
 	ft_close_fd(&here_doc->pipe[1]);
 	ft_close_fd(&here_doc->pipe[0]);
 	if (g_signal != 0)
@@ -102,8 +104,6 @@ t_redirection	*init_here_doc(t_parsing *data)
 	redirection->here_doc = ft_malloc(sizeof(t_here_doc));
 	if (redirection->here_doc == NULL)
 		return (malloc_failed("init_here_doc"), NULL);
-	if (pipe(redirection->here_doc->pipe) == -1)
-		return (parse_err(NULL, NULL), NULL);
 	redirection->here_doc->token = data->curr_token;
 	redirection->type = HERE_DOC;
 	redirection->command = data->command;
