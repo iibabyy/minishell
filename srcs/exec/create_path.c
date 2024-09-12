@@ -2,7 +2,7 @@
 #include "exec.h"
 #include <unistd.h>
 
-int	check_dir()
+// int	check_dir()
 
 char	*get_path(char *command, char **paths)
 {
@@ -16,7 +16,10 @@ char	*get_path(char *command, char **paths)
 		if (stat(command, &buf) == -1)
 			print_err_and_exit("get_path: stat: ", EXIT_FAILURE, true);
 		if (S_ISDIR(buf.st_mode))
-			print_err_and_exit("")
+		{
+			// ft_putstr_fd(c)
+			print_err_and_exit("is a directory", EXIT_FAILURE, false);
+		}
 	}
 	if (command == NULL || access(command, X_OK) == 0)
 		return (command);
