@@ -70,6 +70,7 @@ int   exec_single(t_command *command)
 {
     pid_t	pid;
 
+    command->single = true;
     if (should_fork(command))
     {
         pid = ft_fork(command);
@@ -80,6 +81,19 @@ int   exec_single(t_command *command)
 		return (get_status());
     }
     return(last_status_code(exec_command(command), SET), get_status());
+}
+void check_directory(t_command *command)
+{
+    if(ft_strchr(command->command[0] , '/'))
+    {
+        if (access(command->command[0], F_OK) == 0 && (chdir(command->command[0]) == 0 || errno == EACCES))
+        {
+            ft_putstr_fd("minishell : ", 2);
+            ft_putstr_fd(command->command[0], 2);
+            ft_putendl_fd(": Is a directory", 2);
+            free_and_exit(126);
+        }
+    }
 }
 
 int   exec_single_command(t_command *command)
@@ -93,15 +107,9 @@ int   exec_single_command(t_command *command)
 		free_and_exit(EXIT_FAILURE);
 	if (command->command == NULL || command->command[0] == NULL)
 		(ft_close(&command->outfile), ft_close(&command->infile), free_and_exit(EXIT_FAILURE));
-    if(ft_strchr(command->command[0] , '/'))
+    if (command->single == false)
     {
-        if (access(command->command[0], F_OK) == 0 && (chdir(command->command[0]) == 0 || errno == EACCES))
-        {
-            ft_putstr_fd("minishell : ", 2);
-            ft_putstr_fd(command->command[0], 2);
-            ft_putendl_fd(": Is a directory", 2);
-            free_and_exit(126);
-        }
+        check_directory(command);
     }
 	execve(exec->command_path, command->command, env_tab());
 	if (test_cd(command) == true)
