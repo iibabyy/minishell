@@ -26,6 +26,7 @@ bool is_built_in(t_command *node)
 }
 bool test_cd(t_command *command)
 {
+	struct stat	buf;
 	if (command->previous != NULL || command->type != COMMAND)
 		return (false);
 	if (command->redirections != NULL)
@@ -35,9 +36,11 @@ bool test_cd(t_command *command)
 		return (false);
 	if(access(command->command[0], X_OK) != 0)
 		return (false);
-	if (chdir(command->command[0]) == -1)
-		return (false);
-	return (true);
+	if (stat(command->command[0], &buf) == -1)
+		return(false);
+	if (S_ISDIR(buf.st_mode))
+        return (true);
+	return (false);
 }
 int exec_cd(char *str)
 {
@@ -102,15 +105,15 @@ int   exec_single_command(t_command *command)
 
 	set_child_signals();
 	exec = ft_malloc(sizeof(t_exec_data));
-	init_data(exec, command);
 	if (open_redirections(command) == EXIT_FAILURE)
 		free_and_exit(EXIT_FAILURE);
+    if (command->single == true && test_cd(command))
+    {
+        free_and_exit(250);
+    }
+	init_data(exec, command);
 	if (command->command == NULL || command->command[0] == NULL)
 		(ft_close(&command->outfile), ft_close(&command->infile), free_and_exit(EXIT_FAILURE));
-    if (command->single == false)
-    {
-        check_directory(command);
-    }
 	execve(exec->command_path, command->command, env_tab());
 	if (test_cd(command) == true)
 		free_and_exit(250);
