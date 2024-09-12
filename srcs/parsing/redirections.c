@@ -6,7 +6,7 @@
 /*   By: mdembele <mdembele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:08:33 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/12 20:06:50 by mdembele         ###   ########.fr       */
+/*   Updated: 2024/09/12 20:39:37 by mdembele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,13 @@ int    open_redirections(t_command *command)
         }
         else
         {
-            redirection->command->infile = redirection->here_doc->pipe[0];
-            ft_dup2(&redirection->command->infile, STDIN_FILENO);
-        }
+            if (redirection->here_doc->pipe[0] != -1)
+            {
+				redirection->command->infile = redirection->here_doc->pipe[0];
+				dup2(redirection->here_doc->pipe[0], STDIN_FILENO);
+				perror("dup2");
+			}
+		}
         redirection = redirection->next;
     }
     return (EXIT_SUCCESS);

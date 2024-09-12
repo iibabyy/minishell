@@ -46,6 +46,7 @@ int	ft_check_args(char **args)
 }
 int	echo_minishell(char **args)
 {
+<<<<<<< HEAD
 	if (args[1] == NULL)
 	{
 		printf("\n");
@@ -61,4 +62,21 @@ int	echo_minishell(char **args)
 		printf("\n");
 	}
 	return (0);
+=======
+    if (args[1] == NULL)
+    {
+        printf("\n");
+        return(0);
+    }
+    if(args[1][0] == '-')
+    {
+        return (ft_check_args(args + 1));
+    }
+    else
+    {
+        print_2d_array(&args[1]);
+        printf("\n");
+    }
+    return (0);
+>>>>>>> origin/main
 }

@@ -7,6 +7,28 @@
 #define RIGHT_NODE 1
 
 void	print_command(t_command *command);
+void	exit_subshell(int sig);
+
+void	redirect_subshell_signals(void)
+{
+	signal(SIGQUIT, exit_subshell);
+    signal(SIGTSTP, SIG_IGN);
+    signal(SIGINT, exit_subshell);
+}
+
+void	subsh_fd(int *arg, int sig)
+{
+	static int	*fd = NULL;
+
+	if (fd == NULL)
+		fd = arg;
+	else
+	{
+		ft_close(&fd[0]);
+		ft_close(&fd[1]);
+		exit_subshell(sig);
+	}
+}
 
 int	exec_single_built_in(t_command *command)
 {
@@ -14,25 +36,25 @@ int	exec_single_built_in(t_command *command)
 	int save_fd[2];
 	int	status;
 
-	if(command->redirections)
+	if (command->redirections)
 	{
-		pipe(fd);
-		save_fd[0] = dup(STDIN_FILENO);
-		save_fd[1] = dup(STDOUT_FILENO);
-		dup2(fd[0], STDIN_FILENO);
-		dup2(fd[1], STDOUT_FILENO);
+		fd[0] = dup(STDIN_FILENO);
+		fd[1] = dup(STDOUT_FILENO);
 		open_redirections(command);
 		status = exec_single(command);
-		ft_close(&fd[0]);
-		ft_close(&fd[1]);
-		dup2(save_fd[0], STDIN_FILENO);
-		dup2(save_fd[1], STDOUT_FILENO);
-		ft_close(&save_fd[0]);
-		ft_close(&save_fd[1]);
+		if (fd[0] != -1)
+		{
+			dup2(fd[0], STDIN_FILENO);
+			close(fd[0]);
+		}
+		if (fd[1] != -1)
+		{
+			dup2(fd[1], STDOUT_FILENO);
+			close(fd[1]);
+		}
 	}
 	else
 	{
-		open_redirections(command);
 		status = exec_single(command);
 	}
 	return (status);
