@@ -7,27 +7,53 @@
 #define RIGHT_NODE 1
 
 void	print_command(t_command *command);
+void	exit_subshell(int sig);
+
+void	redirect_subshell_signals(void)
+{
+	signal(SIGQUIT, exit_subshell);
+    signal(SIGTSTP, SIG_IGN);
+    signal(SIGINT, exit_subshell);
+}
+
+void	subsh_fd(int *arg, int sig)
+{
+	static int	*fd = NULL;
+
+	if (fd == NULL)
+		fd = arg;
+	else
+	{
+		ft_close(&fd[0]);
+		ft_close(&fd[1]);
+		exit_subshell(sig);
+	}
+}
 
 int	exec_single_built_in(t_command *command)
 {
 	int	fd[2];
 	int	status;
 
-	if(command->redirections)
+	if (command->redirections)
 	{
+		fd[0] = dup(STDIN_FILENO);
+		fd[1] = dup(STDOUT_FILENO);
 		open_redirections(command);
-		pipe(fd);
-		dup2(STDIN_FILENO, fd[0]);
-		dup2(STDOUT_FILENO, fd[1]);
 		status = exec_single(command);
-		dup2(fd[0], STDIN_FILENO);
-		close(fd[0]);
-		dup2(fd[1], STDOUT_FILENO);
-		close(fd[1]);
+		if (fd[0] != -1)
+		{
+			dup2(fd[0], STDIN_FILENO);
+			close(fd[0]);
+		}
+		if (fd[1] != -1)
+		{
+			dup2(fd[1], STDOUT_FILENO);
+			close(fd[1]);
+		}
 	}
 	else
 	{
-		open_redirections(command);
 		status = exec_single(command);
 	}
 	return (status);

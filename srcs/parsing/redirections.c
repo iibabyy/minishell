@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:08:33 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/10 20:40:33 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/12 20:28:28 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,13 @@ int    open_redirections(t_command *command)
         }
         else
         {
-            redirection->command->infile = redirection->here_doc->pipe[0];
-            ft_dup2(&redirection->command->infile, STDIN_FILENO);
-        }
+            if (redirection->here_doc->pipe[0] != -1)
+            {
+				redirection->command->infile = redirection->here_doc->pipe[0];
+				dup2(redirection->here_doc->pipe[0], STDIN_FILENO);
+				perror("dup2");
+			}
+		}
         redirection = redirection->next;
     }
     return (EXIT_SUCCESS);

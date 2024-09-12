@@ -57,7 +57,7 @@ int echo_minishell(char **args)
     }
     else
     {
-        print_2d_array(args + 1);
+        print_2d_array(&args[1]);
         printf("\n");
     }
     return (0);

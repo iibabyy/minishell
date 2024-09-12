@@ -6,11 +6,17 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:10:53 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/12 17:45:18 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/12 20:35:20 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+
+void	pipe_to_minus1(int *fd)
+{
+	fd[0] = -1;
+	fd[1] = -1;
+}
 
 int	open_here_doc(t_redirection *redirection)
 {
@@ -22,20 +28,21 @@ int	open_here_doc(t_redirection *redirection)
 			EXIT_FAILURE);
 	here_doc = redirection->here_doc;
 	input = get_input(here_doc->end_of_file->content, HEREDOC_PROMPT, false);
-	if (pipe(redirection->here_doc->pipe) == -1)
-		return (print_err("Here-doc: pipe(): ", true), EXIT_FAILURE);
-	ft_close_fd(&here_doc->pipe[1]);
-	ft_close_fd(&here_doc->pipe[0]);
 	if (g_signal != 0)
-		return (EXIT_FAILURE);
+		return (pipe_to_minus1(here_doc->pipe), EXIT_FAILURE);
+	if (pipe(redirection->here_doc->pipe) == -1)
+		return (print_err("Here-doc: pipe(): ", true), 
+			pipe_to_minus1(here_doc->pipe), EXIT_FAILURE);
 	if (input != NULL)
 	{
 		input = replace_env_vars(input);
 		if (input == NULL)
-			return (EXIT_FAILURE);
+			return (ft_close(&redirection->here_doc->pipe[0]),
+				ft_close(&redirection->here_doc->pipe[1]), EXIT_FAILURE);
 		ft_putstr_fd(input, here_doc->pipe[1]);
 		ft_free(input);
 	}
+	ft_close(&redirection->here_doc->pipe[1]);
 	return (EXIT_SUCCESS);
 }
 	
@@ -44,7 +51,7 @@ static bool	is_limiter(char *input, char *limiter)
 	size_t	input_len;
 
 	input_len = ft_strlen(input);
-	if (input_len <= 1)
+	if (input_len < 1)
 	{
 		return (false);
 	}
