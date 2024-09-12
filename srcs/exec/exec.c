@@ -47,7 +47,7 @@ int	exec(t_command *command)
 		status = exec_single_built_in(command);
 	else
 		status = exec_single(command);
-    return (status);
+	return (status);
 }
 
 int	forking_pipe_node(t_command *node, int pos, int fd[])

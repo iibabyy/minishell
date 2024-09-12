@@ -15,14 +15,14 @@ char	*expand_wildcard(char *input)
 	{
 		if (count_char(temp[i], '*') == 0)
 			continue ;
-		temp[i] = list_files(temp[i]);
+		temp[i] = list_files(temp[i], temp);
 		if (temp[i] == NULL)
 			return (free_2d_array((void ***)&temp), NULL);
 	}
 	return (str_join_2d_and_free(temp, " "));
 }
 
-char	*list_files(char *str)
+char	*list_files(char *str, char **input)
 {
 	DIR				*dir;
 	struct dirent	*file;
@@ -33,7 +33,7 @@ char	*list_files(char *str)
 	list = NULL;
 	while ((file = readdir(dir)) != NULL)
 	{
-		if (is_valid_name(file->d_name, str) == false)
+		if (is_valid_name(file->d_name, str, input) == false)
 			continue ;
 		if (list != NULL)
 		{
@@ -50,7 +50,7 @@ char	*list_files(char *str)
 	return (closedir(dir), list);
 }
 
-bool	is_valid_name(char *name, char *original)
+bool	is_valid_name(char *name, char *original, char **input)
 {
 	int	i;
 	int	j;
@@ -61,7 +61,7 @@ bool	is_valid_name(char *name, char *original)
 		return (false);
 	while (original[i] != '\0')
 	{
-		if (original[i] == '*')
+		if (original[i] == '*' && quotes_or_parenthesis_2d(input, original, i) == 0)
 		{
 			if (original[++i] == '\0')
 				return (true);

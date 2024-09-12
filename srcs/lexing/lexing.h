@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:15:31 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/12 00:10:59 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/12 09:25:18 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 
 # define QUOTES_PROMPT "quotes> "
 # define PARENTHESIS_PROMPT ""
+# define DQUOTE 1
+# define SQUOTE 2
 
 t_token	*input_to_tokens(char *input);
 int		word_to_token(char **input, int *start,  t_token **tokens);
@@ -45,5 +47,8 @@ int		next_valid_dollar(char *str, int *i);
 int		skip_quotes(char *str, int *i);
 int		skip_parenthesis(char *str, int *i);
 char	*expand_wildcard(char *input);
+int		is_in_quotes(char *str, int i);
+int		is_in_parenthesis(char *str, int i);
+int		quotes_or_parenthesis_2d(char **str, char *is_in, int index);
 
 #endif

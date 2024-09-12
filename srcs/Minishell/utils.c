@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 15:41:37 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/10 21:13:26 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/12 09:29:37 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 int	init_minishell(char **env)
 {
 	ft_malloc(0);
-	init_history();
-	init_aliases();
 	init_error_log();
 	init_env(env);
+	init_history();
+	init_aliases();
 	return (EXIT_SUCCESS);
 }
 
@@ -82,6 +82,12 @@ t_token	*input_to_tokens_subshell(char *input)
 	int		i;
 
 	i = 0;
+	input = replace_env_vars(input);
+	if (input == NULL)
+		return (NULL);
+	input = expand_wildcard(input);
+	if (input == NULL)
+		return (NULL);
 	tokens = NULL;
 	while (input[i] != '\0')
 	{
