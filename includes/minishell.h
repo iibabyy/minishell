@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 15:08:49 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/11 00:33:28 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/13 01:12:17 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ char		*get_input(char *end_of_file, char *prompt, bool quotes);
 t_command	*parse(char	*input);
 t_command	*last_command(t_command *current);
 int			open_redirections(t_command	*command);
+int			here_doc_fd(t_redirection *redirect);
 
 // built-ins
 

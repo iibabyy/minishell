@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 12:47:24 by mdembele          #+#    #+#             */
-/*   Updated: 2024/09/12 20:12:40 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/13 01:33:45 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ void	set_parent_signals(void)
 void	set_child_signals(void)
 {
     signal(SIGQUIT, SIG_DFL);
+    signal(SIGPIPE, exit_subshell);
     signal(SIGTSTP, SIG_IGN);
     signal(SIGINT, SIG_DFL);
 }

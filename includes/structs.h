@@ -82,6 +82,7 @@ typedef struct s_command
 typedef struct s_here_doc
 {
 	int					pipe[2];
+	char				*input;
 	t_token				*end_of_file;
 	t_token				*token;
 	struct s_here_doc	*next;

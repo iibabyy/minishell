@@ -6,16 +6,23 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:10:53 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/13 00:35:20 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/13 01:16:10 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-void	pipe_to_minus1(int *fd)
+void	ft_dup2(int *fd, int fd2);
+
+void	dup2_here_doc(t_redirection *redirect)
 {
-	fd[0] = -1;
-	fd[1] = -1;
+	int	fd[2];
+
+	if (pipe(fd) == -1)
+		free_and_exit(EXIT_FAILURE);
+	ft_putstr_fd(redirect->here_doc->input, fd[1]);
+	ft_close(&fd[1]);
+	ft_dup2(&fd[0], STDIN_FILENO);
 }
 
 int	open_here_doc(t_redirection *redirection)
@@ -29,8 +36,9 @@ int	open_here_doc(t_redirection *redirection)
 	here_doc = redirection->here_doc;
 	input = get_input(here_doc->end_of_file->content, HEREDOC_PROMPT, false);
 	if (g_signal != 0)
-		return (pipe_to_minus1(here_doc->pipe), EXIT_FAILURE);
-	if (pipe(redirection->here_doc->pipe) == -1)
+		return (ft_free(input), EXIT_FAILURE);
+	here_doc->input = input;
+/* 	if (pipe(redirection->here_doc->pipe) == -1)
 		return (print_err("Here-doc: pipe(): ", true),
 			pipe_to_minus1(here_doc->pipe), EXIT_FAILURE);
 	if (input != NULL)
@@ -43,7 +51,7 @@ int	open_here_doc(t_redirection *redirection)
 		ft_free(input);
 	}
 	redirection->command->infile = here_doc->pipe[0];
-	ft_close(&redirection->here_doc->pipe[1]);
+	ft_close(&redirection->here_doc->pipe[1]); */
 	return (EXIT_SUCCESS);
 }
 	
