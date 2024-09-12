@@ -79,6 +79,8 @@ int   exec_single(t_command *command)
         pid = ft_fork(command);
         if (pid == 0)
 			exec_command(command);
+		ft_close(&command->infile);
+		ft_close(&command->outfile);
 		if (ft_waitpid(pid, command) == 250)
 			last_status_code(exec_cd(command->command[0]), SET);
 		return (get_status());
@@ -115,6 +117,7 @@ int   exec_single_command(t_command *command)
 	if (command->command == NULL || command->command[0] == NULL)
 		(ft_close(&command->outfile), ft_close(&command->infile), free_and_exit(EXIT_FAILURE));
 	execve(exec->command_path, command->command, env_tab());
+	printf("salut, c'est encore moi\n");
 	if (test_cd(command) == true)
 		free_and_exit(250);
 	(ft_close(&command->outfile), ft_close(&command->infile));
