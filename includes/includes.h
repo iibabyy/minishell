@@ -16,6 +16,7 @@
 # include <term.h>
 # include <dirent.h>
 # include <errno.h>
+# include <sys/stat.h>
 
 # include "structs.h"
 # include "libft.h"
