@@ -6,7 +6,7 @@
 /*   By: mdembele <mdembele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:15:07 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/13 00:53:57 by mdembele         ###   ########.fr       */
+/*   Updated: 2024/09/13 00:57:33 by mdembele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	parenthesis_size(char *input, int *i)
 
 	parenthesis = 1;
 	j = 0;
-	while (input[*i] != '\0')
+	while (1)
 	{
 		if (input[*i] == '(')
 			++parenthesis;
