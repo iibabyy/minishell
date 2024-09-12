@@ -3,10 +3,14 @@
 
 void ft_dup2(int *fd1, int fd2)
 {
+    if (*fd1 == -1 || fd2 == -1)
+    {
+        return ;
+    }
 	if (dup2(*fd1, fd2) == -1)
 	{
 		fprintf(stderr, "fd === %i\n", *fd1);
-		perror("close");
+		perror("dup");
         free_and_exit(1);
 	}
     ft_close(fd1);
@@ -14,6 +18,7 @@ void ft_dup2(int *fd1, int fd2)
 
 void	ft_close(int *fd)
 {
+    printf("%i\n", *fd);
 	if (*fd == -1 || *fd == STDIN_FILENO || *fd == STDERR_FILENO
 		|| *fd == STDOUT_FILENO)
 		return ;

@@ -11,19 +11,24 @@ void	print_command(t_command *command);
 int	exec_single_built_in(t_command *command)
 {
 	int	fd[2];
+	int save_fd[2];
 	int	status;
 
 	if(command->redirections)
 	{
-		open_redirections(command);
 		pipe(fd);
-		dup2(STDIN_FILENO, fd[0]);
-		dup2(STDOUT_FILENO, fd[1]);
-		status = exec_single(command);
+		save_fd[0] = dup(STDIN_FILENO);
+		save_fd[1] = dup(STDOUT_FILENO);
 		dup2(fd[0], STDIN_FILENO);
-		close(fd[0]);
 		dup2(fd[1], STDOUT_FILENO);
-		close(fd[1]);
+		open_redirections(command);
+		status = exec_single(command);
+		ft_close(&fd[0]);
+		ft_close(&fd[1]);
+		dup2(save_fd[0], STDIN_FILENO);
+		dup2(save_fd[1], STDOUT_FILENO);
+		ft_close(&save_fd[0]);
+		ft_close(&save_fd[1]);
 	}
 	else
 	{

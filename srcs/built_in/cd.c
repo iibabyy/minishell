@@ -1,11 +1,23 @@
-#include "built_in.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cd.c                                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mdembele <mdembele@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/12 19:23:47 by mdembele          #+#    #+#             */
+/*   Updated: 2024/09/12 19:24:52 by mdembele         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../exec/exec.h"
+#include "built_in.h"
 
 static int	cd_oldpwd(void);
 
-int cd(char	**args)
+int	cd(char **args)
 {
-    char	*actual_path;
+	char	*actual_path;
 	char	*dir;
 
 	if (ft_strlen_2d(args) > 2)
@@ -13,7 +25,7 @@ int cd(char	**args)
 	if (args[1] != NULL && ft_strcmp(args[1], "-") == 0)
 		return (cd_oldpwd());
 	actual_path = ft_getenv("PWD");
-    if (args[1] != NULL)
+	if (args[1] != NULL)
 		dir = args[1];
 	else
 	{
@@ -25,7 +37,7 @@ int cd(char	**args)
 		return (cd_error(NULL, true));
 	if (update_pwd(actual_path) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-    return(0);
+	return (0);
 }
 
 static int	cd_oldpwd(void)
@@ -42,7 +54,7 @@ static int	cd_oldpwd(void)
 	ft_putendl_fd(oldpwd, STDERR_FILENO);
 	if (update_pwd(actual_path) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-    return(0);
+	return (0);
 }
 
 int	cd_error(char *err, bool erno)
@@ -59,6 +71,7 @@ int	update_pwd(char *old_pwd)
 {
 	int		status;
 	char	*pwd;
+
 	status = EXIT_SUCCESS;
 	if (create_and_add_env_var("OLDPWD", old_pwd) == EXIT_FAILURE)
 		status = EXIT_FAILURE;
