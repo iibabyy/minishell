@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:15:43 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/11 22:23:26 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/12 00:31:30 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,9 @@ t_token	*input_to_tokens(char *input)
 	i = 0;
 	ft_addhistory(input);
 	input = replace_env_vars(input);
+	if (input == NULL)
+		return (NULL);
+	input = expand_wildcard(input);
 	if (input == NULL)
 		return (NULL);
 	tokens = NULL;

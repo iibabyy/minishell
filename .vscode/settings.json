@@ -31,6 +31,7 @@
 	"C_Cpp.errorSquiggles": "disabled",
 	"cSpell.words": [
 		"addhistory",
+		"finalpath",
 		"mminishell",
 		"MSHRC",
 		"strtrim"

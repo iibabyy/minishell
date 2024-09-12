@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:05:52 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/10 16:16:19 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/12 09:43:17 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	error_log(char *error, bool erno)
 		return (error_log_file = error, ++error_num, (void)0);
 	else if (error_log_file == NULL)
 		return ;
-	error_log_fd = open(error_log_file, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	error_log_fd = open(error_log_file, O_WRONLY | O_APPEND, 0644);
 	if (error_log_fd == -1)
 		return ;
 	if (++error_num != 1)
@@ -65,6 +65,7 @@ void	error_log(char *error, bool erno)
 	if (erno == true)
 	{
 		ft_putstr_fd(error, error_log_fd);
+		ft_putstr_fd(": ", error_log_fd);
 		ft_putendl_fd(strerror(errno), error_log_fd);
 	}
 	else if (error != NULL)
@@ -83,10 +84,9 @@ void	init_error_log(void)
 	pwd = ft_re_strjoin(pwd, "/.error_log");
 	if (pwd == NULL)
 		return (error_log(NULL, false));
-	unlink(pwd);
-	fd = open(pwd, O_WRONLY | O_CREAT, 0644);
+	fd = open(pwd, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
-		return ;
+		return (error_log(NULL, false));
 	lock(pwd);
 	error_log(pwd, false);
 	close(fd);

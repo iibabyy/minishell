@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 19:09:39 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/11 22:11:39 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/12 09:34:58 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,76 @@ int	skip_parenthesis(char *str, int *i)
 	return (*i);
 }
 
+int	is_in_quotes(char *str, int i)
+{
+	int		j;
+	int	quotes;
 
+	j = -1;
+	quotes = 0;
+	while (str[++j] != '\0' && j < i)
+	{
+		if (str[j] == '\'' && quotes != DQUOTE)
+		{
+			if (quotes == 0)
+				quotes = SQUOTE;
+			else
+				quotes = 0;
+		}
+		if (str[j] == '\'' && quotes != SQUOTE)
+		{
+			if (quotes == 0)
+				quotes = DQUOTE;
+			else
+				quotes = 0;
+		}
+	}
+	return (quotes);
+}
+
+int	is_in_parenthesis(char *str, int i)
+{
+	int		j;
+
+	j = -1;
+	while (str[++j] != '\0' && j < i)
+	{
+		if (str[j] == '(')
+		{
+			if (parenthesis_size(str, &j) == -1)
+				return (-1);
+			if (j - 1 > i)
+				return (true);
+		}
+	}
+	return (false);
+}
+
+int	quotes_or_parenthesis_2d(char **str, char *is_in, int index)
+{
+	int	quotes;
+	int	i;
+	int	j;
+
+	i = -1;
+	j = -1;
+	quotes = 0;
+	while (str[++i])
+	{
+		if (++j == index && str[i] == is_in)
+			return (quotes);
+		if (str[i][j] == '"' && quotes == DQUOTE)
+			quotes = 0;
+		else if (str[i][j] == '"' && quotes == 0)
+			quotes = DQUOTE;
+		if (str[i][j] == '"' && quotes == SQUOTE)
+			quotes = 0;
+		else if (str[i][j] == '"' && quotes == 0)
+			quotes = SQUOTE;
+		if (str[i][j] == '(' && quotes == 0)
+			quotes = PARENTHESIS;
+		else if (str[i][j] == ')' && quotes == PARENTHESIS)
+			quotes = 0;
+	}
+	return (0);
+}
