@@ -33,7 +33,6 @@ void	subsh_fd(int *arg, int sig)
 int	exec_single_built_in(t_command *command)
 {
 	int	fd[2];
-	int save_fd[2];
 	int	status;
 
 	if (command->redirections)

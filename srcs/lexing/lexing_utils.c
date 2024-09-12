@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexing_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mdembele <mdembele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:15:07 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/08 00:05:28 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/13 00:53:57 by mdembele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	parenthesis_size(char *input, int *i)
 
 	parenthesis = 1;
 	j = 0;
-	while (1)
+	while (input[*i] != '\0')
 	{
 		if (input[*i] == '(')
 			++parenthesis;
@@ -79,7 +79,7 @@ int	parenthesis_size(char *input, int *i)
 			--parenthesis;
 		if (input[*i] == '\0')
 		{
-			parse_err(TOKEN_ERR, "newline");
+			parse_err(TOKEN_ERR, "newline1");
 			return (-1);
 		}
 		if (parenthesis == 0 && input[*i] == ')')
@@ -88,7 +88,7 @@ int	parenthesis_size(char *input, int *i)
 		++j;
 	}
 	if (j == 0)
-		return (parse_err(TOKEN_ERR, ")"), -1);
+		return (parse_err(TOKEN_ERR, "("), -1);
 	++*i;
 	return (j);
 }

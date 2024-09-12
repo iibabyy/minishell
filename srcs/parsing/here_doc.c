@@ -6,7 +6,7 @@
 /*   By: mdembele <mdembele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:10:53 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/12 20:39:50 by mdembele         ###   ########.fr       */
+/*   Updated: 2024/09/13 00:50:58 by mdembele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ t_redirection	*init_here_doc(t_parsing *data)
 	redirection->command = data->command;
 	data->curr_token = data->curr_token->next;
 	if (data->curr_token == NULL)
-		return (parse_err(TOKEN_ERR, "newline"), ft_free(redirection), NULL);
+		return (parse_err(TOKEN_ERR, "newline2"), ft_free(redirection), NULL);
 	redirection->here_doc->end_of_file = data->curr_token;
 	return (redirection);
 }

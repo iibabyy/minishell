@@ -55,9 +55,26 @@ int exec_cd(char *str)
 
 void execve_error(char *str)
 {
+    struct stat	buf;
+    
 	str = replace_newline(str);
     if (strchr(str, '/'))
     {
+        if (stat(str, &buf) == -1)
+        {
+            if(errno == EACCES)
+            {
+                ft_putstr_fd("minishell: ", 2);
+                ft_putstr_fd(str, 2);
+                ft_putendl_fd(": Permission denied ", 2);
+                free_and_exit(126);
+            }
+        }
+        else
+        {
+            if (S_ISREG(buf.st_mode))
+                free_and_exit(0);
+        }
         ft_putstr_fd("minishell: No such file or directory: ", 2);
         ft_putendl_fd(str, 2);
         free_and_exit(127);

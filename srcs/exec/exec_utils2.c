@@ -18,7 +18,6 @@ void ft_dup2(int *fd1, int fd2)
 
 void	ft_close(int *fd)
 {
-    printf("%i\n", *fd);
 	if (*fd == -1 || *fd == STDIN_FILENO || *fd == STDERR_FILENO
 		|| *fd == STDOUT_FILENO)
 		return ;
