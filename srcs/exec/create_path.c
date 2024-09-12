@@ -3,26 +3,43 @@
 #include <unistd.h>
 
 // int	check_dir()
-
+char *check_command_status(char *command)
+{
+		struct stat	buf;
+		if (stat(command, &buf) == -1)
+			return(command);
+		if (S_ISDIR(buf.st_mode))
+		{
+			ft_putstr_fd("minishell : ", 2);
+            ft_putstr_fd(command, 2);
+            ft_putendl_fd(": Is a directory", 2);
+            free_and_exit(126);
+		}
+		if (command == NULL || access(command, X_OK) == 0)
+			return (command);
+		if (errno == EACCES)
+		{
+			ft_putstr_fd("minishell: Permission denied: ", 2);
+    		ft_putendl_fd(command, 2);
+    		free_and_exit(126);
+		}
+		else
+		{
+			ft_putstr_fd("minishell: command not found: ", 2);
+    		ft_putendl_fd(command, 2);
+    		free_and_exit(127);
+		}
+		return(NULL);
+}
 char	*get_path(char *command, char **paths)
 {
 	int			i;
 	char		*finalpath;
-	struct stat	buf;
+	
 
 	i = 0;
 	if (command != NULL && ft_strchr(command, '/') != NULL)
-	{
-		if (stat(command, &buf) == -1)
-			print_err_and_exit("get_path: stat: ", EXIT_FAILURE, true);
-		if (S_ISDIR(buf.st_mode))
-		{
-			// ft_putstr_fd(c)
-			print_err_and_exit("is a directory", EXIT_FAILURE, false);
-		}
-	}
-	if (command == NULL || access(command, X_OK) == 0)
-		return (command);
+		return (check_command_status(command));
 	while (paths[i])
 	{
 		paths[i] = ft_re_strjoin(paths[i], "/");
@@ -40,7 +57,10 @@ char	*get_path(char *command, char **paths)
 			return (finalpath);
 		i++;
 	}
-	return (command);
+	ft_putstr_fd("minishell : Command not found : ", 2);
+    ft_putendl_fd(command, 2);
+    free_and_exit(127);
+	return(NULL);
 }
 
 char	*create_command_path(t_exec_data *data, t_command *command)
