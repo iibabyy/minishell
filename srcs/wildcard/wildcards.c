@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 04:10:22 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/13 04:41:05 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/13 05:10:43 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,13 @@ char	*list_files(char *str, char **input)
 	struct dirent	*file;
 	char			*list;
 
-	free((dir = opendir("./"), file = 1, list = NULL));
+	dir = opendir("./");
 	if (dir == NULL)
 		return (NULL);
+	list = NULL;
+	file = readdir(dir);
 	while (file != NULL)
 	{
-		file = readdir(dir);
 		if (is_valid_name(file->d_name, str, input) == false)
 			continue ;
 		if (list != NULL)
@@ -57,6 +58,7 @@ char	*list_files(char *str, char **input)
 		list = ft_re_strjoin(list, file->d_name);
 		if (list == NULL)
 			return (closedir(dir), NULL);
+		file = readdir(dir);
 	}
 	if (list == NULL)
 		return (closedir(dir), str);

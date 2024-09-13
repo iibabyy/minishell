@@ -6,13 +6,13 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 04:53:59 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/13 05:03:51 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/13 05:12:00 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-int	left_and(t_command *node)
+void	left_and(t_command *node)
 {
 	if (should_fork(node->left))
 		forking_node(node->left);

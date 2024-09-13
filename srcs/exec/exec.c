@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 04:32:07 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/13 04:41:41 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/13 05:09:25 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 #include "../built_in/built_in.h"
 #include "exec.h"
 #include <unistd.h>
-
-#define LEFT_NODE 0
-#define RIGHT_NODE 1
 
 void	print_command(t_command *command);
 void	exit_subshell(int sig);
