@@ -17,8 +17,33 @@ int	ft_exit(char **arg)
 	if (first_arg_ok == false)
 		free_and_exit(2);
 	if (first_arg_ok == true && one_arg == true)
-		free_and_exit(ft_atoi(arg[1]));
+		free_and_exit(ft_atoi(arg[1]) % 256);
 	return (EXIT_FAILURE);
+}
+
+int	ft_atoi(const char *str)
+{
+	int	i;
+	int	sign;
+	int	number;
+
+	i = 0;
+	sign = 1;
+	number = 0;
+	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
+		i++;
+	if (str[i] == '+' || str[i] == '-')
+	{
+		if (str[i] == '-')
+			sign = -sign;
+		i++;
+	}
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		number = number * 10 + (str[i] - '0');
+		i++;
+	}
+	return (number * sign);
 }
 
 static bool	is_first_arg_ok(char **arg)

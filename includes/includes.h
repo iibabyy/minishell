@@ -17,6 +17,7 @@
 # include <dirent.h>
 # include <errno.h>
 # include <sys/stat.h>
+# include <limits.h>
 
 # include "structs.h"
 # include "libft.h"
