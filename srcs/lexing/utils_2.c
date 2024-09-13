@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 03:26:41 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/13 03:28:47 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/13 03:29:43 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	tab_to_spaces(char *input)
 	int		i;
 
 	if (input == NULL)
-		return (NULL);
+		return ;
 	i = -1;
 	while (input[++i])
 	{
