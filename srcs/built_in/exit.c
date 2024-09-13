@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exit.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mdembele <mdembele@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/13 03:19:25 by mdembele          #+#    #+#             */
+/*   Updated: 2024/09/13 03:41:30 by mdembele         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "built_in.h"
 
 static bool	first_error(bool getter);
@@ -24,6 +36,7 @@ int	ft_exit(char **arg)
 static bool	is_first_arg_ok(char **arg)
 {
 	int	i;
+
 	if (arg == NULL || arg[1] == NULL)
 		return (false);
 	i = -1;
@@ -57,7 +70,7 @@ static bool	is_one_arg(char **arg)
 static bool	first_error(bool getter)
 {
 	static bool	first = true;
-	
+
 	if (getter == false)
 		return (first = true, true);
 	if (first == true)
