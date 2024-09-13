@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/13 04:32:07 by ibaby             #+#    #+#             */
+/*   Updated: 2024/09/13 04:32:56 by ibaby            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 #include "../built_in/built_in.h"
 #include "exec.h"
@@ -12,8 +24,8 @@ void	exit_subshell(int sig);
 void	redirect_subshell_signals(void)
 {
 	signal(SIGQUIT, exit_subshell);
-    signal(SIGTSTP, SIG_IGN);
-    signal(SIGINT, exit_subshell);
+	signal(SIGTSTP, SIG_IGN);
+	signal(SIGINT, exit_subshell);
 }
 
 void	subsh_fd(int *arg, int sig)
@@ -58,14 +70,14 @@ int	exec_single_built_in(t_command *command)
 
 int	exec(t_command *command)
 {
-    int				status;
-	
+	int	status;
+
 	if (command == NULL)
 		return (EXIT_FAILURE);
 	if (command->is_child == false)
 		set_parent_exec_signals();
-    if (command->type != COMMAND && command->type != SUB_SHELL)
-        status = exec_command(command);
+	if (command->type != COMMAND && command->type != SUB_SHELL)
+		status = exec_command(command);
 	else if (command->type == COMMAND && is_built_in(command) == true)
 		status = exec_single_built_in(command);
 	else
@@ -96,6 +108,7 @@ int	forking_pipe_node(t_command *node, int pos, int fd[])
 	}
 	return (pid);
 }
+
 int	exec_pipe(t_command *node)
 {
 	int	pid[2];
@@ -108,7 +121,7 @@ int	exec_pipe(t_command *node)
 	(ft_close(&node->left->infile), ft_close(&node->right->infile));
 	(ft_close(&node->left->outfile), ft_close(&node->right->outfile));
 	ft_waitpid(pid[0], node);
-	if (get_status() == 128 + SIGQUIT /*&& node->left->type*/)
+	if (get_status() == 128 + SIGQUIT)
 	{
 		if (node->previous && node->previous->type == PIPE)
 			node->previous->sigquit = true;
