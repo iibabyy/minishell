@@ -1,9 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   create_path.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/13 04:22:18 by ibaby             #+#    #+#             */
+/*   Updated: 2024/09/13 04:22:19 by ibaby            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 #include "exec.h"
 #include <unistd.h>
 
-// int	check_dir()
-char *check_command_status(t_command *command)
+char	*check_command_status(t_command *command)
 {
 		struct stat	buf;
 		if (stat(command->command[0], &buf) == -1)

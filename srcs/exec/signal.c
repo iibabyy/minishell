@@ -6,35 +6,16 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 12:47:24 by mdembele          #+#    #+#             */
-/*   Updated: 2024/09/13 03:57:40 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/13 04:20:08 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-int	sig_event(void)
-{
-	return (EXIT_SUCCESS);
-}
-
-void	if_sigint(int sig)
-{
-	g_signal = 128 + sig;
-	rl_done = 1;
-	last_status_code(128 + sig, SET);
-}
-
-void	exit_subshell(int sig)
-{
-	free_and_exit(128 + sig);
-}
-
-void	set_subshell_signals(void)
-{
-	signal(SIGQUIT, exit_subshell);
-	signal(SIGTSTP, SIG_IGN);
-	signal(SIGINT, exit_subshell);
-}
+int		sig_event(void);
+void	if_sigint(int sig);
+void	exit_subshell(int sig);
+void	set_subshell_signals(void);
 
 void	print_nl(void)
 {

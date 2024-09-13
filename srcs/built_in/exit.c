@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 03:19:25 by mdembele          #+#    #+#             */
-/*   Updated: 2024/09/13 04:17:10 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/13 04:24:34 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	ft_exit(char **arg)
 {
 	bool	one_arg;
 	bool	first_arg_ok;
-	int		arg;
+	int		exit_code;
 
 	first_error(false);
 	if (arg == NULL || arg[1] == NULL)
@@ -29,12 +29,12 @@ int	ft_exit(char **arg)
 	one_arg = is_one_arg(arg);
 	if (first_arg_ok == false)
 		free_and_exit(2);
-	arg = ft_atoi(arg[1]);
-	if (arg < 0)
-		arg = -arg;
-	arg = arg % 256;
+	exit_code = ft_atoi(arg[1]);
+	if (exit_code < 0)
+		exit_code = -exit_code;
+	exit_code = exit_code % 256;
 	if (first_arg_ok == true && one_arg == true)
-		free_and_exit(arg);
+		free_and_exit(exit_code);
 	return (EXIT_FAILURE);
 }
 
