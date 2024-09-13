@@ -6,11 +6,25 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 04:10:22 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/13 05:10:43 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/13 05:51:14 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wildcard.h"
+
+bool	check_if_expand(char *str, char **temp)
+{
+	char	*wc;
+
+	wc = ft_strchr(str, '*');
+	while (wc != NULL)
+	{
+		if (!quotes_or_parenthesis_2d(temp, str, wc - str))
+			return (true);
+		wc = ft_strchr(++wc, '*');
+	}
+	return (false);
+}
 
 char	*expand_wildcard(char *input)
 {
@@ -25,7 +39,7 @@ char	*expand_wildcard(char *input)
 	i = -1;
 	while (temp[++i] != NULL)
 	{
-		if (count_char(temp[i], '*') == 0)
+		if (check_if_expand(temp[i], temp) == false)
 			continue ;
 		temp[i] = list_files(temp[i], temp);
 		if (temp[i] == NULL)
@@ -48,7 +62,10 @@ char	*list_files(char *str, char **input)
 	while (file != NULL)
 	{
 		if (is_valid_name(file->d_name, str, input) == false)
+		{
+			file = readdir(dir);
 			continue ;
+		}
 		if (list != NULL)
 		{
 			list = ft_re_strjoin(list, " ");

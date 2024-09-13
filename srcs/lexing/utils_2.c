@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 03:26:41 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/13 03:34:59 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/13 05:51:38 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,20 +87,24 @@ int	quotes_or_parenthesis_2d(char **str, char *is_in, int index)
 	quotes = 0;
 	while (str[++i])
 	{
-		if (++j == index && str[i] == is_in)
-			return (quotes);
-		if (str[i][j] == '"' && quotes == DQUOTE)
-			quotes = 0;
-		else if (str[i][j] == '"' && quotes == 0)
-			quotes = DQUOTE;
-		if (str[i][j] == '"' && quotes == SQUOTE)
-			quotes = 0;
-		else if (str[i][j] == '"' && quotes == 0)
-			quotes = SQUOTE;
-		if (str[i][j] == '(' && quotes == 0)
-			quotes = PARENTHESIS;
-		else if (str[i][j] == ')' && quotes == PARENTHESIS)
-			quotes = 0;
+		while (str[i][++j])
+		{
+			if (j == index && str[i] == is_in)
+				return (quotes);
+			if (str[i][j] == '"' && quotes == DQUOTE)
+				quotes = 0;
+			else if (str[i][j] == '"' && quotes == 0)
+				quotes = DQUOTE;
+			if (str[i][j] == '\'' && quotes == SQUOTE)
+				quotes = 0;
+			else if (str[i][j] == '\'' && quotes == 0)
+				quotes = SQUOTE;
+			if (str[i][j] == '(' && quotes == 0)
+				quotes = PARENTHESIS;
+			else if (str[i][j] == ')' && quotes == PARENTHESIS)
+				quotes = 0;
+		}
+		j = -1;
 	}
 	return (0);
 }
