@@ -39,6 +39,8 @@ int	exec_single_built_in(t_command *command)
 	{
 		fd[0] = dup(STDIN_FILENO);
 		fd[1] = dup(STDOUT_FILENO);
+		if (command->type == COMMAND && ft_strcmp("exit", command->command[0]) == 0)
+			(ft_close(&fd[0]), ft_close(&fd[1]));
 		open_redirections(command);
 		status = exec_single(command);
 		if (fd[0] != -1)
@@ -53,9 +55,7 @@ int	exec_single_built_in(t_command *command)
 		}
 	}
 	else
-	{
 		status = exec_single(command);
-	}
 	return (status);
 }
 

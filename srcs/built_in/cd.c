@@ -51,7 +51,7 @@ int	cd_error(char *err, bool erno)
 	if (erno == true)
 		perror(err);
 	else if (err != NULL)
-		ft_putendl_fd("err", STDERR_FILENO);
+		ft_putendl_fd(err, STDERR_FILENO);
 	return (EXIT_FAILURE);
 }
 

@@ -38,6 +38,8 @@ int exec_builtin(t_command *node)
 		status = export(args);
 	if(ft_strcmp("env", args[0]) == 0)
 		status = env(args);
+	ft_close(&node->outfile);
+	ft_close(&node->infile);
 	if(ft_strcmp("exit", args[0]) == 0)
 	{
 		if (node->is_child == false)
@@ -45,8 +47,6 @@ int exec_builtin(t_command *node)
 		status = ft_exit(args);
 	}
 	last_status_code(status, SET);
-	ft_close(&node->infile);
-	ft_close(&node->outfile);
 	return(status);
 }
 
