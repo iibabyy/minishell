@@ -40,19 +40,14 @@ int	exec_single_built_in(t_command *command)
 		fd[0] = dup(STDIN_FILENO);
 		fd[1] = dup(STDOUT_FILENO);
 		if (command->type == COMMAND && ft_strcmp("exit", command->command[0]) == 0)
-			(ft_close(&fd[0]), ft_close(&fd[1]));
-		open_redirections(command);
+		(ft_close(&fd[0]), ft_close(&fd[1]));
+		if (open_redirections(command) == EXIT_FAILURE)
+			return (EXIT_FAILURE);
 		status = exec_single(command);
 		if (fd[0] != -1)
-		{
-			dup2(fd[0], STDIN_FILENO);
-			close(fd[0]);
-		}
+			(dup2(fd[0], STDIN_FILENO), close(fd[0]));
 		if (fd[1] != -1)
-		{
-			dup2(fd[1], STDOUT_FILENO);
-			close(fd[1]);
-		}
+			(dup2(fd[1], STDOUT_FILENO), close(fd[1]));
 	}
 	else
 		status = exec_single(command);
