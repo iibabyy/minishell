@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   test_utils.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/13 05:05:21 by ibaby             #+#    #+#             */
+/*   Updated: 2024/09/13 05:05:59 by ibaby            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
-char *type_to_str(int type);
-void	print_command(t_command *command);
-char *operator_type_to_str(int type);
-void printTree(t_command *command, int depth, int isRight, int *branch);
+char		*type_to_str(int type);
+void		print_command(t_command *command);
+char		*operator_type_to_str(int type);
+void		printTree(t_command *command, int depth, int isRight, int *branch);
 t_command	*last_command(t_command *current);
 
 void	print_AST(t_command *command)

@@ -1,8 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec_utils.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/13 04:55:13 by ibaby             #+#    #+#             */
+/*   Updated: 2024/09/13 04:55:14 by ibaby            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 #include "exec.h"
 #include <unistd.h>
 
 int		update_pwd(char *old_pwd);
+bool	test_cd(t_command *command);
+int		exec_cd(char *str);
 
 bool	is_built_in(t_command *node)
 {
@@ -24,35 +38,6 @@ bool	is_built_in(t_command *node)
 		return (true);
 	return (false);
 }
-bool	test_cd(t_command *command)
-{
-	struct stat	buf;
-
-	if (command->previous != NULL || command->type != COMMAND)
-		return (false);
-	if (command->redirections != NULL)
-		return (false);
-	if (command->command == NULL || command->command[0] == NULL
-		|| command->command[1] != NULL)
-		return (false);
-	if (access(command->command[0], X_OK) != 0)
-		return (false);
-	if (stat(command->command[0], &buf) == -1)
-		return (false);
-	if (S_ISDIR(buf.st_mode))
-		return (true);
-	return (false);
-}
-int	exec_cd(char *str)
-{
-	char	**cd_args;
-
-	cd_args = ft_malloc(sizeof(char *) * 3);
-	cd_args[0] = ft_strdup("cd");
-	cd_args[1] = ft_strdup(str);
-	cd_args[2] = NULL;
-	return (cd(cd_args));
-}
 
 void	execve_error(char *str)
 {
@@ -70,6 +55,7 @@ void	execve_error(char *str)
 		free_and_exit(127);
 	}
 }
+
 int	exec_single(t_command *command)
 {
 	pid_t	pid;
@@ -88,6 +74,7 @@ int	exec_single(t_command *command)
 	}
 	return (last_status_code(exec_command(command), SET), get_status());
 }
+
 void	check_directory(t_command *command)
 {
 	if (ft_strchr(command->command[0], '/'))
@@ -118,7 +105,7 @@ int	exec_single_command(t_command *command)
 	init_data(exec, command);
 	if (command->command == NULL || command->command[0] == NULL)
 		(ft_close(&command->outfile), ft_close(&command->infile),
-				free_and_exit(EXIT_FAILURE));
+			free_and_exit(EXIT_FAILURE));
 	execve(exec->command_path, command->command, env_tab());
 	if (test_cd(command) == true)
 		free_and_exit(250);

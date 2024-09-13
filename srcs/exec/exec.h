@@ -1,11 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec.h                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/13 04:43:21 by ibaby             #+#    #+#             */
+/*   Updated: 2024/09/13 04:43:22 by ibaby            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef EXEC_H
 # define EXEC_H
 
 # define CMD_LEFT 0
 # define CMD_RIGHT 1
 
-# define SET true
-# define GET false
+# define SET 1
+# define GET 0
 
 # include "../../includes/minishell.h"
 
