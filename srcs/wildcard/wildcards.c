@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 04:10:22 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/13 05:51:14 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/13 06:04:54 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,17 +48,12 @@ char	*expand_wildcard(char *input)
 	return (str_join_2d_and_free(temp, " "));
 }
 
-char	*list_files(char *str, char **input)
+char	*get_dir_files(DIR *dir, char *str, char **input)
 {
-	DIR				*dir;
 	struct dirent	*file;
 	char			*list;
 
-	dir = opendir("./");
-	if (dir == NULL)
-		return (NULL);
-	list = NULL;
-	file = readdir(dir);
+	free((list = NULL, file = readdir(dir), NULL));
 	while (file != NULL)
 	{
 		if (is_valid_name(file->d_name, str, input) == false)
@@ -70,16 +65,31 @@ char	*list_files(char *str, char **input)
 		{
 			list = ft_re_strjoin(list, " ");
 			if (list == NULL)
-				return (closedir(dir), NULL);
+				return (NULL);
 		}
 		list = ft_re_strjoin(list, file->d_name);
 		if (list == NULL)
-			return (closedir(dir), NULL);
+			return (NULL);
 		file = readdir(dir);
 	}
 	if (list == NULL)
-		return (closedir(dir), str);
-	return (closedir(dir), list);
+		return (str);
+	return (list);
+}
+
+char	*list_files(char *str, char **input)
+{
+	DIR				*dir;
+	char			*list;
+
+	dir = opendir("./");
+	if (dir == NULL)
+		return (NULL);
+	list = get_dir_files(dir, str, input);
+	closedir(dir);
+	if (list == NULL)
+		return (NULL);
+	return (list);
 }
 
 bool	is_valid_name(char *name, char *original, char **input)

@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 03:26:41 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/13 05:51:38 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/13 06:11:37 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,23 @@ t_token	*init_token(char **input, int start)
 	return (new_token);
 }
 
+static int	check_quotes(int quotes, char **str, int i, int j)
+{
+	if (str[i][j] == '"' && quotes == DQUOTE)
+		return (0);
+	else if (str[i][j] == '"' && quotes == 0)
+		return (DQUOTE);
+	if (str[i][j] == '\'' && quotes == SQUOTE)
+		return (0);
+	else if (str[i][j] == '\'' && quotes == 0)
+		return (SQUOTE);
+	if (str[i][j] == '(' && quotes == 0)
+		return (PARENTHESIS);
+	else if (str[i][j] == ')' && quotes == PARENTHESIS)
+		return (0);
+	return (quotes);
+}
+
 int	quotes_or_parenthesis_2d(char **str, char *is_in, int index)
 {
 	int	quotes;
@@ -91,20 +108,9 @@ int	quotes_or_parenthesis_2d(char **str, char *is_in, int index)
 		{
 			if (j == index && str[i] == is_in)
 				return (quotes);
-			if (str[i][j] == '"' && quotes == DQUOTE)
-				quotes = 0;
-			else if (str[i][j] == '"' && quotes == 0)
-				quotes = DQUOTE;
-			if (str[i][j] == '\'' && quotes == SQUOTE)
-				quotes = 0;
-			else if (str[i][j] == '\'' && quotes == 0)
-				quotes = SQUOTE;
-			if (str[i][j] == '(' && quotes == 0)
-				quotes = PARENTHESIS;
-			else if (str[i][j] == ')' && quotes == PARENTHESIS)
-				quotes = 0;
+			quotes = check_quotes(quotes, str, i, j);
 		}
 		j = -1;
 	}
-	return (0);
+	return (quotes);
 }

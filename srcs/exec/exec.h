@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 04:43:21 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/13 05:09:30 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/13 06:12:06 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 # define SET 1
 # define GET 0
 
-#define LEFT_NODE 0
-#define RIGHT_NODE 1
+# define LEFT_NODE 0
+# define RIGHT_NODE 1
 
 # include "../../includes/minishell.h"
 

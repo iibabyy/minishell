@@ -6,13 +6,13 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 21:14:36 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/13 05:07:56 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/13 06:12:00 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-int	forking_pipe_node(t_command *node, int pos, int fd[]); 
+int	forking_pipe_node(t_command *node, int pos, int fd[]);
 
 bool	should_fork(t_command *node)
 {
