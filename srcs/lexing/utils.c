@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 19:09:39 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/13 02:01:32 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/13 02:04:23 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	is_in_quotes(char *str, int i)
 			else
 				quotes = 0;
 		}
-		if (str[j] == '\'' && quotes != SQUOTE)
+		if (str[j] == '"' && quotes != SQUOTE)
 		{
 			if (quotes == 0)
 				quotes = DQUOTE;
