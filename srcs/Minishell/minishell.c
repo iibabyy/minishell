@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:42:32 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/13 02:26:09 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/13 02:32:13 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ int	main(int ac, char **av, char **envp)
 	(void)av;
 	if (ac != 1)
 		return (EXIT_FAILURE);
-	if (isatty(STDIN_FILENO) == 0)
-		free_and_exit(2);
 	set_parent_signals();
 	init_minishell(envp);
 	while (1)
@@ -50,6 +48,9 @@ void	minishell(void)
 	(tcgetattr(STDOUT_FILENO, &term));
 	exec(command);
 	(tcsetattr(STDOUT_FILENO, TCSANOW, &term));
+	if (isatty(STDIN_FILENO) == 0)
+		print_err_and_exit("infile is not a terminal, exit",
+			EXIT_FAILURE, false);
 	if (command->sigint == true)
 		print_nl();
 	else if (command->sigquit == true)
