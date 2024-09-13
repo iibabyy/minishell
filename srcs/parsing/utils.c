@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdembele <mdembele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:07:45 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/11 15:34:16 by mdembele         ###   ########.fr       */
+/*   Updated: 2024/09/13 03:23:35 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,11 @@ int	next_operator_weight(t_parsing *data)
 		return (0);
 	type = token_to_operator_type(operator);
 	return (weight_by_type(type));
+}
+
+bool	is_whitespace(char c)
+{
+	if (c == '\t' || c == ' ')
+		return (true);
+	return (false);
 }

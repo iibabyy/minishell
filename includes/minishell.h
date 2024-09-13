@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 15:08:49 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/13 01:12:17 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/13 03:23:52 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ char		*replace_wildcard(char *str);
 char		*replace_env_vars(char *input);
 t_token		*input_to_tokens(char *input);
 char		*get_input(char *end_of_file, char *prompt, bool quotes);
+bool		is_whitespace(char c);
 
 // parsing
 
