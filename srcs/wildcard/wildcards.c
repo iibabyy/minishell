@@ -28,9 +28,11 @@ char	*list_files(char *str, char **input)
 	struct dirent	*file;
 	char			*list;
 
-	if (str == NULL || (dir = opendir("./"), dir) == NULL)
+	if (str == NULL)
 		return (NULL);
-	list = NULL;
+	free((dir = opendir("./"), list = NULL));
+	if (dir == NULL)
+		return (NULL);
 	while ((file = readdir(dir)) != NULL)
 	{
 		if (is_valid_name(file->d_name, str, input) == false)
