@@ -6,26 +6,6 @@ char *operator_type_to_str(int type);
 void printTree(t_command *command, int depth, int isRight, int *branch);
 t_command	*last_command(t_command *current);
 
-/*		Test lexing		*/
-
-// int main(void)
-// {
-// 	while (1)
-// 	{
-// 		char *test = readline("\033[0;36mminishell \033[0;33m✗\033[0m ");
-// 		t_token	*tokens = parse(test);
-// 		if (tokens == NULL)
-// 			continue ;
-// 		while (tokens != NULL)
-// 		{
-// 			printf("(%s:)\"%s\" ", type_to_str(tokens->type), tokens->content);
-// 			tokens = tokens->next;
-// 		}
-// 		printf("\n");
-// 	}
-// 	return 0;
-// }
-
 void	print_AST(t_command *command)
 {
 	int array[1024] = {0};
@@ -33,7 +13,6 @@ void	print_AST(t_command *command)
 	command = last_command(command);
 	printTree(command, 0, 0, array);
 }
-
 
 void print_command(t_command *command)
 {

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   wildcards.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/13 04:10:22 by ibaby             #+#    #+#             */
+/*   Updated: 2024/09/13 04:10:23 by ibaby            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "wildcard.h"
 
 char	*expand_wildcard(char *input)
@@ -28,12 +40,10 @@ char	*list_files(char *str, char **input)
 	struct dirent	*file;
 	char			*list;
 
-	if (str == NULL)
-		return (NULL);
-	free((dir = opendir("./"), list = NULL));
 	if (dir == NULL)
 		return (NULL);
-	while ((file = readdir(dir)) != NULL)
+	free((dir = opendir("./"), file = readdir(dir), list = NULL));
+	while (file != NULL)
 	{
 		if (is_valid_name(file->d_name, str, input) == false)
 			continue ;
@@ -46,6 +56,7 @@ char	*list_files(char *str, char **input)
 		list = ft_re_strjoin(list, file->d_name);
 		if (list == NULL)
 			return (closedir(dir), NULL);
+		file = readdir(dir);
 	}
 	if (list == NULL)
 		return (closedir(dir), str);
@@ -74,10 +85,8 @@ bool	is_valid_name(char *name, char *original, char **input)
 				++j;
 		}
 		else
-		{
 			if (name[j++] != original[i++])
 				return (false);
-		}
 	}
 	return (true);
 }

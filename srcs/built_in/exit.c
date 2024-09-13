@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdembele <mdembele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 03:19:25 by mdembele          #+#    #+#             */
-/*   Updated: 2024/09/13 03:41:30 by mdembele         ###   ########.fr       */
+/*   Updated: 2024/09/13 04:17:10 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	ft_exit(char **arg)
 {
 	bool	one_arg;
 	bool	first_arg_ok;
+	int		arg;
 
 	first_error(false);
 	if (arg == NULL || arg[1] == NULL)
@@ -28,34 +29,13 @@ int	ft_exit(char **arg)
 	one_arg = is_one_arg(arg);
 	if (first_arg_ok == false)
 		free_and_exit(2);
+	arg = ft_atoi(arg[1]);
+	if (arg < 0)
+		arg = -arg;
+	arg = arg % 256;
 	if (first_arg_ok == true && one_arg == true)
-		free_and_exit(ft_atoi(arg[1]) % 256);
+		free_and_exit(arg);
 	return (EXIT_FAILURE);
-}
-
-int	ft_atoi(const char *str)
-{
-	int	i;
-	int	sign;
-	int	number;
-
-	i = 0;
-	sign = 1;
-	number = 0;
-	while (is_whitespace(str[i]) || (str[i] >= 9 && str[i] <= 13))
-		i++;
-	if (str[i] == '+' || str[i] == '-')
-	{
-		if (str[i] == '-')
-			sign = -sign;
-		i++;
-	}
-	while (str[i] >= '0' && str[i] <= '9')
-	{
-		number = number * 10 + (str[i] - '0');
-		i++;
-	}
-	return (number * sign);
 }
 
 static bool	is_first_arg_ok(char **arg)
