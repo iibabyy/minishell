@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 21:53:22 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/08 22:16:50 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/13 03:56:54 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	*git_head(void)
 {
 	char	*git;
 	char	*temp;
-	
+
 	temp = git_line("HEAD");
 	if (temp == NULL)
 		return (NULL);

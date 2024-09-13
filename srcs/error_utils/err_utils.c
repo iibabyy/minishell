@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/08 23:24:41 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/08 23:40:45 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/13 03:57:13 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*replace_newline(char *str)
 	if (count_char(str, '\n') == 0)
 		return (str);
 	res = ft_malloc(sizeof(char) *
-		(ft_strlen(str) + count_char(str, '\n') + 1));
+					(ft_strlen(str) + count_char(str, '\n') + 1));
 	if (res == NULL)
 		return (error_log("replace_newline: malloc", true), str);
 	while (str[++i] != '\0')

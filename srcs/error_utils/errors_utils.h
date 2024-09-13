@@ -6,20 +6,19 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:05:38 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/08 23:31:01 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/13 03:57:20 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ERRORS_UTILS_H
 # define ERRORS_UTILS_H
 
-# include <stdlib.h>
-# include <stdbool.h>
-# include <fcntl.h>
-# include <string.h>
-# include <errno.h>
 # include "../../includes/minishell.h"
-
+# include <errno.h>
+# include <fcntl.h>
+# include <stdbool.h>
+# include <stdlib.h>
+# include <string.h>
 
 void	ft_close(int *fd);
 void	free_all(void);

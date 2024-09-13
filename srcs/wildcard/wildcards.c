@@ -2,7 +2,7 @@
 
 char	*expand_wildcard(char *input)
 {
-	char 	**temp;
+	char	**temp;
 	int		i;
 
 	if (count_char(input, '*') == 0)
@@ -28,7 +28,7 @@ char	*list_files(char *str, char **input)
 	struct dirent	*file;
 	char			*list;
 
-	if (str == NULL || (dir = opendir("./")) == NULL)
+	if (str == NULL || (dir = opendir("./"), dir) == NULL)
 		return (NULL);
 	list = NULL;
 	while ((file = readdir(dir)) != NULL)
@@ -61,7 +61,8 @@ bool	is_valid_name(char *name, char *original, char **input)
 		return (false);
 	while (original[i] != '\0')
 	{
-		if (original[i] == '*' && quotes_or_parenthesis_2d(input, original, i) == 0)
+		if (original[i] == '*' && quotes_or_parenthesis_2d(input, original,
+				i) == 0)
 		{
 			if (original[++i] == '\0')
 				return (true);

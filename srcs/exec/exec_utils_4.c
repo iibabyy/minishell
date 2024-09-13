@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 21:14:36 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/10 21:14:54 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/13 03:57:34 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	ft_fork(t_command *command)
 	return (pid);
 }
 
-void	print_sig()
+void	print_sig(void)
 {
 	int	status;
 
