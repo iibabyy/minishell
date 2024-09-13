@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:08:56 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/09 22:23:31 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/13 03:19:55 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,10 +86,9 @@ int	add_words_to_command(t_parsing *data)
 	t_command	*command;
 	int			i;
 
-	command = data->command;
+	free((command = data->command, i = 0, NULL));
 	if (command == NULL || data->curr_token == NULL)
 		return (EXIT_FAILURE);
-	i = 0;
 	while (data->curr_token != NULL && data->curr_token->type != OPERATOR)
 	{
 		if (data->curr_token->type == WORD)
@@ -108,6 +107,5 @@ int	add_words_to_command(t_parsing *data)
 		}
 		data->curr_token = data->curr_token->next;
 	}
-	
 	return (command->command[i] = NULL, EXIT_SUCCESS);
 }

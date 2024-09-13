@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:08:00 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/08 04:42:58 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/13 03:11:42 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ t_redirection	*init_others_redirection(t_parsing *data, int type, int o_flags)
 	if (data->curr_token == NULL)
 		return (parse_err(TOKEN_ERR, "newline"), ft_free(redirection), NULL);
 	if (data->curr_token->type != WORD)
-		return (parse_err(TOKEN_ERR, data->curr_token->content), ft_free(redirection), NULL);
+		return (parse_err(TOKEN_ERR, data->curr_token->content),
+			ft_free(redirection), NULL);
 	redirection->file = data->curr_token;
 	return (redirection);
 }

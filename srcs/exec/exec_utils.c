@@ -117,7 +117,6 @@ int   exec_single_command(t_command *command)
 	if (command->command == NULL || command->command[0] == NULL)
 		(ft_close(&command->outfile), ft_close(&command->infile), free_and_exit(EXIT_FAILURE));
 	execve(exec->command_path, command->command, env_tab());
-	printf("salut, c'est encore moi\n");
 	if (test_cd(command) == true)
 		free_and_exit(250);
 	(ft_close(&command->outfile), ft_close(&command->infile));

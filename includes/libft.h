@@ -6,26 +6,25 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:35:02 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/11 00:21:30 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/13 03:36:33 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
+# include "../srcs/libft/get_next_line.h"
+# include "error.h"
+# include "garbage_collector.h"
+# include "structs.h"
+# include <limits.h>
+# include <stdbool.h>
 # include <stddef.h>
 # include <stdio.h>
-# include <stdbool.h>
-# include <limits.h>
 # include <stdlib.h>
 # include <unistd.h>
 
-# include "../srcs/libft/get_next_line.h"
-# include "garbage_collector.h"
-# include "structs.h"
-# include "error.h"
-
-//	AMAZING functions 
+//	AMAZING functions
 
 void		ft_close_fd(int *fd);
 char		*ft_re_strjoin(const char *s1, const char *s2);
