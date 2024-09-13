@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:33:50 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/13 01:03:47 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/13 03:05:06 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*replace_env_vars(char *input)
 	char	*new_input;
 
 	if (input == NULL)
-		return(input);
+		return (input);
 	if (count_char(input, '$') == 0)
 		return (input);
 	array = replace_dollars(input);
@@ -76,7 +76,7 @@ char	*transform_env_value(char *value)
 	return (str);
 }
 
-char	*env_to_string(char	*str, int *dollar_index)
+char	*env_to_string(char *str, int *dollar_index)
 {
 	char	*var;
 	char	*env;
@@ -95,33 +95,35 @@ char	*env_to_string(char	*str, int *dollar_index)
 	env = ft_getenv(var);
 	if (env == NULL)
 		return (ft_strdup(""));
-	if (is_in_quotes(str, start - 1) == 0
-		&& is_in_parenthesis(str, start - 1) == 0)
+	if (is_in_quotes(str, start - 1) == 0 && is_in_parenthesis(str, start
+			- 1) == 0)
 	{
 		env = transform_env_value(env);
 		if (env == NULL)
-			return (error_log("env_to_string: transform_env failed", false), NULL);
+			return (error_log("env_to_string: transform_env failed", false),
+				NULL);
 	}
 	return (env);
 }
 
-char    *split_env_var(char *env)
+char	*split_env_var(char *env)
 {
-    char    **splited_env;
-    char    *temp;
-    int        i;
+	char	**splited_env;
+	char	*temp;
+	int		i;
 
-    splited_env = ft_split(env, '=');
-    if (splited_env == NULL)
-        return (NULL);
-    i = -1;
-    while (splited_env[++i] != NULL)
-    {
-        temp = splited_env[i];
-        splited_env[i] = multi_strjoin(3, "\"", splited_env[i], "\"");
-        ft_free(temp);
-        if (splited_env[i] == NULL)
-            return (error_log("split_env_var: multi_strjoin failed", false), NULL);
-    }
-    return (str_join_2d_and_free(splited_env, " "));
+	splited_env = ft_split(env, '=');
+	if (splited_env == NULL)
+		return (NULL);
+	i = -1;
+	while (splited_env[++i] != NULL)
+	{
+		temp = splited_env[i];
+		splited_env[i] = multi_strjoin(3, "\"", splited_env[i], "\"");
+		ft_free(temp);
+		if (splited_env[i] == NULL)
+			return (error_log("split_env_var: multi_strjoin failed", false),
+				NULL);
+	}
+	return (str_join_2d_and_free(splited_env, " "));
 }
