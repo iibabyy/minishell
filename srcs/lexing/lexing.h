@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:15:31 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/13 03:29:14 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/13 03:33:08 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # define SQUOTE 2
 
 t_token	*input_to_tokens(char *input);
-int		word_to_token(char **input, int *start,  t_token **tokens);
+int		word_to_token(char **input, int *start, t_token **tokens);
 int		meta_to_token(char **input, int *index, t_token **tokens);
 bool	is_meta_char(char *input, int index);
 bool	is_operator(char *input, int index);
@@ -37,7 +37,7 @@ int		new_word_token(t_token **tokens, char *word);
 int		new_parenthesis(char **input, int start, int *end, t_token **token);
 int		parenthesis_size(char *input, int *start);
 char	**replace_dollars(char *input);
-char    *split_env_var(char *env);
+char	*split_env_var(char *env);
 int		replace_tokens_env_vars(t_token *token);
 t_token	*last_token(t_token *token);
 bool	is_parenthesis(char *input, int index);
