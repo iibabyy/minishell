@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 19:09:39 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/13 03:34:45 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/13 12:36:51 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,20 @@
 
 int	next_valid_dollar(char *str, int *i)
 {
-	while (str[*i] != '\0' && str[*i] != '$')
+	char	*dollar;
+
+	dollar = ft_strchr(str + *i, '$');
+	while (dollar)
 	{
-		if (is_parenthesis(str, *i) == true)
+		if (is_in_quotes(str, dollar - str) == SQUOTE)
 		{
-			if (skip_parenthesis(str, i) == -1)
-				return (-1);
+			dollar = ft_strchr(dollar + 1, '$');
+			continue ;
 		}
-		else if (str[*i] == '\'')
-			skip_quotes(str, i);
-		else
-			++*i;
+		*i = dollar - str;
+		return (*i);
 	}
+	*i = ft_strlen(str);
 	return (*i);
 }
 
