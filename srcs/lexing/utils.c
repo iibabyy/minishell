@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 19:09:39 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/12 09:34:58 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/13 02:01:32 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,9 @@ int	skip_parenthesis(char *str, int *i)
 {
 	if (str[*i] != '(')
 		return (error_log("skip_parenthesis: not an parenthesis", false), *i);
+	++*i;
 	if (parenthesis_size(str, i) == -1)
-		return (error_log("skip_parenthesis: not an parenthesis", false), -1);
+		return (error_log("skip_parenthesis: parenthesis_size", false), -1);
 	return (*i);
 }
 
