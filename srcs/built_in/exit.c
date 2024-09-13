@@ -6,15 +6,16 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 03:19:25 by mdembele          #+#    #+#             */
-/*   Updated: 2024/09/13 04:24:34 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/13 12:13:36 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "built_in.h"
 
-static bool	first_error(bool getter);
-static bool	is_one_arg(char **arg);
-static bool	is_first_arg_ok(char **arg);
+static		bool	first_error(bool getter);
+static		bool	is_one_arg(char **arg);
+static		bool	is_first_arg_ok(char **arg);
+long long	ft_atol_exit(const char *str);
 
 int	ft_exit(char **arg)
 {
@@ -26,16 +27,45 @@ int	ft_exit(char **arg)
 	if (arg == NULL || arg[1] == NULL)
 		free_and_exit(get_status());
 	first_arg_ok = is_first_arg_ok(arg);
+	exit_code = ft_atol_exit(arg[1]);
 	one_arg = is_one_arg(arg);
 	if (first_arg_ok == false)
 		free_and_exit(2);
-	exit_code = ft_atoi(arg[1]);
-	if (exit_code < 0)
-		exit_code = -exit_code;
-	exit_code = exit_code % 256;
 	if (first_arg_ok == true && one_arg == true)
-		free_and_exit(exit_code);
+		free_and_exit((unsigned char)exit_code);
 	return (EXIT_FAILURE);
+}
+
+long long	ft_atol_exit(const char *str)
+{
+	long	i;
+	long	sign;
+	long long	number;
+
+	i = 0;
+	sign = 1;
+	number = 0;
+	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
+		i++;
+	if (str[i] == '+' || str[i] == '-')
+	{
+		if (str[i] == '-')
+			sign = -sign;
+		i++;
+	}
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		number = number * 10 + (str[i] - '0');
+		if (number > LONG_MAX)
+		{
+			ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
+			ft_putstr_fd(str, STDERR_FILENO);
+			ft_putstr_fd(": numeric argument required", STDERR_FILENO);
+			free_and_exit(2);
+		}
+		i++;
+	}
+	return (number * sign);
 }
 
 static bool	is_first_arg_ok(char **arg)
@@ -45,9 +75,11 @@ static bool	is_first_arg_ok(char **arg)
 	if (arg == NULL || arg[1] == NULL)
 		return (false);
 	i = -1;
+	if (arg[1][0] == '-' || arg[1][0] == '+')
+		++i;
 	while (arg[1][++i] != '\0')
 	{
-		if (ft_isdigit(arg[1][i]) == false)
+		if (ft_isdigit(arg[1][i]) == false || i > 19)
 		{
 			if (first_error(true) == true)
 			{

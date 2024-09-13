@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 04:22:18 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/13 06:03:35 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/13 11:16:30 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ char	*get_path(t_command *command, char **paths)
 	}
 	ft_putstr_fd("minishell : command not found : ", 2);
 	ft_putendl_fd(command->command[0], STDERR_FILENO);
-	free_and_exit(2);
+	free_and_exit(127);
 	return (NULL);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:08:00 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/13 03:11:42 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/13 11:49:20 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,10 @@ t_redirection	*init_redirection(t_parsing *data, int type, int o_flags)
 	if (type == HERE_DOC)
 	{
 		redirection = init_here_doc(data);
+		if (redirection == NULL)
+			return (NULL);
 		if (open_here_doc(redirection) == EXIT_FAILURE)
-			return (destroy_redirections(redirection), NULL);
+			return (NULL);
 	}
 	else
 	{
