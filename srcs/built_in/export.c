@@ -31,7 +31,7 @@ int	export(char **args)
 	while (args[++i] != NULL)
 	{
 		if (parse_export_arg(args[i]) == EXIT_FAILURE)
-			continue ;
+			return (EXIT_FAILURE) ;
 		new_var = arg_to_env_var(args[i]);
 		if (new_var == NULL)
 			return (EXIT_FAILURE);

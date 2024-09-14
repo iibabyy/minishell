@@ -17,6 +17,13 @@ int	env(char **args)
 	static t_env	*env = NULL;
 	t_env_var		*temp;
 
+	if (ft_strlen_2d(args) > 1)
+	{
+		ft_putstr_fd("env : ", 2);
+		ft_putstr_fd(args[1], 2);
+		ft_putendl_fd(": No such files or directory", 2);
+		return (127);
+	}
 	if (env == NULL)
 		env = get_env_list(NULL);
 	if (env == NULL || env->first == NULL)
