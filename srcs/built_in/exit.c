@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 03:19:25 by mdembele          #+#    #+#             */
-/*   Updated: 2024/09/13 12:13:36 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/14 20:53:40 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,21 +49,17 @@ long long	ft_atol_exit(const char *str)
 		i++;
 	if (str[i] == '+' || str[i] == '-')
 	{
-		if (str[i] == '-')
+		if (str[i++] == '-')
 			sign = -sign;
-		i++;
 	}
 	while (str[i] >= '0' && str[i] <= '9')
 	{
-		number = number * 10 + (str[i] - '0');
+		number = number * 10 + (str[i++] - '0');
 		if (number > LONG_MAX)
 		{
-			ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
-			ft_putstr_fd(str, STDERR_FILENO);
-			ft_putstr_fd(": numeric argument required", STDERR_FILENO);
+			print_err("exit: numeric argument required", false);
 			free_and_exit(2);
 		}
-		i++;
 	}
 	return (number * sign);
 }
