@@ -15,10 +15,10 @@ int	exec_single_built_in(t_command *command)
 
 	if(command->redirections)
 	{
+		open_redirections(command);
 		pipe(fd);
 		dup2(STDIN_FILENO, fd[0]);
 		dup2(STDOUT_FILENO, fd[1]);
-		open_redirections(command);
 		status = exec_single(command);
 		dup2(fd[0], STDIN_FILENO);
 		close(fd[0]);
@@ -36,9 +36,11 @@ int	exec_single_built_in(t_command *command)
 int	exec(t_command *command)
 {
     int	status;
-
+	struct termios	term;
+	
 	if (command == NULL)
 		return (EXIT_FAILURE);
+	(tcgetattr(STDOUT_FILENO, &term));
 	if (command->is_child == false)
 		set_parent_exec_signals();
     if (command->type != COMMAND && command->type != SUB_SHELL)
@@ -47,6 +49,7 @@ int	exec(t_command *command)
 		status = exec_single_built_in(command);
 	else
 		status = exec_single(command);
+	(tcsetattr(STDOUT_FILENO, TCSANOW, &term));
 	return (status);
 }
 

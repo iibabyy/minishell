@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 14:48:18 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/09 23:26:59 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/12 18:00:55 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,7 @@ void	set_status(int status)
 char	*check_heredoc_sig(char *input, char *eof)
 {
 	if (g_signal != 0)
-	{
-		// printf("ok\n");
 		return (ft_free(input), NULL);
-	}
 	else
 	{	ft_putstr_fd
 			("minishell: warning: here-document delimited by end-of-file (wanted `",

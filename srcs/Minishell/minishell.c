@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:42:32 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/12 09:43:23 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/12 17:37:20 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ int	main(int ac, char **av, char **envp)
 			print_nl();
 		else if (command->sigquit == true)
 			print_quit();
+		if (isatty(STDIN_FILENO) == 0)
+			free_and_exit(2);
 	}
 	return (0);
 }
