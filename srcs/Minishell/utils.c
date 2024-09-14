@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 15:41:37 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/13 04:23:13 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/14 21:03:08 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int	init_minishell(char **env)
 	ft_malloc(0);
 	init_error_log();
 	init_env(env);
+	printf("salut\n");
 	init_history();
 	init_aliases();
 	return (EXIT_SUCCESS);

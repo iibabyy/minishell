@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils_1.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdembele <mdembele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 15:18:49 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/13 03:13:46 by mdembele         ###   ########.fr       */
+/*   Updated: 2024/09/14 21:01:38 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,12 @@ char	*variable_value(char *env_line)
 t_env	*get_env_list(t_env *only_for_init)
 {
 	static t_env	*env = NULL;
+	static bool		first = true;
 
-	if (env == NULL)
+	if (first == true)
 	{
 		env = only_for_init;
+		first = false;
 		return (NULL);
 	}
 	return (env);
