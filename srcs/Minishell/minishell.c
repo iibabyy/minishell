@@ -6,43 +6,58 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:42:32 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/12 17:37:20 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/13 11:58:28 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils.h"
+#include "msh_utils.h"
 
-volatile sig_atomic_t g_signal = 0;
+volatile sig_atomic_t	g_signal = 0;
 
 int	main(int ac, char **av, char **envp)
 {
-	char		*str;
-	t_command	*command;
-
 	(void)av;
 	if (ac != 1)
 		return (EXIT_FAILURE);
+	if (envp == NULL || envp[0] == NULL)
+	{
+		print_err("no environment variables", false);
+		ft_putendl_fd("exit", EXIT_FAILURE);
+		return (EXIT_FAILURE);
+	}
 	init_minishell(envp);
 	while (1)
 	{
 		set_parent_signals();
+		minishell();
 		clear_garbage();
-		str = get_line();
-		if (g_signal != 0)
-		{
-			g_signal = 0;
-			continue;
-		}
-		command = parse(str);
-		if (command == NULL)
-			continue ;
-		exec(command);
-		if (command->sigint == true)
-			print_nl();
-		else if (command->sigquit == true)
-			print_quit();
-		if (isatty(STDIN_FILENO) == 0)
-			free_and_exit(2);
 	}
 	return (0);
+}
+
+void	minishell(void)
+{
+	struct termios	term;
+	t_command		*command;
+	char			*str;
+
+	str = get_line();
+	if (g_signal != 0)
+	{
+		g_signal = 0;
+		return ;
+	}
+	command = parse(str);
+	if (command == NULL)
+		return ;
+	(tcgetattr(STDOUT_FILENO, &term));
+	exec(command);
+	(tcsetattr(STDOUT_FILENO, TCSANOW, &term));
+	if (isatty(STDIN_FILENO) == 0)
+		print_err_and_exit("infile is not a terminal, exit",
+			get_status(), false);
+	if (command->sigint == true)
+		print_nl();
+	else if (command->sigquit == true)
+		print_quit();
 }

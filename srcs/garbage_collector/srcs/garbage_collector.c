@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:25:32 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/08 03:41:23 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/13 04:13:30 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ Clear the garbage collector:
 free() all the addresses allocated by ft_malloc() function
 don't free the addresses locked by lock() function
 */
-void 	clear_garbage(void)
+void	clear_garbage(void)
 {
 	t_garbage	*garbage;
 	t_garb_node	*node;

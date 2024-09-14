@@ -1,8 +1,34 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   wildcards.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/13 04:10:22 by ibaby             #+#    #+#             */
+/*   Updated: 2024/09/13 06:04:54 by ibaby            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "wildcard.h"
+
+bool	check_if_expand(char *str, char **temp)
+{
+	char	*wc;
+
+	wc = ft_strchr(str, '*');
+	while (wc != NULL)
+	{
+		if (!quotes_or_parenthesis_2d(temp, str, wc - str))
+			return (true);
+		wc = ft_strchr(++wc, '*');
+	}
+	return (false);
+}
 
 char	*expand_wildcard(char *input)
 {
-	char 	**temp;
+	char	**temp;
 	int		i;
 
 	if (count_char(input, '*') == 0)
@@ -13,7 +39,7 @@ char	*expand_wildcard(char *input)
 	i = -1;
 	while (temp[++i] != NULL)
 	{
-		if (count_char(temp[i], '*') == 0)
+		if (check_if_expand(temp[i], temp) == false)
 			continue ;
 		temp[i] = list_files(temp[i], temp);
 		if (temp[i] == NULL)
@@ -22,32 +48,48 @@ char	*expand_wildcard(char *input)
 	return (str_join_2d_and_free(temp, " "));
 }
 
-char	*list_files(char *str, char **input)
+char	*get_dir_files(DIR *dir, char *str, char **input)
 {
-	DIR				*dir;
 	struct dirent	*file;
 	char			*list;
 
-	if (str == NULL || (dir = opendir("./")) == NULL)
-		return (NULL);
-	list = NULL;
-	while ((file = readdir(dir)) != NULL)
+	free((list = NULL, file = readdir(dir), NULL));
+	while (file != NULL)
 	{
 		if (is_valid_name(file->d_name, str, input) == false)
+		{
+			file = readdir(dir);
 			continue ;
+		}
 		if (list != NULL)
 		{
 			list = ft_re_strjoin(list, " ");
 			if (list == NULL)
-				return (closedir(dir), NULL);
+				return (NULL);
 		}
 		list = ft_re_strjoin(list, file->d_name);
 		if (list == NULL)
-			return (closedir(dir), NULL);
+			return (NULL);
+		file = readdir(dir);
 	}
 	if (list == NULL)
-		return (closedir(dir), str);
-	return (closedir(dir), list);
+		return (str);
+	return (list);
+}
+
+char	*list_files(char *str, char **input)
+{
+	DIR				*dir;
+	char			*list;
+
+	dir = opendir("./");
+	if (dir == NULL)
+		return (NULL);
+	list = get_dir_files(dir, str, input);
+	closedir(dir);
+	if (list == NULL)
+		return (NULL);
+	return (list);
 }
 
 bool	is_valid_name(char *name, char *original, char **input)
@@ -61,7 +103,8 @@ bool	is_valid_name(char *name, char *original, char **input)
 		return (false);
 	while (original[i] != '\0')
 	{
-		if (original[i] == '*' && quotes_or_parenthesis_2d(input, original, i) == 0)
+		if (original[i] == '*' && quotes_or_parenthesis_2d(input, original,
+				i) == 0)
 		{
 			if (original[++i] == '\0')
 				return (true);
@@ -71,10 +114,8 @@ bool	is_valid_name(char *name, char *original, char **input)
 				++j;
 		}
 		else
-		{
 			if (name[j++] != original[i++])
 				return (false);
-		}
 	}
 	return (true);
 }

@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 15:18:15 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/09 04:15:21 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/13 03:58:24 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,9 @@
 
 int	env(char **args)
 {
-	static t_env	*env;
+	static t_env	*env = NULL;
 	t_env_var		*temp;
 
-	env = NULL;
 	if (env == NULL)
 		env = get_env_list(NULL);
 	if (env == NULL || env->first == NULL)

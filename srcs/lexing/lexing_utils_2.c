@@ -6,14 +6,13 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 22:44:22 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/10 15:18:00 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/13 03:34:28 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexing.h"
 
 static bool	is_expandable(char *str);
-char	*replace_and_join(char **temp, char *to_replace, char *sep);
 static char	*expand_wave(char *str);
 
 char	*replace_wave(char *input)
@@ -70,29 +69,6 @@ static char	*expand_wave(char *str)
 		return (str);
 	return (res);
 }
-
-// char	*replace_and_join(char **temp, char *to_replace, char *sep)
-// {
-// 	char	*str;
-// 	int		i;
-
-// 	if (temp == NULL)
-// 		return (NULL);
-// 	if (ft_strcmp(temp[i], to_replace) == 0)
-// 	{
-// 		temp[i] = ft_strdup(ft_getenv("HOME"));
-// 		if (temp[i] == NULL)
-// 		{
-// 			temp[i] = ft_strdup(getenv("HOME"));
-// 			if (temp[i] == NULL)
-// 				return (str_join_2d(temp, sep));
-// 		}
-// 	}
-// 	str = str_join_2d_and_free(temp, sep);
-// 	if (str == NULL)
-// 		return (NULL);
-// 	return (str);
-// }
 
 static bool	is_expandable(char *str)
 {

@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:25:18 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/08 16:29:07 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/13 03:56:51 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*git_line(char *git_file);
 void	close_and_re(int fd);
 char	*add_git_delay(char *prompt);
 char	*git_head(void);
-int	is_delayed(char *head);
+int		is_delayed(char *head);
 char	*git_remote_ref(char *head);
 char	*git_local_ref(char *head);
 char	*add_arrow(void);

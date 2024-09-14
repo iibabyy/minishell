@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 15:19:09 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/14 18:26:55 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/14 19:45:12 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,20 +44,17 @@ int	export(char **args)
 	return (status);
 }
 
-int	print_export_var(t_env *env)
+char	*set_value(char *value)
 {
-	t_env_var	*var;
-
-	var = env->first;
-	while (var != NULL)
+	if (value == NULL)
+		return (NULL);
+	if (*value == '"')
 	{
-		if (var->value != NULL)
-			printf("export %s=\"%s\"\n", var->variable, var->value);
-		else
-			printf("export %s\n", var->variable);
-		var = var->next;
+		value = ft_strtrim(value, "\"");
+		if (value == NULL)
+			return (NULL);
 	}
-	return (EXIT_SUCCESS);
+	return (value);
 }
 
 static t_env_var	*arg_to_env_var(char *arg)
@@ -70,14 +67,9 @@ static t_env_var	*arg_to_env_var(char *arg)
 	if (ft_strchr(arg, '=') != NULL)
 	{
 		value = ft_strdup(ft_strchr(arg, '=') + 1);
+		value = set_value(value);
 		if (value == NULL)
 			return (NULL);
-		if (*value == '"')
-		{
-			value = ft_strtrim(value, "\"");
-			if (value == NULL)
-				return (NULL);
-		}
 		*ft_strchr(arg, '=') = '\0';
 	}
 	variable = ft_strdup(arg);
@@ -90,8 +82,8 @@ static t_env_var	*arg_to_env_var(char *arg)
 		new_var = new_env_var(variable, NULL);
 	if (new_var == NULL)
 		return (ft_free(value), ft_free(variable), NULL);
-	new_var->value = value;
-	return (lock(new_var), lock(new_var->value), lock(new_var->variable), new_var);
+	lock((new_var->value = value, new_var));
+	return (lock(new_var->value), lock(new_var->variable), new_var);
 }
 
 int	parse_export_arg(char *arg)

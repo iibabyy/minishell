@@ -1,24 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wildcard_utils.c                                   :+:      :+:    :+:   */
+/*   signal_utils_2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/11 01:12:07 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/11 17:57:12 by ibaby            ###   ########.fr       */
+/*   Created: 2024/09/13 04:19:03 by ibaby             #+#    #+#             */
+/*   Updated: 2024/09/13 04:20:31 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "wildcard.h"
+#include "exec.h"
 
-// bool	need_wildcard_expand(char *str)
-// {
-// 	int	i;
+int	sig_event(void)
+{
+	return (EXIT_SUCCESS);
+}
 
-// 	i = -1;
-// 	while (str[++i] != '\0')
-// 	{
-// 		while (is_quotes(str[i]) == false && is_parenthesis(str, i) && str[i] != '$')
-// 	}
-// }
+void	if_sigint(int sig)
+{
+	g_signal = 128 + sig;
+	rl_done = 1;
+	last_status_code(128 + sig, SET);
+}
+
+void	exit_subshell(int sig)
+{
+	free_and_exit(128 + sig);
+}
+
+void	set_subshell_signals(void)
+{
+	signal(SIGQUIT, exit_subshell);
+	signal(SIGTSTP, SIG_IGN);
+	signal(SIGINT, exit_subshell);
+}

@@ -34,7 +34,6 @@ GARBAGE_COLLECTOR = $(GARBAGE_COLLECTOR_DIR)garbage_collector.a
 
 FILES =	srcs/Minishell/minishell.c			\
 		srcs/Minishell/utils.c				\
-		srcs/Minishell/test_utils.c			\
 		srcs/error_utils/free_and_exit.c	\
 		srcs/error_utils/print_err.c		\
 		srcs/error_utils/err_utils.c		\
@@ -74,6 +73,9 @@ FILES =	srcs/Minishell/minishell.c			\
 		srcs/exec/exec_utils_4.c			\
 		srcs/wildcard/wildcards.c			\
 		srcs/lexing/utils.c					\
+		srcs/lexing/utils_2.c				\
+		srcs/exec/signal_utils_2.c			\
+		srcs/exec/exec_utils_5.c			\
 
 OBJ = $(FILES:.c=.o)
 

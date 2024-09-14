@@ -1,55 +1,84 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/13 04:32:07 by ibaby             #+#    #+#             */
+/*   Updated: 2024/09/13 05:09:25 by ibaby            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 #include "../built_in/built_in.h"
 #include "exec.h"
 #include <unistd.h>
 
-#define LEFT_NODE 0
-#define RIGHT_NODE 1
-
 void	print_command(t_command *command);
+void	exit_subshell(int sig);
+
+void	redirect_subshell_signals(void)
+{
+	signal(SIGQUIT, exit_subshell);
+	signal(SIGTSTP, SIG_IGN);
+	signal(SIGINT, exit_subshell);
+}
+
+void	subsh_fd(int *arg, int sig)
+{
+	static int	*fd = NULL;
+
+	if (fd == NULL)
+		fd = arg;
+	else
+	{
+		ft_close(&fd[0]);
+		ft_close(&fd[1]);
+		exit_subshell(sig);
+	}
+}
 
 int	exec_single_built_in(t_command *command)
 {
 	int	fd[2];
 	int	status;
 
-	if(command->redirections)
+	if (command->redirections)
 	{
-		open_redirections(command);
-		pipe(fd);
-		dup2(STDIN_FILENO, fd[0]);
-		dup2(STDOUT_FILENO, fd[1]);
+		fd[0] = dup(STDIN_FILENO);
+		fd[1] = dup(STDOUT_FILENO);
+		if (open_redirections(command) == EXIT_FAILURE)
+			return (last_status_code(EXIT_FAILURE, SET), ft_close(&fd[0]),
+				ft_close(&fd[1]), EXIT_FAILURE);
+		else if (command->type == COMMAND
+			&& ft_strcmp("exit", command->command[0]) == 0)
+			(ft_close(&fd[0]), ft_close(&fd[1]));
 		status = exec_single(command);
-		dup2(fd[0], STDIN_FILENO);
-		close(fd[0]);
-		dup2(fd[1], STDOUT_FILENO);
-		close(fd[1]);
+		if (fd[0] != -1)
+			(dup2(fd[0], STDIN_FILENO), close(fd[0]));
+		if (fd[1] != -1)
+			(dup2(fd[1], STDOUT_FILENO), close(fd[1]));
 	}
 	else
-	{
-		open_redirections(command);
 		status = exec_single(command);
-	}
 	return (status);
 }
 
 int	exec(t_command *command)
 {
-    int	status;
-	struct termios	term;
-	
+	int	status;
+
 	if (command == NULL)
 		return (EXIT_FAILURE);
-	(tcgetattr(STDOUT_FILENO, &term));
 	if (command->is_child == false)
 		set_parent_exec_signals();
-    if (command->type != COMMAND && command->type != SUB_SHELL)
-        status = exec_command(command);
+	if (command->type != COMMAND && command->type != SUB_SHELL)
+		status = exec_command(command);
 	else if (command->type == COMMAND && is_built_in(command) == true)
 		status = exec_single_built_in(command);
 	else
 		status = exec_single(command);
-	(tcsetattr(STDOUT_FILENO, TCSANOW, &term));
 	return (status);
 }
 
@@ -61,7 +90,6 @@ int	forking_pipe_node(t_command *node, int pos, int fd[])
 	pid = ft_fork(node);
 	if (pid == 0)
 	{
-		set_subshell_signals();
 		if (pos == LEFT_NODE)
 		{
 			ft_close(&fd[0]);
@@ -76,56 +104,4 @@ int	forking_pipe_node(t_command *node, int pos, int fd[])
 		free_and_exit(status);
 	}
 	return (pid);
-}
-int	exec_pipe(t_command *node)
-{
-	int	pid[2];
-	int	fd[2];
-
-	ft_pipe(fd);
-	pid[0] = forking_pipe_node(node->left, LEFT_NODE, fd);
-	pid[1] = forking_pipe_node(node->right, RIGHT_NODE, fd);
-	(ft_close(&fd[1]), ft_close(&fd[0]));
-	(ft_close(&node->left->infile), ft_close(&node->right->infile));
-	(ft_close(&node->left->outfile), ft_close(&node->right->outfile));
-	ft_waitpid(pid[0], node);
-	if (get_status() == 128 + SIGQUIT /*&& node->left->type*/)
-	{
-		if (node->previous && node->previous->type == PIPE)
-			node->previous->sigquit = true;
-		else
-			node->sigquit = true;
-	}
-	ft_waitpid(pid[1], node);
-	if (get_status() == 128 + SIGQUIT)
-	{
-		if (node->previous && node->previous->type == PIPE)
-			node->previous->sigquit = true;
-		else
-			node->sigquit = true;
-	}
-	return (get_status());
-}
-
-int	exec_command(t_command *node)
-{
-	int	status;
-
-	status = 0;
-	if (node->type == COMMAND)
-	{
-		if (is_built_in(node))
-			status = exec_builtin(node);
-		else
-			status = exec_single_command(node);
-	}
-	else if (node->type == OR)
-		status = exec_or(node);
-	else if (node->type == SUB_SHELL)
-		status = exec_sub_shell(node);
-	else if (node->type == AND)
-		status = exec_and(node);
-	else if (node->type == PIPE)
-		status = exec_pipe(node);
-	return (status);
 }

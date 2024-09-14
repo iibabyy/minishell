@@ -6,11 +6,11 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 15:41:37 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/12 09:29:37 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/13 04:23:13 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils.h"
+#include "msh_utils.h"
 
 int	init_minishell(char **env)
 {
@@ -63,7 +63,6 @@ t_command	*parse_subshell(char *input)
 		return (NULL);
 	ft_memset(&data, 0, sizeof(t_data));
 	data.error = false;
-	// input = replace_env_vars(input);
 	data.token = input_to_tokens_subshell(input);
 	if (data.token == NULL)
 		return (destroy_parsing(&data), NULL);

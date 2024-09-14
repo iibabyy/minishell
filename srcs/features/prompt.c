@@ -6,17 +6,19 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 00:42:23 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/09 22:12:55 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/13 03:56:45 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "features.h"
 
-char	*minishell_prompt()
+char	*minishell_prompt(void)
 {
-	char	*prompt = NULL;
-	char	*pwd = NULL;
+	char	*prompt;
+	char	*pwd;
 
+	prompt = NULL;
+	pwd = NULL;
 	if (pwd == NULL)
 		pwd = ft_getenv("PWD");
 	if (pwd == NULL)
@@ -64,12 +66,12 @@ char	*add_git_head(char *prompt)
 {
 	char	*git;
 	char	*temp;
-	
+
 	temp = git_head();
 	if (temp == NULL)
 		return (prompt);
-	git = multi_strjoin(3, "\001\033[34;1m\002git:(\001\033[31;1m\002",
-			temp, "\001\033[34;1m\002) ");
+	git = multi_strjoin(3, "\001\033[34;1m\002git:(\001\033[31;1m\002", temp,
+			"\001\033[34;1m\002) ");
 	ft_free(temp);
 	if (git == NULL)
 		return (prompt);
