@@ -99,6 +99,7 @@ $(NAME) : $(LIBFT) $(GARBAGE_COLLECTOR) $(OBJ)
 	@$(CC) $(FLAGS) $(OBJ) $(GARBAGE_COLLECTOR) -lreadline $(LIBFT) -o $(NAME)
 	@echo ""
 	@echo "$(BLUE)$(NAME) done ! ✅$(END)"
+	@echo ""
 
 $(GARBAGE_COLLECTOR) : $(GARBAGE_COLLECTOR_DIR)
 	@make -sC $(GARBAGE_COLLECTOR_DIR)
@@ -118,11 +119,11 @@ $(LIBFT) : $(LIBFT_DIR)
 	@for i in `seq 1 $(shell echo "$$(($(BAR_SIZE)-$(COMPILED_FILES)*$(BAR_SIZE)/$(TOTAL_FILES)))")`; do \
 		echo -n "▱" ; \
 	done
-	@echo -n " ($(shell echo "scale=2; $(COMPILED_FILES)/$(TOTAL_FILES) * 100" | bc)%) "
-	@echo -n "["
-	@printf "%d/%d" $(COMPILED_FILES) $(TOTAL_FILES)
-	@echo -n "] "
-	@printf "%s" $(notdir $<)
+	@echo -n " [$(shell echo "scale=2; $(COMPILED_FILES)/$(TOTAL_FILES) * 100" | bc)%] "
+# @echo -n "["
+# @printf "%d/%d" $(COMPILED_FILES) $(TOTAL_FILES)
+# @echo -n "] "
+# @printf "%s" $(notdir $<)
 	@printf "\e[0K\r"
 
 clean :
