@@ -81,6 +81,7 @@ SRCS =	count_char.c			\
 		insert_str.c			\
 		ft_strstr.c				\
 		2dstr_join.c			\
+		sort_str2d.c			\
 
 #	Loading bar	#
 

@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 14:48:18 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/13 11:50:41 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/14 19:57:39 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,7 @@ char	*check_heredoc_sig(char *input, char *eof)
 		ft_putstr_fd(eof, STDERR_FILENO);
 		ft_putendl_fd("')", STDERR_FILENO);
 	}
+	if (input == NULL)
+		input = ft_strdup("");
 	return (input);
 }

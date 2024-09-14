@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 15:18:15 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/13 03:58:24 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/14 20:05:08 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	env(char **args)
 	static t_env	*env = NULL;
 	t_env_var		*temp;
 
+	if (args[1] != NULL)
+		return (print_err("env: too many args", false), EXIT_FAILURE);
 	if (env == NULL)
 		env = get_env_list(NULL);
 	if (env == NULL || env->first == NULL)

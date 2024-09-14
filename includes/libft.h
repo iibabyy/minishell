@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:35:02 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/13 03:36:33 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/14 20:14:23 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ char		*ft_strstr(const char *big, const char *little);
 char		**str2d_join(char **str1, char **str2);
 char		**str2djoin_and_free(char **str1, char **str2);
 char		**strdup2d(char **str);
+void		sort_str2d(char **str);
 
 //	libft functions
 

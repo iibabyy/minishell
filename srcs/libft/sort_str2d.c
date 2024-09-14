@@ -1,25 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wildcard.h                                         :+:      :+:    :+:   */
+/*   sort_str2d.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/13 04:01:00 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/14 20:25:11 by ibaby            ###   ########.fr       */
+/*   Created: 2024/09/14 20:05:55 by ibaby             #+#    #+#             */
+/*   Updated: 2024/09/14 20:30:41 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef WILDCARD_H
-# define WILDCARD_H
+#include "../../includes/libft.h"
 
-# include "../../includes/minishell.h"
-# include "../lexing/lexing.h"
+void	sort_str2d(char **str)
+{
+	int		temp;
+	char	*lower;
+	int		i;
+	int		y;
 
-char	*list_files(char *str, char **input);
-char	*get_dir_files(DIR *dir, char *str, char **input);
-bool	is_valid_name(char *name, char *original, char **input);
-char	*sort_wildcard_files(char *files);
-bool	check_if_expand(char *str, char **temp);
-
-#endif
+	y = -1;
+	while (str[++y] != NULL)
+	{
+		i = y;
+		temp = i;
+		lower = str[i];
+		while (str[++i] != NULL)
+		{
+			if (ft_strcmp(lower, str[i]) > 0)
+			{
+				temp = i;
+				lower = str[i];
+			}
+		}
+		str[temp] = str[y];
+		str[y] = lower;
+	}
+}
