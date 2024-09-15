@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 00:42:23 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/13 03:56:45 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/14 21:04:29 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,15 @@ char	*minishell_prompt(void)
 	if (pwd == NULL)
 		pwd = ft_getenv("PWD");
 	if (pwd == NULL)
-		return (ft_strdup(MINISHELL_PROMPT));
+		return (urgency_prompt());
 	prompt = add_arrow();
 	if (prompt == NULL)
-		return (ft_strdup(MINISHELL_PROMPT));
+		return (urgency_prompt());
 	prompt = add_dir_name(prompt);
 	prompt = add_git_head(prompt);
 	prompt = ft_re_strjoin(prompt, "\001\033[0m\002");
 	if (prompt == NULL || *prompt == '\0')
-		return (ft_free(prompt), ft_strdup(MINISHELL_PROMPT));
+		return (ft_free(prompt), urgency_prompt());
 	return (prompt);
 }
 

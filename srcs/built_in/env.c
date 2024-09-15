@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 15:18:15 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/13 03:58:24 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/15 02:11:28 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,8 @@ int	env(char **args)
 	static t_env	*env = NULL;
 	t_env_var		*temp;
 
-	if (ft_strlen_2d(args) > 1)
-	{
-		ft_putstr_fd("env : ", 2);
-		ft_putstr_fd(args[1], 2);
-		ft_putendl_fd(": No such files or directory", 2);
-		return (127);
-	}
+	if (args[1] != NULL)
+		return (print_err("env: too many args", false), EXIT_FAILURE);
 	if (env == NULL)
 		env = get_env_list(NULL);
 	if (env == NULL || env->first == NULL)
@@ -45,12 +40,15 @@ void	init_env(char **env_arg)
 {
 	t_env	*env;
 
-	if (env_arg == NULL)
-		return ;
 	env = ft_malloc(sizeof(t_env) * 1);
 	if (env == NULL)
 		return (malloc_failed("init_env"));
 	lock(env);
+	if (env_arg == NULL || env_arg[0] == NULL)
+	{
+		(void)get_env_list(env);
+		return ;
+	}
 	env->first = create_env(env_arg);
 	if (env->first == NULL)
 		return (ft_free(env));

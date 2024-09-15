@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdembele <mdembele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 15:19:09 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/13 03:43:00 by mdembele         ###   ########.fr       */
+/*   Updated: 2024/09/15 02:11:44 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	export(char **args)
 	static t_env	*env = NULL;
 	t_env_var		*new_var;
 	int				i;
+	int				status;
 
 	if (env == NULL)
 		env = get_env_list(NULL);
@@ -27,17 +28,20 @@ int	export(char **args)
 		return (EXIT_SUCCESS);
 	if (args[1] == NULL)
 		return (print_export_var(env));
-	i = 0;
+	free((i = 0, status = EXIT_SUCCESS, NULL));
 	while (args[++i] != NULL)
 	{
 		if (parse_export_arg(args[i]) == EXIT_FAILURE)
-			return (EXIT_FAILURE) ;
+		{
+			status = EXIT_FAILURE;
+			continue ;
+		}
 		new_var = arg_to_env_var(args[i]);
 		if (new_var == NULL)
 			return (EXIT_FAILURE);
 		add_env_var(env, new_var);
 	}
-	return (EXIT_SUCCESS);
+	return (status);
 }
 
 char	*set_value(char *value)

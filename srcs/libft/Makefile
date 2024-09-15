@@ -81,6 +81,7 @@ SRCS =	count_char.c			\
 		insert_str.c			\
 		ft_strstr.c				\
 		2dstr_join.c			\
+		sort_str2d.c			\
 
 #	Loading bar	#
 
@@ -115,17 +116,18 @@ $(OBJS_DIR)%.o : %.c
 	@for i in `seq 1 $(shell echo "$$(($(BAR_SIZE)-$(COMPILED_FILES)*$(BAR_SIZE)/$(TOTAL_FILES)))")`; do \
 		echo -n "▱" ; \
 	done
-	@echo -n " ($(shell echo "scale=2; $(COMPILED_FILES)/$(TOTAL_FILES) * 100" | bc)%) "
-	@echo -n "["
-	@printf "%d/%d" $(COMPILED_FILES) $(TOTAL_FILES)
-	@echo -n "] "
-	@printf "%s" $(notdir $<)
+	@echo -n " [$(shell echo "scale=2; $(COMPILED_FILES)/$(TOTAL_FILES) * 100" | bc)%] "
+# @echo -n "["
+# @printf "%d/%d" $(COMPILED_FILES) $(TOTAL_FILES)
+# @echo -n "] "
+# @printf "%s" $(notdir $<)
 	@printf "\e[0K\r"
 	
 $(NAME): $(OBJECTS_PREFIXED) $(SRCS)
 	@ar cr $(NAME) $(OBJECTS_PREFIXED)
 	@echo ""
 	@echo "$(BLUE)Libft done ✅$(END)"
+	@echo ""
 
 clean:
 	@rm -rf $(OBJS_DIR)

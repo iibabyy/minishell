@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 21:53:22 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/13 04:13:47 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/14 21:11:31 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,16 @@ int	is_delayed(char *head)
 	char	*local;
 	char	*remote;
 
-	local = git_local_ref(head);
+	local = ft_strjoin("refs/heads/", head);
 	if (local == NULL)
 		return (-1);
-	remote = git_remote_ref(head);
+	local = git_line(local);
+	if (local == NULL)
+		return (-1);
+	remote = ft_strjoin("refs/remotes/origin/", head);
+	if (remote == NULL)
+		return (-1);
+	remote = git_line(remote);
 	if (remote == NULL)
 		return (-1);
 	if (ft_strcmp(local, remote) == 0)
@@ -82,22 +88,13 @@ int	is_delayed(char *head)
 		return (true);
 }
 
-char	*git_remote_ref(char *head)
+char	*urgency_prompt(void)
 {
-	char	*git;
+	char	*prompt;
 
-	git = ft_strjoin("refs/remotes/origin/", head);
-	if (git == NULL)
+	prompt = add_arrow();
+	if (prompt == NULL)
 		return (NULL);
-	return (git_line(git));
-}
-
-char	*git_local_ref(char *head)
-{
-	char	*git;
-
-	git = ft_strjoin("refs/heads/", head);
-	if (git == NULL)
-		return (NULL);
-	return (git_line(git));
+	prompt = ft_re_strjoin(prompt, "minishell \001\033[0m\002");
+	return (prompt);
 }

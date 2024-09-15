@@ -6,24 +6,13 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:10:53 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/13 11:52:48 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/14 20:00:15 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
 void	ft_dup2(int *fd, int fd2);
-
-void	dup2_here_doc(t_redirection *redirect)
-{
-	int	fd[2];
-
-	if (pipe(fd) == -1)
-		free_and_exit(EXIT_FAILURE);
-	ft_putstr_fd(redirect->here_doc->input, fd[1]);
-	ft_close(&fd[1]);
-	ft_dup2(&fd[0], STDIN_FILENO);
-}
 
 int	open_here_doc(t_redirection *redirection)
 {
@@ -53,10 +42,6 @@ static bool	is_limiter(char *input, char *limiter)
 	{
 		return (false);
 	}
-	if (input[input_len - 1] == '\n')
-	{
-		input[input_len - 1] = '\0';
-	}
 	if (ft_strcmp(input, limiter) == 0)
 	{
 		return (true);
@@ -66,6 +51,13 @@ static bool	is_limiter(char *input, char *limiter)
 		input[input_len - 1] = '\n';
 	}
 	return (false);
+}
+
+char	*check_here_doc_input(char *input)
+{
+	if (input == NULL)
+		return (ft_strdup(""));
+	return (input);
 }
 
 char	*get_input(char *end_of_file, char *prompt, bool quotes)
@@ -86,7 +78,7 @@ char	*get_input(char *end_of_file, char *prompt, bool quotes)
 				return (NULL);
 		}
 		if (quotes == false && is_limiter(input, end_of_file) == true)
-			return (free(input), input_join);
+			return (free(input), check_here_doc_input(input_join));
 		input_join = ft_re_strjoin(input_join, input);
 		if (input_join == NULL)
 			return (NULL);
