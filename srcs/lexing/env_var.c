@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:33:50 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/13 12:39:52 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/18 16:53:07 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,6 @@ char	**replace_dollars(char *input)
 			return (free_2d_array((void ***)&array), NULL);
 		if (input[i] == '\0')
 			break ;
-		// if (is_in_quotes(input, i) == SQUOTE || is_in_parenthesis(input, i) == true)
-		// 	continue ;
 		array[++y] = env_to_string(input, &i);
 		if (array[y] == NULL)
 			return (free_2d_array((void ***)&array), NULL);

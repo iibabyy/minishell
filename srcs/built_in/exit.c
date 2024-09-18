@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 03:19:25 by mdembele          #+#    #+#             */
-/*   Updated: 2024/09/14 20:53:40 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/18 16:53:24 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ int	ft_exit(char **arg)
 
 long long	ft_atol_exit(const char *str)
 {
-	long	i;
-	long	sign;
+	long		i;
+	long		sign;
 	long long	number;
 
 	i = 0;

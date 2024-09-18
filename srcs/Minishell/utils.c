@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 15:41:37 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/15 02:13:15 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/18 16:52:23 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*get_line(void)
 	free(temp);
 	if (str == NULL)
 	{
-		printf("exit\n");
+		ft_putendl_fd("exit", STDERR_FILENO);
 		free_and_exit(get_status());
 	}
 	if (is_only_space(str) == true)

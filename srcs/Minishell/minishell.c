@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:42:32 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/14 21:01:54 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/09/18 16:41:35 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,6 @@ int	main(int ac, char **av, char **envp)
 	(void)av;
 	if (ac != 1)
 		return (EXIT_FAILURE);
-	// if (envp == NULL || envp[0] == NULL)
-	// {
-	// 	print_err("no environment variables", false);
-	// 	ft_putendl_fd("exit", EXIT_FAILURE);
-	// 	return (EXIT_FAILURE);
-	// }
 	init_minishell(envp);
 	while (1)
 	{
