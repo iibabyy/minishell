@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 22:24:38 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/13 03:25:27 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/10/10 05:10:33 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,10 +86,4 @@ char	**insert_alias(char **command, char **alias)
 	new_command[i + j] = NULL;
 	ft_free(command);
 	return (new_command);
-}
-
-void	close_and_re(int fd)
-{
-	close(fd);
-	lseek(fd, 0, SEEK_SET);
 }

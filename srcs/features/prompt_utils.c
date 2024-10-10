@@ -6,7 +6,7 @@
 /*   By: ibaby <ibaby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 21:53:22 by ibaby             #+#    #+#             */
-/*   Updated: 2024/09/14 21:11:31 by ibaby            ###   ########.fr       */
+/*   Updated: 2024/10/10 05:10:39 by ibaby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	*git_line(char *git_file)
 	i = open(path, O_RDONLY);
 	if (i == -1)
 		return (error_log("git_line: open(): ", true), ft_free(path), NULL);
-	return (temp = get_next_line(i), close_and_re(i), ft_free(path), temp);
+	return (temp = get_next_line(i), close(i), ft_free(path), temp);
 }
 
 char	*git_head(void)
